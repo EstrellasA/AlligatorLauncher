@@ -44,15 +44,26 @@ struct BundledModSet {
 /// - `alligatorzone-core-*` registers the `clientmods/` discovery directory
 ///
 /// The client set is the rendering stack the server pack does not ship, and
-/// which AutoModpack therefore never distributes (Sodium, Colorwheel, Iris, …).
+/// which AutoModpack therefore never distributes (Colorwheel, Iris, …).
 /// Without it Flywheel comes up as `flywheel:off` and Create: Steam 'n' Rails
 /// dies during startup in `PhantomSpriteManager.renderTick` with an
 /// `ArrayIndexOutOfBoundsException` from `SpriteContents.upload`.
+///
+/// A jar belongs to the **server** set, not the client set, whenever it is a
+/// Sinytra Connector build of a Fabric mod. Connector is only handed such a jar
+/// by NeoForge's own `mods/` scanning; discovered instead by our `clientmods/`
+/// locator it registers as a *library*, its version resolves to `[MISSING]`,
+/// and every dependent fails with "<mod> is not installed". Sodium is exactly
+/// that case, which is why it sits in `mods/` despite being client-only.
 const BUNDLED_MOD_SETS: &[BundledModSet] = &[
     BundledModSet {
         resource_dir: "resources/bundled-mods",
         mods_folder: "mods",
-        files: &["automodpack-5.0.0-rc.4.jar", "alligatorzone-core-1.0.0.jar"],
+        files: &[
+            "automodpack-5.0.0-rc.4.jar",
+            "alligatorzone-core-1.0.0.jar",
+            "[钠] sodium-neoforge-0.8.13+mc1.21.1.jar",
+        ],
     },
     BundledModSet {
         resource_dir: "resources/bundled-client-mods",
@@ -79,7 +90,6 @@ const BUNDLED_MOD_SETS: &[BundledModSet] = &[
             "Searchables-neoforge-1.21.1-1.0.2.jar",
             "smart_bounds-1.0.0.jar",
             "[机械动力：赛博护目镜] CreateCyberGoggles-1.21.1-8.3.12-NeoForge.jar",
-            "[钠] sodium-neoforge-0.8.13+mc1.21.1.jar",
         ],
     },
 ];
