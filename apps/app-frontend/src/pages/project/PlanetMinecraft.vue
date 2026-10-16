@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router'
 
 import BrowseInstanceSelector from '@/components/browse/BrowseInstanceSelector.vue'
 import InstanceIcon from '@/components/ui/InstanceIcon.vue'
+import { CLIENT_MOD_TARGET_PROJECT_TYPE } from '@/helpers/client-mod-browse'
 import {
     import_planet_minecraft_content,
     install_planet_minecraft_content,
@@ -78,7 +79,13 @@ const selectedInstance = computed(() => contentSelection.targetInstance.value)
 
 function createRequest(version: PlanetMinecraftVersion): PlanetMinecraftContentInstallRequest {
     if (!project.value) throw new Error('Planet Minecraft project is unavailable')
-    return { projectId: project.value.id, versionId: version.id, projectType: 'mod' }
+    // Planet Minecraft projects reachable from Browse are mods, and the content
+    // browser installs mods into `clientmods/`, never into `mods/`.
+    return {
+        projectId: project.value.id,
+        versionId: version.id,
+        projectType: CLIENT_MOD_TARGET_PROJECT_TYPE,
+    }
 }
 
 async function install(version: PlanetMinecraftVersion) {

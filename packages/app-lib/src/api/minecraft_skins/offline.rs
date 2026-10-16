@@ -13,7 +13,7 @@ use crate::{
 
 use super::{Credentials, png_util};
 
-pub(crate) const OFFLINE_SKIN_PACK_FILE_NAME: &str = "Axolotl Offline Skin.zip";
+pub(crate) const OFFLINE_SKIN_PACK_FILE_NAME: &str = "ALLIGATORZONE Offline Skin.zip";
 pub(crate) const OFFLINE_SKIN_PACK_LEGACY_ID: &str = "Axolotl Offline Skin.zip";
 pub(crate) const OFFLINE_SKIN_PACK_MODERN_ID: &str =
     "file/Axolotl Offline Skin.zip";
@@ -197,7 +197,7 @@ fn build_resource_pack(
     let metadata = json!({
         "pack": {
             "pack_format": pack_format,
-            "description": "Axolotl Launcher offline skin"
+            "description": "ALLIGATORZONE offline skin"
         }
     });
 

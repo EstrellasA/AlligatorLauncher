@@ -642,7 +642,7 @@ async fn read_eula_accepted(dir: &Path) -> bool {
 /// progress is visible even before the JVM produces any output of its own.
 async fn log_server_step(server_id: &str, message: &str) {
     let line = format!(
-        "{} [Axolotl/INFO]: {}",
+        "{} [ALLIGATORZONE/INFO]: {}",
         chrono::Local::now().format("%H:%M:%S"),
         message,
     );

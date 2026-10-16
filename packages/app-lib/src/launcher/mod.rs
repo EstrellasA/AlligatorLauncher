@@ -1963,7 +1963,7 @@ pub async fn launch_minecraft(
         // 2.9.4-nightly-20150209, and the natives-only `lwjgl-platform`
         // carrier whose root-level `lwjgl.dll` would otherwise be what
         // `System.loadLibrary("lwjgl")` resolves first), plus the vanilla JNA
-        // platform and Mojang ICU (pre-existing Axolotl Cleanroom rule) —
+        // platform and Mojang ICU (pre-existing ALLIGATORZONE Cleanroom rule) —
         // covers direct ensure, classpath, and launch at once; the Cleanroom
         // LWJGL 3 line, lwjglxx, and the vanilla JNA core are never affected.
         for removed_library in
@@ -2174,7 +2174,7 @@ pub async fn launch_minecraft(
         .await
     {
         // The linked launcher configured its own Java runtime for this
-        // version; prefer it over Axolotl's discovery.
+        // version; prefer it over ALLIGATORZONE's discovery.
         java
     } else if let (Some(direct), Some(pcl)) =
         (direct_launch.as_ref(), pcl_launch.as_ref())
@@ -2185,7 +2185,7 @@ pub async fn launch_minecraft(
         && let Some(java) = select_pcl_java(direct, pcl).await
     {
         // The linked PCL/PCL-CE instance selected its own Java runtime;
-        // prefer it over Axolotl's discovery.
+        // prefer it over ALLIGATORZONE's discovery.
         java
     } else {
         let key = required_java_major(&version_info);
@@ -2409,8 +2409,8 @@ pub async fn launch_minecraft(
     } else {
         state.directories.version_natives_dir(&version_jar)
     };
-    // Linked native archives can change outside Axolotl, so rebuild only the
-    // Axolotl-owned linked cache on every launch. Never mutate linked folders.
+    // Linked native archives can change outside ALLIGATORZONE, so rebuild only the
+    // ALLIGATORZONE-owned linked cache on every launch. Never mutate linked folders.
     if direct_launch.is_some() && natives_dir.exists() {
         io::remove_dir_all(&natives_dir).await?;
     }
@@ -2420,7 +2420,7 @@ pub async fn launch_minecraft(
     if let (Some(direct), Some(libraries)) =
         (direct_launch.clone(), linked_libraries.clone())
     {
-        // Linked instances rebuild the Axolotl-owned natives cache on every
+        // Linked instances rebuild the ALLIGATORZONE-owned natives cache on every
         // launch; the managed restore path below must never touch them.
         let target = natives_dir.clone();
         let java_arch = java_version.architecture.clone();
@@ -2579,7 +2579,7 @@ pub async fn launch_minecraft(
     // loader. Append these after profile-provided JVM arguments so custom
     // arguments cannot accidentally replace the launcher's identity.
     command
-        .arg("-Dminecraft.launcher.brand=Axolotl Launcher")
+        .arg("-Dminecraft.launcher.brand=ALLIGATORZONE")
         .arg(format!(
             "-Dminecraft.launcher.version={}",
             env!("CARGO_PKG_VERSION")

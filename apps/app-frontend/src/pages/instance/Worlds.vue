@@ -41,31 +41,6 @@
                         ><PlusIcon class="size-5" />
                         {{ formatMessage(messages.addServer) }}
                     </Button>
-                    <Button
-                        type="colored"
-                        color="brand"
-                        class="!h-10 flex items-center gap-2"
-                        @click="
-                            router.push({
-                                path: '/browse/server',
-                                query: { i: instance.id, from: 'worlds' },
-                            })
-                        "
-                        ><CompassIcon class="size-5" />
-                        <span>{{ formatMessage(messages.browseServers) }}</span>
-                    </Button>
-                    <Button
-                        type="outlined"
-                        class="!h-10 flex items-center gap-2"
-                        @click="
-                            router.push({
-                                path: '/browse/world',
-                                query: { i: instance.id, from: 'world-maps' },
-                            })
-                        "
-                        ><WorldIcon class="size-5" />
-                        <span>{{ formatMessage(messages.browseMaps) }}</span>
-                    </Button>
                 </div>
             </div>
             <div class="flex flex-wrap items-center justify-between gap-2">
@@ -156,43 +131,16 @@
                     ><PlusIcon class="size-5" />
                     {{ formatMessage(messages.addServer) }}
                 </Button>
-                <Button
-                    type="colored"
-                    color="brand"
-                    class="!h-10 flex items-center gap-2"
-                    @click="
-                        router.push({
-                            path: '/browse/server',
-                            query: { i: instance.id, from: 'worlds' },
-                        })
-                    "
-                    ><CompassIcon class="size-5" />
-                    <span>{{ formatMessage(messages.browseServers) }}</span>
-                </Button>
-                <Button
-                    type="outlined"
-                    class="!h-10 flex items-center gap-2"
-                    @click="
-                        router.push({
-                            path: '/browse/world',
-                            query: { i: instance.id, from: 'world-maps' },
-                        })
-                    "
-                    ><WorldIcon class="size-5" />
-                    <span>{{ formatMessage(messages.browseMaps) }}</span>
-                </Button>
             </template>
         </EmptyState>
     </ReadyTransition>
 </template>
 <script setup lang="ts">
 import {
-    CompassIcon,
     FilterIcon,
     PlusIcon,
     RefreshCwIcon,
     SearchIcon,
-    WorldIcon,
 } from '@modrinth/assets'
 import {
     Button,
@@ -264,21 +212,13 @@ const messages = defineMessages({
         id: 'app.instance.worlds.add-server',
         defaultMessage: 'Add server',
     },
-    browseServers: {
-        id: 'app.instance.worlds.browse-servers',
-        defaultMessage: 'Browse servers',
-    },
-    browseMaps: {
-        id: 'app.instance.worlds.browse-maps',
-        defaultMessage: 'Browse maps',
-    },
     noWorldsHeading: {
         id: 'app.instance.worlds.no-worlds-heading',
         defaultMessage: 'No servers or worlds added',
     },
     noWorldsDescription: {
         id: 'app.instance.worlds.no-worlds-description',
-        defaultMessage: 'Add a server or browse to get started',
+        defaultMessage: 'Add a server to get started',
     },
     vanillaFilter: {
         id: 'app.instance.worlds.filter-vanilla',

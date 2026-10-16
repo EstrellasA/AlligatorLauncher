@@ -24,7 +24,6 @@ const SETTINGS_TABS = new Set([
     'storage-backups',
     'privacy-data',
     'updates',
-    'about',
     'logs',
 ])
 
@@ -64,7 +63,7 @@ export function resolveOpenRoute(path: string, query?: string | null) {
     if (path.startsWith('/project/')) {
         const rest = path.slice('/project/'.length)
         const [id, tab] = rest.split('/')
-        if (id && (!tab || ['versions', 'gallery', 'changelog'].includes(tab))) {
+        if (id && (!tab || ['versions', 'gallery'].includes(tab))) {
             return route(path, query)
         }
         return null
@@ -105,9 +104,7 @@ export function resolveOpenRoute(path: string, query?: string | null) {
         }
         return null
     }
-    if (
-        ['/downloads', '/create', '/skins', '/worlds', '/screenshots', '/help/drop'].includes(path)
-    ) {
+    if (['/downloads', '/create', '/skins', '/help/drop'].includes(path)) {
         return route(path, query)
     }
     return null

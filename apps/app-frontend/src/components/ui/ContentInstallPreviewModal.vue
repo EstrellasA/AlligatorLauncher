@@ -72,6 +72,15 @@ export interface ContentInstallConflictPrompt {
     confidence: 'high' | 'possible'
 }
 
+export interface PackDuplicatePrompt {
+    /**
+     * How many of the projects about to be installed the server pack already
+     * provides in its own `mods/` folder. One prompt covers them all rather
+     * than one per project.
+     */
+    count: number
+}
+
 const { formatMessage } = useVIntl()
 
 const messages = defineMessages({
@@ -182,6 +191,24 @@ const messages = defineMessages({
         id: 'app.content-install.preview.continue-anyway',
         defaultMessage: 'Install anyway',
     },
+    packDuplicateHeader: {
+        id: 'app.content-install.preview.pack-duplicate-header',
+        defaultMessage: 'Already provided by the server pack',
+    },
+    packDuplicateDescription: {
+        id: 'app.content-install.preview.pack-duplicate-description',
+        defaultMessage:
+            '{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}',
+    },
+    packDuplicateConsequence: {
+        id: 'app.content-install.preview.pack-duplicate-consequence',
+        defaultMessage:
+            "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it.",
+    },
+    packDuplicateConfirm: {
+        id: 'app.content-install.preview.pack-duplicate-confirm',
+        defaultMessage: 'Install my copy anyway',
+    },
     existingContent: {
         id: 'app.content-install.preview.existing-content',
         defaultMessage: 'Existing content',
@@ -197,6 +224,8 @@ let settled = false
 let batchMode = false
 let conflictMode = false
 const conflictPrompt = ref<ContentInstallConflictPrompt | null>(null)
+let packDuplicateMode = false
+const packDuplicatePrompt = ref<PackDuplicatePrompt | null>(null)
 let resolveShow:
     ((result: string[] | ContentInstallBatchPreviewResult | boolean | null) => void) | null = null
 
@@ -324,7 +353,7 @@ function finish(result: string[] | ContentInstallBatchPreviewResult | boolean | 
 }
 
 function confirm() {
-    if (conflictMode) {
+    if (conflictMode || packDuplicateMode) {
         finish(true)
         return
     }
@@ -346,6 +375,8 @@ function show(value: ContentInstallPreviewData): Promise<string[] | null> {
     batchMode = false
     conflictMode = false
     conflictPrompt.value = null
+    packDuplicateMode = false
+    packDuplicatePrompt.value = null
     removedPrimaryKeys.value = new Set()
     selectedIds.value = initialSelectedIds(value)
     expandedDependencyIds.value = new Set()
@@ -365,6 +396,8 @@ function showBatch(
     batchMode = true
     conflictMode = false
     conflictPrompt.value = null
+    packDuplicateMode = false
+    packDuplicatePrompt.value = null
     removedPrimaryKeys.value = new Set()
     selectedIds.value = initialSelectedIds(value)
     expandedDependencyIds.value = new Set()
@@ -383,6 +416,30 @@ function showConflict(value: ContentInstallConflictPrompt): Promise<boolean> {
     batchMode = false
     conflictMode = true
     conflictPrompt.value = value
+    packDuplicateMode = false
+    packDuplicatePrompt.value = null
+    settled = false
+    modal.value?.show()
+    return new Promise<boolean>((resolve) => {
+        resolveShow = (result) => resolve(result === true)
+    })
+}
+
+/**
+ * Asks the player to confirm installing content the server pack already ships
+ * in its own `mods/` folder. The pack's copy is the one that loads, so the
+ * install is legitimate but must not happen by accident. Resolves `true` to
+ * continue and `false` when the player backs out.
+ */
+function showPackDuplicates(value: PackDuplicatePrompt): Promise<boolean> {
+    resolveShow?.(null)
+    resolveShow = null
+    data.value = null
+    batchMode = false
+    conflictMode = false
+    conflictPrompt.value = null
+    packDuplicateMode = true
+    packDuplicatePrompt.value = value
     settled = false
     modal.value?.show()
     return new Promise<boolean>((resolve) => {
@@ -394,19 +451,39 @@ function removePrimary(key: string) {
     removedPrimaryKeys.value = new Set([...removedPrimaryKeys.value, key])
 }
 
-defineExpose({ show, showBatch, showConflict })
+defineExpose({ show, showBatch, showConflict, showPackDuplicates })
 </script>
 
 <template>
     <NewModal
         ref="modal"
-        :header="formatMessage(conflictMode ? messages.conflictHeader : messages.header)"
+        :header="
+            formatMessage(
+                packDuplicateMode
+                    ? messages.packDuplicateHeader
+                    : conflictMode
+                      ? messages.conflictHeader
+                      : messages.header,
+            )
+        "
         scrollable
         max-content-height="70vh"
         width="40rem"
         max-width="40rem"
         :on-hide="hide"
     >
+        <div v-if="packDuplicatePrompt" class="flex flex-col gap-3">
+            <p class="m-0 font-medium text-[var(--color-text-primary)]">
+                {{
+                    formatMessage(messages.packDuplicateDescription, {
+                        count: packDuplicatePrompt.count,
+                    })
+                }}
+            </p>
+            <p class="m-0 text-[var(--color-text-tertiary)]">
+                {{ formatMessage(messages.packDuplicateConsequence) }}
+            </p>
+        </div>
         <div v-if="conflictPrompt" class="flex flex-col gap-4">
             <div
                 class="flex items-center gap-3 rounded-lg border border-solid border-warning bg-warning-bg p-3"
@@ -759,15 +836,19 @@ defineExpose({ show, showBatch, showConflict })
                     type="colored"
                     color="brand"
                     :disabled="
-                        !conflictMode && (hasBlockingPrimary || visiblePrimaries.length === 0)
+                        !conflictMode &&
+                        !packDuplicateMode &&
+                        (hasBlockingPrimary || visiblePrimaries.length === 0)
                     "
                     @click="confirm"
                     >{{
-                        conflictMode
-                            ? formatMessage(messages.continueAnyway)
-                            : hasUnresolvedDependencies
-                              ? formatMessage(messages.installResolved)
-                              : formatMessage(messages.install)
+                        packDuplicateMode
+                            ? formatMessage(messages.packDuplicateConfirm)
+                            : conflictMode
+                              ? formatMessage(messages.continueAnyway)
+                              : hasUnresolvedDependencies
+                                ? formatMessage(messages.installResolved)
+                                : formatMessage(messages.install)
                     }}
                 </Button>
             </div>

@@ -134,11 +134,23 @@ pub(crate) async fn get_content_projects(
     .await
 }
 
+/// Project ids that already have a file in this instance's applied content set.
+///
+/// `folders` restricts the answer to files that live in those instance-relative
+/// folders (for example `["clientmods"]`). This is what makes Browse's
+/// "installed" state target-aware: the launcher installs browsed mods into
+/// `clientmods/`, so a copy the server pack ships in `mods/` must not count as
+/// installed for that install. `None` keeps the historical "installed anywhere"
+/// answer, and an empty slice reports nothing as installed.
 pub(crate) async fn get_installed_project_ids_for_instance(
     instance_id: &str,
     content_set_id: Option<&str>,
+    folders: Option<&[&str]>,
     state: &State,
 ) -> crate::Result<Vec<String>> {
+    if folders.is_some_and(|folders| folders.is_empty()) {
+        return Ok(Vec::new());
+    }
     let resolved = resolve_content_scope_with_instance(
         instance_id,
         content_set_id,
@@ -146,17 +158,33 @@ pub(crate) async fn get_installed_project_ids_for_instance(
     )
     .await?;
     let mut project_ids = HashSet::new();
-    let provider_rows = sqlx::query(
+
+    let mut sql = String::from(
         "SELECT DISTINCT ref.provider, ref.provider_project_id
          FROM instance_content_entries entry
          INNER JOIN instance_files file ON file.id = entry.file_id
          INNER JOIN instance_content_provider_refs ref
             ON ref.content_entry_id = entry.id
          WHERE entry.content_set_id = ? AND file.missing = 0",
-    )
-    .bind(&resolved.content_set.id)
-    .fetch_all(&state.pool)
-    .await?;
+    );
+    if let Some(folders) = folders {
+        sql.push_str(" AND (");
+        for index in 0..folders.len() {
+            if index > 0 {
+                sql.push_str(" OR ");
+            }
+            sql.push_str("file.relative_path LIKE ?");
+        }
+        sql.push(')');
+    }
+
+    let mut query = sqlx::query(&sql).bind(&resolved.content_set.id);
+    if let Some(folders) = folders {
+        for folder in folders {
+            query = query.bind(format!("{folder}/%"));
+        }
+    }
+    let provider_rows = query.fetch_all(&state.pool).await?;
     for row in provider_rows {
         let provider = row.try_get::<String, _>("provider")?;
         let project_id = row.try_get::<String, _>("provider_project_id")?;
@@ -273,7 +301,7 @@ fn instance_matches_targets(
 
     targets.iter().any(|target| {
         target.game_version == game_version
-            && (project_type != ProjectType::Mod
+            && (!project_type.is_mod()
                 || target.loader == loader
                 || target.loader == "datapack")
     })
@@ -429,15 +457,17 @@ pub(crate) async fn list_content_by_paths(
         resolve_content_scope_with_instance(instance_id, None, &state.pool)
             .await?;
 
-    let path_set = paths.iter().map(String::as_str).collect::<HashSet<_>>();
-
     let files = sqlite::content_rows::get_instance_files(
         &resolved.instance.id,
         &state.pool,
     )
     .await?
     .into_iter()
-    .filter(|file| path_set.contains(file.relative_path.as_str()))
+    .filter(|file| {
+        paths
+            .iter()
+            .any(|requested| content_path_matches(&file.relative_path, requested))
+    })
     .collect::<Vec<_>>();
 
     let files = content_projects_for_files(
@@ -1232,6 +1262,7 @@ pub(crate) async fn dependencies_to_content_items(
                 external: false,
                 loader: version
                     .and_then(|version| version.loaders.first().cloned()),
+                display_url: None,
             })
         })
         .collect::<Vec<_>>();
@@ -1694,7 +1725,7 @@ fn file_update_cache_key(
     content_set: &ContentSet,
     channel: ReleaseChannel,
 ) -> String {
-    let loader_key = if project_type == ProjectType::Mod {
+    let loader_key = if project_type.is_mod() {
         content_set.loader.as_str().to_string()
     } else {
         project_type.get_loaders().join("+")
@@ -1915,7 +1946,7 @@ async fn content_files_to_content_items(
                     .iter()
                     .find(|index| {
                         index.game_version == content_set.game_version
-                            && (file.project_type != ProjectType::Mod
+                            && (!file.project_type.is_mod()
                                 || index.mod_loader == loader_type)
                             && release_type_allowed(index.release_type)
                     })
@@ -1938,7 +1969,7 @@ async fn content_files_to_content_items(
                         if !has_game_version {
                             return false;
                         }
-                        if file.project_type != ProjectType::Mod {
+                        if !file.project_type.is_mod() {
                             return true;
                         }
                         candidate.game_versions.iter().any(|value| {
@@ -2170,6 +2201,11 @@ async fn content_files_to_content_items(
                 source_kind,
                 external,
                 loader,
+                // The homepage the mod declares for itself. `local_mod` is the
+                // already-parsed jar metadata, so nothing re-reads the archive.
+                display_url: local_mod
+                    .as_ref()
+                    .and_then(|meta| meta.url.clone()),
             }
         })
         .collect::<Vec<_>>();
@@ -2722,6 +2758,27 @@ async fn get_modpack_identifiers(
     })
 }
 
+/// Whether an indexed content path is selected by one requested path.
+///
+/// A request may name either a single file (`mods/foo.jar`) or a whole content
+/// folder (`mods`, `clientmods`). Indexed paths always name a file, so a folder
+/// request has to match by path prefix — an exact comparison would silently
+/// return nothing for the folder form the mod pages use.
+///
+/// The prefix must end on a path separator, so a request for `mods/foo.jar`
+/// never drags in `mods/foo.jar.disabled` or `mods/foo.jar.bak`.
+fn content_path_matches(relative_path: &str, requested: &str) -> bool {
+    let requested = requested.trim_end_matches(['/', '\\']);
+    if requested.is_empty() {
+        return false;
+    }
+
+    relative_path == requested
+        || relative_path
+            .strip_prefix(requested)
+            .is_some_and(|rest| rest.starts_with(['/', '\\']))
+}
+
 fn project_type_from_api_name(project_type: &str) -> ProjectType {
     match project_type {
         "resourcepack" => ProjectType::ResourcePack,
@@ -2975,6 +3032,7 @@ mod tests {
             get_installed_project_ids_for_instance(
                 &resolved.instance.id,
                 None,
+                None,
                 &state,
             ),
         )
@@ -2985,9 +3043,97 @@ mod tests {
         assert_eq!(ids, ["curseforge:123", "projectA"]);
     }
 
+    /// Browse's installed state has to be target-aware: the launcher installs
+    /// browsed mods into `clientmods/`, so a copy the server pack ships in
+    /// `mods/` must not count as installed for that install. The reverse still
+    /// holds — anything already in `clientmods/` counts, so no duplicate is
+    /// offered.
+    #[tokio::test]
+    async fn installed_ids_can_be_restricted_to_the_client_mods_folder() {
+        let (_temp, state, resolved) = reconciliation_fixture().await;
+        for (project_id, path) in [
+            ("pack-api", "mods/fabric-api.jar"),
+            ("pack-zipped", "mods/zipped.jar.disabled"),
+            ("my-sodium", "clientmods/sodium.jar"),
+            ("my-iris", "clientmods/iris.jar.disabled"),
+            ("pack-resourcepack", "resourcepacks/pack.zip"),
+        ] {
+            let file =
+                insert_test_file(&resolved, &state, project_id, path, "hash", true)
+                    .await;
+            // Every entry is recorded as a plain `mod`, so the filter has to be
+            // driven by where the file actually lives and not by how a row was
+            // labelled when it was written.
+            let entry =
+                insert_test_entry(&resolved, &state, &file, true).await;
+            let mut tx = state.pool.begin().await.unwrap();
+            sqlite::content_rows::upsert_content_provider_ref_in_transaction(
+                &entry.id,
+                &ContentProviderRef::Modrinth {
+                    project_id: crate::state::ModrinthProjectId::new(
+                        project_id,
+                    )
+                    .unwrap(),
+                    version_id: None,
+                },
+                true,
+                &mut tx,
+            )
+            .await
+            .unwrap();
+            tx.commit().await.unwrap();
+        }
+
+        // Historical behaviour: installed in any folder.
+        let mut all = get_installed_project_ids_for_instance(
+            &resolved.instance.id,
+            None,
+            None,
+            &state,
+        )
+        .await
+        .unwrap();
+        all.sort();
+        assert_eq!(
+            all,
+            [
+                "my-iris",
+                "my-sodium",
+                "pack-api",
+                "pack-resourcepack",
+                "pack-zipped"
+            ]
+        );
+
+        // Target-aware: only the launcher-managed folder counts.
+        let client_mod_folders = [ProjectType::ClientMod.get_folder()];
+        let mut client_mods = get_installed_project_ids_for_instance(
+            &resolved.instance.id,
+            None,
+            Some(&client_mod_folders),
+            &state,
+        )
+        .await
+        .unwrap();
+        client_mods.sort();
+        assert_eq!(client_mods, ["my-iris", "my-sodium"]);
+
+        // An empty folder selection reports nothing as installed.
+        assert!(
+            get_installed_project_ids_for_instance(
+                &resolved.instance.id,
+                None,
+                Some(&[]),
+                &state,
+            )
+            .await
+            .unwrap()
+            .is_empty()
+        );
+    }
+
     #[test]
-    fn linked_modpack_ids_stay_provider_qualified() {
-        let modrinth = InstanceLink::ModrinthModpack {
+    fn linked_modpack_ids_stay_provider_qualified() {        let modrinth = InstanceLink::ModrinthModpack {
             project_id: "mr-project".to_string(),
             version_id: "mr-version".to_string(),
         };
@@ -3391,6 +3537,119 @@ mod tests {
             .unwrap()
             .revision,
             revision
+        );
+    }
+
+    #[test]
+    fn path_requests_select_a_folder_or_a_single_file() {
+        // Folder requests match the files inside the folder.
+        assert!(content_path_matches("mods/example.jar", "mods"));
+        assert!(content_path_matches("mods/example.jar", "mods/"));
+        assert!(content_path_matches("clientmods/example.jar", "clientmods"));
+        // Single-file requests keep matching themselves.
+        assert!(content_path_matches("mods/example.jar", "mods/example.jar"));
+        // A narrower request must not drag in the `.disabled` sibling.
+        assert!(!content_path_matches(
+            "clientmods/example.jar.disabled",
+            "clientmods/example.jar"
+        ));
+        assert!(!content_path_matches(
+            "mods/example.jar.bak",
+            "mods/example.jar"
+        ));
+        // Prefixes that do not end on a separator are not children.
+        assert!(!content_path_matches("clientmods/example.jar", "client"));
+        assert!(!content_path_matches("mods-extra/example.jar", "mods"));
+        // Nothing is selected by an empty request.
+        assert!(!content_path_matches("mods/example.jar", ""));
+        assert!(!content_path_matches("mods/example.jar", "/"));
+    }
+
+    #[tokio::test]
+    async fn listing_by_folder_path_returns_clientmods_and_mods_files() {
+        let (_temp, state, resolved) = reconciliation_fixture().await;
+        let instance_dir =
+            state.directories.instance_game_dir(&resolved.instance);
+        std::fs::create_dir_all(&instance_dir).unwrap();
+        insert_test_file(
+            &resolved,
+            &state,
+            "file-client",
+            "clientmods/client.jar",
+            "hash-client",
+            true,
+        )
+        .await;
+        insert_test_file(
+            &resolved,
+            &state,
+            "file-server",
+            "mods/server.jar",
+            "hash-server",
+            true,
+        )
+        .await;
+        insert_test_file(
+            &resolved,
+            &state,
+            "file-pack",
+            "resourcepacks/pack.zip",
+            "hash-pack",
+            true,
+        )
+        .await;
+
+        let client = list_content_by_paths(
+            &resolved.instance.id,
+            &["clientmods".to_string()],
+            Some(CacheBehaviour::CacheOnly),
+            &state,
+        )
+        .await
+        .unwrap();
+        assert_eq!(
+            client
+                .iter()
+                .map(|item| item.file_path.as_str())
+                .collect::<Vec<_>>(),
+            ["clientmods/client.jar"],
+            "asking for the clientmods folder must list the client mods in it"
+        );
+        assert_eq!(client[0].project_type, ProjectType::ClientMod);
+
+        // The server folder keeps returning only its own files.
+        let server = list_content_by_paths(
+            &resolved.instance.id,
+            &["mods".to_string()],
+            Some(CacheBehaviour::CacheOnly),
+            &state,
+        )
+        .await
+        .unwrap();
+        assert_eq!(
+            server
+                .iter()
+                .map(|item| item.file_path.as_str())
+                .collect::<Vec<_>>(),
+            ["mods/server.jar"],
+        );
+        assert_eq!(server[0].project_type, ProjectType::Mod);
+
+        // Single-file requests keep behaving exactly as before.
+        let single = list_content_by_paths(
+            &resolved.instance.id,
+            &["clientmods/client.jar".to_string()],
+            Some(CacheBehaviour::CacheOnly),
+            &state,
+        )
+        .await
+        .unwrap();
+        assert_eq!(
+            single
+                .iter()
+                .map(|item| item.file_path.as_str())
+                .collect::<Vec<_>>(),
+            ["clientmods/client.jar"],
         );
     }
 }

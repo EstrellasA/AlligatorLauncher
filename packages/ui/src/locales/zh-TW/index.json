@@ -2228,9 +2228,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, other {模組}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "模組"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, other {模組}}"
   },
@@ -3666,7 +3663,7 @@
     "message": "複製檔案"
   },
   "drop.symlink_method.copy_desc": {
-    "message": "複製到 Axolotl 目錄"
+    "message": "複製到 ALLIGATORZONE 目錄"
   },
   "drop.symlink_method.symlink_title": {
     "message": "符號連結"
@@ -4284,7 +4281,7 @@
     "message": "缓存"
   },
   "drop.symlink_method.stats_cache_tooltip": {
-    "message": "Axolotl 缓存"
+    "message": "ALLIGATORZONE 缓存"
   },
   "drop.symlink_method.stats_local": {
     "message": "复用"

@@ -1,0 +1,16 @@
+-- Per-instance web map address used by the launcher's map page and its sidebar
+-- entry (`apps/app-frontend/src/pages/ServerMap.vue`).
+--
+-- Three states are intentionally distinguishable:
+--
+--   * NULL       = never configured. The frontend falls back to the built-in
+--                  default in `apps/app-frontend/src/server-config.ts`, so an
+--                  install that upgrades to this version keeps the map it has
+--                  always had instead of silently losing it.
+--   * ''         = explicitly hidden. The map page and its nav entry are
+--                  disabled; the default must NOT be substituted.
+--   * 'http...'  = the map address to embed.
+--
+-- Purely additive: existing rows get NULL, which means "use the built-in
+-- default", and no existing data is touched.
+ALTER TABLE instances ADD COLUMN web_map_url TEXT NULL;

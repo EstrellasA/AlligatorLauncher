@@ -1859,9 +1859,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mod} few {Mody} other {Modów}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Modyfikacje"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mod} few {mody} other {modów}}"
   },

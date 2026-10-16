@@ -314,7 +314,7 @@ const messages = defineMessages({
     portHint: {
         id: 'app.multiplayer.hongshi.port-hint',
         defaultMessage:
-            'Open a world to LAN. Axolotl will detect the port automatically; external games can use a manual port.',
+            'Open a world to LAN. ALLIGATORZONE will detect the port automatically; external games can use a manual port.',
     },
     node: { id: 'app.multiplayer.hongshi.node', defaultMessage: 'Relay node' },
     autoNode: { id: 'app.multiplayer.hongshi.node-auto', defaultMessage: 'Auto — lowest latency' },
@@ -400,8 +400,8 @@ const {
     updateTerracotta,
 } = useMultiplayerSession()
 
-const providerStorageKey = 'axolotl-multiplayer-provider'
-const nodeStorageKey = 'axolotl-hongshi-node'
+const providerStorageKey = 'ALLIGATORZONE-multiplayer-provider'
+const nodeStorageKey = 'ALLIGATORZONE-hongshi-node'
 const route = useRoute()
 const storedProvider =
     typeof route.query.provider === 'string'

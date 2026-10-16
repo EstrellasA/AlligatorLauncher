@@ -10,6 +10,13 @@ export type GameInstance = {
     icon_path?: string
     symlink_target?: string | null
     game_dir_override?: string | null
+    /**
+     * Web map address embedded by the map page.
+     *
+     * `null`/absent = never configured, so the built-in default from
+     * `server-config.ts` applies; `''` = explicitly hidden.
+     */
+    web_map_url?: string | null
     linked_launcher?: string | null
     linked_launcher_root?: string | null
     linked_dot_minecraft?: string | null
@@ -147,7 +154,13 @@ type ContentFile = {
     origin_provider: 'modrinth' | 'curseforge' | 'mcarchive' | null
 }
 
-type ContentFileProjectType = 'mod' | 'datapack' | 'resourcepack' | 'shaderpack' | 'schematic'
+type ContentFileProjectType =
+    | 'mod'
+    | 'clientmod'
+    | 'datapack'
+    | 'resourcepack'
+    | 'shaderpack'
+    | 'schematic'
 
 type CacheBehaviour =
     // Serve expired data. If fetch fails / launcher is offline, errors are ignored
@@ -221,7 +234,6 @@ type AppSettings = {
     transparent_background_blur: boolean
     auto_hide_downloads_button: boolean
     worlds_in_home: boolean
-    home_layout: 'standard' | 'minimal'
     minimal_home_instance_id: string | null
     close_behavior: 'ask' | 'close' | 'lightweight'
     home_widgets: import('@/components/home/home-dashboard').HomeDashboardConfig | null

@@ -15,7 +15,12 @@
             :dependency-link-creator="createDependencyLink"
         >
             <template #headerActions>
+                <!--
+                    Withheld when the page was opened from an instance's content
+                    list: the item is already part of that instance.
+                -->
                 <Button
+                    v-if="showInstall"
                     type="colored"
                     color="brand"
                     :disabled="installing || (installed && installedVersion === version.id)"
@@ -136,6 +141,12 @@ const props = defineProps<{
     versions: Labrinth.Versions.v3.Version[]
     members: Labrinth.Projects.v3.TeamMember[]
     install: (version: string | null) => void
+    /**
+     * Whether this page may offer an install action. `false` when it was opened
+     * from an instance's content list, where the item is already part of that
+     * instance.
+     */
+    showInstall?: boolean
     installed: boolean
     installing: boolean
     installedVersion: string

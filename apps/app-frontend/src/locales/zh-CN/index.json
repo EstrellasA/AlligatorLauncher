@@ -1,15 +1,60 @@
 {
-  "app.screenshots.selection.select-group": {
-    "message": "选择“{group}”中的所有截图"
-  },
-  "app.screenshots.selection.hint": {
-    "message": "使用复选框或 Ctrl/Command + 单击选择，Shift + 单击选择连续区间，或从空白处拖动框选。"
-  },
-  "app.settings.environment-variables.invalid-format": {
-    "message": "请使用 NAME=value 格式，以空格分隔。名称和等号不能为空；值可以为空，也可以包含更多等号。"
-  },
   "app.account.signed-in-as": {
     "message": "登录身份："
+  },
+  "app.action-bar.active-backups": {
+    "message": "正在进行的备份任务"
+  },
+  "app.action-bar.announcements": {
+    "message": "公告"
+  },
+  "app.action-bar.backup": {
+    "message": "正在备份"
+  },
+  "app.action-bar.backup-stage": {
+    "message": "处理中：{stage}"
+  },
+  "app.action-bar.backup-stage.applying": {
+    "message": "正在应用文件"
+  },
+  "app.action-bar.backup-stage.hashing": {
+    "message": "正在计算哈希"
+  },
+  "app.action-bar.backup-stage.materializing": {
+    "message": "正在应用文件"
+  },
+  "app.action-bar.backup-stage.queued": {
+    "message": "排队中"
+  },
+  "app.action-bar.backup-stage.saving": {
+    "message": "正在保存备份"
+  },
+  "app.action-bar.backup-stage.scanning": {
+    "message": "正在扫描文件"
+  },
+  "app.action-bar.backup-stage.validating": {
+    "message": "正在验证备份"
+  },
+  "app.action-bar.backup-task.backup": {
+    "message": "备份"
+  },
+  "app.action-bar.backup-task.cancelled": {
+    "message": "{operation}已取消"
+  },
+  "app.action-bar.backup-task.completed": {
+    "message": "{operation}已完成"
+  },
+  "app.action-bar.backup-task.failed": {
+    "message": "{operation}失败"
+  },
+  "app.action-bar.backup-task.repository-move": {
+    "message": "备份仓库移动"
+  },
+  "app.action-bar.backup-task.restore": {
+    "message": "备份恢复"
+  },
+  "app.action-bar.backup-task.restore-preview": {
+    "message": "恢复分析"
   },
   "app.action-bar.downloading-java": {
     "message": "正在下载 Java {version}"
@@ -61,69 +106,6 @@
   },
   "app.action-bar.downloads.view-history": {
     "message": "查看下载历史"
-  },
-  "app.action-bar.active-backups": {
-    "message": "正在进行的备份任务"
-  },
-  "app.action-bar.backup": {
-    "message": "正在备份"
-  },
-  "app.action-bar.restore": {
-    "message": "正在恢复备份"
-  },
-  "app.action-bar.restore-preview": {
-    "message": "正在分析恢复变更"
-  },
-  "app.action-bar.repository-move": {
-    "message": "正在移动备份仓库"
-  },
-  "app.action-bar.repository": {
-    "message": "备份仓库"
-  },
-  "app.action-bar.backup-task.completed": {
-    "message": "{operation}已完成"
-  },
-  "app.action-bar.backup-task.backup": {
-    "message": "备份"
-  },
-  "app.action-bar.backup-task.restore": {
-    "message": "备份恢复"
-  },
-  "app.action-bar.backup-task.restore-preview": {
-    "message": "恢复分析"
-  },
-  "app.action-bar.backup-task.repository-move": {
-    "message": "备份仓库移动"
-  },
-  "app.action-bar.backup-task.cancelled": {
-    "message": "{operation}已取消"
-  },
-  "app.action-bar.backup-task.failed": {
-    "message": "{operation}失败"
-  },
-  "app.action-bar.backup-stage": {
-    "message": "处理中：{stage}"
-  },
-  "app.action-bar.backup-stage.queued": {
-    "message": "排队中"
-  },
-  "app.action-bar.backup-stage.scanning": {
-    "message": "正在扫描文件"
-  },
-  "app.action-bar.backup-stage.hashing": {
-    "message": "正在计算哈希"
-  },
-  "app.action-bar.backup-stage.saving": {
-    "message": "正在保存备份"
-  },
-  "app.action-bar.backup-stage.validating": {
-    "message": "正在验证备份"
-  },
-  "app.action-bar.backup-stage.materializing": {
-    "message": "正在应用文件"
-  },
-  "app.action-bar.backup-stage.applying": {
-    "message": "正在应用文件"
   },
   "app.action-bar.exporting-modpack": {
     "message": "正在导出整合包"
@@ -245,9 +227,6 @@
   "app.action-bar.no-instances-running": {
     "message": "没有运行中的实例"
   },
-  "app.action-bar.announcements": {
-    "message": "公告"
-  },
   "app.action-bar.notifications": {
     "message": "通知"
   },
@@ -268,6 +247,18 @@
   },
   "app.action-bar.reload-to-update": {
     "message": "重新加载以更新"
+  },
+  "app.action-bar.repository": {
+    "message": "备份仓库"
+  },
+  "app.action-bar.repository-move": {
+    "message": "正在移动备份仓库"
+  },
+  "app.action-bar.restore": {
+    "message": "正在恢复备份"
+  },
+  "app.action-bar.restore-preview": {
+    "message": "正在分析恢复变更"
   },
   "app.action-bar.show-more-running-instances": {
     "message": "显示更多运行中的实例"
@@ -558,10 +549,10 @@
     "message": "隐藏至托盘"
   },
   "app.appearance-settings.close-behavior.title": {
-    "message": "关闭 Axolotl Launcher 的方式"
+    "message": "关闭 ALLIGATORZONE 的方式"
   },
   "app.appearance-settings.color-theme.description": {
-    "message": "为 Axolotl Launcher 选择偏好的色彩主题。"
+    "message": "为 ALLIGATORZONE 选择偏好的色彩主题。"
   },
   "app.appearance-settings.color-theme.title": {
     "message": "色彩主题"
@@ -674,12 +665,6 @@
   "app.appearance-settings.fonts.ui-preview-sample": {
     "message": "字体预览：山川异域，风月同天。0123456789"
   },
-  "app.appearance-settings.hide-nametag.description": {
-    "message": "在皮肤页面中禁用你玩家头顶上的名牌。"
-  },
-  "app.appearance-settings.hide-nametag.title": {
-    "message": "隐藏名牌"
-  },
   "app.appearance-settings.hidden-nav-items.description": {
     "message": "选择哪些固定导航按钮保持可见。隐藏后仍可通过网址或快捷键访问对应页面。"
   },
@@ -700,6 +685,12 @@
   },
   "app.appearance-settings.hidden-nav-items.title": {
     "message": "导航栏项目"
+  },
+  "app.appearance-settings.hide-nametag.description": {
+    "message": "在皮肤页面中禁用你玩家头顶上的名牌。"
+  },
+  "app.appearance-settings.hide-nametag.title": {
+    "message": "隐藏名牌"
   },
   "app.appearance-settings.home-layout.description": {
     "message": "在信息主页和专注的实例启动页之间选择。"
@@ -742,6 +733,15 @@
   },
   "app.appearance-settings.page-transitions.title": {
     "message": "页面切换过渡动画"
+  },
+  "app.appearance-settings.sections.advanced-interface": {
+    "message": "高级界面"
+  },
+  "app.appearance-settings.sections.content-behavior": {
+    "message": "内容行为"
+  },
+  "app.appearance-settings.sections.home-navigation": {
+    "message": "主页与导航"
   },
   "app.appearance-settings.select-option": {
     "message": "选择一个选项"
@@ -811,6 +811,30 @@
   },
   "app.auth.sign-in-browser": {
     "message": "请在刚刚打开的浏览器窗口中登录以继续。"
+  },
+  "app.backup-exit.body": {
+    "message": "仍有 {count} 个备份任务在运行。请保持启动器打开，或将其隐藏到托盘以等待任务完成。"
+  },
+  "app.backup-exit.cancel": {
+    "message": "取消任务并退出"
+  },
+  "app.backup-exit.force": {
+    "message": "强制退出"
+  },
+  "app.backup-exit.repository-move-body": {
+    "message": "备份文件仓库正在移动。此任务无法取消或强制终止，请保持启动器打开，或将其隐藏到托盘直至任务完成。"
+  },
+  "app.backup-exit.return": {
+    "message": "返回启动器"
+  },
+  "app.backup-exit.timeout": {
+    "message": "等待备份任务停止超时。"
+  },
+  "app.backup-exit.title": {
+    "message": "备份任务仍在运行"
+  },
+  "app.backup-exit.tray": {
+    "message": "隐藏到托盘"
   },
   "app.browse.add": {
     "message": "添加"
@@ -987,34 +1011,10 @@
     "message": "记住我的选择"
   },
   "app.close-launcher.title": {
-    "message": "选择关闭 Axolotl Launcher 的方式"
+    "message": "选择关闭 ALLIGATORZONE 的方式"
   },
   "app.close-launcher.tray": {
     "message": "隐藏至托盘"
-  },
-  "app.backup-exit.title": {
-    "message": "备份任务仍在运行"
-  },
-  "app.backup-exit.body": {
-    "message": "仍有 {count} 个备份任务在运行。请保持启动器打开，或将其隐藏到托盘以等待任务完成。"
-  },
-  "app.backup-exit.repository-move-body": {
-    "message": "备份文件仓库正在移动。此任务无法取消或强制终止，请保持启动器打开，或将其隐藏到托盘直至任务完成。"
-  },
-  "app.backup-exit.return": {
-    "message": "返回启动器"
-  },
-  "app.backup-exit.tray": {
-    "message": "隐藏到托盘"
-  },
-  "app.backup-exit.cancel": {
-    "message": "取消任务并退出"
-  },
-  "app.backup-exit.force": {
-    "message": "强制退出"
-  },
-  "app.backup-exit.timeout": {
-    "message": "等待备份任务停止超时。"
   },
   "app.content-favorites.add": {
     "message": "添加到收藏夹"
@@ -1968,7 +1968,7 @@
     "message": "调试信息"
   },
   "app.error.directory-description": {
-    "message": "Axolotl Launcher 无法迁移到所选目录。请联系支持获取帮助，或取消目录更改。"
+    "message": "ALLIGATORZONE 无法迁移到所选目录。请联系支持获取帮助，或取消目录更改。"
   },
   "app.error.directory-title": {
     "message": "无法更改应用目录"
@@ -1986,7 +1986,7 @@
     "message": "与 Microsoft、Xbox 或 Minecraft 服务的连接被拒绝。这些服务可能被 hosts 文件阻止，请参考支持文章进行修复。"
   },
   "app.error.loader-description": {
-    "message": "Axolotl Launcher 无法找到此实例所需的加载器版本。"
+    "message": "ALLIGATORZONE 无法找到此实例所需的加载器版本。"
   },
   "app.error.loader-fix": {
     "message": "请使用下方按钮修复此实例。"
@@ -2004,7 +2004,7 @@
     "message": "登录 Minecraft"
   },
   "app.error.network-description": {
-    "message": "Axolotl Launcher 连接 Microsoft 服务时遇到问题，这通常是网络连接不佳造成的。请重试；如果问题持续存在，请参考支持文章。"
+    "message": "ALLIGATORZONE 连接 Microsoft 服务时遇到问题，这通常是网络连接不佳造成的。请重试；如果问题持续存在，请参考支持文章。"
   },
   "app.error.network-issues": {
     "message": "网络问题"
@@ -2025,7 +2025,7 @@
     "message": "正在使用 PC Game Pass、从基岩版转来，或刚刚购买游戏？"
   },
   "app.error.permissions-description": {
-    "message": "Axolotl Launcher 无法写入所选目录。请调整目录权限后重试，或取消目录更改。"
+    "message": "ALLIGATORZONE 无法写入所选目录。请调整目录权限后重试，或取消目录更改。"
   },
   "app.error.permissions-title": {
     "message": "更改目录权限"
@@ -2043,7 +2043,7 @@
     "message": "空间不足"
   },
   "app.error.state-database-newer-description": {
-    "message": "数据库最后一次是被较新版本的 Axolotl 打开的，它将其升级为当前版本无法读取的格式。你的实例与设置仍然保留。"
+    "message": "数据库最后一次是被较新版本的 ALLIGATORZONE 打开的，它将其升级为当前版本无法读取的格式。你的实例与设置仍然保留。"
   },
   "app.error.state-database-newer-fix-downgrade": {
     "message": "如果你只是在试用构建、并非日常使用启动器，可以改用 scripts/axolotl/downgrade-app-db.mjs 将数据库回退。"
@@ -2052,10 +2052,10 @@
     "message": "要让启动器重新启动，可以任选其一："
   },
   "app.error.state-database-newer-fix-update": {
-    "message": "重新安装较新版本的 Axolotl——它可以直接打开这个数据库。"
+    "message": "重新安装较新版本的 ALLIGATORZONE——它可以直接打开这个数据库。"
   },
   "app.error.state-description": {
-    "message": "Axolotl Launcher 未能正确加载，可能有文件损坏或缺少必要文件。"
+    "message": "ALLIGATORZONE 未能正确加载，可能有文件损坏或缺少必要文件。"
   },
   "app.error.state-fix-internet": {
     "message": "检查网络连接，然后重启应用。"
@@ -2067,7 +2067,7 @@
     "message": "重新下载并安装应用。"
   },
   "app.error.state-title": {
-    "message": "Axolotl Launcher 初始化失败"
+    "message": "ALLIGATORZONE 初始化失败"
   },
   "app.error.support-article": {
     "message": "支持文章"
@@ -2480,14 +2480,14 @@
   "app.home.servers.linked-toast": {
     "message": "已关联到本地服务器“{name}”"
   },
-  "app.home.servers.more-options": {
-    "message": "更多选项"
-  },
   "app.home.servers.local": {
     "message": "本地"
   },
   "app.home.servers.local-server-not-ready": {
     "message": "关联的本地服务器未能在超时前启动，请查看它的控制台日志后重试。"
+  },
+  "app.home.servers.more-options": {
+    "message": "更多选项"
   },
   "app.home.servers.offline": {
     "message": "离线"
@@ -2524,12 +2524,6 @@
   },
   "app.home.shortcut.server.players-online": {
     "message": "{count} 人在线"
-  },
-  "app.home.widgets.size": {
-    "message": "尺寸 {size}"
-  },
-  "app.home.widgets.unavailable": {
-    "message": "内容已不可用"
   },
   "app.home.widgets.add": {
     "message": "添加小组件"
@@ -2659,6 +2653,12 @@
   },
   "app.home.widgets.server-description": {
     "message": "选择一个服务器，创建独立的快速加入入口。"
+  },
+  "app.home.widgets.size": {
+    "message": "尺寸 {size}"
+  },
+  "app.home.widgets.unavailable": {
+    "message": "内容已不可用"
   },
   "app.home.widgets.world": {
     "message": "单个世界入口"
@@ -3467,8 +3467,53 @@
   "app.instances.add-content": {
     "message": "添加内容"
   },
+  "app.instances.batch-edit-groups.add": {
+    "message": "添加"
+  },
+  "app.instances.batch-edit-groups.add-to-group-title": {
+    "message": "添加实例到「{groupName}」"
+  },
+  "app.instances.batch-edit-groups.added": {
+    "message": "已添加"
+  },
+  "app.instances.batch-edit-groups.cancel": {
+    "message": "取消"
+  },
+  "app.instances.batch-edit-groups.create": {
+    "message": "创建分组"
+  },
+  "app.instances.batch-edit-groups.group-name": {
+    "message": "分组名称"
+  },
+  "app.instances.batch-edit-groups.group-name-placeholder": {
+    "message": "输入分组名称"
+  },
   "app.instances.batch-edit-groups.header": {
     "message": "创建分组"
+  },
+  "app.instances.batch-edit-groups.load-failed": {
+    "message": "无法加载实例，请重试。"
+  },
+  "app.instances.batch-edit-groups.loading": {
+    "message": "正在加载实例…"
+  },
+  "app.instances.batch-edit-groups.membership-failed": {
+    "message": "分组已创建，但实例关系未能保存。请重试以完成保存。"
+  },
+  "app.instances.batch-edit-groups.no-instances-found": {
+    "message": "未找到实例"
+  },
+  "app.instances.batch-edit-groups.retry": {
+    "message": "重试"
+  },
+  "app.instances.batch-edit-groups.save-changes": {
+    "message": "保存"
+  },
+  "app.instances.batch-edit-groups.save-failed": {
+    "message": "无法保存分组。已保留你的修改，请重试。"
+  },
+  "app.instances.batch-edit-groups.search-instance": {
+    "message": "搜索实例"
   },
   "app.instances.copy-path": {
     "message": "复制路径"
@@ -3485,6 +3530,27 @@
   "app.instances.group-by": {
     "message": "分组方式"
   },
+  "app.instances.group.add-to-group": {
+    "message": "添加到分组"
+  },
+  "app.instances.group.collapse": {
+    "message": "折叠分组"
+  },
+  "app.instances.group.delete-description": {
+    "message": "此分组中的实例将被取消分组。"
+  },
+  "app.instances.group.delete-group": {
+    "message": "删除分组"
+  },
+  "app.instances.group.edit-name": {
+    "message": "编辑分组名称"
+  },
+  "app.instances.group.empty": {
+    "message": "拖放实例到此处添加。"
+  },
+  "app.instances.group.expand": {
+    "message": "展开分组"
+  },
   "app.instances.group.game-version": {
     "message": "游戏版本"
   },
@@ -3494,47 +3560,11 @@
   "app.instances.group.loader": {
     "message": "加载器"
   },
-  "app.instances.group.none": {
-    "message": "无"
-  },
-  "app.instances.group.ungrouped": {
-    "message": "无分组"
-  },
-  "app.instances.group.pinned": {
-    "message": "已置顶"
-  },
-  "app.instances.group.empty": {
-    "message": "拖放实例到此处添加。"
-  },
-  "app.instances.group.edit-name": {
-    "message": "编辑分组名称"
-  },
-  "app.instances.group.delete-group": {
-    "message": "删除分组"
-  },
-  "app.instances.group.delete-description": {
-    "message": "此分组中的实例将被取消分组。"
-  },
-  "app.instances.group.move-up": {
-    "message": "上移分组"
-  },
   "app.instances.group.move-down": {
     "message": "下移分组"
   },
-  "app.instances.group.add-to-group": {
-    "message": "添加到分组"
-  },
-  "app.instances.group.new-instance": {
-    "message": "新建实例"
-  },
-  "app.instances.group.collapse": {
-    "message": "折叠分组"
-  },
-  "app.instances.group.expand": {
-    "message": "展开分组"
-  },
-  "app.instances.group.rename-group": {
-    "message": "重命名分组"
+  "app.instances.group.move-up": {
+    "message": "上移分组"
   },
   "app.instances.group.name-empty": {
     "message": "分组名称不能为空。"
@@ -3542,68 +3572,20 @@
   "app.instances.group.name-too-long": {
     "message": "分组名称不能超过 {maxLength} 个字符。"
   },
-  "app.instances.batch-edit-groups.add-to-group-title": {
-    "message": "添加实例到「{groupName}」"
+  "app.instances.group.new-instance": {
+    "message": "新建实例"
   },
-  "app.instances.batch-edit-groups.group-name": {
-    "message": "分组名称"
+  "app.instances.group.none": {
+    "message": "无"
   },
-  "app.instances.batch-edit-groups.group-name-placeholder": {
-    "message": "输入分组名称"
+  "app.instances.group.pinned": {
+    "message": "已置顶"
   },
-  "app.instances.batch-edit-groups.search-instance": {
-    "message": "搜索实例"
+  "app.instances.group.rename-group": {
+    "message": "重命名分组"
   },
-  "app.instances.batch-edit-groups.no-instances-found": {
-    "message": "未找到实例"
-  },
-  "app.instances.batch-edit-groups.add": {
-    "message": "添加"
-  },
-  "app.instances.batch-edit-groups.added": {
-    "message": "已添加"
-  },
-  "app.instances.batch-edit-groups.cancel": {
-    "message": "取消"
-  },
-  "app.instances.batch-edit-groups.create": {
-    "message": "创建分组"
-  },
-  "app.instances.batch-edit-groups.save-changes": {
-    "message": "保存"
-  },
-  "app.instances.batch-edit-groups.loading": {
-    "message": "正在加载实例…"
-  },
-  "app.instances.batch-edit-groups.load-failed": {
-    "message": "无法加载实例，请重试。"
-  },
-  "app.instances.batch-edit-groups.retry": {
-    "message": "重试"
-  },
-  "app.instances.batch-edit-groups.save-failed": {
-    "message": "无法保存分组。已保留你的修改，请重试。"
-  },
-  "app.instances.batch-edit-groups.membership-failed": {
-    "message": "分组已创建，但实例关系未能保存。请重试以完成保存。"
-  },
-  "app.library.group.new": {
-    "message": "新建分组"
-  },
-  "app.library.selection.new-group": {
-    "message": "新建分组"
-  },
-  "app.library.selection.remove-from-group": {
-    "message": "移出分组"
-  },
-  "app.library.context-menu.pin-instance": {
-    "message": "在实例库中置顶"
-  },
-  "app.library.context-menu.unpin-instance": {
-    "message": "取消实例库置顶"
-  },
-  "app.library.context-menu.remove-from-group": {
-    "message": "移出分组"
+  "app.instances.group.ungrouped": {
+    "message": "无分组"
   },
   "app.instances.pin-to-home": {
     "message": "固定到主页"
@@ -3664,6 +3646,45 @@
   },
   "app.instances.view-instance": {
     "message": "查看实例"
+  },
+  "app.java-arguments.gc.reason.ample-memory-high-cores": {
+    "message": "内存充足且 CPU 核心数高"
+  },
+  "app.java-arguments.gc.reason.below-zgc-recommendation": {
+    "message": "资源未达到 ZGC 推荐配置"
+  },
+  "app.java-arguments.gc.reason.heavy-instance": {
+    "message": "重型实例 ({loader}, {mods} mods)"
+  },
+  "app.java-arguments.gc.reason.high-resources": {
+    "message": "资源高 ({memory}GB, {cores}核)"
+  },
+  "app.java-arguments.gc.reason.insufficient-cpu": {
+    "message": "CPU 资源不足 ({cores}核/{threads}线程)"
+  },
+  "app.java-arguments.gc.reason.insufficient-memory": {
+    "message": "内存不足 ({allocated}GB < 4GB)"
+  },
+  "app.java-arguments.gc.reason.java-too-old": {
+    "message": "Java 太旧，Shenandoah/ZGC 不可靠"
+  },
+  "app.java-arguments.gc.reason.java-version-unknown": {
+    "message": "Java 版本未知"
+  },
+  "app.java-arguments.gc.reason.large-modpack-low-memory": {
+    "message": "大型 ModPack ({mods} mods) 但资源不足 ({allocated}GB < 8GB)"
+  },
+  "app.java-arguments.gc.reason.lightweight-instance": {
+    "message": "轻量实例 ({loader}, {mods} mods)"
+  },
+  "app.java-arguments.gc.reason.low-resources": {
+    "message": "资源低 ({memory}GB, {cores}核)"
+  },
+  "app.java-arguments.gc.reason.medium-resources": {
+    "message": "资源中 ({memory}GB, {cores}核)"
+  },
+  "app.java-arguments.gc.reason.zgc-non-generational": {
+    "message": "Java < 21，ZGC 非分代模式性能不佳"
   },
   "app.java-arguments.presets.applied": {
     "message": "已应用"
@@ -4227,7 +4248,7 @@
     "message": "红石"
   },
   "app.lab.recipe-generator.copyright.disclaimer-body": {
-    "message": "Minecraft 素材版权归 Mojang Studios / Microsoft 所有，仅用于识别兼容的游戏内容。Axolotl Launcher 与 Mojang Studios 或 Microsoft 无关联，也未获得其认可。"
+    "message": "Minecraft 素材版权归 Mojang Studios / Microsoft 所有，仅用于识别兼容的游戏内容。ALLIGATORZONE 与 Mojang Studios 或 Microsoft 无关联，也未获得其认可。"
   },
   "app.lab.recipe-generator.copyright.disclaimer-heading": {
     "message": "非官方工具"
@@ -5205,13 +5226,13 @@
     "message": "复制 /tp"
   },
   "app.lab.seed-map.copyright.disclaimer-body": {
-    "message": "Minecraft 是 Mojang Synergies AB 的商标。Axolotl Launcher 与 Mojang 或 MinecraftSearch 均无隶属关系，也未获得其认可。"
+    "message": "Minecraft 是 Mojang Synergies AB 的商标。ALLIGATORZONE 与 Mojang 或 MinecraftSearch 均无隶属关系，也未获得其认可。"
   },
   "app.lab.seed-map.copyright.disclaimer-heading": {
     "message": "非官方工具"
   },
   "app.lab.seed-map.copyright.engine-body": {
-    "message": "群系、地形、出生点与结构数据由 cubiomes 和 Axolotl 原生集成在本地生成。cubiomes 版权所有 (c) 2020 Cubitect，并依据 MIT 许可证提供。"
+    "message": "群系、地形、出生点与结构数据由 cubiomes 和 ALLIGATORZONE 原生集成在本地生成。cubiomes 版权所有 (c) 2020 Cubitect，并依据 MIT 许可证提供。"
   },
   "app.lab.seed-map.copyright.engine-heading": {
     "message": "本地地图引擎"
@@ -5630,11 +5651,29 @@
   "app.lab.tool-count-plural": {
     "message": "{count} 个工具"
   },
+  "app.library.context-menu.pin-instance": {
+    "message": "在实例库中置顶"
+  },
+  "app.library.context-menu.remove-from-group": {
+    "message": "移出分组"
+  },
+  "app.library.context-menu.unpin-instance": {
+    "message": "取消实例库置顶"
+  },
   "app.library.create-instance": {
     "message": "创建新实例"
   },
+  "app.library.group.new": {
+    "message": "新建分组"
+  },
   "app.library.no-instances": {
     "message": "未找到实例"
+  },
+  "app.library.selection.new-group": {
+    "message": "新建分组"
+  },
+  "app.library.selection.remove-from-group": {
+    "message": "移出分组"
   },
   "app.library.tabs.all-instances": {
     "message": "全部实例"
@@ -5687,18 +5726,6 @@
   "app.log-share.ai.queued-front": {
     "message": "排队中，正在等待空闲槽位"
   },
-  "app.log-share.ai.thinking": {
-    "message": "思考中…"
-  },
-  "app.log-share.ai.tool": {
-    "message": "正在使用工具：{name}"
-  },
-  "app.log-share.ai.tool-result": {
-    "message": "已收到工具结果"
-  },
-  "app.log-share.ai.working": {
-    "message": "正在使用 LogAgent 分析…"
-  },
   "app.log-share.ai.root-cause": {
     "message": "核心根因"
   },
@@ -5708,8 +5735,20 @@
   "app.log-share.ai.tab": {
     "message": "LogAgent 深度分析"
   },
+  "app.log-share.ai.thinking": {
+    "message": "思考中…"
+  },
+  "app.log-share.ai.tool": {
+    "message": "正在使用工具：{name}"
+  },
+  "app.log-share.ai.tool-result": {
+    "message": "已收到工具结果"
+  },
   "app.log-share.ai.unknown-tool": {
     "message": "工具"
+  },
+  "app.log-share.ai.working": {
+    "message": "正在使用 LogAgent 分析…"
   },
   "app.log-share.settings.ai-source": {
     "message": "AI 分析来源"
@@ -5783,9 +5822,6 @@
   "app.log-share.shared-logs.truncated": {
     "message": "已截断"
   },
-  "app.log-share.summary.loading": {
-    "message": "正在加载结构化摘要…"
-  },
   "app.log-share.summary.empty": {
     "message": "LogShare 未返回这些日志的结构化摘要。"
   },
@@ -5794,6 +5830,9 @@
   },
   "app.log-share.summary.information": {
     "message": "信息"
+  },
+  "app.log-share.summary.loading": {
+    "message": "正在加载结构化摘要…"
   },
   "app.log-share.summary.no-storage": {
     "message": "启用不落盘模式时无法获取结构化摘要。"
@@ -6170,6 +6209,9 @@
   "app.multiplayer.hongshi.cached": {
     "message": "（缓存）"
   },
+  "app.multiplayer.hongshi.cancel": {
+    "message": "取消"
+  },
   "app.multiplayer.hongshi.closed": {
     "message": "红石联机 2 房间已关闭。重新创建后会获得新的联机地址。"
   },
@@ -6182,35 +6224,29 @@
   "app.multiplayer.hongshi.detected-port": {
     "message": "{instance} — 端口 {port}"
   },
-  "app.multiplayer.hongshi.cancel": {
-    "message": "取消"
-  },
-  "app.multiplayer.hongshi.no-nodes": {
-    "message": "当前没有已发布的中转节点，请刷新列表后重试。"
-  },
   "app.multiplayer.hongshi.error.build-unavailable": {
     "message": "适用于当前设备的红石联机 2 内核暂未发布，请稍后重试。"
-  },
-  "app.multiplayer.hongshi.error.node-list": {
-    "message": "无法获取中转节点，请检查网络并刷新列表。"
-  },
-  "app.multiplayer.hongshi.error.node-unavailable": {
-    "message": "中转节点未能创建房间，请刷新节点列表或选择其他节点。"
-  },
-  "app.multiplayer.hongshi.error.invalid-port": {
-    "message": "请输入 1 到 65535 之间的本地端口。"
   },
   "app.multiplayer.hongshi.error.install": {
     "message": "无法安装红石联机 2 内核，请检查网络后重试。"
   },
-  "app.multiplayer.hongshi.error.kernel-start": {
-    "message": "红石联机 2 内核未能创建房间，请重试或打开日志。"
+  "app.multiplayer.hongshi.error.invalid-port": {
+    "message": "请输入 1 到 65535 之间的本地端口。"
   },
   "app.multiplayer.hongshi.error.kernel-exit": {
     "message": "红石联机 2 内核意外退出，请重新创建房间或打开日志。"
   },
   "app.multiplayer.hongshi.error.kernel-output": {
     "message": "红石联机 2 内核返回了无效地址或输出，请打开日志查看详情。"
+  },
+  "app.multiplayer.hongshi.error.kernel-start": {
+    "message": "红石联机 2 内核未能创建房间，请重试或打开日志。"
+  },
+  "app.multiplayer.hongshi.error.node-list": {
+    "message": "无法获取中转节点，请检查网络并刷新列表。"
+  },
+  "app.multiplayer.hongshi.error.node-unavailable": {
+    "message": "中转节点未能创建房间，请刷新节点列表或选择其他节点。"
   },
   "app.multiplayer.hongshi.error.unknown": {
     "message": "无法创建红石联机 2 房间，请重试或打开日志。"
@@ -6220,6 +6256,9 @@
   },
   "app.multiplayer.hongshi.manual-port": {
     "message": "手动输入端口"
+  },
+  "app.multiplayer.hongshi.no-nodes": {
+    "message": "当前没有已发布的中转节点，请刷新列表后重试。"
   },
   "app.multiplayer.hongshi.node": {
     "message": "中转节点"
@@ -6454,6 +6493,9 @@
   },
   "app.navigation.worlds": {
     "message": "世界"
+  },
+  "app.notification.error-occurred": {
+    "message": "发生错误"
   },
   "app.notification.export-error-logs": {
     "message": "导出错误日志"
@@ -6741,10 +6783,10 @@
     "message": "浏览时直接翻译 Modrinth 项目的标题、摘要和介绍。保留原文、双语同屏，或者让译文站 C 位，都由你决定。"
   },
   "app.onboarding.translation.title": {
-    "message": "翻译，是 Axolotl 的拿手活"
+    "message": "翻译，是 ALLIGATORZONE 的拿手活"
   },
   "app.onboarding.updates.description": {
-    "message": "决定 Axolotl 何时检查更新，以及是否替你安装。"
+    "message": "决定 ALLIGATORZONE 何时检查更新，以及是否替你安装。"
   },
   "app.onboarding.updates.title": {
     "message": "保持在线"
@@ -6777,7 +6819,7 @@
     "message": "Discord 运行时显示你当前使用启动器或游玩的状态。"
   },
   "app.privacy-consent.intro": {
-    "message": "选择 Axolotl 可以发送或展示的内容。确认前不会发送任何遥测。"
+    "message": "选择 ALLIGATORZONE 可以发送或展示的内容。确认前不会发送任何遥测。"
   },
   "app.privacy-consent.privacy-policy": {
     "message": "阅读隐私政策"
@@ -6959,6 +7001,12 @@
   "app.project.versions.start-server": {
     "message": "开服"
   },
+  "app.remote-announcements.center-title": {
+    "message": "公告"
+  },
+  "app.remote-announcements.empty": {
+    "message": "暂无公告"
+  },
   "app.remote-announcements.preview-action": {
     "message": "访问官网"
   },
@@ -6970,12 +7018,6 @@
   },
   "app.remote-announcements.preview-title": {
     "message": "公告样式预览"
-  },
-  "app.remote-announcements.center-title": {
-    "message": "公告"
-  },
-  "app.remote-announcements.empty": {
-    "message": "暂无公告"
   },
   "app.remote-announcements.read-all": {
     "message": "将所有公告标为已读"
@@ -7076,9 +7118,6 @@
   "app.screenshots.group.yesterday": {
     "message": "昨天"
   },
-  "app.screenshots.skipped-folders": {
-    "message": "已跳过 {count} 个无法访问的实例文件夹"
-  },
   "app.screenshots.heading": {
     "message": "截图"
   },
@@ -7118,11 +7157,17 @@
   "app.screenshots.selection.global-export-filename": {
     "message": "Modrinth 截图.zip"
   },
+  "app.screenshots.selection.hint": {
+    "message": "使用复选框或 Ctrl/Command + 单击选择，Shift + 单击选择连续区间，或从空白处拖动框选。"
+  },
   "app.screenshots.selection.instance-export-filename": {
     "message": "{instance} 截图.zip"
   },
   "app.screenshots.selection.remove-from-group": {
     "message": "将其移出分组"
+  },
+  "app.screenshots.selection.select-group": {
+    "message": "选择“{group}”中的所有截图"
   },
   "app.screenshots.selection.selected-count": {
     "message": "已选 {count} 项"
@@ -7132,6 +7177,9 @@
   },
   "app.screenshots.show-in-folder": {
     "message": "在文件夹中显示"
+  },
+  "app.screenshots.skipped-folders": {
+    "message": "已跳过 {count} 个无法访问的实例文件夹"
   },
   "app.screenshots.sort-by": {
     "message": "排序方式"
@@ -7157,6 +7205,32 @@
   "app.server.adding": {
     "message": "正在添加……"
   },
+  "app.server.changelog.changed-files": "{count, plural, =0 {本次没有文件变更} other {共 # 个文件变更}}",
+  "app.server.changelog.file-count": "{count, plural, other {# 个文件}}",
+  "app.server.changelog.generation": "第 {seq} 代",
+  "app.server.changelog.kind-added": "新增",
+  "app.server.changelog.kind-added-tooltip": "本代新增了该模组。",
+  "app.server.changelog.kind-changed": "更新",
+  "app.server.changelog.kind-changed-tooltip": "本代更新了该模组。",
+  "app.server.changelog.kind-removed": "移除",
+  "app.server.changelog.kind-removed-tooltip": "本代移除了该模组。",
+  "app.server.changelog.load-failed": "无法读取更新笔记。",
+  "app.server.changelog.loading": "正在读取已发布的整合包历史……",
+  "app.server.changelog.mods-heading": "模组",
+  "app.server.changelog.mods-loading": "正在加载模组详情……",
+  "app.server.changelog.mods-unavailable": "这些模组已不在本实例中，因此只能显示文件名。",
+  "app.server.changelog.more-files": "显示更多变更文件",
+  "app.server.changelog.no-history": "本机还没有任何实例产生 AutoModpack 历史。启动一次整合包，服务端发布过的变更就会出现在这里。",
+  "app.server.changelog.no-notes": "本代没有随包发布更新笔记。",
+  "app.server.changelog.open-project": "打开 {name} 的项目页",
+  "app.server.changelog.open-project-search": "在线搜索 {name} —— 该模组未声明自己的项目页",
+  "app.server.changelog.other-heading": "其他变更文件",
+  "app.server.changelog.published": "发布于 {date}",
+  "app.server.changelog.refresh": "刷新",
+  "app.server.changelog.restore": "回滚至第 {seq} 代",
+  "app.server.changelog.retry": "重试",
+  "app.server.changelog.skipped-lines": "{count, plural, other {有 # 行日志无法读取，已跳过。}}",
+  "app.server.changelog.title": "整合包更新笔记",
   "app.server.compatibility-warning": {
     "message": "此服务器可能并非与所有实例兼容。"
   },
@@ -7271,6 +7345,21 @@
   "app.servers.modpack.download-in-background": {
     "message": "后台下载"
   },
+  "app.servers.modpack.downloading": {
+    "message": "正在下载整合包文件..."
+  },
+  "app.servers.modpack.first-run-crashed": {
+    "message": "服务器在首次启动时崩溃。请检查所选 Java 版本是否兼容，然后重试。"
+  },
+  "app.servers.modpack.preparing": {
+    "message": "正在准备服务器..."
+  },
+  "app.servers.modpack.unsupported-loader-description": {
+    "message": "此整合包使用 {loader}，但 ALLIGATORZONE 目前仅支持原版、Fabric 和 Quilt 整合包服务端。{loader} 支持即将推出。"
+  },
+  "app.servers.modpack.unsupported-loader-title": {
+    "message": "{loader} 服务端暂不支持"
+  },
   "app.servers.online-mode-warning.body": {
     "message": "服务器“{server}”开启了正版验证（online-mode=true），而你当前使用的账号“{account}”是离线账号，进入该服务器时会被拒绝。是否仍要继续启动？"
   },
@@ -7282,21 +7371,6 @@
   },
   "app.servers.online-mode-warning.title": {
     "message": "该服务器启用了正版验证"
-  },
-  "app.servers.modpack.downloading": {
-    "message": "正在下载整合包文件..."
-  },
-  "app.servers.modpack.first-run-crashed": {
-    "message": "服务器在首次启动时崩溃。请检查所选 Java 版本是否兼容，然后重试。"
-  },
-  "app.servers.modpack.preparing": {
-    "message": "正在准备服务器..."
-  },
-  "app.servers.modpack.unsupported-loader-description": {
-    "message": "此整合包使用 {loader}，但 Axolotl 目前仅支持原版、Fabric 和 Quilt 整合包服务端。{loader} 支持即将推出。"
-  },
-  "app.servers.modpack.unsupported-loader-title": {
-    "message": "{loader} 服务端暂不支持"
   },
   "app.servers.port.change": {
     "message": "修改端口"
@@ -7628,11 +7702,11 @@
   "app.servers.settings.memory-mb": {
     "message": "内存 (MB)"
   },
-  "app.servers.settings.pin-home": {
-    "message": "固定到主页"
-  },
   "app.servers.settings.name": {
     "message": "服务器名称"
+  },
+  "app.servers.settings.pin-home": {
+    "message": "固定到主页"
   },
   "app.servers.settings.pre-launch-hook-hint": {
     "message": "在服务器启动前于服务器目录中执行；退出码非零将取消启动。"
@@ -7767,7 +7841,7 @@
     "message": "支持项目持续开发"
   },
   "app.settings.about.attribution": {
-    "message": "Axolotl Launcher 是开源项目 Modrinth 代码库的修改版本。"
+    "message": "ALLIGATORZONE 是开源项目 Modrinth 代码库的修改版本。"
   },
   "app.settings.about.community-support": {
     "message": "项目与社区"
@@ -7866,7 +7940,7 @@
     "message": "许可证与来源声明"
   },
   "app.settings.about.not-affiliated": {
-    "message": "Modrinth 是 Rinth, Inc. 的商标。Axolotl Launcher 与 Rinth, Inc. 无关联，亦未获得其认可。"
+    "message": "Modrinth 是 Rinth, Inc. 的商标。ALLIGATORZONE 与 Rinth, Inc. 无关联，亦未获得其认可。"
   },
   "app.settings.about.original-source": {
     "message": "Modrinth 原始源代码"
@@ -7979,11 +8053,11 @@
   "app.settings.about.run.tap-to-start": {
     "message": "按空格或点击开始"
   },
-  "app.settings.about.run.tnt": {
-    "message": "TNT"
-  },
   "app.settings.about.run.title": {
     "message": "美西螈快跑"
+  },
+  "app.settings.about.run.tnt": {
+    "message": "TNT"
   },
   "app.settings.about.run.totem": {
     "message": "不死图腾"
@@ -8048,21 +8122,6 @@
   "app.settings.defaults.maximize-window.unsupported": {
     "message": "当前操作系统暂不支持。"
   },
-  "app.settings.defaults.window-title.default": {
-    "message": "默认窗口标题"
-  },
-  "app.settings.defaults.window-title.default-description": {
-    "message": "实例未单独设置标题时使用此标题。"
-  },
-  "app.settings.defaults.window-title.default-placeholder": {
-    "message": "输入默认窗口标题……"
-  },
-  "app.settings.defaults.window-title.enabled": {
-    "message": "自定义 Minecraft 窗口标题"
-  },
-  "app.settings.defaults.window-title.enabled-description": {
-    "message": "允许实例自定义 Minecraft 窗口标题。"
-  },
   "app.settings.defaults.memory": {
     "message": "分配内存"
   },
@@ -8093,6 +8152,18 @@
   "app.settings.defaults.pre-launch-placeholder": {
     "message": "输入启动前命令……"
   },
+  "app.settings.defaults.sections.after-launch": {
+    "message": "启动后行为"
+  },
+  "app.settings.defaults.sections.environment": {
+    "message": "环境变量"
+  },
+  "app.settings.defaults.sections.launch-hooks": {
+    "message": "启动钩子"
+  },
+  "app.settings.defaults.sections.window-behavior": {
+    "message": "窗口行为"
+  },
   "app.settings.defaults.width": {
     "message": "宽度"
   },
@@ -8101,6 +8172,21 @@
   },
   "app.settings.defaults.width-placeholder": {
     "message": "输入宽度……"
+  },
+  "app.settings.defaults.window-title.default": {
+    "message": "默认窗口标题"
+  },
+  "app.settings.defaults.window-title.default-description": {
+    "message": "实例未单独设置标题时使用此标题。"
+  },
+  "app.settings.defaults.window-title.default-placeholder": {
+    "message": "输入默认窗口标题……"
+  },
+  "app.settings.defaults.window-title.enabled": {
+    "message": "自定义 Minecraft 窗口标题"
+  },
+  "app.settings.defaults.window-title.enabled-description": {
+    "message": "允许实例自定义 Minecraft 窗口标题。"
   },
   "app.settings.defaults.wrapper-description": {
     "message": "用于启动 Minecraft 的包装器命令。"
@@ -8120,6 +8206,21 @@
   "app.settings.developer.announcement-preview-description": {
     "message": "使用本地示例预览真实公告组件，不请求远端公告，也不改变真实公告的已读状态。"
   },
+  "app.settings.developer.clear-official-login-marker": {
+    "message": "清除登录记录"
+  },
+  "app.settings.developer.feature-flags-section-title": {
+    "message": "功能开关"
+  },
+  "app.settings.developer.official-login-description": {
+    "message": "清除此设备曾登录正版 Minecraft 的记录。清除后，你可能需要重新登录正版账号，才能创建或使用离线账号。"
+  },
+  "app.settings.developer.official-login-marker-cleared": {
+    "message": "已清除正版 Minecraft 登录记录"
+  },
+  "app.settings.developer.official-login-section": {
+    "message": "正版 Minecraft 登录记录"
+  },
   "app.settings.developer.preview-announcement-modal": {
     "message": "预览启动弹窗"
   },
@@ -8132,8 +8233,56 @@
   "app.settings.downloading": {
     "message": "正在下载 v{version}"
   },
+  "app.settings.environment-variables.invalid-format": {
+    "message": "请使用 NAME=value 格式，以空格分隔。名称和等号不能为空；值可以为空，也可以包含更多等号。"
+  },
+  "app.settings.feature-flags.advanced-filters-collapsed": {
+    "message": "默认折叠高级筛选"
+  },
+  "app.settings.feature-flags.always-show-app-controls": {
+    "message": "始终显示应用控制项"
+  },
+  "app.settings.feature-flags.auto-install-dependencies": {
+    "message": "自动安装依赖项"
+  },
+  "app.settings.feature-flags.i18n-debug": {
+    "message": "翻译调试"
+  },
+  "app.settings.feature-flags.page-path": {
+    "message": "页面路径"
+  },
+  "app.settings.feature-flags.page-transitions": {
+    "message": "页面切换动画"
+  },
+  "app.settings.feature-flags.project-background": {
+    "message": "项目背景"
+  },
   "app.settings.feature-flags.reset-to-default": {
     "message": "恢复默认值"
+  },
+  "app.settings.feature-flags.server-project-qa": {
+    "message": "服务器项目问答"
+  },
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+    "message": "始终以字节显示服务器内存"
+  },
+  "app.settings.feature-flags.show-instance-play-time": {
+    "message": "显示实例游玩时间"
+  },
+  "app.settings.feature-flags.show-version-environment-column": {
+    "message": "显示版本环境列"
+  },
+  "app.settings.feature-flags.skip-non-essential-warnings": {
+    "message": "跳过非必要警告"
+  },
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
+    "message": "跳过未知整合包警告"
+  },
+  "app.settings.feature-flags.worlds-in-home": {
+    "message": "在主页显示世界"
+  },
+  "app.settings.feature-flags.worlds-tab": {
+    "message": "世界标签页"
   },
   "app.settings.game-options.category.accessibility.description": {
     "message": "无障碍设置"
@@ -9362,6 +9511,24 @@
   "app.settings.privacy.discord-rpc-description": {
     "message": "在 Discord 中显示你当前使用启动器或游玩的状态。"
   },
+  "app.settings.privacy.external-scheme": {
+    "message": "接受外部 Scheme URL"
+  },
+  "app.settings.privacy.external-scheme-description": {
+    "message": "响应来自浏览器及其他应用的 axolotl:// 链接。关闭后，外部的启动、安装与页面跳转将被阻止。"
+  },
+  "app.settings.privacy.privileged-scheme": {
+    "message": "允许敏感scheme操作"
+  },
+  "app.settings.privacy.privileged-scheme-description": {
+    "message": "允许 axolotl:// 链接修改设置与停止游戏进程。开启时需阅读风险警告，每次执行仍需你确认。"
+  },
+  "app.settings.privacy.section-title": {
+    "message": "隐私与数据分享"
+  },
+  "app.settings.privacy.security-title": {
+    "message": "安全"
+  },
   "app.settings.privacy.telemetry": {
     "message": "允许遥测"
   },
@@ -9375,7 +9542,7 @@
     "message": "应用缓存"
   },
   "app.settings.resources.app-cache-description": {
-    "message": "Axolotl Launcher 会缓存数据以加快加载速度。清除缓存会强制应用重新加载数据，并可能暂时降低速度。"
+    "message": "ALLIGATORZONE 会缓存数据以加快加载速度。清除缓存会强制应用重新加载数据，并可能暂时降低速度。"
   },
   "app.settings.resources.app-directory": {
     "message": "应用目录"
@@ -9387,7 +9554,7 @@
     "message": "正在以便携模式运行，所有数据已固定在程序目录下，无法修改。"
   },
   "app.settings.resources.axolotl-data-directory": {
-    "message": "Axolotl 数据目录"
+    "message": "ALLIGATORZONE 数据目录"
   },
   "app.settings.resources.concurrency.manual": {
     "message": "手动"
@@ -9447,19 +9614,19 @@
     "message": "Minecraft 目录"
   },
   "app.settings.resources.minecraft-directories-description": {
-    "message": "添加一个或多个供实例使用的外部 .minecraft 文件夹。这些文件夹与 Axolotl 数据分开保存。"
+    "message": "添加一个或多个供实例使用的外部 .minecraft 文件夹。这些文件夹与 ALLIGATORZONE 数据分开保存。"
   },
   "app.settings.resources.minecraft-directory-mode": {
     "message": "游戏目录模式"
+  },
+  "app.settings.resources.minecraft-directory-mode.automatic": {
+    "message": "自动"
   },
   "app.settings.resources.minecraft-directory-mode.isolated": {
     "message": "版本隔离"
   },
   "app.settings.resources.minecraft-directory-mode.shared": {
     "message": "共享 .minecraft 目录"
-  },
-  "app.settings.resources.minecraft-directory-mode.automatic": {
-    "message": "自动"
   },
   "app.settings.resources.minecraft-file-source": {
     "message": "Minecraft 文件、加载器与 Java"
@@ -9568,6 +9735,18 @@
   },
   "app.settings.resources.reset-import-directory": {
     "message": "使用系统 Downloads 文件夹"
+  },
+  "app.settings.resources.sections.data-storage": {
+    "message": "数据目录与缓存"
+  },
+  "app.settings.resources.sections.download-behavior": {
+    "message": "下载行为"
+  },
+  "app.settings.resources.sections.missing-content": {
+    "message": "缺失内容"
+  },
+  "app.settings.resources.sections.network-authentication": {
+    "message": "网络认证"
   },
   "app.settings.resources.select-directory": {
     "message": "选择新的应用目录"
@@ -10056,7 +10235,7 @@
     "message": "将 Release 数据复制到 Beta？"
   },
   "app.settings.updates.channel.description": {
-    "message": "选择 Axolotl 接收的启动器版本。"
+    "message": "选择 ALLIGATORZONE 接收的启动器版本。"
   },
   "app.settings.updates.channel.label": {
     "message": "通道"
@@ -10068,7 +10247,7 @@
     "message": "稳定且经过测试的新功能与修复，更新频率较慢。"
   },
   "app.settings.updates.channel.restart-description": {
-    "message": "立即重启 Axolotl 以开始使用新的更新通道，或稍后手动重启。"
+    "message": "立即重启 ALLIGATORZONE 以开始使用新的更新通道，或稍后手动重启。"
   },
   "app.settings.updates.channel.restart-development-description": {
     "message": "手动重启开发会话后，新的更新通道才会生效。"
@@ -10119,7 +10298,7 @@
     "message": "数据库隔离"
   },
   "app.settings.updates.database-operation.active-target": {
-    "message": "无法覆盖当前正在使用的数据库。请先重启 Axolotl 并切换更新通道。"
+    "message": "无法覆盖当前正在使用的数据库。请先重启 ALLIGATORZONE 并切换更新通道。"
   },
   "app.settings.updates.database-operation.beta-to-release": {
     "message": "从 Beta 复制到 Release"
@@ -10137,7 +10316,7 @@
     "message": "覆盖数据库？"
   },
   "app.settings.updates.database-operation.failed": {
-    "message": "无法复制数据库。请确认 Axolotl 未在使用目标数据库。"
+    "message": "无法复制数据库。请确认 ALLIGATORZONE 未在使用目标数据库。"
   },
   "app.settings.updates.database-operation.label": {
     "message": "数据库操作"
@@ -10194,7 +10373,7 @@
     "message": "只有通过加密签名验证的更新才会被安装。"
   },
   "app.settings.updates.up-to-date": {
-    "message": "Axolotl 已是最新版本。"
+    "message": "ALLIGATORZONE 已是最新版本。"
   },
   "app.shortcut-settings.change-shortcut": {
     "message": "更改「{action}」的快捷键"
@@ -10464,13 +10643,13 @@
     "message": "小鬼当家"
   },
   "app.skins.sign-in.axolotl-alt": {
-    "message": "Axolotl Launcher"
+    "message": "ALLIGATORZONE"
   },
   "app.skins.sign-in.button": {
     "message": "登录"
   },
   "app.skins.sign-in.description": {
-    "message": "请登录您的 Minecraft 账号，以便使用 Axolotl Launcher 的皮肤管理功能。"
+    "message": "请登录您的 Minecraft 账号，以便使用 ALLIGATORZONE 的皮肤管理功能。"
   },
   "app.skins.sign-in.title": {
     "message": "请登录"
@@ -10576,6 +10755,9 @@
   },
   "app.translation-settings.display-mode.translation-only": {
     "message": "仅译文"
+  },
+  "app.translation-settings.display-section-title": {
+    "message": "翻译显示"
   },
   "app.translation-settings.google-ip-pool": {
     "message": "可用: {count}"
@@ -10704,16 +10886,16 @@
     "message": "此版本暂未内置更新公告，请前往官网查看完整更新日志。"
   },
   "app.update-announcement.unknown-title": {
-    "message": "Axolotl Launcher 已更新"
+    "message": "ALLIGATORZONE 已更新"
   },
   "app.update-announcement.version": {
     "message": "版本 {version}"
   },
   "app.update-popup.body.download-complete": {
-    "message": "Axolotl Launcher v{version} 更新已下载完成！立即重启更新，或退出时自动安装。"
+    "message": "ALLIGATORZONE v{version} 更新已下载完成！立即重启更新，或退出时自动安装。"
   },
   "app.update-popup.body.metered": {
-    "message": "Axolotl Launcher v{version} 现已发布！由于你正在使用按流量计费的网络，该更新未自动下载。"
+    "message": "ALLIGATORZONE v{version} 现已发布！由于你正在使用按流量计费的网络，该更新未自动下载。"
   },
   "app.update-popup.changelog": {
     "message": "更新日志"
@@ -10743,7 +10925,7 @@
     "message": "正在安装版本 {version}"
   },
   "app.warning.running-as-admin": {
-    "message": "Axolotl 正在以管理员身份运行。此模式下无法拖拽导入文件，请以普通权限重新启动启动器。"
+    "message": "ALLIGATORZONE 正在以管理员身份运行。此模式下无法拖拽导入文件，请以普通权限重新启动启动器。"
   },
   "app.window-controls.close": {
     "message": "关闭"
@@ -11208,7 +11390,7 @@
     "message": "光影包"
   },
   "drop.help.title": {
-    "message": "我可以拖入什么到 Axolotl？"
+    "message": "我可以拖入什么到 ALLIGATORZONE？"
   },
   "drop.help.worlds-desc": {
     "message": "拖放存档文件夹来导入到实例。"
@@ -11402,23 +11584,17 @@
   "instance.backups.snapshots": {
     "message": "快照"
   },
+  "instance.backups.stage.applying": {
+    "message": "正在应用变更文件"
+  },
   "instance.backups.stage.failed": {
     "message": "备份失败"
-  },
-  "instance.backups.stage.interrupted": {
-    "message": "备份任务已中断"
   },
   "instance.backups.stage.hashing": {
     "message": "正在计算文件哈希"
   },
-  "instance.backups.stage.queued": {
-    "message": "等待开始"
-  },
-  "instance.backups.stage.saving": {
-    "message": "正在保存快照索引"
-  },
-  "instance.backups.stage.validating": {
-    "message": "正在验证恢复任务"
+  "instance.backups.stage.interrupted": {
+    "message": "备份任务已中断"
   },
   "instance.backups.stage.materializing": {
     "message": "正在准备变更文件"
@@ -11426,11 +11602,17 @@
   "instance.backups.stage.preview": {
     "message": "正在分析恢复变更"
   },
-  "instance.backups.stage.applying": {
-    "message": "正在应用变更文件"
+  "instance.backups.stage.queued": {
+    "message": "等待开始"
+  },
+  "instance.backups.stage.saving": {
+    "message": "正在保存快照索引"
   },
   "instance.backups.stage.scanning": {
     "message": "正在扫描文件"
+  },
+  "instance.backups.stage.validating": {
+    "message": "正在验证恢复任务"
   },
   "instance.backups.title": {
     "message": "实例备份"
@@ -11621,11 +11803,11 @@
   "instance.settings.sync.unsupported": {
     "message": "此实例不可用"
   },
-  "instance.settings.tabs.core-components": {
-    "message": "核心组件"
-  },
   "instance.settings.tabs.backups": {
     "message": "备份"
+  },
+  "instance.settings.tabs.core-components": {
+    "message": "核心组件"
   },
   "instance.settings.tabs.core-components.add": {
     "message": "添加到 Minecraft.jar"
@@ -11769,7 +11951,7 @@
     "message": "版本隔离（存放于 versions/）"
   },
   "instance.settings.tabs.general.game-dir.managed-note": {
-    "message": "此实例使用 Axolotl 托管目录。"
+    "message": "此实例使用 ALLIGATORZONE 托管目录。"
   },
   "instance.settings.tabs.general.game-dir.move-note": {
     "message": "切换隔离仅更新启动器路径。请自行移动模组、存档和配置文件夹以保持一致。"
@@ -11930,15 +12112,6 @@
   "instance.settings.tabs.window.height.enter": {
     "message": "输入高度……"
   },
-  "instance.settings.tabs.window.window-title": {
-    "message": "窗口标题"
-  },
-  "instance.settings.tabs.window.window-title.description": {
-    "message": "自定义 Minecraft 窗口标题。留空则使用默认标题。"
-  },
-  "instance.settings.tabs.window.window-title.enter": {
-    "message": "输入窗口标题……"
-  },
   "instance.settings.tabs.window.maximize-window": {
     "message": "最大化窗口"
   },
@@ -11956,6 +12129,15 @@
   },
   "instance.settings.tabs.window.width.enter": {
     "message": "输入宽度……"
+  },
+  "instance.settings.tabs.window.window-title": {
+    "message": "窗口标题"
+  },
+  "instance.settings.tabs.window.window-title.description": {
+    "message": "自定义 Minecraft 窗口标题。留空则使用默认标题。"
+  },
+  "instance.settings.tabs.window.window-title.enter": {
+    "message": "输入窗口标题……"
   },
   "instance.upgrade.action.add-dependency": {
     "message": "添加依赖"
@@ -12342,7 +12524,7 @@
     "message": "{count} 个精确选择"
   },
   "instance.upgrade.customize.custom.description": {
-    "message": "为所选内容固定精确版本，其余依赖图由 Axolotl 求解。"
+    "message": "为所选内容固定精确版本，其余依赖图由 ALLIGATORZONE 求解。"
   },
   "instance.upgrade.customize.custom.discard-switch": {
     "message": "放弃并切换"
@@ -12447,7 +12629,7 @@
     "message": "继续前请处理自定义冲突。"
   },
   "instance.upgrade.customize.search-limit.body": {
-    "message": "Axolotl 未能在搜索上限内找到方案。请放宽一项自定义选择。"
+    "message": "ALLIGATORZONE 未能在搜索上限内找到方案。请放宽一项自定义选择。"
   },
   "instance.upgrade.customize.search-limit.title": {
     "message": "已达到搜索上限"
@@ -13067,6 +13249,24 @@
   "minecraft-account.remove-account": {
     "message": "移除账户"
   },
+  "minecraft-account.restriction.buy": {
+    "message": "购买 Minecraft"
+  },
+  "minecraft-account.restriction.description": {
+    "message": "请先在此设备上登录一次正版 Minecraft 账号，再创建或使用离线账号。如果你尚未拥有 Minecraft，可以前往官方网站购买。"
+  },
+  "minecraft-account.restriction.open-failed": {
+    "message": "无法打开 Minecraft 商店"
+  },
+  "minecraft-account.restriction.open-failed-description": {
+    "message": "请重试，或在浏览器中手动访问 https://www.minecraft.net 购买 Minecraft。"
+  },
+  "minecraft-account.restriction.sign-in": {
+    "message": "登录正版 Minecraft"
+  },
+  "minecraft-account.restriction.title": {
+    "message": "离线账号暂不可用"
+  },
   "minecraft-account.select-account": {
     "message": "选择账户"
   },
@@ -13240,179 +13440,5 @@
   },
   "unknown-pack-warning-modal.warning.title": {
     "message": "未知文件警告"
-  },
-  "app.appearance-settings.sections.advanced-interface": {
-    "message": "高级界面"
-  },
-  "app.appearance-settings.sections.content-behavior": {
-    "message": "内容行为"
-  },
-  "app.appearance-settings.sections.home-navigation": {
-    "message": "主页与导航"
-  },
-  "app.settings.defaults.sections.after-launch": {
-    "message": "启动后行为"
-  },
-  "app.settings.defaults.sections.environment": {
-    "message": "环境变量"
-  },
-  "app.settings.defaults.sections.launch-hooks": {
-    "message": "启动钩子"
-  },
-  "app.settings.defaults.sections.window-behavior": {
-    "message": "窗口行为"
-  },
-  "app.settings.developer.feature-flags-section-title": {
-    "message": "功能开关"
-  },
-  "app.settings.privacy.section-title": {
-    "message": "隐私与数据分享"
-  },
-  "app.settings.resources.sections.data-storage": {
-    "message": "数据目录与缓存"
-  },
-  "app.settings.resources.sections.download-behavior": {
-    "message": "下载行为"
-  },
-  "app.settings.resources.sections.missing-content": {
-    "message": "缺失内容"
-  },
-  "app.settings.resources.sections.network-authentication": {
-    "message": "网络认证"
-  },
-  "app.translation-settings.display-section-title": {
-    "message": "翻译显示"
-  },
-  "app.settings.feature-flags.project-background": {
-    "message": "项目背景"
-  },
-  "app.settings.feature-flags.page-path": {
-    "message": "页面路径"
-  },
-  "app.settings.feature-flags.worlds-tab": {
-    "message": "世界标签页"
-  },
-  "app.settings.feature-flags.worlds-in-home": {
-    "message": "在主页显示世界"
-  },
-  "app.settings.feature-flags.server-project-qa": {
-    "message": "服务器项目问答"
-  },
-  "app.settings.feature-flags.show-version-environment-column": {
-    "message": "显示版本环境列"
-  },
-  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
-    "message": "始终以字节显示服务器内存"
-  },
-  "app.settings.feature-flags.always-show-app-controls": {
-    "message": "始终显示应用控制项"
-  },
-  "app.settings.feature-flags.skip-non-essential-warnings": {
-    "message": "跳过非必要警告"
-  },
-  "app.settings.feature-flags.skip-unknown-pack-warning": {
-    "message": "跳过未知整合包警告"
-  },
-  "app.settings.feature-flags.i18n-debug": {
-    "message": "翻译调试"
-  },
-  "app.settings.feature-flags.show-instance-play-time": {
-    "message": "显示实例游玩时间"
-  },
-  "app.settings.feature-flags.page-transitions": {
-    "message": "页面切换动画"
-  },
-  "app.settings.feature-flags.advanced-filters-collapsed": {
-    "message": "默认折叠高级筛选"
-  },
-  "app.settings.feature-flags.auto-install-dependencies": {
-    "message": "自动安装依赖项"
-  },
-  "minecraft-account.restriction.title": {
-    "message": "离线账号暂不可用"
-  },
-  "minecraft-account.restriction.description": {
-    "message": "请先在此设备上登录一次正版 Minecraft 账号，再创建或使用离线账号。如果你尚未拥有 Minecraft，可以前往官方网站购买。"
-  },
-  "minecraft-account.restriction.sign-in": {
-    "message": "登录正版 Minecraft"
-  },
-  "minecraft-account.restriction.open-failed": {
-    "message": "无法打开 Minecraft 商店"
-  },
-  "minecraft-account.restriction.open-failed-description": {
-    "message": "请重试，或在浏览器中手动访问 https://www.minecraft.net 购买 Minecraft。"
-  },
-  "minecraft-account.restriction.buy": {
-    "message": "购买 Minecraft"
-  },
-  "app.settings.developer.official-login-section": {
-    "message": "正版 Minecraft 登录记录"
-  },
-  "app.settings.developer.official-login-description": {
-    "message": "清除此设备曾登录正版 Minecraft 的记录。清除后，你可能需要重新登录正版账号，才能创建或使用离线账号。"
-  },
-  "app.settings.developer.clear-official-login-marker": {
-    "message": "清除登录记录"
-  },
-  "app.settings.developer.official-login-marker-cleared": {
-    "message": "已清除正版 Minecraft 登录记录"
-  },
-  "app.settings.privacy.external-scheme-description": {
-    "message": "响应来自浏览器及其他应用的 axolotl:// 链接。关闭后，外部的启动、安装与页面跳转将被阻止。"
-  },
-  "app.settings.privacy.external-scheme": {
-    "message": "接受外部 Scheme URL"
-  },
-  "app.settings.privacy.privileged-scheme-description": {
-    "message": "允许 axolotl:// 链接修改设置与停止游戏进程。开启时需阅读风险警告，每次执行仍需你确认。"
-  },
-  "app.settings.privacy.privileged-scheme": {
-    "message": "允许敏感scheme操作"
-  },
-  "app.notification.error-occurred": {
-    "message": "发生错误"
-  },
-  "app.java-arguments.gc.reason.zgc-non-generational": {
-    "message": "Java < 21，ZGC 非分代模式性能不佳"
-  },
-  "app.java-arguments.gc.reason.medium-resources": {
-    "message": "资源中 ({memory}GB, {cores}核)"
-  },
-  "app.java-arguments.gc.reason.low-resources": {
-    "message": "资源低 ({memory}GB, {cores}核)"
-  },
-  "app.java-arguments.gc.reason.lightweight-instance": {
-    "message": "轻量实例 ({loader}, {mods} mods)"
-  },
-  "app.java-arguments.gc.reason.large-modpack-low-memory": {
-    "message": "大型 ModPack ({mods} mods) 但资源不足 ({allocated}GB < 8GB)"
-  },
-  "app.java-arguments.gc.reason.java-version-unknown": {
-    "message": "Java 版本未知"
-  },
-  "app.java-arguments.gc.reason.java-too-old": {
-    "message": "Java 太旧，Shenandoah/ZGC 不可靠"
-  },
-  "app.java-arguments.gc.reason.insufficient-memory": {
-    "message": "内存不足 ({allocated}GB < 4GB)"
-  },
-  "app.java-arguments.gc.reason.insufficient-cpu": {
-    "message": "CPU 资源不足 ({cores}核/{threads}线程)"
-  },
-  "app.java-arguments.gc.reason.high-resources": {
-    "message": "资源高 ({memory}GB, {cores}核)"
-  },
-  "app.java-arguments.gc.reason.heavy-instance": {
-    "message": "重型实例 ({loader}, {mods} mods)"
-  },
-  "app.java-arguments.gc.reason.below-zgc-recommendation": {
-    "message": "资源未达到 ZGC 推荐配置"
-  },
-  "app.java-arguments.gc.reason.ample-memory-high-cores": {
-    "message": "内存充足且 CPU 核心数高"
-  },
-  "app.settings.privacy.security-title": {
-    "message": "安全"
   }
 }

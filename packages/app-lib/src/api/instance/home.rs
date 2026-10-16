@@ -1,8 +1,6 @@
 use crate::event::InstancePayloadType;
 use crate::event::emit::emit_instance;
-use crate::state::{
-    DailyPlaytime, DailyPlaytimeEntry, InstanceMetadata, State,
-};
+use crate::state::{DailyPlaytime, DailyPlaytimeEntry, InstanceMetadata, State};
 
 pub async fn set_pinned(
     instance_id: &str,

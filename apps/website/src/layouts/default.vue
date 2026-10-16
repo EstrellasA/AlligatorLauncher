@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AxolotlFooter from '~/components/ui/AxolotlFooter.vue'
-import AxolotlHeader from '~/components/ui/AxolotlHeader.vue'
+import ALLIGATORZONEFooter from '~/components/ui/AxolotlFooter.vue'
+import ALLIGATORZONEHeader from '~/components/ui/AxolotlHeader.vue'
 import SiteSettingsModal from '~/components/ui/SiteSettingsModal.vue'
 
 const settingsOpen = ref(false)
@@ -8,11 +8,11 @@ const settingsOpen = ref(false)
 
 <template>
     <div class="site-layout">
-        <AxolotlHeader @open-settings="settingsOpen = true" />
+        <ALLIGATORZONEHeader @open-settings="settingsOpen = true" />
         <main id="main">
             <slot />
         </main>
-        <AxolotlFooter />
+        <ALLIGATORZONEFooter />
         <SiteSettingsModal v-model="settingsOpen" />
     </div>
 </template>

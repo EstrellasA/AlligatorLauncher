@@ -1589,9 +1589,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mod} other {Moddar}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Moddar"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mod} other {moddar}}"
   },

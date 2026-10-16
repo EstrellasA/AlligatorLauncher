@@ -3,17 +3,15 @@ import '@/assets/stylesheets/window-frame.css'
 
 import { AuthFeature, TauriModrinthClient, VerboseLoggingFeature } from '@modrinth/api-client'
 import {
-    ChangeSkinIcon,
-    CompassIcon,
+    CubeIcon,
     ExternalIcon,
-    FlaskConicalIcon,
     FolderOpenIcon,
     HomeIcon,
-    ImagesIcon,
     LeftArrowIcon,
-    LibraryIcon,
     LogInIcon,
     LogOutIcon,
+    MapIcon,
+    NewspaperIcon,
     PlusIcon,
     RefreshCwIcon,
     RightArrowIcon,
@@ -21,8 +19,6 @@ import {
     SettingsIcon,
     SpinnerIcon,
     UserIcon,
-    UsersIcon,
-    WorldIcon,
     XIcon,
 } from '@modrinth/assets'
 import {
@@ -80,10 +76,11 @@ import InstanceExportModal from '@/components/lab/recipe-generator/InstanceExpor
 import AccountsCard from '@/components/ui/AccountsCard.vue'
 import UpdateAnnouncementModal from '@/components/ui/announcement/UpdateAnnouncementModal.vue'
 import AppActionBar from '@/components/ui/AppActionBar.vue'
-import AxolotlLogo from '@/components/ui/AxolotlLogo.vue'
+import AlligatorZoneLogo from '@/components/ui/AlligatorZoneLogo.vue'
 import Breadcrumbs from '@/components/ui/Breadcrumbs.vue'
 import ContentInstallPreviewModal from '@/components/ui/ContentInstallPreviewModal.vue'
 import ErrorModal from '@/components/ui/ErrorModal.vue'
+import FirstRunBootstrapOverlay from '@/components/ui/FirstRunBootstrapOverlay.vue'
 import AddServerToInstanceModal from '@/components/ui/install_flow/AddServerToInstanceModal.vue'
 import UnknownPackWarningModal from '@/components/ui/install_flow/UnknownPackWarningModal.vue'
 import MinecraftAuthErrorModal from '@/components/ui/minecraft-auth-error-modal/MinecraftAuthErrorModal.vue'
@@ -98,7 +95,7 @@ import PrivacyConsentModal from '@/components/ui/modal/PrivacyConsentModal.vue'
 import NavButton from '@/components/ui/NavButton.vue'
 import NavRail from '@/components/ui/NavRail.vue'
 import OfflineAccountRestrictionModal from '@/components/ui/OfflineAccountRestrictionModal.vue'
-import OnboardingOverlay from '@/components/ui/onboarding/OnboardingOverlay.vue'
+// 引导已移除（OnboardingOverlay 不再挂载）
 import QuickInstanceSwitcher from '@/components/ui/QuickInstanceSwitcher.vue'
 import RemoteAnnouncements from '@/components/ui/RemoteAnnouncements.vue'
 import SplashScreen from '@/components/ui/SplashScreen.vue'
@@ -108,10 +105,12 @@ import { isOfflineAccountRestrictedError } from '@/composables/useAntiPiracyStat
 import { useDropImport } from '@/composables/useDropImport'
 import { minecraftLaunchErrorKey } from '@/composables/useMinecraftLaunchError'
 import { useNetworkStatus } from '@/composables/useNetworkStatus'
-import { AxolotlBrandConfig, config, getOfficialLabrinthBaseUrl } from '@/config'
+import { useServerWebMap } from '@/composables/useServerWebMap'
+import { AlligatorZoneConfig, config, getOfficialLabrinthBaseUrl } from '@/config'
 import { trackEvent } from '@/helpers/analytics'
 import { check_reachable } from '@/helpers/auth.js'
 import { get_user, get_version } from '@/helpers/cache.js'
+import { BROWSE_LOCKED_PROJECT_PATH } from '@/helpers/client-mod-browse'
 import { configureCurseForgeManualDownloadWatcher } from '@/helpers/curseforge'
 import { applySettingChanges } from '@/helpers/deep-link-settings.ts'
 import { resolveOpenRoute, resolveSettingsRoute } from '@/helpers/deep-links.ts'
@@ -140,7 +139,6 @@ import { getExternalLinkUrl, mergeUrlQuery, parseModrinthLink } from '@/helpers/
 import { getQuickScrollEnabled, getShowScrollTop } from '@/helpers/scroll-top-state'
 import {
     get as getSettings,
-    getLastBrowseContentProjectType,
     getPrivacySettings,
     getUpdateChannel,
     getUpdatePreferences,
@@ -150,12 +148,10 @@ import {
 } from '@/helpers/settings.ts'
 import { diffSettings } from '@/helpers/settings-patch'
 import {
-    discoverContentTarget,
     SHORTCUT_ACTIONS,
     type ShortcutAction,
 } from '@/helpers/shortcut-actions'
 import { resolveAllBindings } from '@/helpers/shortcut-bindings'
-import { getSidebarExpanded, setSidebarExpanded } from '@/helpers/sidebar-state.ts'
 import { get_opening_command, initialize_state, set_discord_activity } from '@/helpers/state'
 import {
     areUpdatesEnabled,
@@ -205,6 +201,12 @@ import { AppNotificationManager } from './providers/app-notifications'
 import { AppPopupNotificationManager } from './providers/app-popup-notifications'
 
 const themeStore = useTheming()
+/**
+ * The web map address comes from the instance settings, not from a constant, so
+ * the nav entry has to appear and disappear with it. `useServerWebMap` owns the
+ * resolution rule and the instance-event refresh.
+ */
+const { mapUrl: serverWebMapUrl } = useServerWebMap()
 /** While a dialog is open no shortcut fires, including the one being recorded. */
 const { hasModal } = useModalStack()
 const router = useRouter()
@@ -214,8 +216,6 @@ const onSchematicWorkshopPage = computed(() => route.path === '/lab/schematic-pr
 const onSettingsPage = computed(() => route.path.startsWith('/settings'))
 const isSchematicFile = (path: string) => /\.(litematic|schematic|schem)$/i.test(path)
 const APP_LEFT_NAV_WIDTH = '4rem'
-
-const discoverContentPath = computed(() => discoverContentTarget(route))
 
 const pagePathCopied = ref(false)
 let pagePathCopiedTimer: ReturnType<typeof window.setTimeout> | undefined
@@ -253,27 +253,7 @@ function getPageTransitionKey(route: RouteLocationNormalizedLoaded) {
 
     return `${transitionGroup}:`
 }
-const APP_SIDEBAR_WIDTH = 300
 const credentials = ref()
-const sidebarToggled = ref(getSidebarExpanded())
-
-function toggleSidebar() {
-    sidebarToggled.value = !sidebarToggled.value
-    setSidebarExpanded(sidebarToggled.value)
-}
-
-const forceSidebar = computed(
-    () => route.path.startsWith('/browse') || route.path.startsWith('/project'),
-)
-const forceSidebarHidden = computed(() => route.path === '/settings')
-/** Console fullscreen collapses the account sidebar so its controls stay reachable. */
-const consoleFullscreenActive = ref(false)
-const sidebarVisible = computed(
-    () =>
-        !forceSidebarHidden.value &&
-        !consoleFullscreenActive.value &&
-        (sidebarToggled.value || forceSidebar.value),
-)
 const customBackgroundStyle = computed(() => {
     // A custom image would sit between the desktop and the UI, defeating the
     // transparent window entirely, so the two are mutually exclusive.
@@ -315,10 +295,10 @@ void appVersion
         console.warn('Failed to read the app version for the Beta label', error)
     })
 const tauriApiClient = new TauriModrinthClient({
-    userAgent: async () => AxolotlBrandConfig.userAgent(await appVersion, await getOsType()),
+    userAgent: async () => AlligatorZoneConfig.userAgent(await appVersion, await getOsType()),
     labrinthBaseUrl: config.labrinthBaseUrl,
     features: [
-        ...(AxolotlBrandConfig.capabilities.privateModrinthServices
+        ...(AlligatorZoneConfig.capabilities.privateModrinthServices
             ? [
                   new AuthFeature({
                       token: async () => (await getCreds())?.session,
@@ -334,7 +314,7 @@ providePageContext({
     showAds: ref(false),
     floatingActionBarOffsets: {
         left: ref(APP_LEFT_NAV_WIDTH),
-        right: computed(() => (sidebarVisible.value ? `${APP_SIDEBAR_WIDTH}px` : '0px')),
+        right: ref('0px'),
     },
     featureFlags: {
         serverRamAsBytesAlwaysOn: computed(() =>
@@ -767,7 +747,6 @@ onMounted(async () => {
     document.querySelector('body').addEventListener('click', handleClick)
     document.querySelector('body').addEventListener('auxclick', handleAuxClick)
     window.addEventListener(DIRECT_LINKS_SYNCED_EVENT, handleDirectLinkSyncReport)
-    window.addEventListener('modrinth-console-fullscreen', handleConsoleFullscreen as EventListener)
 
     // Background maintenance must not compete with first paint / route enter.
     runWhenIdle(() => {
@@ -780,10 +759,6 @@ onMounted(async () => {
 let directLinkSync: (() => Promise<void>) | undefined
 let stopDirectLinkSync: (() => void) | undefined
 let directLinkSyncErrorSignature = ''
-
-function handleConsoleFullscreen(event: CustomEvent<boolean>) {
-    consoleFullscreenActive.value = Boolean(event.detail)
-}
 
 function handleDirectLinkSyncReport(event: Event) {
     if (!(event instanceof CustomEvent)) return
@@ -808,7 +783,7 @@ function handleDirectLinkSyncReport(event: Event) {
 function startDirectLinkSync() {
     const readRoots = () => {
         try {
-            const parsed = JSON.parse(localStorage.getItem('axolotl-minecraft-directories') ?? '[]')
+            const parsed = JSON.parse(localStorage.getItem('ALLIGATORZONE-minecraft-directories') ?? '[]')
             return Array.isArray(parsed)
                 ? parsed.flatMap((value) => {
                       if (typeof value === 'string' && value.trim()) {
@@ -994,7 +969,7 @@ const messages = defineMessages({
     runningAsAdmin: {
         id: 'app.warning.running-as-admin',
         defaultMessage:
-            'Axolotl is running as administrator. Drag-and-drop file import is disabled in this mode; please restart the launcher without administrator privileges.',
+            'ALLIGATORZONE is running as administrator. Drag-and-drop file import is disabled in this mode; please restart the launcher without administrator privileges.',
     },
     restarting: {
         id: 'app.restarting',
@@ -1002,7 +977,7 @@ const messages = defineMessages({
     },
     closeLauncherTitle: {
         id: 'app.close-launcher.title',
-        defaultMessage: 'Choose how to close Axolotl Launcher',
+        defaultMessage: 'Choose how to close ALLIGATORZONE',
     },
     closeLauncherDirect: {
         id: 'app.close-launcher.direct',
@@ -1061,6 +1036,19 @@ const messages = defineMessages({
         id: 'app.navigation.skin-selector',
         defaultMessage: 'Skin selector',
     },
+    serverMap: {
+        id: 'app.navigation.server-map',
+        defaultMessage: 'Server map',
+    },
+    changelog: {
+        id: 'app.navigation.changelog',
+        defaultMessage: 'Update notes',
+    },
+    schematicWorkshop: {
+        // 复用 Lab 的键，31 个语言包里「投影工坊」的翻译直接生效
+        id: 'app.lab.schematic-preview.title',
+        defaultMessage: 'Schematic workshop',
+    },
     library: {
         id: 'app.navigation.library',
         defaultMessage: 'Library',
@@ -1088,18 +1076,6 @@ const messages = defineMessages({
     signedInAs: {
         id: 'app.account.signed-in-as',
         defaultMessage: 'Signed in as',
-    },
-    playingAs: {
-        id: 'app.minecraft.playing-as',
-        defaultMessage: 'Playing as',
-    },
-    collapseSidebar: {
-        id: 'app.sidebar.collapse',
-        defaultMessage: 'Collapse sidebar',
-    },
-    expandSidebar: {
-        id: 'app.sidebar.expand',
-        defaultMessage: 'Expand sidebar',
     },
     warning: {
         id: 'app.notification.warning',
@@ -1448,7 +1424,6 @@ async function setupApp() {
         hidden_nav_items,
         sidebar_instance_count,
         auto_hide_downloads_button,
-        home_layout,
         minimal_home_instance_id,
         close_behavior,
         developer_mode,
@@ -1468,7 +1443,7 @@ async function setupApp() {
 
     const defaultPageRoutes = {
         Home: '/',
-        DiscoverContent: `/browse/${getLastBrowseContentProjectType()}`,
+        DiscoverContent: BROWSE_LOCKED_PROJECT_PATH,
         Library: '/library',
     }
     const defaultPageRoute = offline.value ? '/library' : defaultPageRoutes[default_page]
@@ -1478,7 +1453,7 @@ async function setupApp() {
     const dev = await isDev()
     isDevEnvironment.value = dev
     pendingUpdateAnnouncementVersion.value = pending_update_toast_for_version
-    if (!onboarded && route.path !== '/') await router.replace('/')
+    // 引导已移除：这里原本会把未完成引导的玩家锁在首页，现在不再限制路由。
     privacyConsentPending.value = telemetry_consent_version < 1
     showOnboarding.value = false
     onboardingSettings.value = initialSettings
@@ -1515,7 +1490,6 @@ async function setupApp() {
     themeStore.hiddenNavItems = hidden_nav_items ?? []
     themeStore.sidebarInstanceCount = sidebar_instance_count
     themeStore.autoHideDownloadsButton = auto_hide_downloads_button
-    themeStore.homeLayout = home_layout
     themeStore.minimalHomeInstanceId = minimal_home_instance_id
     themeStore.closeBehavior = close_behavior
     themeStore.showScrollTop = getShowScrollTop()
@@ -1536,7 +1510,8 @@ async function setupApp() {
             consent_version: telemetry_consent_version,
         })
     } else {
-        showOnboarding.value = !onboarded
+        // 引导已移除，永不显示。
+        showOnboarding.value = false
     }
 
     unlistenWindowResize = await getCurrentWindow().onResized(() => {
@@ -1631,10 +1606,9 @@ async function initializeSystemAccentColor() {
     }
 }
 
-function startOnboarding(mode = 'main') {
-    onboardingReplay.value = false
-    onboardingMode.value = mode
-    showOnboarding.value = true
+function startOnboarding(_mode = 'main') {
+    // 引导已移除：所有自动触发点（首次启动、首次建实例）都走这里，直接不启动。
+    showOnboarding.value = false
 }
 
 async function replayOnboarding(mode) {
@@ -1963,13 +1937,6 @@ let discordActivityUpdate = Promise.resolve()
 
 let suspensePending = false
 
-const sidebarOverlayScrollbarsOptions = Object.freeze({
-    overflow: {
-        x: 'hidden',
-        y: 'scroll',
-    },
-})
-
 router.beforeEach(() => {
     suspensePending = false
     if (routerToken) loading.end(routerToken)
@@ -2229,7 +2196,7 @@ watch(
 )
 
 setupAuthProvider(credentials, async (_redirectPath) => {
-    if (AxolotlBrandConfig.capabilities.privateModrinthServices) await signIn()
+    if (AlligatorZoneConfig.capabilities.privateModrinthServices) await signIn()
 })
 
 async function validateSession(sessionToken) {
@@ -2246,7 +2213,7 @@ async function validateSession(sessionToken) {
 }
 
 async function fetchCredentials() {
-    if (!AxolotlBrandConfig.capabilities.privateModrinthServices) {
+    if (!AlligatorZoneConfig.capabilities.privateModrinthServices) {
         credentials.value = null
         return
     }
@@ -2502,11 +2469,11 @@ const updatePopupMessages = defineMessages({
     },
     meteredBody: {
         id: 'app.update-popup.body.metered',
-        defaultMessage: `Axolotl Launcher v{version} is available now! Since you're on a metered network, we didn't automatically download it.`,
+        defaultMessage: `ALLIGATORZONE v{version} is available now! Since you're on a metered network, we didn't automatically download it.`,
     },
     downloadedBody: {
         id: 'app.update-popup.body.download-complete',
-        defaultMessage: `Axolotl Launcher v{version} has finished downloading. Reload to update now, or automatically when you close Axolotl Launcher.`,
+        defaultMessage: `ALLIGATORZONE v{version} has finished downloading. Reload to update now, or automatically when you close ALLIGATORZONE.`,
     },
     reload: {
         id: 'app.update-popup.reload',
@@ -2781,7 +2748,7 @@ setAppUpdateActions({
         if (version && getAnnouncementByVersion(version)) {
             updateAnnouncementModal.value?.show(version)
         } else {
-            openUrl(AxolotlBrandConfig.website)
+            openUrl(AlligatorZoneConfig.website)
         }
     },
 })
@@ -2856,6 +2823,11 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 
 <template>
     <SplashScreen v-if="!stateFailed" ref="splashScreen" data-tauri-drag-region />
+    <!--
+		First run only: there is no instance for this server yet, so build one.
+		Renders nothing (and does nothing) once an instance exists.
+	-->
+    <FirstRunBootstrapOverlay v-if="!stateFailed" />
     <!--
 		A failed initialization never renders the app shell, so this framed window
 		ends up with no title bar and no controls at all. This strip keeps the
@@ -2945,75 +2917,33 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
                 >
                     <HomeIcon />
                 </NavButton>
+                <!--
+                    地图入口只在实例设置里填了网页地图地址时才出现；
+                    留空（或从未填写且默认值为空）时整个功能隐藏 + 禁用。
+                -->
                 <NavButton
-                    v-if="!themeStore.isNavItemHidden('screenshots')"
-                    v-tooltip.right="formatMessage(messages.screenshots)"
-                    data-onboarding-id="nav-screenshots"
-                    to="/screenshots"
-                    :is-primary="(r) => r.path.startsWith('/screenshots')"
+                    v-if="serverWebMapUrl"
+                    v-tooltip.right="formatMessage(messages.serverMap)"
+                    data-onboarding-id="nav-server-map"
+                    to="/map"
+                    :is-primary="(r) => r.path.startsWith('/map')"
                 >
-                    <ImagesIcon />
+                    <MapIcon />
                 </NavButton>
                 <NavButton
-                    v-if="
-                        themeStore.featureFlags.worlds_tab && !themeStore.isNavItemHidden('worlds')
-                    "
-                    v-tooltip.right="formatMessage(messages.worlds)"
-                    to="/worlds"
+                    v-tooltip.right="formatMessage(messages.changelog)"
+                    data-onboarding-id="nav-changelog"
+                    to="/changelog"
+                    :is-primary="(r) => r.path.startsWith('/changelog')"
                 >
-                    <WorldIcon />
+                    <NewspaperIcon />
                 </NavButton>
                 <NavButton
-                    v-if="!themeStore.isNavItemHidden('discover')"
-                    v-tooltip.right="formatMessage(messages.discoverContent)"
-                    data-onboarding-id="nav-discover"
-                    :to="discoverContentPath"
-                    :disabled="offline"
-                    :is-primary="() => route.path.startsWith('/browse') && !route.query.i"
-                    :is-subpage="(route) => route.path.startsWith('/project') && !route.query.i"
+                    v-tooltip.right="formatMessage(messages.schematicWorkshop)"
+                    to="/lab/schematic-preview"
+                    :is-primary="(r) => r.path.startsWith('/lab/schematic-preview')"
                 >
-                    <CompassIcon />
-                </NavButton>
-                <NavButton
-                    v-if="!themeStore.isNavItemHidden('skins')"
-                    v-tooltip.right="formatMessage(messages.skinSelector)"
-                    data-onboarding-id="nav-skins"
-                    to="/skins"
-                >
-                    <ChangeSkinIcon />
-                </NavButton>
-                <NavButton
-                    v-if="!themeStore.isNavItemHidden('multiplayer')"
-                    v-tooltip.right="formatMessage(messages.multiplayer)"
-                    to="/multiplayer"
-                    :is-primary="(r) => r.path.startsWith('/multiplayer')"
-                >
-                    <UsersIcon />
-                </NavButton>
-                <NavButton
-                    v-if="!themeStore.isNavItemHidden('library')"
-                    v-tooltip.right="formatMessage(messages.library)"
-                    data-onboarding-id="nav-library"
-                    to="/library"
-                    :is-primary="(r) => r.matched.some((record) => record.name === 'Library')"
-                    :is-subpage="
-                        () =>
-                            route.path.startsWith('/instance') ||
-                            ((route.path.startsWith('/browse') ||
-                                route.path.startsWith('/project')) &&
-                                route.query.i)
-                    "
-                >
-                    <LibraryIcon />
-                </NavButton>
-                <NavButton
-                    v-if="!themeStore.isNavItemHidden('lab')"
-                    v-tooltip.right="formatMessage(messages.lab)"
-                    data-onboarding-id="nav-lab"
-                    to="/lab"
-                    :is-primary="(r) => r.path.startsWith('/lab')"
-                >
-                    <FlaskConicalIcon />
+                    <CubeIcon />
                 </NavButton>
             </NavRail>
             <div class="h-px w-6 mx-auto my-2 bg-surface-5"></div>
@@ -3038,7 +2968,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
                 <SettingsIcon />
             </NavButton>
             <OverflowMenu
-                v-if="AxolotlBrandConfig.capabilities.privateModrinthServices && credentials?.user"
+                v-if="AlligatorZoneConfig.capabilities.privateModrinthServices && credentials?.user"
                 v-tooltip.right="`Modrinth account`"
                 data-onboarding-id="account-entry"
                 class="w-12 h-12 text-[var(--color-text-default)] rounded-full flex items-center justify-center text-2xl transition-all bg-transparent hover:bg-surface-4 hover:text-[var(--color-text-primary)] border-0 cursor-pointer"
@@ -3078,7 +3008,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
                 <template #sign-out> <LogOutIcon /> Sign out </template>
             </OverflowMenu>
             <NavButton
-                v-else-if="AxolotlBrandConfig.capabilities.privateModrinthServices"
+                v-else-if="AlligatorZoneConfig.capabilities.privateModrinthServices"
                 v-tooltip.right="'Sign in to a Modrinth account'"
                 data-onboarding-id="account-entry"
                 :to="() => signIn()"
@@ -3092,7 +3022,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
         >
             <div data-tauri-drag-region class="flex min-w-0 flex-1 overflow-hidden p-3">
                 <div data-tauri-drag-region class="flex shrink-0 items-center gap-2">
-                    <AxolotlLogo class="h-full w-auto shrink-0 pointer-events-none" />
+                    <AlligatorZoneLogo class="h-full w-auto shrink-0 pointer-events-none" />
                     <span
                         v-if="isBetaBuild"
                         class="inline-flex shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold leading-none text-blue-700"
@@ -3130,7 +3060,6 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
         v-if="stateInitialized"
         class="app-contents"
         :class="{
-            'sidebar-enabled': sidebarVisible,
             'studio-mode':
                 route.name === 'FileStudio' || route.name === 'MultiplayerServerFileStudio',
             'disable-advanced-rendering': !themeStore.advancedRendering,
@@ -3207,63 +3136,15 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
             </div>
             <ScrollToTopButton v-if="themeStore.showScrollTop" />
         </div>
-        <div
-            class="app-sidebar mt-px shrink-0 flex flex-col border-0 border-l-[1px] border-[--brand-gradient-border] border-solid"
-        >
-            <button
-                v-if="!forceSidebar && !forceSidebarHidden"
-                v-tooltip.left="
-                    sidebarToggled
-                        ? formatMessage(messages.collapseSidebar)
-                        : formatMessage(messages.expandSidebar)
-                "
-                class="sidebar-toggle-handle"
-                :aria-label="
-                    sidebarToggled
-                        ? formatMessage(messages.collapseSidebar)
-                        : formatMessage(messages.expandSidebar)
-                "
-                type="button"
-                @click="toggleSidebar"
-            >
-                <RightArrowIcon
-                    class="w-2.5 h-2.5 -translate-x-[1px] transition-transform duration-300"
-                    :class="{ 'rotate-180': !sidebarToggled }"
-                />
-            </button>
-            <div
-                v-overlay-scrollbars="sidebarOverlayScrollbarsOptions"
-                class="app-sidebar-scrollable relative min-h-0 flex-1"
-                data-overlayscrollbars-initialize
-            >
-                <div id="sidebar-teleport-target" class="sidebar-teleport-content contents"></div>
-                <div
-                    class="sidebar-default-content hidden"
-                    :class="{ 'sidebar-enabled': sidebarVisible }"
-                >
-                    <div
-                        class="p-4 border-0 border-b-[1px] border-[--brand-gradient-border] border-solid"
-                    >
-                        <h3 class="text-base text-[var(--color-text-default)] font-medium m-0">
-                            {{ formatMessage(messages.playingAs) }}
-                        </h3>
-                        <suspense>
-                            <AccountsCard ref="accounts" />
-                        </suspense>
-                    </div>
-                    <div id="sidebar-default-teleport-target"></div>
-                </div>
-            </div>
-        </div>
     </div>
     <I18nDebugPanel />
     <NotificationPanel
-        :has-sidebar="sidebarVisible"
+        :has-sidebar="false"
         :on-error-action="exportNotificationErrorLogs"
         :error-action-label="formatMessage(messages.exportErrorLogs)"
     />
     <PopupNotificationPanel
-        :has-sidebar="sidebarVisible"
+        :has-sidebar="false"
         :on-error-action="exportNotificationErrorLogs"
         :error-action-label="formatMessage(messages.exportErrorLogs)"
     />
@@ -3545,14 +3426,6 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
         :done="batchScanDone"
         :total="batchOriginalCount"
         @cancel="cancelBatchScan"
-    />
-
-    <OnboardingOverlay
-        :visible="showOnboarding"
-        :mode="onboardingMode"
-        @complete="finishOnboarding"
-        @skip="skipOnboarding"
-        @request-close-settings="closeOnboardingSettings"
     />
 </template>
 

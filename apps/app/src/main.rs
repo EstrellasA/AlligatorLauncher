@@ -37,9 +37,9 @@ struct UpdatePreferences {
 #[cfg(target_os = "macos")]
 mod macos;
 
-#[cfg(feature = "updater")]
-mod updater_impl;
-#[cfg(not(feature = "updater"))]
+// ALLIGATORZONE is handed out manually by its owner, so this fork ships no
+// update mechanism at all: the only "updater" implementation is a no-op and no
+// updater plugin is registered (see `updater_impl_noop.rs`).
 mod updater_impl_noop;
 
 const BLOCKBENCH_SKIN_RESOURCE_DIR: &str = "resources/blockbench-skin";
@@ -481,15 +481,15 @@ fn is_dev() -> bool {
     cfg!(debug_assertions)
 }
 
+/// Whether this build checks for launcher updates.
+///
+/// Always `false`: this fork has no update server and no bundled updater, so
+/// the frontend must not offer an update check that could never succeed.
 #[tauri::command]
 fn are_updates_enabled() -> bool {
-    true
+    false
 }
 
-#[cfg(feature = "updater")]
-pub use updater_impl::*;
-
-#[cfg(not(feature = "updater"))]
 pub use updater_impl_noop::*;
 
 // Toggles decorations
@@ -619,7 +619,7 @@ fn raise_file_descriptor_limit() {
 // if Tauri app is called with arguments, then those arguments will be treated as commands
 // ie: deep links or filepaths for .mrpacks
 fn main() {
-    // Initialize portable mode first (checks .Axolotl folder and sets THESEUS_CONFIG_DIR)
+    // Initialize portable mode first (checks .ALLIGATORZONE folder and sets THESEUS_CONFIG_DIR)
     // SAFETY: Called at the start of main() before any threads or tokio runtime are spawned
     let _portable = unsafe { portable::init_portable_mode() };
 
@@ -703,7 +703,7 @@ fn main() {
 
     let _log_guard = theseus::start_logger(&tauri_context.config().identifier);
 
-    tracing::info!("Initialized tracing subscriber. Loading Axolotl Launcher!");
+    tracing::info!("Initialized tracing subscriber. Loading ALLIGATORZONE!");
 
     let mut builder = tauri::Builder::default().register_uri_scheme_protocol(
         "axolotl-skin",
@@ -725,21 +725,6 @@ fn main() {
             blockbench_skin_response(request.uri().path(), &resource_dir)
         },
     );
-
-    #[cfg(feature = "updater")]
-    {
-        use tauri_plugin_http::reqwest::header::{HeaderValue, USER_AGENT};
-        use theseus::launcher_user_agent;
-        builder = builder.plugin(
-            tauri_plugin_updater::Builder::new()
-                .header(
-                    USER_AGENT,
-                    HeaderValue::from_str(&launcher_user_agent()).unwrap(),
-                )
-                .unwrap()
-                .build(),
-        );
-    }
 
     builder = builder
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
@@ -848,6 +833,7 @@ fn main() {
     builder = builder
         .plugin(api::ai::init())
         .plugin(api::auth::init())
+        .plugin(api::bootstrap::init())
         .plugin(api::mr_auth::init())
         .plugin(api::import::init())
         .plugin(api::install::init())
@@ -925,7 +911,7 @@ fn main() {
     match app {
         Ok(app) => {
             app.run(|app, event| {
-                #[cfg(not(any(feature = "updater", target_os = "macos")))]
+                #[cfg(not(target_os = "macos"))]
                 let _ = app;
 
                 if matches!(&event, tauri::RunEvent::ExitRequested { .. })
@@ -948,86 +934,6 @@ fn main() {
                     );
                 }
 
-                #[cfg(feature = "updater")]
-                if matches!(&event, tauri::RunEvent::Exit) {
-                    let update_data = app.state::<PendingUpdateData>().inner();
-                    let should_restart = State::get_if_initialized()
-                        .map(|s| {
-                            s.restart_after_pending_update.load(Ordering::Relaxed)
-                        })
-                        .unwrap_or(false);
-                    if let Some((update, data)) = &*update_data.0.lock().unwrap()
-                    {
-                        fn set_changelog_toast(version: Option<String>) {
-                            let toast_result: theseus::Result<()> = tauri::async_runtime::block_on(async move {
-                                settings::patch(serde_json::json!({ "pending_update_toast_for_version": version })).await?;
-                                Ok(())
-                            });
-                            if let Err(e) = toast_result {
-                                tracing::warn!(
-                                    "Failed to set pending_update_toast: {e}"
-                                )
-                            }
-                        }
-
-                        let version = update.version.clone();
-                        let install_result = if is_apt_linux() {
-                            tauri::async_runtime::block_on(
-                                install_apt_package(&version, data),
-                            )
-                            .map_err(|error| error.to_string())
-                        } else {
-                            let update = if should_restart {
-                                (**update).clone()
-                            } else {
-                                (**update).clone().restart_after_install(false)
-                            };
-
-                            // Persist the trigger before installing: on Windows
-                            // the updater plugin launches the NSIS installer and
-                            // exits the process via `std::process::exit(0)`
-                            // without returning, so the success path below never
-                            // runs there.
-                            #[cfg(target_os = "windows")]
-                            set_changelog_toast(Some(update.version.clone()));
-
-                            update.install(data).map_err(|error| error.to_string())
-                        };
-
-                        match install_result {
-                            Ok(()) => {
-                                set_changelog_toast(Some(version.clone()));
-                                if should_restart {
-                                    tracing::info!(
-                                        "Pending update installed successfully (version {}); restarting because user requested reload",
-                                        version
-                                    );
-                                    app.restart();
-                                } else {
-                                    tracing::info!(
-                                        "Pending update installed successfully (version {}); exiting without relaunch (user did not request reload)",
-                                        version
-                                    );
-                                }
-                            }
-                            Err(e) => {
-                                tracing::error!(
-                                    "Pending update install failed (version {}): {e}",
-                                    version
-                                );
-                                set_changelog_toast(None);
-
-                                DialogBuilder::message()
-                                    .set_level(MessageLevel::Error)
-                                    .set_title("Update error")
-                                    .set_text(format!("Failed to install update due to an error:\n{e}"))
-                                    .alert()
-                                    .show()
-                                    .unwrap();
-                            }
-                        }
-                    }
-                }
                 #[cfg(target_os = "macos")]
                 if let tauri::RunEvent::Opened { urls } = event {
                     tracing::info!("Handling webview open {urls:?}");
@@ -1066,7 +972,7 @@ fn main() {
                     DialogBuilder::message()
                         .set_level(MessageLevel::Error)
                         .set_title("Initialization error")
-                        .set_text("Your Microsoft Edge WebView2 installation is corrupt.\n\nMicrosoft Edge WebView2 is required to run Axolotl Launcher.\n\nRepair or reinstall the Microsoft Edge WebView2 Runtime, then start Axolotl again.")
+                        .set_text("Your Microsoft Edge WebView2 installation is corrupt.\n\nMicrosoft Edge WebView2 is required to run ALLIGATORZONE.\n\nRepair or reinstall the Microsoft Edge WebView2 Runtime, then start ALLIGATORZONE again.")
                         .alert()
                         .show()
                         .unwrap();

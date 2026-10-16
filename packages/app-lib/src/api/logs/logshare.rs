@@ -10,7 +10,7 @@ use crate::emit_logshare_ai_event;
 
 const LOGSHARE_BASE_URL: &str = "https://api.logshare.cn";
 const LOGSHARE_AI_READ_TIMEOUT_SECS: u64 = 300;
-const LOGSHARE_SOURCE_PREFIX: &str = "axolotl";
+const LOGSHARE_SOURCE_PREFIX: &str = "alligatorzone";
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LogShareSettings {

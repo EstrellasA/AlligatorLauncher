@@ -10,10 +10,10 @@ const messages = defineMessages({
     changelog: { id: 'axolotl-site.footer.release-history', defaultMessage: 'Changelog' },
     terms: { id: 'axolotl-site.navigation.terms', defaultMessage: 'Terms of Service' },
     privacy: { id: 'axolotl-site.navigation.privacy', defaultMessage: 'Privacy Policy' },
-    developer: { id: 'axolotl-site.footer.developer', defaultMessage: 'Axolotl Launcher Team' },
+    developer: { id: 'axolotl-site.footer.developer', defaultMessage: 'ALLIGATORZONE Team' },
     openSourcePrefix: {
         id: 'axolotl-site.footer.open-source-prefix',
-        defaultMessage: 'Axolotl is',
+        defaultMessage: 'ALLIGATORZONE is',
     },
     openSourceLink: {
         id: 'axolotl-site.footer.open-source-link',

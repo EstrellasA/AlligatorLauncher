@@ -1,14 +1,14 @@
-pub const PRODUCT_NAME: &str = "Axolotl Launcher";
-pub const SHORT_PRODUCT_NAME: &str = "Axolotl";
-pub const WEBSITE: &str = "https://www.ghs.red";
-pub const BUNDLE_IDENTIFIER: &str = "red.ghs.axolotl";
-pub const DEEP_LINK_SCHEME: &str = "axolotl";
+pub const PRODUCT_NAME: &str = "ALLIGATORZONE";
+pub const SHORT_PRODUCT_NAME: &str = "ALLIGATORZONE";
+pub const WEBSITE: &str = "";
+pub const BUNDLE_IDENTIFIER: &str = "com.alligatorzone.launcher";
+pub const DEEP_LINK_SCHEME: &str = "alligatorzone";
 
 /// Longest accepted data directory suffix; enough to name a branch or a build.
 const MAX_DATA_DIR_SUFFIX_LEN: usize = 32;
 
 pub fn user_agent(version: &str, os: &str) -> String {
-    format!("garbage-human-studio/axolotl/{version} ({os})")
+    format!("alligatorzone-launcher/{version} ({os})")
 }
 
 /// Name of the directory the launcher keeps its settings, databases and logs in.
@@ -64,7 +64,7 @@ mod tests {
     fn user_agent_is_unique_and_contains_no_contact_information() {
         let user_agent = user_agent("1.2.3", "windows");
 
-        assert_eq!(user_agent, "garbage-human-studio/axolotl/1.2.3 (windows)");
+        assert_eq!(user_agent, "alligatorzone-launcher/1.2.3 (windows)");
         assert!(!user_agent.contains("ghs.red"));
         assert!(!user_agent.contains("http"));
         assert!(!user_agent.contains('@'));

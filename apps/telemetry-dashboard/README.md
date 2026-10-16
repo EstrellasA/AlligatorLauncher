@@ -1,4 +1,4 @@
-# Axolotl Telemetry Dashboard
+# ALLIGATORZONE Telemetry Dashboard
 
 Read-only administration UI for the existing `axolotl-telemetry` D1 database and
 `axolotl-telemetry-errors` R2 bucket. It does not share routes or code with the public telemetry
@@ -40,13 +40,13 @@ credentials are sent to the browser.
 
 Do not deploy the dashboard until every item below is complete:
 
-1. Create a GitHub OAuth App controlled by the `Axolotl-Launcher` organization. Use
+1. Create a GitHub OAuth App controlled by the `ALLIGATORZONE-Launcher` organization. Use
    `https://admin.axlmc.org` as its homepage and the callback URL shown by Cloudflare Zero Trust,
    normally `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
 2. Add GitHub as a Cloudflare Zero Trust identity provider using that Client ID and Client Secret.
    Keep the Client Secret only in GitHub and Cloudflare.
 3. Create a self-hosted Access application for `admin.axlmc.org` with an 8-hour session duration.
-4. Create one Allow policy with `Include -> GitHub Organization -> Axolotl-Launcher`. Do not add a
+4. Create one Allow policy with `Include -> GitHub Organization -> ALLIGATORZONE-Launcher`. Do not add a
    bypass policy or a broader include rule.
 5. Keep the Worker custom domain `admin.axlmc.org` bound to `axolotl-telemetry-dashboard`. The DNS
    records for `axlmc.org` stay proxied through Cloudflare.

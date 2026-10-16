@@ -62,6 +62,7 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
             instance_get_content_items_by_paths,
             instance_get_content_snapshot,
             instance_refresh_content,
+            instance_get_automodpack_changelog,
             instance_plan_content_updates,
             instance_apply_content_update_plan,
             instance_plan_upgrade,
@@ -450,6 +451,9 @@ pub struct Instance {
     pub hooks: Hooks,
     pub symlink_target: Option<String>,
     pub game_dir_override: Option<String>,
+    /// `null` = never configured (the frontend applies the built-in default from
+    /// `server-config.ts`); `""` = explicitly hidden.
+    pub web_map_url: Option<String>,
     pub linked_launcher: Option<String>,
     pub linked_launcher_root: Option<String>,
     pub linked_dot_minecraft: Option<String>,
@@ -597,6 +601,14 @@ pub struct EditInstance {
         with = "serde_with::rust::double_option"
     )]
     pub game_dir_override: Option<Option<String>>,
+    /// See `theseus::data::EditInstance::web_map_url`: absent leaves the stored
+    /// value alone, `null` means "never configured", `""` means "hidden".
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "serde_with::rust::double_option"
+    )]
+    pub web_map_url: Option<Option<String>>,
 }
 
 impl From<InstanceMetadata> for Instance {
@@ -640,6 +652,7 @@ impl From<InstanceMetadata> for Instance {
             hooks: metadata.launch_overrides.hooks,
             symlink_target: metadata.instance.symlink_target,
             game_dir_override: metadata.instance.game_dir_override,
+            web_map_url: metadata.instance.web_map_url,
             linked_launcher: metadata.instance.linked_launcher,
             linked_launcher_root: metadata.instance.linked_launcher_root,
             linked_dot_minecraft: metadata.instance.linked_dot_minecraft,
@@ -805,6 +818,7 @@ fn edit_to_core(edit_instance: EditInstance) -> Result<CoreEditInstance> {
         recent_time_played: None,
         symlink_target: None,
         game_dir_override: edit_instance.game_dir_override,
+        web_map_url: edit_instance.web_map_url,
     })
 }
 
@@ -1057,8 +1071,10 @@ pub async fn instance_get_projects(
 #[tauri::command]
 pub async fn instance_get_installed_project_ids(
     instance_id: &str,
+    project_types: Option<Vec<ProjectType>>,
 ) -> Result<Vec<String>> {
-    Ok(theseus::instance::get_installed_project_ids(instance_id).await?)
+    Ok(theseus::instance::get_installed_project_ids(instance_id, project_types)
+        .await?)
 }
 
 #[tauri::command]
@@ -1113,6 +1129,20 @@ pub async fn instance_get_content_snapshot(
     instance_id: &str,
 ) -> Result<theseus::data::InstanceContentSnapshot> {
     Ok(theseus::instance::get_content_snapshot(instance_id).await?)
+}
+
+/// The server's published AutoModpack generation history for this instance.
+///
+/// Read straight off the instance's `automodpack/client/` mirror, so the update
+/// notes work with no network and no running game. The response carries an
+/// `available` flag and an `unavailableReason` for the ordinary "nothing
+/// published here yet" states, and a `skippedLines` count when a torn journal
+/// tail had to be ignored.
+#[tauri::command]
+pub async fn instance_get_automodpack_changelog(
+    instance_id: &str,
+) -> Result<theseus::data::AutomodpackChangelog> {
+    Ok(theseus::instance::get_automodpack_changelog(instance_id).await?)
 }
 
 #[tauri::command]

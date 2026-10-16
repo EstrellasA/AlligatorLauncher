@@ -35,6 +35,11 @@ pub mod translation;
 pub mod worlds;
 
 pub mod data {
+    pub use crate::instance::{
+        AutomodpackChange, AutomodpackChangeKind, AutomodpackChangelog,
+        AutomodpackDirectoryGroup, AutomodpackGeneration,
+        AutomodpackUnavailableReason,
+    };
     pub use crate::instance::McArchiveCoreInstallResult;
     pub use crate::launcher::ExternalGameDirMode;
     pub use crate::state::{

@@ -366,7 +366,7 @@ async fn resolve_curseforge_updates(
                         crate::api::curseforge::select_latest_compatible_file(
                             project_id.get(),
                             Some(context.content_set.game_version.clone()),
-                            (project_type == ProjectType::Mod)
+                            (project_type.is_mod())
                                 .then(|| {
                                     curseforge_loader_type(
                                         context.content_set.loader.as_str(),
@@ -474,7 +474,7 @@ fn update_cache_key(
     format!(
         "{}-{}-{}-{}",
         file.sha1,
-        if project_type == ProjectType::Mod {
+        if project_type.is_mod() {
             loader.to_string()
         } else {
             project_type.get_loaders().join("+")

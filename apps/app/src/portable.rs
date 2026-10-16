@@ -1,11 +1,11 @@
 use std::sync::atomic::{AtomicBool, Ordering};
 
-const PORTABLE_DIR_NAME: &str = ".Axolotl";
+const PORTABLE_DIR_NAME: &str = ".ALLIGATORZONE";
 
 static PORTABLE_MODE: AtomicBool = AtomicBool::new(false);
 
 /// 在启动时初始化便携模式
-/// 检查 `.Axolotl` 文件夹是否存在且可写
+/// 检查 `.ALLIGATORZONE` 文件夹是否存在且可写
 /// 如果存在且可写，将 `THESEUS_CONFIG_DIR` 环境变量设置为该路径
 /// 返回 `true` 如果便携模式已启用，否则返回 `false`
 ///

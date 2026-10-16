@@ -14,7 +14,7 @@ use crate::state::{clear_log_buffer, push_log_line};
 const MAX_PTY_LINE_BYTES: usize = 256 * 1024;
 const MAX_SERVER_LOG_LINE_BYTES: usize = 64 * 1024;
 const SERVER_LOG_TRUNCATION_MARKER: &str =
-    " … [log output truncated by Axolotl] … ";
+    " … [log output truncated by ALLIGATORZONE] … ";
 
 async fn read_bounded_server_log_line<R>(
     reader: &mut R,
@@ -307,9 +307,9 @@ fn is_eula_refusal(line: &str) -> bool {
 }
 
 const JNA_CRASH_HINT_LINES: [&str; 3] = [
-    "[Axolotl] This crash matches a known JNA bug on macOS (java-native-access#1452):",
-    "[Axolotl] mods bundling JNA below 5.13.0 abort when a native library fails to load.",
-    "[Axolotl] Update or remove the affected mod, or ask the modpack author to bump JNA to 5.13.0+.",
+    "[ALLIGATORZONE] This crash matches a known JNA bug on macOS (java-native-access#1452):",
+    "[ALLIGATORZONE] mods bundling JNA below 5.13.0 abort when a native library fails to load.",
+    "[ALLIGATORZONE] Update or remove the affected mod, or ask the modpack author to bump JNA to 5.13.0+.",
 ];
 
 /// Removes ANSI escape sequences (SGR colors, cursor control, OSC titles) that
@@ -409,7 +409,7 @@ mod tests {
             .unwrap()
             .unwrap();
 
-        assert!(first.contains("truncated by Axolotl"));
+        assert!(first.contains("truncated by ALLIGATORZONE"));
         assert!(first.len() <= MAX_SERVER_LOG_LINE_BYTES);
         assert_eq!(second, "next\n");
     }

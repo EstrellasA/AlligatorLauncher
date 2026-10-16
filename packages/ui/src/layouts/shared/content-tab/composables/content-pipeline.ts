@@ -75,6 +75,62 @@ const filterMessages = defineMessages({
     },
 })
 
+/**
+ * The two mod folders are one loader but two different things: the files the
+ * server pack ships in `mods/` and the ones the player chose themselves in
+ * `clientmods/`. Each gets its own chip, so the labels must not be the generic
+ * "Mods" category, which stays in use everywhere a mod is just a mod.
+ */
+const typeFilterMessages = defineMessages({
+    serverMod: {
+        id: 'content.filter.type.server-mod',
+        defaultMessage: 'Server Mod',
+    },
+    clientMod: {
+        id: 'content.filter.type.client-mod',
+        defaultMessage: 'Client Mod',
+    },
+})
+
+/**
+ * Chip order. A type keeps its slot whether or not the current instance has any
+ * of it, so the row does not reshuffle between instances and the mod chips stay
+ * next to each other instead of drifting apart by count.
+ */
+const TYPE_FILTER_CHIP_ORDER = [
+    'mod',
+    'clientmod',
+    'schematic',
+    'shader',
+    'resourcepack',
+    'datapack',
+    'modpack',
+    'plugin',
+    'server',
+    'project',
+]
+
+/** Chips that are offered even when the page holds none of that type. */
+const ALWAYS_VISIBLE_TYPE_CHIPS = ['schematic']
+
+/**
+ * The filter a content item belongs to. `clientmod` must not be folded into
+ * `mod` the way `normalizeProjectType` does for labels: the two folders are
+ * exactly what this filter row separates.
+ */
+function typeFilterKey(item: ContentItem): string {
+    const raw = (item.project_type ?? '').toLowerCase()
+    if (raw === 'clientmod' || raw === 'clientmods' || raw === 'client_mod') {
+        return 'clientmod'
+    }
+    return normalizeProjectType(item.project_type)
+}
+
+function typeFilterOrder(type: string): number {
+    const index = TYPE_FILTER_CHIP_ORDER.indexOf(type)
+    return index === -1 ? TYPE_FILTER_CHIP_ORDER.length : index
+}
+
 // ---- composable ----
 
 export function useContentPipeline(config: ContentPipelineConfig) {
@@ -172,7 +228,7 @@ export function useContentPipeline(config: ContentPipelineConfig) {
         )
 
         for (const item of allItems) {
-            type.add(normalizeProjectType(item.project_type))
+            type.add(typeFilterKey(item))
             if (showUpdateFilter && item.update != null) status.add('updates')
             if (isEnabledContentItem(item)) status.add('enabled')
             if (isDisabledContentItem(item)) status.add('disabled')
@@ -247,7 +303,7 @@ export function useContentPipeline(config: ContentPipelineConfig) {
             (duplicateItems?.value ?? []).map((item) => getItemId(item)),
         )
         const matchesTypeFilter = (item: ContentItem) =>
-            typeFilters.includes(normalizeProjectType(item.project_type)) ||
+            typeFilters.includes(typeFilterKey(item)) ||
             (typeFilters.includes('duplicates') && duplicateItemIds.has(getItemId(item)))
 
         // Step 3: Compute typeFilteredItems and statusFilteredItems from searchedAllItems
@@ -282,7 +338,7 @@ export function useContentPipeline(config: ContentPipelineConfig) {
 
         // type counts: from statusFiltered (status-filtered items, NOT type-filtered)
         for (const item of statusFiltered) {
-            const type = normalizeProjectType(item.project_type)
+            const type = typeFilterKey(item)
             counts[type] = (counts[type] || 0) + 1
         }
         counts['duplicates'] = statusFiltered.filter((item) =>
@@ -302,18 +358,29 @@ export function useContentPipeline(config: ContentPipelineConfig) {
         if (showTypeFilters) {
             const frequency: Record<string, number> = {}
             for (const item of searchedAllItems) {
-                const normalized = normalizeProjectType(item.project_type)
+                const normalized = typeFilterKey(item)
                 frequency[normalized] = (frequency[normalized] || 0) + 1
             }
-            const types = Object.keys(frequency).sort((a, b) => frequency[b] - frequency[a])
+            const types = [
+                ...new Set([...Object.keys(frequency), ...ALWAYS_VISIBLE_TYPE_CHIPS]),
+            ]
+            types.sort((a, b) => {
+                const order = typeFilterOrder(a) - typeFilterOrder(b)
+                return order !== 0 ? order : frequency[b] - frequency[a]
+            })
             for (const type of types) {
                 const msg =
                     commonProjectTypeCategoryMessages[
                         type as keyof typeof commonProjectTypeCategoryMessages
                     ]
-                const label = msg
-                    ? formatMessage(msg)
-                    : type.charAt(0).toUpperCase() + type.slice(1) + 's'
+                const label =
+                    type === 'mod'
+                        ? formatMessage(typeFilterMessages.serverMod)
+                        : type === 'clientmod'
+                          ? formatMessage(typeFilterMessages.clientMod)
+                          : msg
+                            ? formatMessage(msg)
+                            : type.charAt(0).toUpperCase() + type.slice(1) + 's'
                 row1.push({ id: type, label })
             }
             if (searchedAllItems.some((item) => duplicateItemIds.has(getItemId(item)))) {

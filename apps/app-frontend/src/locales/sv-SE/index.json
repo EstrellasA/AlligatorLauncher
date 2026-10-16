@@ -66,7 +66,7 @@
     "message": "Avancerad rendering"
   },
   "app.appearance-settings.color-theme.description": {
-    "message": "Välj färgtema för Axolotl Launcheren."
+    "message": "Välj färgtema för ALLIGATORZONEen."
   },
   "app.appearance-settings.color-theme.title": {
     "message": "Färgtema"
@@ -100,6 +100,15 @@
   },
   "app.appearance-settings.native-decorations.title": {
     "message": "Inbyggda fönsterdekorationer"
+  },
+  "app.appearance-settings.sections.advanced-interface": {
+    "message": "Advanced interface"
+  },
+  "app.appearance-settings.sections.content-behavior": {
+    "message": "Content behavior"
+  },
+  "app.appearance-settings.sections.home-navigation": {
+    "message": "Home & navigation"
   },
   "app.appearance-settings.select-option": {
     "message": "Välj ett alternativ"
@@ -350,11 +359,112 @@
   "app.project.install-context.install-content-to-instance": {
     "message": "Installera innehåll till instans"
   },
+  "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
+  "app.server.changelog.file-count": "{count, plural, one {# file} other {# files}}",
+  "app.server.changelog.generation": "Generation {seq}",
+  "app.server.changelog.kind-added": "Added",
+  "app.server.changelog.kind-added-tooltip": "This generation added the mod.",
+  "app.server.changelog.kind-changed": "Changed",
+  "app.server.changelog.kind-changed-tooltip": "This generation updated the mod.",
+  "app.server.changelog.kind-removed": "Removed",
+  "app.server.changelog.kind-removed-tooltip": "This generation removed the mod.",
+  "app.server.changelog.load-failed": "Could not read the update notes.",
+  "app.server.changelog.loading": "Reading the published pack history...",
+  "app.server.changelog.mods-heading": "Mods",
+  "app.server.changelog.mods-loading": "Loading mod details...",
+  "app.server.changelog.mods-unavailable": "These mods are no longer installed here, so only their file names are known.",
+  "app.server.changelog.more-files": "Show more changed files",
+  "app.server.changelog.no-history": "No instance on this computer has an AutoModpack history yet. Launch the pack once and the changes the server published will appear here.",
+  "app.server.changelog.no-notes": "No patch notes were published with this generation.",
+  "app.server.changelog.open-project": "Open the project page for {name}",
+  "app.server.changelog.open-project-search": "Search for {name} online - this mod declares no project page of its own",
+  "app.server.changelog.other-heading": "Other changed files",
+  "app.server.changelog.published": "Published {date}",
+  "app.server.changelog.refresh": "Refresh",
+  "app.server.changelog.restore": "Rollback of generation {seq}",
+  "app.server.changelog.retry": "Try again",
+  "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
+  "app.server.changelog.title": "Pack update notes",
+  "app.settings.defaults.sections.after-launch": {
+    "message": "After launch behavior"
+  },
+  "app.settings.defaults.sections.environment": {
+    "message": "Environment variables"
+  },
+  "app.settings.defaults.sections.launch-hooks": {
+    "message": "Launch hooks"
+  },
+  "app.settings.defaults.sections.window-behavior": {
+    "message": "Window behavior"
+  },
   "app.settings.developer-mode-enabled": {
     "message": "Utvecklarläge aktiverat."
   },
+  "app.settings.developer.feature-flags-section-title": {
+    "message": "Feature flags"
+  },
   "app.settings.downloading": {
     "message": "Ladda ner v{version}"
+  },
+  "app.settings.feature-flags.advanced-filters-collapsed": {
+    "message": "Collapse advanced filters by default"
+  },
+  "app.settings.feature-flags.always-show-app-controls": {
+    "message": "Always show app controls"
+  },
+  "app.settings.feature-flags.auto-install-dependencies": {
+    "message": "Automatically install dependencies"
+  },
+  "app.settings.feature-flags.i18n-debug": {
+    "message": "Translation debugging"
+  },
+  "app.settings.feature-flags.page-path": {
+    "message": "Page path"
+  },
+  "app.settings.feature-flags.page-transitions": {
+    "message": "Page transitions"
+  },
+  "app.settings.feature-flags.project-background": {
+    "message": "Project backgrounds"
+  },
+  "app.settings.feature-flags.server-project-qa": {
+    "message": "Server project QA"
+  },
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+    "message": "Always show server RAM as bytes"
+  },
+  "app.settings.feature-flags.show-instance-play-time": {
+    "message": "Show instance play time"
+  },
+  "app.settings.feature-flags.show-version-environment-column": {
+    "message": "Show version environment column"
+  },
+  "app.settings.feature-flags.skip-non-essential-warnings": {
+    "message": "Skip non-essential warnings"
+  },
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
+    "message": "Skip unknown pack warnings"
+  },
+  "app.settings.feature-flags.worlds-in-home": {
+    "message": "Worlds on home page"
+  },
+  "app.settings.feature-flags.worlds-tab": {
+    "message": "Worlds tab"
+  },
+  "app.settings.privacy.section-title": {
+    "message": "Privacy & data sharing"
+  },
+  "app.settings.resources.sections.data-storage": {
+    "message": "Data directories & cache"
+  },
+  "app.settings.resources.sections.download-behavior": {
+    "message": "Download behavior"
+  },
+  "app.settings.resources.sections.missing-content": {
+    "message": "Missing content"
+  },
+  "app.settings.resources.sections.network-authentication": {
+    "message": "Network authentication"
   },
   "app.skins.add-button": {
     "message": "Lägg till utseende"
@@ -479,14 +589,14 @@
   "app.skins.section.tiny-takeover": {
     "message": "Tiny Takeover"
   },
+  "app.skins.sign-in.axolotl-alt": {
+    "message": "ALLIGATORZONE"
+  },
   "app.skins.sign-in.button": {
     "message": "Logga in"
   },
   "app.skins.sign-in.description": {
-    "message": "Logga in på ditt Minecraft-konto för att använda hudhanteringsfunktionerna i Axolotl Launcher."
-  },
-  "app.skins.sign-in.axolotl-alt": {
-    "message": "Axolotl Launcher"
+    "message": "Logga in på ditt Minecraft-konto för att använda hudhanteringsfunktionerna i ALLIGATORZONE."
   },
   "app.skins.sign-in.title": {
     "message": "Vänligen logga in"
@@ -494,11 +604,14 @@
   "app.skins.title": {
     "message": "Utseende väljare"
   },
+  "app.translation-settings.display-section-title": {
+    "message": "Translation display"
+  },
   "app.update-popup.body.download-complete": {
-    "message": "Axolotl Launcher v{version} har laddats ner. Ladda om för att uppdatera nu, eller automatiskt när du stänger Axolotl Launcher."
+    "message": "ALLIGATORZONE v{version} har laddats ner. Ladda om för att uppdatera nu, eller automatiskt när du stänger ALLIGATORZONE."
   },
   "app.update-popup.body.metered": {
-    "message": "Axolotl Launcher v{version} är nu tillgänglig! Eftersom du använder ett nätverk med datatrafikbegränsningar har vi inte laddat ner det automatiskt."
+    "message": "ALLIGATORZONE v{version} är nu tillgänglig! Eftersom du använder ett nätverk med datatrafikbegränsningar har vi inte laddat ner det automatiskt."
   },
   "app.update-popup.changelog": {
     "message": "Ändringslogg"
@@ -916,92 +1029,5 @@
   },
   "unknown-pack-warning-modal.warning.title": {
     "message": "Okänd filvarning"
-  },
-  "app.appearance-settings.sections.advanced-interface": {
-    "message": "Advanced interface"
-  },
-  "app.appearance-settings.sections.content-behavior": {
-    "message": "Content behavior"
-  },
-  "app.appearance-settings.sections.home-navigation": {
-    "message": "Home & navigation"
-  },
-  "app.settings.defaults.sections.after-launch": {
-    "message": "After launch behavior"
-  },
-  "app.settings.defaults.sections.environment": {
-    "message": "Environment variables"
-  },
-  "app.settings.defaults.sections.launch-hooks": {
-    "message": "Launch hooks"
-  },
-  "app.settings.defaults.sections.window-behavior": {
-    "message": "Window behavior"
-  },
-  "app.settings.developer.feature-flags-section-title": {
-    "message": "Feature flags"
-  },
-  "app.settings.privacy.section-title": {
-    "message": "Privacy & data sharing"
-  },
-  "app.settings.resources.sections.data-storage": {
-    "message": "Data directories & cache"
-  },
-  "app.settings.resources.sections.download-behavior": {
-    "message": "Download behavior"
-  },
-  "app.settings.resources.sections.missing-content": {
-    "message": "Missing content"
-  },
-  "app.settings.resources.sections.network-authentication": {
-    "message": "Network authentication"
-  },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
-  "app.settings.feature-flags.project-background": {
-    "message": "Project backgrounds"
-  },
-  "app.settings.feature-flags.page-path": {
-    "message": "Page path"
-  },
-  "app.settings.feature-flags.worlds-tab": {
-    "message": "Worlds tab"
-  },
-  "app.settings.feature-flags.worlds-in-home": {
-    "message": "Worlds on home page"
-  },
-  "app.settings.feature-flags.server-project-qa": {
-    "message": "Server project QA"
-  },
-  "app.settings.feature-flags.show-version-environment-column": {
-    "message": "Show version environment column"
-  },
-  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
-    "message": "Always show server RAM as bytes"
-  },
-  "app.settings.feature-flags.always-show-app-controls": {
-    "message": "Always show app controls"
-  },
-  "app.settings.feature-flags.skip-non-essential-warnings": {
-    "message": "Skip non-essential warnings"
-  },
-  "app.settings.feature-flags.skip-unknown-pack-warning": {
-    "message": "Skip unknown pack warnings"
-  },
-  "app.settings.feature-flags.i18n-debug": {
-    "message": "Translation debugging"
-  },
-  "app.settings.feature-flags.show-instance-play-time": {
-    "message": "Show instance play time"
-  },
-  "app.settings.feature-flags.page-transitions": {
-    "message": "Page transitions"
-  },
-  "app.settings.feature-flags.advanced-filters-collapsed": {
-    "message": "Collapse advanced filters by default"
-  },
-  "app.settings.feature-flags.auto-install-dependencies": {
-    "message": "Automatically install dependencies"
   }
 }

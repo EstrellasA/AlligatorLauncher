@@ -170,6 +170,12 @@ pub struct ModrinthFileMatch {
 #[serde(rename_all = "lowercase")]
 pub enum ProjectType {
     Mod,
+    /// Mods the player chose themselves, kept in `clientmods/` and registered
+    /// with the loader by AlligatorZone Core instead of being loaded from the
+    /// server pack's `mods/` folder. Semantically a mod everywhere the loader,
+    /// update or metadata logic is concerned; only the folder differs.
+    #[serde(alias = "client_mod", alias = "clientmods")]
+    ClientMod,
     DataPack,
     ResourcePack,
     #[serde(alias = "shader")]
@@ -223,6 +229,7 @@ impl ProjectType {
     pub(crate) fn from_folder_name(folder_name: &str) -> Option<Self> {
         match folder_name {
             "mods" => Some(ProjectType::Mod),
+            "clientmods" => Some(ProjectType::ClientMod),
             "datapacks" => Some(ProjectType::DataPack),
             "resourcepacks" => Some(ProjectType::ResourcePack),
             "shaderpacks" => Some(ProjectType::ShaderPack),
@@ -232,9 +239,18 @@ impl ProjectType {
         }
     }
 
+    /// Whether this type is a jar-based mod: the server pack's `mods/` folder or
+    /// the launcher-managed `clientmods/` folder. Both share loader
+    /// compatibility, mod metadata extraction, and Modrinth/CurseForge update
+    /// semantics, so every mod-shaped decision must accept both.
+    pub fn is_mod(&self) -> bool {
+        matches!(self, ProjectType::Mod | ProjectType::ClientMod)
+    }
+
     pub fn get_name(&self) -> &'static str {
         match self {
             ProjectType::Mod => "mod",
+            ProjectType::ClientMod => "clientmod",
             ProjectType::DataPack => "datapack",
             ProjectType::ResourcePack => "resourcepack",
             ProjectType::ShaderPack => "shader",
@@ -246,6 +262,7 @@ impl ProjectType {
     pub fn get_folder(&self) -> &'static str {
         match self {
             ProjectType::Mod => "mods",
+            ProjectType::ClientMod => "clientmods",
             ProjectType::DataPack => "datapacks",
             ProjectType::ResourcePack => "resourcepacks",
             ProjectType::ShaderPack => "shaderpacks",
@@ -256,7 +273,9 @@ impl ProjectType {
 
     pub fn get_loaders(&self) -> &'static [&'static str] {
         match self {
-            ProjectType::Mod => &["fabric", "forge", "quilt", "neoforge"],
+            ProjectType::Mod | ProjectType::ClientMod => {
+                &["fabric", "forge", "quilt", "neoforge"]
+            }
             ProjectType::DataPack => &["datapack"],
             ProjectType::ResourcePack => &["vanilla", "canvas", "minecraft"],
             ProjectType::ShaderPack => &["iris", "optifine"],
@@ -268,6 +287,7 @@ impl ProjectType {
     pub fn iterator() -> impl Iterator<Item = ProjectType> {
         [
             ProjectType::Mod,
+            ProjectType::ClientMod,
             ProjectType::DataPack,
             ProjectType::ResourcePack,
             ProjectType::ShaderPack,
@@ -282,7 +302,7 @@ impl ProjectType {
 impl From<ProjectType> for modrinth_content_management::ContentType {
     fn from(project_type: ProjectType) -> Self {
         match project_type {
-            ProjectType::Mod => Self::Mod,
+            ProjectType::Mod | ProjectType::ClientMod => Self::Mod,
             ProjectType::DataPack => Self::DataPack,
             ProjectType::ResourcePack => Self::ResourcePack,
             ProjectType::ShaderPack => Self::Shader,

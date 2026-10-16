@@ -8,7 +8,7 @@ export interface AdminSessionDto {
         name: string
         email: string | null
     }
-    organization: 'Axolotl-Launcher'
+    organization: 'ALLIGATORZONE-Launcher'
     logoutUrl: string
     mock: boolean
     dataSource: 'production' | 'fixture'

@@ -43,11 +43,11 @@ const { formatMessage, locale } = useVIntl()
 const messages = defineMessages({
     seoTitle: {
         id: 'axolotl-site.changelog.seo.title',
-        defaultMessage: 'Changelog - Axolotl Launcher',
+        defaultMessage: 'Changelog - ALLIGATORZONE',
     },
     seoDescription: {
         id: 'axolotl-site.changelog.seo.description',
-        defaultMessage: 'See what changed in each public Axolotl Launcher release.',
+        defaultMessage: 'See what changed in each public ALLIGATORZONE release.',
     },
     eyebrow: { id: 'axolotl-site.changelog.eyebrow', defaultMessage: 'Release history' },
     title: { id: 'axolotl-site.changelog.title', defaultMessage: 'Changelog' },

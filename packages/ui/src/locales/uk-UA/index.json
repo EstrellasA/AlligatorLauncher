@@ -1775,9 +1775,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Мод} few {Мода} many {Модів} other {Модів}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Моди"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {мод} few {мода} many {модів} other {модів}}"
   },

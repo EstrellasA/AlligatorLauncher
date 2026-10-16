@@ -37,7 +37,6 @@ const settingsComponentFiles = {
     'instance-sync': ['./instances/index.vue'],
     updates: ['./UpdateSettings.vue'],
     logs: ['./LogsSettings.vue'],
-    about: ['./AboutSettings.vue'],
     'feature-flags': ['./FeatureFlagSettings.vue'],
 } as const
 
@@ -159,7 +158,7 @@ test('developer-only settings stay out of the normal search categories', () => {
     )
 })
 
-test('settings navigation groups preserve the intended Axolotl information architecture', () => {
+test('settings navigation groups preserve the intended ALLIGATORZONE information architecture', () => {
     const categoriesForGroup = (
         group: 'launcher' | 'game' | 'data-privacy' | 'support' | 'developer',
         developerMode = false,
@@ -183,7 +182,7 @@ test('settings navigation groups preserve the intended Axolotl information archi
         'network-multiplayer',
     ])
     assert.deepEqual(categoriesForGroup('data-privacy'), ['storage-backups', 'privacy-data'])
-    assert.deepEqual(categoriesForGroup('support'), ['updates', 'about', 'logs'])
+    assert.deepEqual(categoriesForGroup('support'), ['updates', 'logs'])
     assert.deepEqual(categoriesForGroup('developer'), [])
     assert.deepEqual(categoriesForGroup('developer', true), ['feature-flags'])
 })

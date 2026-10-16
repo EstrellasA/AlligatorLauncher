@@ -12,12 +12,12 @@ import {
 } from '@/store/navigation-return'
 
 import { discoverRoutes } from './discover'
-import { headlessDemoRoutes } from './headless-demo'
 import { homeRoutes } from './home'
 import { instanceRoutes } from './instance'
 import { labRoutes } from './lab'
 import { libraryRoutes } from './library'
 import { multiplayerRoutes } from './multiplayer'
+import { serverRoutes } from './server'
 import { utilityRoutes } from './utility'
 
 /**
@@ -34,7 +34,7 @@ export default createRouter({
         ...labRoutes,
         ...libraryRoutes,
         ...instanceRoutes,
-        ...headlessDemoRoutes,
+        ...serverRoutes,
     ],
     linkActiveClass: 'router-link-active',
     linkExactActiveClass: 'router-link-exact-active',

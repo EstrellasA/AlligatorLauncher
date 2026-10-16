@@ -163,7 +163,7 @@ pub async fn login<R: Runtime>(
             },
         )?),
     )
-    .title("Sign into Axolotl Launcher")
+    .title("Sign into ALLIGATORZONE")
     .always_on_top(true)
     .center()
     .initialization_script(help_bar_script)

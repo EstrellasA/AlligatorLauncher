@@ -95,7 +95,6 @@ const categoryContent: Record<SettingsCategoryId, Pick<SettingsCategory, 'icon' 
         icon: FileTextIcon,
         content: defineAsyncComponent(() => import('./LogsSettings.vue')),
     },
-    about: { icon: InfoIcon, content: defineAsyncComponent(() => import('./AboutSettings.vue')) },
     'feature-flags': {
         icon: ToggleRightIcon,
         content: defineAsyncComponent(() => import('./FeatureFlagSettings.vue')),

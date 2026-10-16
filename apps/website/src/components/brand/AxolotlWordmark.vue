@@ -3,7 +3,7 @@
         class="inline-flex items-center gap-2.5 text-[1.375rem] font-extrabold leading-none tracking-[-0.035em] text-[var(--color-contrast)]"
     >
         <img src="/axolotl.png" alt="" />
-        <span>Axolotl</span>
+        <span>ALLIGATORZONE</span>
     </span>
 </template>
 

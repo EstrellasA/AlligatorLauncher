@@ -22,6 +22,7 @@ import {
     safeAnnouncementUrl,
 } from '@/helpers/remote-announcements'
 import { getUpdateChannel } from '@/helpers/settings'
+import { ServerConfig } from '@/server-config'
 
 const props = defineProps<{ ready: boolean; previewOnly?: boolean }>()
 const { formatMessage } = useVIntl()
@@ -224,11 +225,16 @@ async function refresh() {
     const timeout = setTimeout(() => abort.abort(), 10000)
     try {
         if (!endpoint) {
+            const configured =
+                import.meta.env.VITE_AXO_ANNOUNCEMENTS_URL || ServerConfig.announcementsUrl
+
+            // 未配置公告服务时直接关闭该功能。
+            // 这里绝不能回落到上游 ALLIGATORZONE 的公告地址，否则会把别家的公告
+            // 显示在自家启动器里。return 后 finally 会把 inFlight 复位。
+            if (!configured) return
+
             const [version, channel] = await Promise.all([getVersion(), getUpdateChannel()])
-            endpoint = new URL(
-                import.meta.env.VITE_AXO_ANNOUNCEMENTS_URL ||
-                    'https://admin.axlmc.org/api/public/announcements',
-            )
+            endpoint = new URL(configured)
             endpoint.searchParams.set('version', version)
             endpoint.searchParams.set('channel', channel === 'release' ? 'stable' : 'beta')
             cacheKey = stateKey + ':cache:' + endpoint.href

@@ -23,7 +23,7 @@ import {
 import { computed, ref } from 'vue'
 
 import { ChatIcon } from '@/assets/icons'
-import { AxolotlBrandConfig } from '@/config'
+import { AlligatorZoneConfig } from '@/config'
 import { trackEvent } from '@/helpers/analytics'
 import { login as login_flow, set_default_user } from '@/helpers/auth.js'
 import { install_existing_instance } from '@/helpers/install'
@@ -51,13 +51,13 @@ const messages = defineMessages({
     loaderTitle: { id: 'app.error.loader-title', defaultMessage: 'No loader selected' },
     stateTitle: {
         id: 'app.error.state-title',
-        defaultMessage: 'Error initializing Axolotl Launcher',
+        defaultMessage: 'Error initializing ALLIGATORZONE',
     },
     networkIssues: { id: 'app.error.network-issues', defaultMessage: 'Network issues' },
     networkDescription: {
         id: 'app.error.network-description',
         defaultMessage:
-            'Axolotl Launcher had trouble connecting to Microsoft services. This is often caused by a poor connection. Try again, and use our support article if the issue persists.',
+            'ALLIGATORZONE had trouble connecting to Microsoft services. This is often caused by a poor connection. Try again, and use our support article if the issue persists.',
     },
     hostsDescription: {
         id: 'app.error.hosts-description',
@@ -114,7 +114,7 @@ const messages = defineMessages({
     permissionsDescription: {
         id: 'app.error.permissions-description',
         defaultMessage:
-            'Axolotl Launcher cannot write to the selected directory. Adjust its permissions and try again, or cancel the directory change.',
+            'ALLIGATORZONE cannot write to the selected directory. Adjust its permissions and try again, or cancel the directory change.',
     },
     spaceTitle: { id: 'app.error.space-title', defaultMessage: 'Not enough space' },
     spaceDescription: {
@@ -125,7 +125,7 @@ const messages = defineMessages({
     directoryDescription: {
         id: 'app.error.directory-description',
         defaultMessage:
-            'Axolotl Launcher cannot migrate to the selected directory. Contact support for help or cancel the directory change.',
+            'ALLIGATORZONE cannot migrate to the selected directory. Contact support for help or cancel the directory change.',
     },
     retryDirectory: {
         id: 'app.error.retry-directory',
@@ -143,7 +143,7 @@ const messages = defineMessages({
     stateDescription: {
         id: 'app.error.state-description',
         defaultMessage:
-            'Axolotl Launcher failed to load correctly. A file may be corrupted or an essential file may be missing.',
+            'ALLIGATORZONE failed to load correctly. A file may be corrupted or an essential file may be missing.',
     },
     stateFixIntro: {
         id: 'app.error.state-fix-intro',
@@ -160,7 +160,7 @@ const messages = defineMessages({
     stateDatabaseNewerDescription: {
         id: 'app.error.state-database-newer-description',
         defaultMessage:
-            'The database was last opened by a newer version of Axolotl, which upgraded it to a format this version cannot read. Your instances and settings are still there.',
+            'The database was last opened by a newer version of ALLIGATORZONE, which upgraded it to a format this version cannot read. Your instances and settings are still there.',
     },
     stateDatabaseNewerFixIntro: {
         id: 'app.error.state-database-newer-fix-intro',
@@ -168,16 +168,16 @@ const messages = defineMessages({
     },
     stateDatabaseNewerFixUpdate: {
         id: 'app.error.state-database-newer-fix-update',
-        defaultMessage: 'Reinstall the newer version of Axolotl - it opens this database as it is.',
+        defaultMessage: 'Reinstall the newer version of ALLIGATORZONE - it opens this database as it is.',
     },
     stateDatabaseNewerFixDowngrade: {
         id: 'app.error.state-database-newer-fix-downgrade',
         defaultMessage:
-            'If you are trying out a build rather than using the launcher normally, revert the database with scripts/axolotl/downgrade-app-db.mjs instead.',
+            'If you are trying out a build rather than using the launcher normally, revert the database with scripts/Axolotl/downgrade-app-db.mjs instead.',
     },
     loaderDescription: {
         id: 'app.error.loader-description',
-        defaultMessage: 'Axolotl Launcher could not find a loader version for this instance.',
+        defaultMessage: 'ALLIGATORZONE could not find a loader version for this instance.',
     },
     loaderFix: {
         id: 'app.error.loader-fix',
@@ -203,7 +203,7 @@ const errorCollapsed = ref(false)
 
 const title = ref(formatMessage(messages.genericTitle))
 const errorType = ref('unknown')
-const supportLink = ref(AxolotlBrandConfig.supportUrl)
+const supportLink = ref(AlligatorZoneConfig.supportUrl)
 const metadata = ref({})
 
 defineExpose({
@@ -214,7 +214,7 @@ defineExpose({
         if (errorVal.message && errorVal.message.includes('Minecraft authentication error:')) {
             title.value = formatMessage(messages.minecraftAuthTitle)
             errorType.value = 'minecraft_auth'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
 
             if (
                 errorVal.message.includes('existing connection was forcibly closed') ||
@@ -228,11 +228,11 @@ defineExpose({
         } else if (errorVal.message && errorVal.message.includes('User is not logged in')) {
             title.value = formatMessage(messages.minecraftSignInTitle)
             errorType.value = 'minecraft_sign_in'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
         } else if (errorVal.message && errorVal.message.includes('Move directory error:')) {
             title.value = formatMessage(messages.directoryTitle)
             errorType.value = 'directory_move'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
 
             if (errorVal.message.includes('directory is not writable')) {
                 metadata.value.readOnly = true
@@ -247,23 +247,23 @@ defineExpose({
         ) {
             title.value = formatMessage(messages.loaderTitle)
             errorType.value = 'no_loader_version'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
             metadata.value.instanceId = context.instanceId
         } else if (
             errorVal.message &&
-            errorVal.message.includes('was created by a newer Axolotl build')
+            errorVal.message.includes('was created by a newer ALLIGATORZONE build')
         ) {
             title.value = formatMessage(messages.stateTitle)
             errorType.value = 'state_db_newer'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
         } else if (source === 'state_init') {
             title.value = formatMessage(messages.stateTitle)
             errorType.value = 'state_init'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
         } else {
             title.value = formatMessage(messages.genericTitle)
             errorType.value = 'unknown'
-            supportLink.value = AxolotlBrandConfig.supportUrl
+            supportLink.value = AlligatorZoneConfig.supportUrl
             metadata.value = {}
         }
 
@@ -366,7 +366,10 @@ async function exportLogs() {
                         <h3>{{ formatMessage(messages.networkIssues) }}</h3>
                         <p>
                             {{ formatMessage(messages.networkDescription) }}
-                            <a :href="AxolotlBrandConfig.supportUrl">
+                            <a
+                                v-if="AlligatorZoneConfig.supportUrl"
+                                :href="AlligatorZoneConfig.supportUrl"
+                            >
                                 {{ formatMessage(messages.supportArticle) }}
                             </a>
                         </p>
@@ -375,7 +378,10 @@ async function exportLogs() {
                         <h3>{{ formatMessage(messages.networkIssues) }}</h3>
                         <p>
                             {{ formatMessage(messages.hostsDescription) }}
-                            <a :href="AxolotlBrandConfig.supportUrl">
+                            <a
+                                v-if="AlligatorZoneConfig.supportUrl"
+                                :href="AlligatorZoneConfig.supportUrl"
+                            >
                                 {{ formatMessage(messages.supportArticle) }}
                             </a>
                         </p>

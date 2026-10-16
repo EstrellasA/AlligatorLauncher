@@ -1,7 +1,7 @@
-//! Axolotl's shared resource/data-pack projection.
+//! ALLIGATORZONE's shared resource/data-pack projection.
 //!
 //! The upstream implementation stores a launcher-wide JSON library and decorates
-//! the upstream `ContentItem` with sync-only fields. Axolotl keeps content
+//! the upstream `ContentItem` with sync-only fields. ALLIGATORZONE keeps content
 //! ownership in SQLite, so this adapter stores only the shared catalog here and
 //! lets the normal instance watcher materialize ownership in each content set.
 
@@ -316,6 +316,7 @@ fn row_item(row: &PackRow) -> crate::Result<ContentItem> {
         source_kind: Some(ContentSourceKind::SharedInstance),
         external: true,
         loader: None,
+        display_url: None,
     })
 }
 

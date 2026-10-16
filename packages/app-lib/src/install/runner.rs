@@ -191,7 +191,7 @@ pub async fn duplicate_instance(
     source_instance_id: String,
 ) -> crate::Result<InstallJobSnapshot> {
     // Directly associated instances own no files to copy: duplicating one
-    // would clone the linked launcher's `.minecraft` into Axolotl.
+    // would clone the linked launcher's `.minecraft` into ALLIGATORZONE.
     let state = State::get().await?;
     if let Some(metadata) =
         crate::state::get_instance(&source_instance_id, &state.pool).await?
@@ -242,6 +242,7 @@ pub async fn install_content(
     content_type: modrinth_content_management::ContentType,
     selected: modrinth_content_management::ResolutionPreferences,
     excluded_project_ids: Vec<String>,
+    target_project_type: Option<crate::state::ProjectType>,
     display_title: String,
     display_icon: Option<String>,
 ) -> crate::Result<InstallJobSnapshot> {
@@ -252,6 +253,7 @@ pub async fn install_content(
         content_type,
         selected,
         excluded_project_ids,
+        target_project_type,
         display_title,
         display_icon,
     })

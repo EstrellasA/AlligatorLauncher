@@ -3,10 +3,12 @@
     <!-- eslint-disable-next-line vue/no-undef-components -->
     <div
         ref="skinPreviewContainer"
-        class="relative w-full h-full overflow-visible cursor-grab"
+        class="relative w-full h-full overflow-visible"
+        :class="headTracking ? 'cursor-pointer' : 'cursor-grab'"
         @click="onCanvasClick"
     >
         <div
+            v-if="showsDragHint"
             class="absolute left-0 right-0 z-10 flex items-center justify-center pointer-events-none"
             :style="previewControlsPositionStyle"
         >
@@ -59,10 +61,10 @@
             }"
             class="transition-opacity duration-500"
             :class="{ 'opacity-0': !isPreviewVisible, 'opacity-100': isPreviewVisible }"
-            @pointerdown="onPointerDown"
-            @pointermove="onPointerMove"
-            @pointerup="onPointerUp"
-            @pointerleave="onPointerUp"
+            @pointerdown="onPreviewPointerDown"
+            @pointermove="onPreviewPointerMove"
+            @pointerup="onPreviewPointerUp"
+            @pointerleave="onPreviewPointerUp"
         >
             <Suspense>
                 <Group
@@ -134,6 +136,7 @@ import {
     useSkinPreviewAnimation,
     useSkinPreviewControls,
     useSkinPreviewFit,
+    useSkinPreviewHeadTracking,
     useSkinPreviewLoading,
     useSkinPreviewScene,
 } from '#ui/composables/skin-rendering'
@@ -173,6 +176,18 @@ const props = withDefaults(
          * them out alongside its own controls turns this off and hosts them.
          */
         armorControls?: boolean
+        /**
+         * Makes the model's head follow the pointer over the whole window while
+         * the rest of the model stays still, for small avatar-sized previews.
+         * Whole-model dragging is disabled while it is on.
+         */
+        headTracking?: boolean
+        /**
+         * Pointer travel, in CSS pixels, between the container's centre and the
+         * edge of the head's yaw and pitch range. A small value makes the head
+         * reach a full turn with little cursor movement.
+         */
+        headTrackingRadius?: number
     }>(),
     {
         variant: 'CLASSIC',
@@ -191,6 +206,8 @@ const props = withDefaults(
         }),
         armorPreview: false,
         armorControls: true,
+        headTracking: false,
+        headTrackingRadius: 520,
     },
 )
 
@@ -298,6 +315,28 @@ const {
     },
 })
 
+// Whole-model dragging is turned off while the head tracks the pointer: the two
+// motions fight over the same axis, and a preview that turns its own head should
+// keep facing the viewer.
+const dragToRotate = computed(() => !props.headTracking)
+// The hint only makes sense while dragging actually works.
+const showsDragHint = computed(() => !props.headTracking)
+
+function onPreviewPointerDown(event: PointerEvent) {
+    if (!dragToRotate.value) return
+    onPointerDown(event)
+}
+
+function onPreviewPointerMove(event: PointerEvent) {
+    if (!dragToRotate.value) return
+    onPointerMove(event)
+}
+
+function onPreviewPointerUp(event: PointerEvent) {
+    if (!dragToRotate.value) return
+    onPointerUp(event)
+}
+
 const armorConfig = defineModel<ArmorPreviewConfig>('armorConfig', {
     default: createDefaultArmorPreviewConfig,
 })
@@ -357,6 +396,16 @@ const rendererDpr: [number, number] = [1, 2]
 const radialSpotlightShader = createRadialSpotlightShader(isDarkPreviewTheme.value)
 const isReady = computed(() => isModelLoaded.value && isTextureLoaded.value && hasResolvedFit.value)
 const { isPreviewVisible, showLoading } = useSkinPreviewLoading(isReady)
+
+// Opt-in only: when disabled the head is left entirely to the animation mixer
+// and the drag-to-rotate controls, exactly as before.
+useSkinPreviewHeadTracking({
+    enabled: toRef(props, 'headTracking'),
+    scene,
+    containerElement: computed(() => skinPreviewContainer.value),
+    maxRadius: toRef(props, 'headTrackingRadius'),
+    resetKey: selectedModelSrc,
+})
 
 onMounted(() => {
     observeSubtitleElement()

@@ -6,7 +6,7 @@ mod windows {
     use winreg::RegKey;
     use winreg::enums::{HKEY_CURRENT_USER, KEY_READ, KEY_SET_VALUE};
 
-    const INSTALLER_REGISTRY_KEY: &str = "Software\\ghs\\Axolotl Launcher";
+    const INSTALLER_REGISTRY_KEY: &str = "Software\\ghs\\Axolotl";
     const PENDING_RESOURCE_DIRECTORY_VALUE: &str = "PendingResourceDirectory";
 
     #[derive(Debug, Eq, PartialEq)]

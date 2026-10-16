@@ -28,8 +28,10 @@ import ConfirmDeleteInstanceModal from '@/components/ui/modal/ConfirmDeleteInsta
 import { trackEvent } from '@/helpers/analytics'
 import { install_duplicate_instance } from '@/helpers/install'
 import { edit, edit_icon, get_full_path, remove } from '@/helpers/instance'
+import { isValidWebMapUrl } from '@/helpers/server-web-map'
 import { createInstanceShortcutOnDesktop } from '@/helpers/utils'
 import { injectInstanceSettings } from '@/providers/instance-settings'
+import { ServerConfig } from '@/server-config'
 
 import type { GameInstance } from '../../../helpers/types'
 
@@ -264,6 +266,74 @@ async function setGameDirMode(mode: GameDirMode) {
     }
 }
 
+/**
+ * 网页地图地址（按实例保存）。
+ *
+ * `web_map_url` 有三种状态，UI 必须让玩家分得清：
+ *   - `null`  = 从未设置过 → 启动器用 `server-config.ts` 里的内置默认地址；
+ *   - `''`    = 明确关掉 → 地图页和侧边栏按钮都隐藏；
+ *   - 一个 URL = 用这个地址。
+ * 所以输入框只在「已保存过」时回填，空输入框 + 默认地址提示 = 从未设置。
+ */
+const webMapInput = ref(instance.value.web_map_url ?? '')
+/**
+ * Local mirror of the stored value, updated optimistically after a save — the
+ * same shape `gameDirOverride` uses, because the modal's `instance` prop is not
+ * guaranteed to be replaced after the edit round trip.
+ */
+const webMapStored = ref<string | null | undefined>(instance.value.web_map_url)
+const webMapInvalid = ref(false)
+const savingWebMap = ref(false)
+
+const webMapUnset = computed(() => webMapStored.value === null || webMapStored.value === undefined)
+const webMapHidden = computed(() => webMapStored.value === '')
+const webMapDirty = computed(() => webMapInput.value.trim() !== (webMapStored.value ?? '').trim())
+
+watch(
+    () => [instance.value.id, instance.value.web_map_url] as const,
+    () => {
+        webMapStored.value = instance.value.web_map_url
+        webMapInput.value = instance.value.web_map_url ?? ''
+        webMapInvalid.value = false
+    },
+)
+
+const webMapDefaultUrl = ServerConfig.mapUrl.trim()
+
+async function saveWebMapUrl() {
+    const value = webMapInput.value.trim()
+    if (!isValidWebMapUrl(value)) {
+        webMapInvalid.value = true
+        return
+    }
+
+    webMapInvalid.value = false
+    savingWebMap.value = true
+    try {
+        await edit(instance.value.id, { web_map_url: value })
+        webMapStored.value = value
+    } catch (error) {
+        handleError(error)
+    } finally {
+        savingWebMap.value = false
+    }
+}
+
+/** Stores the explicit empty value, which is what disables the map. */
+async function hideWebMap() {
+    webMapInvalid.value = false
+    savingWebMap.value = true
+    try {
+        await edit(instance.value.id, { web_map_url: '' })
+        webMapStored.value = ''
+        webMapInput.value = ''
+    } catch (error) {
+        handleError(error)
+    } finally {
+        savingWebMap.value = false
+    }
+}
+
 const editInstanceObject = computed(() => ({
     name: title.value.trim().substring(0, 32) ?? 'Instance',
 }))
@@ -380,7 +450,7 @@ const messages = defineMessages({
     },
     gameDirManagedNote: {
         id: 'instance.settings.tabs.general.game-dir.managed-note',
-        defaultMessage: 'This instance uses the Axolotl-managed folder.',
+        defaultMessage: 'This instance uses the ALLIGATORZONE-managed folder.',
     },
     gameDirExternalNote: {
         id: 'instance.settings.tabs.general.game-dir.external-note',
@@ -417,6 +487,44 @@ const messages = defineMessages({
     selectUpdateChannelAriaLabel: {
         id: 'instance.settings.tabs.general.update-channel.select',
         defaultMessage: 'Select update channel',
+    },
+    webMap: {
+        id: 'instance.settings.tabs.general.web-map',
+        defaultMessage: 'Web map',
+    },
+    webMapDescription: {
+        id: 'instance.settings.tabs.general.web-map.description',
+        defaultMessage:
+            'Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map.',
+    },
+    webMapInputLabel: {
+        id: 'instance.settings.tabs.general.web-map.input-label',
+        defaultMessage: 'Map address',
+    },
+    webMapPlaceholder: {
+        id: 'instance.settings.tabs.general.web-map.placeholder',
+        defaultMessage: 'https://map.example.com/',
+    },
+    webMapSave: {
+        id: 'instance.settings.tabs.general.web-map.save',
+        defaultMessage: 'Save',
+    },
+    webMapHide: {
+        id: 'instance.settings.tabs.general.web-map.hide',
+        defaultMessage: 'Hide map',
+    },
+    webMapDefaultNote: {
+        id: 'instance.settings.tabs.general.web-map.default-note',
+        defaultMessage:
+            "No address is saved for this instance yet, so the launcher's built-in default is used: {url}",
+    },
+    webMapHiddenNote: {
+        id: 'instance.settings.tabs.general.web-map.hidden-note',
+        defaultMessage: 'The map is hidden for this instance, and its page is disabled.',
+    },
+    webMapInvalid: {
+        id: 'instance.settings.tabs.general.web-map.invalid',
+        defaultMessage: 'Enter a full address starting with http:// or https://.',
     },
     deleteInstance: {
         id: 'instance.settings.tabs.general.delete',
@@ -605,6 +713,53 @@ const messages = defineMessages({
             />
             <p class="m-0">
                 {{ formatReleaseChannelDescription(selectedReleaseChannel) }}
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-2.5 mt-6">
+            <label
+                for="instance-web-map-url"
+                class="m-0 text-lg font-semibold text-[var(--color-text-primary)] block"
+            >
+                {{ formatMessage(messages.webMap) }}
+            </label>
+            <p class="m-0">
+                {{ formatMessage(messages.webMapDescription) }}
+            </p>
+            <div class="flex flex-wrap items-center gap-2">
+                <StyledInput
+                    id="instance-web-map-url"
+                    v-model="webMapInput"
+                    autocomplete="off"
+                    :placeholder="formatMessage(messages.webMapPlaceholder)"
+                    :aria-label="formatMessage(messages.webMapInputLabel)"
+                    :error="webMapInvalid"
+                    wrapper-class="min-w-[16rem] flex-grow"
+                />
+                <Button
+                    class="w-max !shadow-none"
+                    :disabled="savingWebMap || !webMapDirty"
+                    @click="saveWebMapUrl"
+                >
+                    <SpinnerIcon v-if="savingWebMap" class="animate-spin" />
+                    {{ formatMessage(messages.webMapSave) }}
+                </Button>
+                <Button
+                    class="w-max !shadow-none"
+                    :disabled="savingWebMap || webMapHidden"
+                    @click="hideWebMap"
+                >
+                    {{ formatMessage(messages.webMapHide) }}
+                </Button>
+            </div>
+            <p v-if="webMapInvalid" class="m-0 text-sm text-red">
+                {{ formatMessage(messages.webMapInvalid) }}
+            </p>
+            <p v-else-if="webMapUnset" class="m-0 text-sm text-[var(--color-text-tertiary)]">
+                {{ formatMessage(messages.webMapDefaultNote, { url: webMapDefaultUrl }) }}
+            </p>
+            <p v-else-if="webMapHidden" class="m-0 text-sm text-[var(--color-text-tertiary)]">
+                {{ formatMessage(messages.webMapHiddenNote) }}
             </p>
         </div>
 

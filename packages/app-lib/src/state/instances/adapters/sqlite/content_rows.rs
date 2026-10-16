@@ -2411,6 +2411,9 @@ pub(crate) async fn bump_content_set_revision_in_transaction(
 fn project_type_from_str(value: &str) -> crate::Result<ProjectType> {
     match value {
         "mod" => Ok(ProjectType::Mod),
+        "clientmod" | "client_mod" | "clientmods" => {
+            Ok(ProjectType::ClientMod)
+        }
         "datapack" => Ok(ProjectType::DataPack),
         "resourcepack" => Ok(ProjectType::ResourcePack),
         "shader" | "shaderpack" => Ok(ProjectType::ShaderPack),
@@ -2798,6 +2801,32 @@ mod tests {
         pool
     }
 
+    #[test]
+    fn every_project_type_round_trips_through_its_stored_name() {
+        for project_type in ProjectType::iterator() {
+            assert_eq!(
+                project_type_from_str(project_type.get_name()).unwrap(),
+                project_type,
+                "{} must parse back from its stored name",
+                project_type.get_name(),
+            );
+        }
+        // Tolerated legacy spellings for the client mods folder.
+        for alias in ["clientmod", "client_mod", "clientmods"] {
+            assert_eq!(
+                project_type_from_str(alias).unwrap(),
+                ProjectType::ClientMod
+            );
+        }
+        assert!(project_type_from_str("not-a-type").is_err());
+        // Existing rows keep parsing exactly as before.
+        assert_eq!(project_type_from_str("mod").unwrap(), ProjectType::Mod);
+        assert_eq!(
+            project_type_from_str("world_save").unwrap(),
+            ProjectType::WorldSave
+        );
+    }
+
     #[tokio::test]
     async fn mutation_target_supports_untracked_instance_files() {
         let pool = mutation_target_pool().await;
@@ -2812,6 +2841,30 @@ mod tests {
         assert_eq!(target.relative_path.as_deref(), Some("mods/example.jar"));
         assert_eq!(target.ownership_kind, ContentOwnershipKind::UserAdded);
         assert_eq!(target.project_type, ProjectType::Mod);
+    }
+
+    #[tokio::test]
+    async fn mutation_target_infers_client_mods_from_the_clientmods_path() {
+        let pool = mutation_target_pool().await;
+        sqlx::query(
+            "INSERT INTO instance_files (id, instance_id, relative_path)
+			 VALUES ('client-file', 'instance', 'clientmods/example.jar')",
+        )
+        .execute(&pool)
+        .await
+        .expect("insert untracked client mod");
+
+        let target =
+            get_content_mutation_target("instance", "client-file", &pool)
+                .await
+                .expect("resolve mutation target")
+                .expect("mutation target exists");
+
+        assert_eq!(
+            target.relative_path.as_deref(),
+            Some("clientmods/example.jar")
+        );
+        assert_eq!(target.project_type, ProjectType::ClientMod);
     }
 
     #[tokio::test]

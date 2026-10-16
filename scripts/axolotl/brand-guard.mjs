@@ -47,15 +47,15 @@ for (const root of roots) {
 const tauriConfig = JSON.parse(await readFile('apps/app/tauri.conf.json', 'utf8'))
 const frontendConfig = await readFile('apps/app-frontend/src/config.ts', 'utf8')
 const requiredInvariants = [
-	['product name', tauriConfig.productName === 'Axolotl Launcher'],
-	['bundle identifier', tauriConfig.identifier === 'red.ghs.axolotl'],
+	['product name', tauriConfig.productName === 'ALLIGATORZONE'],
+	['bundle identifier', tauriConfig.identifier === 'com.alligatorzone.launcher'],
 	[
 		'deep-link scheme',
-		tauriConfig.plugins?.['deep-link']?.desktop?.schemes?.includes('axolotl') === true,
+		tauriConfig.plugins?.['deep-link']?.desktop?.schemes?.includes('alligatorzone') === true,
 	],
 	[
 		'User-Agent format',
-		frontendConfig.includes('garbage-human-studio/axolotl/${version} (${os})'),
+		frontendConfig.includes('alligatorzone-launcher/${version} (${os})'),
 	],
 	[
 		'private Modrinth services disabled',
@@ -68,8 +68,8 @@ for (const [label, valid] of requiredInvariants) {
 }
 
 if (failures.length > 0) {
-	console.error(`Axolotl brand guard failed:\n${failures.join('\n')}`)
+	console.error(`ALLIGATORZONE brand guard failed:\n${failures.join('\n')}`)
 	process.exit(1)
 }
 
-console.log('Axolotl brand guard passed.')
+console.log('ALLIGATORZONE brand guard passed.')

@@ -27,7 +27,7 @@ import {
     getSettingsSearchTargetId,
     type SettingsSearchEntry,
 } from '@/components/ui/settings/settings-search-index'
-import { AxolotlBrandConfig } from '@/config'
+import { AlligatorZoneConfig } from '@/config'
 import { update } from '@/helpers/settings'
 import { injectAppUpdateDownloadProgress } from '@/providers/download-progress'
 import { useTheming } from '@/store/state'
@@ -502,7 +502,7 @@ const pageTitle: MessageDescriptor = settingsPageTitle
                         </button>
                         <div class="settings-footer-version min-w-0">
                             <p class="m-0 break-words">
-                                {{ AxolotlBrandConfig.productName }} {{ version }}
+                                {{ AlligatorZoneConfig.productName }} {{ version }}
                             </p>
                             <p class="m-0 truncate">{{ platformName() }} {{ osVersion }}</p>
                         </div>

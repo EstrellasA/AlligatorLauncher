@@ -7,7 +7,7 @@ const frontendRequire = createRequire(path.resolve(__dirname, '../../app-fronten
 const { chromium } = frontendRequire('playwright')
 const pageUrl = pathToFileURL(path.resolve(__dirname, '../src/installer.html')).href
 const logoUrl = pathToFileURL(path.resolve(__dirname, '../../app/icons/128x128.png')).href
-const installDir = String.raw`D:\Program Files\游戏\Axolotl Launcher`
+const installDir = String.raw`D:\Program Files\游戏\Axolotl`
 
 async function openPage(browser, mode) {
 	const page = await browser.newPage({
@@ -225,7 +225,7 @@ for (const language of ['en', 'zhCn']) {
 					window.axolotlInstaller.receive({
 						type: 'installFailed',
 						exitCode: 2,
-						message: 'Could not write launcher files. Close Axolotl Launcher and retry.',
+						message: 'Could not write launcher files. Close ALLIGATORZONE and retry.',
 					}),
 				)
 				await checkBounds(page)

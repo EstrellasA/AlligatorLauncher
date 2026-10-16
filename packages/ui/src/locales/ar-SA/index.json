@@ -587,9 +587,6 @@
   "project-type.datapack.category": {
     "defaultMessage": "حزم بيانات"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "مودات"
-  },
   "project-type.modpack.category": {
     "defaultMessage": "حزم المودات"
   },

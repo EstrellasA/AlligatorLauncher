@@ -40,7 +40,7 @@ pnpm prepr:frontend:app
 # Rust 格式化检查
 cargo fmt --all --check
 # Rust 基础检查
-cargo check --package theseus_gui --features updater
+cargo check --package theseus_gui
 ```
 
 ### 构建缓存与磁盘空间

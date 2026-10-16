@@ -1,7 +1,7 @@
 import { defineMessages, type KeyBinding, type MessageDescriptor } from '@modrinth/ui'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
-import { getLastBrowseContentProjectType, isBrowseContentProjectType } from '@/helpers/settings'
+import { BROWSE_LOCKED_PROJECT_PATH } from '@/helpers/client-mod-browse'
 
 /** Which half of the settings page an action belongs to. */
 export type ShortcutGroupId = 'scroll' | 'nav'
@@ -10,7 +10,6 @@ export type ShortcutGroupId = 'scroll' | 'nav'
 export type ShortcutEnabledField =
     | 'quickScrollEnabled'
     | 'shortcutNavHome'
-    | 'shortcutNavWorlds'
     | 'shortcutNavDiscover'
     | 'shortcutNavSkins'
     | 'shortcutNavMultiplayer'
@@ -83,11 +82,6 @@ const messages = defineMessages({
         id: 'app.shortcut-settings.nav-home-description',
         defaultMessage: 'Jump to the Home page.',
     },
-    navWorlds: { id: 'app.shortcut-settings.nav-worlds', defaultMessage: 'Worlds' },
-    navWorldsDescription: {
-        id: 'app.shortcut-settings.nav-worlds-description',
-        defaultMessage: 'Jump to your worlds.',
-    },
     navDiscover: {
         id: 'app.shortcut-settings.nav-discover',
         defaultMessage: 'Discover content',
@@ -140,20 +134,12 @@ function keyboard(code: string, mod = false, alt = false, shift = false): KeyBin
 /**
  * Resolves the Discover content target from the current route, so the nav
  * button and the keyboard shortcut share one source of truth.
+ *
+ * The launcher's content browser is locked to client-side mods, so the target
+ * is always the locked Browse route.
  */
-export function discoverContentTarget(route: RouteLocationNormalizedLoaded): string {
-    const projectType = route.params.projectType
-    if (
-        !route.query.i &&
-        !route.query.sid &&
-        !route.query.wid &&
-        typeof projectType === 'string' &&
-        isBrowseContentProjectType(projectType)
-    ) {
-        return `/browse/${projectType}`
-    }
-
-    return `/browse/${getLastBrowseContentProjectType()}`
+export function discoverContentTarget(_route: RouteLocationNormalizedLoaded): string {
+    return BROWSE_LOCKED_PROJECT_PATH
 }
 
 /**
@@ -214,16 +200,6 @@ export const SHORTCUT_ACTIONS: ShortcutAction[] = [
         label: messages.navHome,
         description: messages.navHomeDescription,
         target: () => '/',
-    },
-    {
-        id: 'shortcutNavWorlds',
-        group: 'nav',
-        enabledField: 'shortcutNavWorlds',
-        defaultBinding: keyboard('Digit2', true),
-        label: messages.navWorlds,
-        description: messages.navWorldsDescription,
-        target: () => '/worlds',
-        unavailable: (context) => !context.worldsTabEnabled,
     },
     {
         id: 'shortcutNavDiscover',

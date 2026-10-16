@@ -16,7 +16,7 @@ const content = computed(() => {
         return {
             icon: LogIn,
             title: '需要登录',
-            detail: '请使用 Axolotl-Launcher 组织成员账号通过 Cloudflare Access 登录。',
+            detail: '请使用 ALLIGATORZONE-Launcher 组织成员账号通过 Cloudflare Access 登录。',
             action: '前往登录',
         }
     }

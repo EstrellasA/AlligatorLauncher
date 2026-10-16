@@ -43,14 +43,31 @@ pub async fn get_projects(
     .await
 }
 
+/// Project ids already present in the instance's applied content set.
+///
+/// `project_types` restricts the answer to files that live in those project
+/// types' folders (for example `[ProjectType::ClientMod]` → only `clientmods/`).
+/// The launcher places browsed mods in `clientmods/`, so a copy the server pack
+/// ships in `mods/` must not be reported as installed for that decision.
+/// `None` keeps the historical "installed anywhere" answer.
 #[tracing::instrument]
 pub async fn get_installed_project_ids(
     instance_id: &str,
+    project_types: Option<Vec<ProjectType>>,
 ) -> crate::Result<Vec<String>> {
     let state = State::get().await?;
+    let folders = project_types
+        .as_deref()
+        .map(|project_types| {
+            project_types
+                .iter()
+                .map(ProjectType::get_folder)
+                .collect::<Vec<_>>()
+        });
     crate::state::get_installed_project_ids_for_instance(
         instance_id,
         None,
+        folders.as_deref(),
         &state,
     )
     .await

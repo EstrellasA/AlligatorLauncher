@@ -212,6 +212,17 @@ fn main() {
                     ),
             )
             .plugin(
+                "bootstrap",
+                InlinedPlugin::new()
+                    .commands(&[
+                        "bootstrap_install_bundled_mods",
+                        "bootstrap_bundled_mods_status",
+                    ])
+                    .default_permission(
+                        DefaultPermissionRule::AllowAllCommands,
+                    ),
+            )
+            .plugin(
                 "cache",
                 InlinedPlugin::new()
                     .commands(&[
@@ -537,6 +548,7 @@ fn main() {
                         "instance_get_projects",
                         "instance_get_installed_project_ids",
                         "instance_get_install_candidates",
+                        "instance_get_automodpack_changelog",
                         "instance_content",
                         "instance_get_content_items_by_paths",
                         "instance_get_content_items",
@@ -824,6 +836,7 @@ fn main() {
                         "file_save_as",
                         "file_read_dragged_file",
                         "screenshot_thumbnail",
+                        "instance_icon_thumbnail",
                         "studio_read_text",
                         "studio_read_binary",
                         "studio_write_binary",

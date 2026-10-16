@@ -36,6 +36,12 @@ pub struct ContentItem {
     /// Loader derived from the installed version's loaders when a Modrinth
     /// match exists, falling back to the locally parsed mod metadata.
     pub loader: Option<String>,
+    /// Homepage the mod declares in its own jar metadata (`displayURL` in
+    /// `META-INF/neoforge.mods.toml`, `displayURL`/`url` in `fabric.mod.json` or
+    /// `mods.toml`). Most mods point this at their Modrinth or CurseForge page,
+    /// which is the only publication link available for files the launcher
+    /// could not match to an online project.
+    pub display_url: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

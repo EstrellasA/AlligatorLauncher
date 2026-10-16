@@ -807,6 +807,9 @@ export const financialMessages = defineMessages({
 
 const PROJECT_TYPE_ALIASES: Record<string, string> = {
     shaderpack: 'shader',
+    // Client mods are mods: they load through the same loader, so every label
+    // and filter groups them with `mod` instead of inventing a new type.
+    clientmod: 'mod',
 }
 
 export function normalizeProjectType(type: string): string {

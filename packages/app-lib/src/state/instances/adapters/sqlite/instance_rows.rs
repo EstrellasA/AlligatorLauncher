@@ -54,6 +54,7 @@ pub(crate) struct InstanceRow {
     pub icon_path: Option<String>,
     pub symlink_target: Option<String>,
     pub game_dir_override: Option<String>,
+    pub web_map_url: Option<String>,
     pub created: i64,
     pub modified: i64,
     pub last_played: Option<i64>,
@@ -181,6 +182,27 @@ pub(crate) async fn set_direct_link_fields(
     Ok(())
 }
 
+/// Stores the per-instance web map address.
+///
+/// Written through a runtime query, like the direct-link columns above, so the
+/// checked-in `.sqlx` cache (prepared against a schema without this column)
+/// stays valid. `None` writes SQL NULL, which means "never configured" and lets
+/// the frontend fall back to the built-in default; `Some("")` is stored as-is
+/// and means "explicitly hidden".
+pub(crate) async fn set_instance_web_map_url(
+    id: &str,
+    web_map_url: Option<&str>,
+    tx: &mut Transaction<'_, Sqlite>,
+) -> crate::Result<()> {
+    sqlx::query("UPDATE instances SET web_map_url = ? WHERE id = ?")
+        .bind(web_map_url)
+        .bind(id)
+        .execute(&mut **tx)
+        .await?;
+
+    Ok(())
+}
+
 impl TryFrom<InstanceRow> for Instance {
     type Error = crate::Error;
 
@@ -204,6 +226,7 @@ impl TryFrom<InstanceRow> for Instance {
             linked_version_json_path: None,
             linked_game_dir_mode: None,
             game_dir_override: row.game_dir_override,
+            web_map_url: row.web_map_url,
             created: timestamp(row.created),
             modified: timestamp(row.modified),
             last_played: row.last_played.and_then(optional_timestamp),
@@ -344,6 +367,7 @@ struct InstanceMetadataRow {
     linked_version_json_path: Option<String>,
     linked_game_dir_mode: Option<String>,
     game_dir_override: Option<String>,
+    web_map_url: Option<String>,
     created: i64,
     modified: i64,
     last_played: Option<i64>,
@@ -418,6 +442,7 @@ impl InstanceMetadataRow {
             icon_path: self.icon_path,
             symlink_target: self.symlink_target,
             game_dir_override: self.game_dir_override,
+            web_map_url: self.web_map_url,
             created: self.created,
             modified: self.modified,
             last_played: self.last_played,
@@ -542,6 +567,7 @@ where
 			icon_path,
 			symlink_target,
 			game_dir_override,
+			web_map_url,
 			created,
 			modified,
 			last_played,
@@ -586,6 +612,7 @@ where
 			icon_path,
 			symlink_target,
 			game_dir_override,
+			web_map_url,
 			created,
 			modified,
 			last_played,
@@ -721,6 +748,7 @@ pub(crate) async fn get_instance_metadata_by_id(
             i.linked_version_json_path,
             i.linked_game_dir_mode,
             i.game_dir_override,
+            i.web_map_url,
             i.created,
             i.modified,
             i.last_played,
@@ -812,6 +840,7 @@ pub(crate) async fn get_instance_metadata_many(
             i.linked_version_json_path,
             i.linked_game_dir_mode,
             i.game_dir_override,
+            i.web_map_url,
             i.created,
             i.modified,
             i.last_played,
@@ -897,6 +926,7 @@ pub(crate) async fn list_instance_metadata(
             i.linked_version_json_path,
             i.linked_game_dir_mode,
             i.game_dir_override,
+            i.web_map_url,
             i.created,
             i.modified,
             i.last_played,
@@ -979,6 +1009,7 @@ pub(crate) async fn get_instance_launch_context(
             i.linked_version_json_path,
             i.linked_game_dir_mode,
             i.game_dir_override,
+            i.web_map_url,
             i.created,
             i.modified,
             i.last_played,
@@ -1047,6 +1078,7 @@ pub(crate) async fn list_instances(
 			icon_path,
 			symlink_target,
 			game_dir_override,
+			web_map_url,
 			created,
 			modified,
 			last_played,

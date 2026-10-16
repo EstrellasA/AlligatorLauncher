@@ -123,7 +123,7 @@ watch(
                         <Activity class="size-[18px]" />
                     </div>
                     <div class="min-w-0">
-                        <p class="truncate text-sm font-semibold">Axolotl 遥测中心</p>
+                        <p class="truncate text-sm font-semibold">ALLIGATORZONE 遥测中心</p>
                         <p class="mt-0.5 text-[11px] text-muted-foreground">只读管理控制台</p>
                     </div>
                     <Button

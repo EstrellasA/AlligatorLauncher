@@ -1301,7 +1301,7 @@ const MICROSOFT_AUTHORIZE_URL: &str =
 const MICROSOFT_TOKEN_URL: &str =
     "https://login.microsoftonline.com/consumers/oauth2/v2.0/token";
 const REQUESTED_SCOPE: &str = "XboxLive.signin offline_access";
-pub const MINECRAFT_SERVICES_USER_AGENT: &str = "Axolotl Launcher";
+pub const MINECRAFT_SERVICES_USER_AGENT: &str = "ALLIGATORZONE";
 
 pub struct RequestWithDate<T> {
     pub date: DateTime<Utc>,

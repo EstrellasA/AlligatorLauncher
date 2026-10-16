@@ -385,6 +385,7 @@ pub(super) async fn run_request(
             content_type,
             selected,
             excluded_project_ids,
+            target_project_type,
             display_title: _,
             display_icon: _,
         } => {
@@ -396,8 +397,7 @@ pub(super) async fn run_request(
                 InstallPhaseDetails::Empty,
             )
             .await?;
-            let plan = crate::state::instances::commands::resolve_install_plan(
-                &instance_id,
+            let request =
                 crate::state::instances::commands::InstanceInstallProjectRequest {
                     project_id: project_id.clone(),
                     version_id,
@@ -405,7 +405,15 @@ pub(super) async fn run_request(
                     selected,
                     excluded_project_ids,
                     force_project_ids: Vec::new(),
-                },
+                    target_project_type,
+                };
+            // The request is the single source of truth for the destination
+            // folder; the same override is handed to the install step below so
+            // the primary file and every dependency land together.
+            let target_project_type = request.target_project_type;
+            let plan = crate::state::instances::commands::resolve_install_plan(
+                &instance_id,
+                request,
                 state,
             )
             .await?;
@@ -427,6 +435,7 @@ pub(super) async fn run_request(
                 &instance_id,
                 &plan,
                 Some(reporter.clone()),
+                target_project_type,
                 state,
             )
             .await?;
@@ -592,9 +601,9 @@ pub(super) async fn run_request(
                                 selected,
                                 excluded_project_ids,
                                 force_project_ids,
+                                target_project_type,
                             } => {
-                                let plan = crate::state::instances::commands::resolve_install_plan(
-                                    &instance_id,
+                                let request =
                                     crate::state::instances::commands::InstanceInstallProjectRequest {
                                         project_id: project_id.clone(),
                                         version_id,
@@ -602,11 +611,16 @@ pub(super) async fn run_request(
                                         selected,
                                         excluded_project_ids,
                                         force_project_ids,
-                                    },
+                                        target_project_type,
+                                    };
+                                let target_project_type = request.target_project_type;
+                                let plan = crate::state::instances::commands::resolve_install_plan(
+                                    &instance_id,
+                                    request,
                                     state,
                                 ).await?;
                                 crate::state::instances::commands::install_resolved_content_plan_with_reporter(
-                                    &instance_id, &plan, Some(reporter.clone()), state,
+                                    &instance_id, &plan, Some(reporter.clone()), target_project_type, state,
                                 ).await?;
                                 Ok::<Option<InstallPauseReason>, crate::Error>(None)
                             }

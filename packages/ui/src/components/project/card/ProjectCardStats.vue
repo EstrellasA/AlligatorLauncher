@@ -23,10 +23,10 @@ defineProps<{
                 }),
             )
         "
-        class="flex items-center gap-2 trim-text-box smart-clickable:allow-pointer-events"
+        class="flex min-w-0 items-center gap-2 trim-text-box smart-clickable:allow-pointer-events"
     >
         <DownloadIcon class="size-5 shrink-0" />
-        <span class="font-medium">
+        <span class="min-w-0 truncate font-medium">
             {{ formatCompactNumber(downloads) }}
         </span>
     </div>

@@ -154,6 +154,10 @@ const messages = defineMessages({
         id: 'content.page-layout.reset-view',
         defaultMessage: 'Reset view',
     },
+    deleteNotAllowed: {
+        id: 'content.page-layout.delete-not-allowed',
+        defaultMessage: 'Nothing in this selection can be deleted by the launcher.',
+    },
 })
 
 const ctx = injectContentManager()
@@ -507,6 +511,10 @@ async function handleRefresh() {
 function mapToTableItem(item: ContentItem, group?: string): ContentCardTableItem {
     const base = ctx.mapToTableItem(item)
     const id = getItemId(item)
+    // Read from `base`, never from `writeProtectedItemIds`: that set is built
+    // from `tableItems`, which this function feeds, and consulting it here would
+    // close the cycle.
+    const writeProtected = base.writeProtected === true
     return {
         ...base,
         id,
@@ -521,9 +529,18 @@ function mapToTableItem(item: ContentItem, group?: string): ContentCardTableItem
             : (base.toggleDisabledTooltip ?? null),
         installing: item.installing === true,
         pendingManualDownload: item.pendingManualDownload === true,
-        hasUpdate: !group && item.update != null && item.instanceCapabilities?.canUpdate !== false,
-        rollbackFileName: item.rollback?.file_name,
-        hideSwitchVersion: base.hideSwitchVersion ?? !base.versionLink,
+        // A write-protected row offers no mutating action at all: no update, no
+        // version switch, no rollback (which renames the `*.old` backup back
+        // into place). The row keeps its read-only actions — open, lookups,
+        // share, verify — plus "restore pack default", which re-asserts the
+        // owner's copy rather than overriding it.
+        hasUpdate:
+            !writeProtected &&
+            !group &&
+            item.update != null &&
+            item.instanceCapabilities?.canUpdate !== false,
+        rollbackFileName: writeProtected ? undefined : item.rollback?.file_name,
+        hideSwitchVersion: (base.hideSwitchVersion ?? !base.versionLink) || writeProtected,
         overflowOptions: buildItemOverflowOptions(item),
     }
 }
@@ -651,7 +668,11 @@ const tableItems = computed<ContentCardTableItem[]>(() => {
             versionLink: modpack.versionLink,
             owner: modpack.owner,
             enabled: true,
-            hasUpdate: modpack.hasUpdate,
+            // Only advertise a modpack update when the host actually provides
+            // one: a server instance withholds it (the pack scope would rewrite
+            // the server's own `mods/` files), and a button with no handler is
+            // worse than no button.
+            hasUpdate: modpack.hasUpdate && !!ctx.updateModpack,
             disabled:
                 modpack.disabled ||
                 ctx.isBusy.value ||
@@ -677,8 +698,35 @@ const tableItems = computed<ContentCardTableItem[]>(() => {
 
 watch(tableItems, restoreContentViewScroll, { flush: 'post', immediate: true })
 
+/**
+ * Rows a row-level capability marks as untouchable — today the server's own
+ * `mods/` folder, which the launcher reconciles against the server pack (and
+ * which AutoModpack treats as player-editable) and must never be written from
+ * the UI.
+ *
+ * Withholding the row's toggle and trash button is not enough on its own:
+ * selection (including "select all") would still reach those rows, so every
+ * bulk action filters through this set. The rows stay selectable because
+ * selecting them is still useful for the read-only actions (update-free share,
+ * verify, lookups).
+ */
+const writeProtectedItemIds = computed(
+    () =>
+        new Set(
+            tableItems.value.filter((item) => item.writeProtected === true).map((item) => item.id),
+        ),
+)
+
+function isWriteProtected(item: ContentItem): boolean {
+    return writeProtectedItemIds.value.has(getItemId(item))
+}
+
+const actionableSelection = computed(() =>
+    selectedItems.value.filter((item) => !isWriteProtected(item)),
+)
+
 const hasOutdatedProjects = computed(() => {
-    const outdated = ctx.items.value.filter((p) => p.update != null)
+    const outdated = ctx.items.value.filter((p) => p.update != null && !isWriteProtected(p))
     const modpackHasUpdate =
         ctx.bulkUpdateIncludesModpack !== false && (ctx.modpack.value?.hasUpdate ?? false)
     return outdated.length > 0 || modpackHasUpdate
@@ -705,16 +753,19 @@ function mapToDisplayItem(item: ContentItem) {
 }
 
 async function promptDeleteItems(items: ContentItem[], event?: MouseEvent) {
-    if (items.length === 0) return
-    pendingDeletionItems.value = items
+    // Single choke point for every deletion: a row click and a bulk selection
+    // both land here, so dropping the write-protected rows here covers both.
+    const deletableItems = items.filter((item) => !isWriteProtected(item))
+    if (deletableItems.length === 0) return
+    pendingDeletionItems.value = deletableItems
     pendingDependencyWarningItems.value = []
     pendingDependencyWarningDependents.value = []
     pendingDependencyWarningDisableTargets.value = []
-    const deletingIds = new Set(items.map(getItemId))
+    const deletingIds = new Set(deletableItems.map(getItemId))
 
     const warning = ctx.getDeleteDependencyWarning
         ? await Promise.resolve()
-              .then(() => ctx.getDeleteDependencyWarning!(items))
+              .then(() => ctx.getDeleteDependencyWarning!(deletableItems))
               .catch(() => null)
         : null
     if (warning) {
@@ -730,7 +781,9 @@ async function promptDeleteItems(items: ContentItem[], event?: MouseEvent) {
         const relevantDependencyIds = new Set(
             remainingDependents.flatMap((dependent) => dependent.dependencies.map(getItemId)),
         )
-        const warningItems = items.filter((item) => relevantDependencyIds.has(getItemId(item)))
+        const warningItems = deletableItems.filter((item) =>
+            relevantDependencyIds.has(getItemId(item)),
+        )
         if (warningItems.length === 0) {
             showDeletionConfirmation(event)
             return
@@ -869,7 +922,9 @@ async function handleToggleEnabledById(id: string, _value: boolean) {
 async function handleRollbackById(id: string) {
     if (ctx.isBusy.value || !ctx.rollbackItem) return
     const item = findContentItem(id)
-    if (!item || !item.rollback) return
+    // Rollback renames the `*.old` backup back over the active file, so a
+    // write-protected row must not reach it.
+    if (!item || !item.rollback || isWriteProtected(item)) return
     markChanging(id)
     try {
         await ctx.rollbackItem(item)
@@ -881,7 +936,10 @@ async function handleRollbackById(id: string) {
 async function bulkEnable() {
     if (ctx.isBusy.value) return
     const items = selectedItems.value.filter(
-        (item) => canToggleContentItem(item) && isDisabledContentItem(item),
+        (item) =>
+            !isWriteProtected(item) &&
+            canToggleContentItem(item) &&
+            isDisabledContentItem(item),
     )
     if (items.length === 0) return
     if (ctx.bulkEnableItems) {
@@ -903,7 +961,10 @@ async function bulkEnable() {
 async function bulkDisable() {
     if (ctx.isBusy.value) return
     const items = selectedItems.value.filter(
-        (item) => canToggleContentItem(item) && isEnabledContentItem(item),
+        (item) =>
+            !isWriteProtected(item) &&
+            canToggleContentItem(item) &&
+            isEnabledContentItem(item),
     )
     if (items.length === 0) return
     if (ctx.bulkDisableItems) {
@@ -928,14 +989,14 @@ function handleUpdateById(id: string) {
         return
     }
     const item = findContentItem(id)
-    if (item) {
+    if (item && !isWriteProtected(item)) {
         void ctx.updateItem?.(item)
     }
 }
 
 function handleSwitchVersionById(id: string) {
     const item = findContentItem(id)
-    if (item) {
+    if (item && !isWriteProtected(item)) {
         ctx.switchVersion?.(item)
     }
 }
@@ -951,7 +1012,7 @@ const hasBulkUpdateSupport = computed(
 
 function promptUpdateAll(event?: MouseEvent) {
     if (!hasBulkUpdateSupport.value) return
-    const items = ctx.items.value.filter((item) => item.update != null)
+    const items = ctx.items.value.filter((item) => item.update != null && !isWriteProtected(item))
     const modpackHasUpdate =
         ctx.bulkUpdateIncludesModpack !== false && (ctx.modpack.value?.hasUpdate ?? false)
     if (items.length === 0 && !modpackHasUpdate) return
@@ -966,7 +1027,9 @@ function promptUpdateAll(event?: MouseEvent) {
 
 function promptUpdateSelected(event?: MouseEvent) {
     if (!hasBulkUpdateSupport.value) return
-    const items = selectedItems.value.filter((item) => item.update != null)
+    const items = selectedItems.value.filter(
+        (item) => item.update != null && !isWriteProtected(item),
+    )
     if (items.length === 0) return
     pendingBulkUpdateItems.value = items
     pendingBulkUpdateAll.value = false
@@ -1186,6 +1249,7 @@ const confirmUnlinkModal = ref<InstanceType<typeof ConfirmUnlinkModal>>()
 
         <ContentSelectionBar
             :selected-items="selectedItems"
+            :actionable-items="actionableSelection"
             :content-type-label="ctx.contentTypeLabel.value"
             :is-busy="ctx.isBusy.value"
             :busy-tooltip="ctx.busyMessage?.value"
@@ -1264,10 +1328,15 @@ const confirmUnlinkModal = ref<InstanceType<typeof ConfirmUnlinkModal>>()
                 <div class="mx-1 h-6 w-px bg-surface-5" />
 
                 <Button
-                    v-tooltip="formatMessage(commonMessages.deleteLabel)"
+                    v-tooltip="
+                        actionableSelection.length > 0
+                            ? formatMessage(commonMessages.deleteLabel)
+                            : formatMessage(messages.deleteNotAllowed)
+                    "
                     type="quiet"
                     color="red"
                     interaction="filled"
+                    :disabled="actionableSelection.length === 0"
                     @click="showBulkDeleteModal"
                 >
                     <TrashIcon />

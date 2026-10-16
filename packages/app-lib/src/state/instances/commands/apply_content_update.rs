@@ -13,11 +13,12 @@ use std::collections::{HashMap, HashSet};
 
 use super::apply_content_install::{
     DownloadedProjectVersion, add_downloaded_project_version,
-    add_project_from_version, add_resolved_content, archive_project_file,
-    content_ownership_for_path, download_project_version,
-    finalize_updated_project_path, persist_resolved_plan_dependency_edges,
-    primary_version_file_name, remove_project, resolve_content_scope,
-    resolve_update_plan, toggle_disable_project,
+    add_project_from_version_to_target, add_resolved_content,
+    archive_project_file, client_mod_update_target, content_ownership_for_path,
+    download_project_version, finalize_updated_project_path,
+    persist_resolved_plan_dependency_edges, primary_version_file_name,
+    remove_project, resolve_content_scope, resolve_update_plan,
+    toggle_disable_project,
 };
 use super::check_content_updates::{ContentUpdate, check_content_updates};
 
@@ -41,6 +42,10 @@ struct PlannedDependencyInstall {
     project_id: String,
     version_id: String,
     parent_version_id: String,
+    /// Instance-relative path of the project that pulled this dependency in, so
+    /// the addition follows that project's folder. `None` when the parent is not
+    /// one of the planned updates, which keeps the loader-derived default.
+    parent_relative_path: Option<String>,
 }
 
 #[derive(Clone, Debug)]
@@ -138,6 +143,9 @@ async fn apply_content_update(
             .await?
             .map(|version| primary_version_file_name(&version))
             .transpose()?;
+            // An update must never move a client-side mod into the server
+            // pack's `mods/` folder; the existing path is authoritative.
+            let target_project_type = client_mod_update_target(project_path);
             let plan = resolve_update_plan(
                 instance_id,
                 super::apply_content_install::InstanceInstallProjectRequest {
@@ -147,6 +155,7 @@ async fn apply_content_update(
                     selected: Default::default(),
                     excluded_project_ids: Vec::new(),
                     force_project_ids: Vec::new(),
+                    target_project_type,
                 },
                 state,
             )
@@ -156,13 +165,13 @@ async fn apply_content_update(
                     .await?;
             let mut paths = Vec::with_capacity(plan.dependencies.len() + 1);
             paths.push(
-                add_project_from_version(
+                add_project_from_version_to_target(
                     instance_id,
                     &plan.primary.version_id,
                     DownloadReason::Update,
                     Some(current_version_id.to_string()),
-                    ContentSourceKind::Local,
                     ownership_kind,
+                    target_project_type,
                     state,
                 )
                 .await?,
@@ -174,6 +183,7 @@ async fn apply_content_update(
                         dependency,
                         DownloadReason::Dependency,
                         true,
+                        target_project_type,
                         state,
                     )
                     .await?,
@@ -255,7 +265,15 @@ pub(crate) async fn update_all_projects(
     .await?;
     for download in downloads {
         match download {
-            DownloadedBulkProject::ProjectUpdate(update, downloaded) => {
+            DownloadedBulkProject::ProjectUpdate(update, mut downloaded) => {
+                // `download_project_version` derives the folder from the new
+                // version's loaders; a client-side mod must stay in
+                // `clientmods/` instead of being moved into `mods/`.
+                if let Some(target) =
+                    client_mod_update_target(&update.relative_path)
+                {
+                    downloaded.project_type = target;
+                }
                 let mut new_path = add_downloaded_project_version(
                     instance_id,
                     downloaded,
@@ -468,7 +486,7 @@ async fn download_planned_projects(
                 ))
             }
             PlannedDownload::DependencyAddition(dependency) => {
-                let downloaded = download_project_version(
+                let mut downloaded = download_project_version(
                     instance_id,
                     &dependency.version_id,
                     DownloadReason::Dependency,
@@ -476,6 +494,17 @@ async fn download_planned_projects(
                     state,
                 )
                 .await?;
+
+                // `download_project_version` derives the folder from the new
+                // version's loaders; a dependency of a client-side mod belongs
+                // in `clientmods/` with it, not in the server pack's `mods/`.
+                if let Some(target) = dependency
+                    .parent_relative_path
+                    .as_deref()
+                    .and_then(client_mod_update_target)
+                {
+                    downloaded.project_type = target;
+                }
 
                 Ok::<_, crate::Error>(
                     DownloadedBulkProject::DependencyAddition(
@@ -623,6 +652,25 @@ async fn plan_bulk_update(
         .collect::<Vec<_>>();
     let planned_dependencies =
         dependency_closure(planned_versions, &content_set, state).await?;
+    // Maps the version a dependency was resolved for to the path that version
+    // will be materialized at, so the addition can follow the same folder.
+    let planned_parent_paths = installed
+        .iter()
+        .filter(|project| project.enabled)
+        .filter(|project| updateable_paths.contains(&project.relative_path))
+        .filter_map(|project| {
+            let target_version_id = updates_by_path
+                .get(&project.relative_path)
+                .map(|(_, update_version_id)| update_version_id)
+                .map(|version_id| version_id.as_str())
+                .or(project.version_id.as_deref())?;
+
+            Some((
+                target_version_id.to_string(),
+                project.relative_path.clone(),
+            ))
+        })
+        .collect::<HashMap<String, String>>();
     let dependency_additions = planned_dependencies
         .values()
         .filter(|dependency| {
@@ -632,6 +680,9 @@ async fn plan_bulk_update(
             project_id: dependency.project_id.clone(),
             version_id: dependency.version_id.clone(),
             parent_version_id: dependency.parent_version_id.clone(),
+            parent_relative_path: planned_parent_paths
+                .get(&dependency.parent_version_id)
+                .cloned(),
         })
         .collect::<Vec<_>>();
     let curseforge_updates = updates

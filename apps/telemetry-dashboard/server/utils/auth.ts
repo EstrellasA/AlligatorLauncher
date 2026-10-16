@@ -46,7 +46,7 @@ export async function verifyAccessJwt(
         const name = typeof nameClaim === 'string' && nameClaim.trim() ? nameClaim : 'GitHub member'
         return {
             identity: { name, email },
-            organization: 'Axolotl-Launcher',
+            organization: 'ALLIGATORZONE-Launcher',
             logoutUrl: '/cdn-cgi/access/logout',
             mock: false,
             dataSource: 'production',
@@ -70,7 +70,7 @@ export function mockSession(scenario: string): AdminSessionDto {
     if (scenario === 'unconfigured-auth') throw unauthorized()
     return {
         identity: { name: '本地开发身份', email: null },
-        organization: 'Axolotl-Launcher',
+        organization: 'ALLIGATORZONE-Launcher',
         logoutUrl: '/',
         mock: true,
         dataSource: 'fixture',

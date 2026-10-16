@@ -14,7 +14,6 @@ export type SettingsCategoryId =
     | 'storage-backups'
     | 'privacy-data'
     | 'updates'
-    | 'about'
     | 'logs'
     | 'feature-flags'
 
@@ -155,15 +154,6 @@ export const settingsCategoryDefinitions: SettingsCategoryDefinition[] = [
         }),
         group: 'support',
         onboardingId: 'settings-tab-updates',
-    },
-    {
-        id: 'about',
-        name: defineMessage({
-            id: 'app.settings.tabs.about',
-            defaultMessage: 'About',
-        }),
-        group: 'support',
-        onboardingId: 'settings-tab-about',
     },
     {
         id: 'logs',

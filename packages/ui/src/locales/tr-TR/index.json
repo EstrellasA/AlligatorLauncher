@@ -1820,9 +1820,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "Mod"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Modlar"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "mod"
   },

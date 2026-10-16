@@ -155,6 +155,13 @@
                 <p class="m-0">{{ formatMessage(messages.contentRefreshWarningBody) }}</p>
             </div>
         </CollapsibleAdmonition>
+        <p
+            v-if="hasServerModsRows"
+            class="mb-3 mt-0 flex items-start gap-2 text-sm text-[var(--color-text-tertiary)]"
+        >
+            <InfoIcon class="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            <span>{{ formatMessage(messages.serverModsFolderNote) }}</span>
+        </p>
         <ContentPageLayout @visible-items="handleVisibleItems">
             <template #modals>
                 <ContentToggleDependenciesModal ref="toggleDependenciesModal" />
@@ -234,6 +241,8 @@ import {
     FileIcon,
     FolderOpenIcon,
     FolderSearchIcon,
+    GlobeIcon,
+    InfoIcon,
     PencilIcon,
     SpinnerIcon,
     UndoIcon,
@@ -277,6 +286,13 @@ import { useWorldDatapacks } from '@/composables/useWorldDatapacks'
 import { trackEvent } from '@/helpers/analytics'
 import { get_project_versions, get_version, get_version_many } from '@/helpers/cache.js'
 import {
+    BROWSE_LOCKED_PROJECT_PATH,
+    isServerManagedInstance,
+    isServerModsContent,
+    manualAddContentTypeFromPath,
+    manualAddTargetProjectType,
+} from '@/helpers/client-mod-browse'
+import {
     activeContentChangeJobs as selectActiveContentChangeJobs,
     contentItemStableId,
     hasActiveContentChange,
@@ -297,6 +313,7 @@ import {
 import { getMissingContentScannerSettings } from '@/helpers/downloads-scanner'
 import { instance_listener } from '@/helpers/events.js'
 import { install_duplicate_instance, installJobInstanceId } from '@/helpers/install'
+import { modDisplayName, modLinkMessages, modMcmodUrl, modProjectUrl } from '@/helpers/mod-links'
 import {
     add_project_from_path,
     apply_content_update_plan,
@@ -465,6 +482,20 @@ const messages = defineMessages({
     packMemberRemoved: {
         id: 'app.instance.mods.pack-member-removed',
         defaultMessage: 'This modpack file was removed locally',
+    },
+    playerAddedModBadge: {
+        id: 'app.instance.mods.player-added.badge',
+        defaultMessage: 'Player-added',
+    },
+    serverModsFolderNote: {
+        id: 'app.instance.mods.folder-note',
+        defaultMessage:
+            'The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder.',
+    },
+    playerAddedModHint: {
+        id: 'app.instance.mods.player-added.hint',
+        defaultMessage:
+            'This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it.',
     },
     postUpgradeNoticeTitle: {
         id: 'app.instance.mods.post-upgrade-notice.title',
@@ -1055,6 +1086,107 @@ const isCurseForgeLinkedModpack = computed(
     () => props.instance?.link?.type === 'curseforge_modpack',
 )
 
+/**
+ * A server instance's `mods/` folder belongs to the server, not to the player.
+ * The launcher reconciles it against the server pack, and the server's
+ * AutoModpack treats `mods/*` as player-editable: it honours (and keeps!) any
+ * edit a player makes there, so a local disable, delete, update, version switch
+ * or rollback is not a cosmetic mistake — it permanently takes the server's
+ * authority over its own pack away.
+ *
+ * Those rows therefore carry the `writeProtected` row capability: every
+ * mutating control is withheld, and the shared content table's bulk actions
+ * (enable, disable, delete, update) filter through the same flag, so "select
+ * all" cannot reach them either. The app-side write functions are guarded
+ * independently — the UI is not the only thing in the way. `writeProtected` is
+ * set per row and per type, not special-cased per table, so any future
+ * untouchable content gets the same treatment by setting the same flag.
+ *
+ * `clientmods/` is the player's own folder and keeps every control, other
+ * project types are untouched, and an ordinary (non-server) instance keeps full
+ * control of its own `mods/` folder. Server mods keep their read-only actions:
+ * open, the 🌐/📖 lookups, share, and "restore pack default", which re-asserts
+ * the server's copy rather than overriding it.
+ *
+ * The signal is the instance link, which is what the rest of the app uses for
+ * "is this a server instance" (`Favorites.vue`, `HomeMinimal.vue`,
+ * `Instance.vue`), with the resolved server-project flag as a fallback. Unlike
+ * the v3 project lookup behind `isServerInstance`, the link needs no network.
+ */
+/**
+ * Whether this instance is linked to the ALLIGATORZONE server pack rather than to
+ * an ordinary Modrinth / CurseForge / imported modpack.
+ *
+ * This is about the **provenance of the pack**, so it stays link-based: it gates
+ * the flows that rewrite the pack's own members by version (the modpack update),
+ * and those must keep working for ordinary imported modpacks. It is deliberately
+ * *not* the rule for who owns the `mods/` folder — that rule is
+ * `isServerModsContent` in `@/helpers/client-mod-browse` and it is folder-based,
+ * because a measured `unmanaged` instance owns a server `mods/` folder with zero
+ * `pack_managed` rows while `imported_modpack` instances are 100%
+ * `pack_managed`.
+ */
+const isServerProjectInstance = computed(
+    () => isServerManagedInstance(props.instance) || props.isServerInstance === true,
+)
+
+/** Whether the launcher may enable/disable this row at all. */
+function canToggleContent(item: ContentItem): boolean {
+    return !isServerModsContent(item) && item.instanceCapabilities?.canToggle !== false
+}
+
+/**
+ * Whether this instance's `mods/` list actually mixes both kinds of file, so the
+ * ownership marker can tell them apart.
+ *
+ * On the real databases it never does: `unmanaged` instances report zero
+ * `pack_managed` rows (so a marker would land on *every* mod row) and
+ * `imported_modpack` instances report 100% `pack_managed` (so there is nothing to
+ * mark). Requiring the mix keeps the marker meaningful where it can be and
+ * invisible where it would be noise. The folder-level guidance below covers the
+ * case where ownership cannot identify the player's files at all.
+ */
+const hasPackManagedModRows = computed(() =>
+    [...mergedProjects.value, ...displayedLinkedModpackContentItems.value].some(
+        (item) => isServerModsContent(item) && item.instanceOwnershipKind === 'pack_managed',
+    ),
+)
+
+/** Whether the list holds any server-mods row at all. */
+const hasServerModsRows = computed(() =>
+    [...mergedProjects.value, ...displayedLinkedModpackContentItems.value].some((item) =>
+        isServerModsContent(item),
+    ),
+)
+
+/**
+ * The badge for a mod sitting in the server pack's `mods/` folder that the pack
+ * did not put there — a jar the player added by hand earlier.
+ *
+ * Purely informational: the row is write-protected either way, and the badge plus
+ * its hint are how a player learns that their own mods belong in `clientmods/`.
+ * Moving the file is the player's job; the launcher never changes anything inside
+ * `mods/`.
+ *
+ * Only shown when ownership can actually distinguish the two kinds (see
+ * `hasPackManagedModRows`) and when the ownership is known — an unknown value is
+ * left unmarked rather than guessed.
+ *
+ * Ownership is already on these rows: the content page loads its items through
+ * the snapshot path (`loadInstanceContentData` →
+ * `instanceContentData.contentItems` / `linkedContentItems`), which carries
+ * `instanceOwnershipKind`; pack members arrive through `linkedContentItems`.
+ */
+function playerAddedModBadge(item: ContentItem) {
+    if (!isServerModsContent(item) || !hasPackManagedModRows.value) return null
+    const ownership = item.instanceOwnershipKind
+    if (ownership !== 'user_added' && ownership !== 'local_discovered') return null
+    return {
+        label: formatMessage(messages.playerAddedModBadge),
+        tooltip: formatMessage(messages.playerAddedModHint),
+    }
+}
+
 const shareModal = ref<InstanceType<typeof ShareModal> | null>()
 const exportModal = ref(null)
 const contentUpdaterModal = ref<InstanceType<typeof ContentUpdaterModal> | null>()
@@ -1269,7 +1401,13 @@ function hasContentOperation(item: ContentItem) {
 }
 
 function canUpdateProject(item: ContentItem) {
-    return item.update != null && (item.instanceCapabilities?.canUpdate ?? true)
+    // A server-managed row is never updatable: an update would replace pack
+    // bytes the server owns with something it did not ship.
+    return (
+        !isServerModsContent(item) &&
+        item.update != null &&
+        (item.instanceCapabilities?.canUpdate ?? true)
+    )
 }
 
 function contentUpdateId(item: ContentItem): string | null {
@@ -1506,7 +1644,7 @@ async function getUpdaterProjectVersions(
 async function handleBrowseContent() {
     if (!props.instance) return
     await router.push({
-        path: `/browse/${props.instance.loader === 'vanilla' ? 'resourcepack' : 'mod'}`,
+        path: BROWSE_LOCKED_PROJECT_PATH,
         query: { i: props.instance.id },
     })
 }
@@ -1521,7 +1659,15 @@ async function handleUploadFiles() {
         const path = (file as { path?: string }).path ?? file
         const fileName = typeof path === 'string' ? (path.split('/').pop() ?? path) : String(path)
         try {
-            await add_project_from_path(props.instance.id, path)
+            // A jar added by hand targets the player's own `clientmods/`, never the
+            // server pack's `mods/` — AutoModpack keeps whatever a player puts in
+            // `mods/`, so an add there would hand the player authority the server
+            // owns. Every other file type keeps the backend's own folder rules.
+            await add_project_from_path(
+                props.instance.id,
+                path,
+                manualAddTargetProjectType(manualAddContentTypeFromPath(String(path))),
+            )
             addedFiles.push(fileName)
         } catch (e) {
             handleError(e as Error)
@@ -1582,7 +1728,7 @@ function collectToggleRelated(items: ContentItem[], enabling: boolean): ContentI
                 (candidate) => dependencyRefMatchesContentItem(reference, candidate),
             )
             if (!match) continue
-            if (match.instanceCapabilities?.canToggle === false) continue
+            if (!canToggleContent(match)) continue
             const id = getContentItemId(match)
             if (targetIds.has(id) || relatedIds.has(id)) continue
             const needsChange = enabling ? !match.enabled : match.enabled
@@ -1674,6 +1820,10 @@ async function toggleDisableMod(
         return
     }
 
+    // Refuse before the dependency prompt too, so a protected row never even
+    // offers to change anything.
+    if (!canToggleContent(mod)) return
+
     const enabled = desiredEnabled ?? !mod.enabled
     if (!skipDependencyPrompt && mod.dependency) {
         const related = collectToggleRelated([mod], enabled)
@@ -1692,7 +1842,11 @@ async function toggleDisableMod(
 
 async function applyToggleDisableMod(mod: ContentItem, enabled: boolean) {
     const contentId = getStableContentId(mod)
-    if (!mod.file_path || !contentId || mod.instanceCapabilities?.canToggle === false) return
+    // The last gate before a rename to `.disabled`: the server's own mods never
+    // reach it, however the toggle was triggered (row, bulk, or a dependency
+    // expansion of another row).
+    if (!canToggleContent(mod)) return
+    if (!mod.file_path || !contentId) return
     const operation = beginContentOperation(mod)
     if (!operation) return
     const originalFilePath = mod.file_path
@@ -1762,7 +1916,7 @@ async function applyToggleDisableBatch(items: ContentItem[], enabled: boolean) {
         if (
             !contentId ||
             !item.file_path ||
-            item.instanceCapabilities?.canToggle === false ||
+            !canToggleContent(item) ||
             hasContentOperation(item)
         ) {
             continue
@@ -1890,6 +2044,9 @@ const toggleDisableDebounced = toggleDisableMod
 
 async function removeMod(mod: ContentItem) {
     const contentId = getStableContentId(mod)
+    // The last gate before a file is removed: the server's own mods never reach
+    // it, however the delete was triggered (row, bulk, or "select all").
+    if (isServerModsContent(mod)) return
     if (
         !mod.file_path ||
         mod.instanceCapabilities?.canDelete === false ||
@@ -2055,20 +2212,24 @@ async function getDeleteDependencyWarning(items: ContentItem[]) {
 
 async function bulkUpdateAllProjects() {
     if (pendingContentChanges.value.length > 0 || activeContentChangeJobs.value.length > 0) return
-    try {
-        await downloadManager.queueContentChange({
-            instanceId: props.instance.id,
-            intent: { type: 'update_all_user_added' },
-            displayTitle: formatMessage(messages.updateAddedContent),
-        })
-    } catch (err) {
-        handleError(err as Error)
-        throw err
-    }
+
+    // The `update_all_user_added` scope selects by ownership only (see
+    // `update_scope_selects_item` on the backend), so it would also sweep in a
+    // user-added file that sits in the server's `mods/` folder — a jar dragged in
+    // by hand, say — which the write rule forbids. Build the target list here
+    // instead; it keeps exactly the same scope as the backend's (user-added
+    // content with a known update) minus the `mods/` rows.
+    await bulkUpdateProjects(
+        projects.value.filter(
+            (item) => item.instanceOwnershipKind === 'user_added' && item.update != null,
+        ),
+    )
 }
 
 async function bulkUpdateProjects(items: ContentItem[]) {
-    const targets = items.flatMap((item) => {
+    // Filtered through the same rule as the row action: a bulk "update
+    // selected", reached via "select all", must not touch a server mod.
+    const targets = items.filter((item) => !isServerModsContent(item)).flatMap((item) => {
         const contentId = getStableContentId(item)
         const targetReleaseId = contentUpdateId(item)
         return contentId && targetReleaseId
@@ -2123,6 +2284,9 @@ async function updateProject(mod: ContentItem) {
 
 async function switchProjectVersion(mod: ContentItem, version: Labrinth.Versions.v2.Version) {
     const contentId = getStableContentId(mod)
+    // Switching a server mod to another version is the player overruling the
+    // server's pack; AutoModpack keeps that choice, so it must not be offered.
+    if (isServerModsContent(mod)) return
     if (!mod.file_path || !contentId || mod.instanceCapabilities?.canChangeVersion === false) return
     if (hasGlobalContentChange(mod)) return
 
@@ -2151,6 +2315,9 @@ async function switchProjectVersion(mod: ContentItem, version: Labrinth.Versions
 }
 
 async function handleRollbackContent(mod: ContentItem) {
+    // Rollback renames the `*.old` backup back over the active file, so it is a
+    // write into the server's folder like any other.
+    if (isServerModsContent(mod)) return
     if (!mod.file_path || !mod.rollback) return
     const operation = beginContentOperation(mod)
     if (!operation) return
@@ -2178,6 +2345,8 @@ async function handleUpdate(item: ContentItem) {
 }
 
 async function handleSwitchVersion(item: ContentItem) {
+    // No version picker for a server mod: the server's pack chooses the version.
+    if (isServerModsContent(item)) return
     if (!item.project?.id || !item.version?.id) return
 
     const requestId = beginUpdateRequest()
@@ -2223,6 +2392,11 @@ watch(
 )
 
 async function handleModpackUpdate() {
+    // The pack scope rewrites the modpack's own members, which for a server
+    // instance are the files under `mods/`. The server's pack is the authority
+    // there, so the launcher offers no modpack update for it at all (the row
+    // action is withheld too) — the admin updates the pack, AutoModpack syncs it.
+    if (isServerProjectInstance.value) return
     if (!props.instance?.link?.project_id) return
 
     const requestId = beginUpdateRequest()
@@ -2420,6 +2594,10 @@ async function handleModpackUpdateRequest(selectedVersion: Labrinth.Versions.v2.
 }
 
 async function handleModpackUpdateConfirm() {
+    // Last gate before the pack-scope plan is applied: `plan_content_updates`
+    // with the `pack` scope targets the linked modpack's members, which for a
+    // server instance live in the server's `mods/` folder.
+    if (isServerProjectInstance.value) return
     if (!pendingModpackUpdateVersion.value || !props.instance?.id) return
 
     const version = pendingModpackUpdateVersion.value
@@ -2786,6 +2964,52 @@ function dismissContentHint() {
     writeInstanceCache(props.instance.id, { modpackHintDismissed: true })
 }
 
+/**
+ * Row actions: the schematic workshop for plans, and the two external lookups
+ * every mod entry gets. A lookup whose URL cannot be derived is left out rather
+ * than rendered dead.
+ *
+ * Both mod folders are covered: `mods` is the server pack's copy and
+ * `clientmods` is the player's own. They get their own chips in the filter row,
+ * but a mod is a mod when it comes to finding its page.
+ */
+function buildContentInlineActions(item: ContentItem) {
+    const actions: NonNullable<ContentItem['inlineActions']> = []
+
+    if (item.project_type === 'schematic') {
+        actions.push({
+            id: 'open-in-schematic-workshop',
+            label: formatMessage(messages.openInSchematicWorkshop),
+            icon: PencilIcon,
+            action: () => openSchematicInWorkshop(item),
+        })
+    }
+
+    if (item.project_type === 'mod' || item.project_type === 'clientmod') {
+        const name = modDisplayName(item)
+        const projectUrl = modProjectUrl(item)
+        if (projectUrl) {
+            actions.push({
+                id: 'open-project-page',
+                label: formatMessage(modLinkMessages.projectPage, { name }),
+                icon: GlobeIcon,
+                action: () => void openUrl(projectUrl).catch(() => undefined),
+            })
+        }
+        const mcmodUrl = modMcmodUrl(item)
+        if (mcmodUrl) {
+            actions.push({
+                id: 'open-mcmod-page',
+                label: formatMessage(modLinkMessages.mcmod, { name }),
+                icon: BookOpenIcon,
+                action: () => void openUrl(mcmodUrl).catch(() => undefined),
+            })
+        }
+    }
+
+    return actions.length > 0 ? actions : undefined
+}
+
 provideContentManager({
     items: mergedProjects,
     duplicateItems: duplicateModItems,
@@ -2874,17 +3098,13 @@ provideContentManager({
     toggleEnabled: toggleDisableDebounced,
     bulkEnableItems: async (items: ContentItem[]) => {
         await toggleDisableBatch(
-            items.filter(
-                (item) => item.enabled === false && item.instanceCapabilities?.canToggle !== false,
-            ),
+            items.filter((item) => item.enabled === false && canToggleContent(item)),
             true,
         )
     },
     bulkDisableItems: async (items: ContentItem[]) => {
         await toggleDisableBatch(
-            items.filter(
-                (item) => item.enabled === true && item.instanceCapabilities?.canToggle !== false,
-            ),
+            items.filter((item) => item.enabled === true && canToggleContent(item)),
             false,
         )
     },
@@ -2906,7 +3126,9 @@ provideContentManager({
     bulkUpdateAllDescription: formatMessage(messages.updateAddedContentDescription),
     bulkUpdateIncludesModpack: false,
     bulkUpdateItems: bulkUpdateProjects,
-    updateModpack: props.isServerInstance ? undefined : handleModpackUpdate,
+    // A server instance has no launcher-side modpack update: the pack scope
+    // rewrites the server's own `mods/` files (see `handleModpackUpdate`).
+    updateModpack: isServerProjectInstance.value ? undefined : handleModpackUpdate,
     viewDependencies: handleViewDependencies,
     unlinkModpack: unpairInstance,
 
@@ -3014,23 +3236,21 @@ provideContentManager({
                       ? formatMessage(messages.packMemberRemoved)
                       : null,
             toggleDisabled: item.instanceCapabilities?.canToggle === false,
+            // The server's `mods/` folder is write-protected for the player, on
+            // every instance: no toggle, no trash, no update, no version switch,
+            // no rollback are offered, and the shared table's bulk actions skip
+            // these rows too (see `isServerModsContent`).
+            writeProtected: isServerModsContent(item),
             hideSwitchVersion:
                 (isPackLocked.value && item.instanceOwnershipKind === 'pack_managed') ||
                 item.instanceCapabilities?.canChangeVersion === false,
             pendingManualDownload: item.pendingManualDownload,
             installing: item.installing,
             dependencyBadge,
-            inlineActions:
-                item.project_type === 'schematic'
-                    ? [
-                          {
-                              id: 'open-in-schematic-workshop',
-                              label: formatMessage(messages.openInSchematicWorkshop),
-                              icon: PencilIcon,
-                              action: () => openSchematicInWorkshop(item),
-                          },
-                      ]
-                    : undefined,
+            // Marks the player's own files sitting in the server's `mods/`
+            // folder; the row stays write-protected either way.
+            noticeBadge: playerAddedModBadge(item),
+            inlineActions: buildContentInlineActions(item),
         }
     },
 })

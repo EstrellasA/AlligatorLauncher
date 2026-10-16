@@ -196,8 +196,22 @@ export async function get_projects(
     return await invoke('plugin:instance|instance_get_projects', { instanceId, cacheBehaviour })
 }
 
-export async function get_installed_project_ids(instanceId: string): Promise<string[]> {
-    return await invoke('plugin:instance|instance_get_installed_project_ids', { instanceId })
+/**
+ * Project ids already installed in the instance.
+ *
+ * `projectTypes` restricts the answer to files that live in those project
+ * types' folders. Browse passes `['clientmod']`, because browsed mods install
+ * into `clientmods/`: a copy the server pack ships in `mods/` must not count as
+ * installed for that install.
+ */
+export async function get_installed_project_ids(
+    instanceId: string,
+    projectTypes?: string[],
+): Promise<string[]> {
+    return await invoke('plugin:instance|instance_get_installed_project_ids', {
+        instanceId,
+        projectTypes,
+    })
 }
 
 export type CoreComponentKind = 'jar_mod' | 'replacement_jar' | 'agent'
@@ -465,6 +479,88 @@ export async function get_content_items_by_paths(
         instanceId,
         paths,
         cacheBehaviour,
+    })
+}
+
+/** What a published generation did to one file. */
+export type AutomodpackChangeKind = 'added' | 'changed' | 'removed'
+
+/** One file a generation touched. `path` is `/`-separated and instance-relative. */
+export interface AutomodpackChange {
+    path: string
+    kind: AutomodpackChangeKind
+    from_sha1?: string
+    to_sha1?: string
+    from_size: number
+    to_size: number
+}
+
+/**
+ * Non-mod changes folded by top-level directory. A first publish can touch
+ * hundreds of script or config files, so the page shows `count` with a bounded
+ * sample rather than a flat list.
+ */
+export interface AutomodpackDirectoryGroup {
+    directory: string
+    count: number
+    added: number
+    changed: number
+    removed: number
+    sample_paths: string[]
+    samples_truncated: boolean
+}
+
+/**
+ * One published AutoModpack generation.
+ *
+ * `mod_paths` is the whole reason the update-notes page can render project
+ * cards: each entry is a real instance-relative path such as
+ * `mods/Jade-1.21.1-NeoForge-15.10.5.jar`, which is handed to
+ * `get_content_items_by_paths` to recover the project, icon and author.
+ */
+export interface AutomodpackGeneration {
+    seq: number
+    created_at: string
+    /** Operator-authored patch notes; empty means this generation has none. */
+    notes: string
+    content_token: string
+    restore_of?: number
+    changed_files: number
+    mod_paths: string[]
+    /** Every file the generation touched, with its kind. */
+    changes: AutomodpackChange[]
+    directories: AutomodpackDirectoryGroup[]
+}
+
+export type AutomodpackUnavailableReason =
+    | 'not_installed'
+    | 'no_selected_pack'
+    | 'history_missing'
+
+/** The server's published generation history, read from disk with no network. */
+export interface AutomodpackChangelog {
+    available: boolean
+    modpack_id?: string
+    unavailable_reason?: AutomodpackUnavailableReason
+    /** Newest first. */
+    generations: AutomodpackGeneration[]
+    /** Journal lines ignored because they could not be parsed (a torn tail). */
+    skipped_lines: number
+}
+
+/**
+ * The server's published pack changes for an instance, read from the
+ * AutoModpack journal mirror under `<instance>/automodpack/client/`.
+ *
+ * Never touches the network, so it works offline and without a running game.
+ * `available: false` is an ordinary state, not an error: the pack may not have
+ * synced here yet or the mirror may be gone.
+ */
+export async function get_automodpack_changelog(
+    instanceId: string,
+): Promise<AutomodpackChangelog> {
+    return await invoke<AutomodpackChangelog>('plugin:instance|instance_get_automodpack_changelog', {
+        instanceId,
     })
 }
 
@@ -769,6 +865,13 @@ export interface ResolveContentRequest {
     selected?: ResolutionPreferences
     excluded_project_ids?: string[]
     force_project_ids?: string[]
+    /**
+     * Explicit, opt-in destination folder for the install. The content browser
+     * sends `clientmod` so its installs land in the instance's `clientmods/`
+     * folder and can never write the server pack's `mods/` folder. Omitted
+     * keeps the backend's loader-derived default.
+     */
+    target_project_type?: string
 }
 
 export interface ResolvedContent {
@@ -866,6 +969,7 @@ export type InstallContentBatchItem =
           selected?: unknown
           excluded_project_ids?: string[]
           force_project_ids?: string[]
+          target_project_type?: string
       }
     | { type: 'curse_forge'; request: unknown }
     | { type: 'curse_forge_world'; request: unknown }

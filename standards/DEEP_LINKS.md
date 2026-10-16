@@ -130,7 +130,6 @@ axolotl://<命名空间>[/<动作>/<标识>][?<参数>]
 | `collapsed_navigation` `toggle_sidebar` `hide_nametag_skins_page` `advanced_rendering` `native_decorations` `auto_hide_downloads_button` `show_files_tab_in_instances` `show_worlds_tab_in_instances` `show_screenshots_tab_in_instances` `show_skin_selector_in_sidebar` `custom_window_title_enabled` `transparent_background` `transparent_background_blur` | 布尔 | 界面开关 |
 | `close_behavior` | `ask/close/lightweight` | 关闭行为 |
 | `log_level` | `error/warn/info/debug/trace` | 日志级别 |
-| `home_layout` | `standard/minimal` | 主页布局 |
 | `sidebar_instance_count` | 0–50 | 侧栏实例数 |
 | `default_window_title` | 非空文本 ≤128 | 游戏窗口标题 |
 | `transparent_background_opacity` `home_widget_background_opacity` `custom_background_component_opacity` | 0–100 | 透明度 |

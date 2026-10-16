@@ -53,6 +53,19 @@ export interface ContentCardTableItem {
     postUpgradeWarningTooltip?: string | null
     toggleDisabled?: boolean
     toggleDisabledTooltip?: string | null
+    /**
+     * Row-level capability: the launcher must not write to this file at all, so
+     * every mutating action is withheld — enable/disable, delete, update, switch
+     * version and rollback. Hiding is deliberate: a disabled control still
+     * advertises an action that must never happen.
+     *
+     * This is the capability, not a styling hint. The content card layout reads
+     * it to (a) withhold the row's controls and (b) build the protected-id set
+     * every bulk action filters through, so a selection — including "select all"
+     * — cannot reach a row the UI refuses to offer. The app-side write functions
+     * are guarded independently; the UI is not the only thing in the way.
+     */
+    writeProtected?: boolean
     installing?: boolean
     hasUpdate?: boolean
     /** File name that would be restored by the rollback action, when the item
@@ -93,6 +106,13 @@ export interface ContentCardTableItem {
         autoDependency: boolean
         orphaned: boolean
     } | null
+    /**
+     * Host-provided informational badge for this row: a short label plus an
+     * optional explanation rendered as its tooltip. Informational only — the
+     * host uses it to say where a file came from, never to offer an action the
+     * row deliberately does not have.
+     */
+    noticeBadge?: { label: string; tooltip?: string | null } | null
     overflowOptions?: OverflowMenuOption[]
     inlineActions?: ContentRowInlineAction[]
     isGroupHeader?: boolean
@@ -153,6 +173,12 @@ export interface ContentItem extends Omit<
     external?: boolean
     /** Loader derived from the installed version or locally parsed mod metadata. */
     loader?: string
+    /**
+     * Homepage the mod declares in its own jar metadata (`displayURL`), when the
+     * backend extracted one. Most mods point it at their Modrinth or CurseForge
+     * page, which is the only publication link for files that matched no project.
+     */
+    display_url?: string | null
     installing?: boolean
     pendingManualDownload?: boolean
     rollback?: { file_name: string } | null

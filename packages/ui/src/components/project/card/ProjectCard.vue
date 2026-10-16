@@ -401,7 +401,13 @@ const baseCardStyle =
     'w-full h-full border-[1px] border-solid border-surface-4 overflow-hidden bg-surface-3 rounded-2xl transition-all smart-clickable:outline-on-focus smart-clickable:highlight-on-hover'
 
 const compactCardStyle =
-    'w-full h-16 border-[1px] border-solid border-surface-4 overflow-hidden bg-surface-2 rounded-lg px-2 py-[7px] grid grid-cols-[48px_minmax(0,1fr)_5rem_10rem_4.5rem_4.5rem_5.5rem] items-center gap-3 transition-all smart-clickable:outline-on-focus smart-clickable:highlight-on-hover'
+    // The last track is content-sized, not a fixed `5.5rem`: an action label
+    // wider than its track used to spill over the "updated" column, because
+    // ButtonFrame refuses to shrink (`shrink-0`) and centres a nowrap label, so
+    // it overflowed symmetrically from a too-small cell. The downloads and date
+    // tracks can give up width instead (`minmax(0, …)` plus truncation inside
+    // those two cells), which is the graceful degradation this row wants.
+    'w-full h-16 border-[1px] border-solid border-surface-4 overflow-hidden bg-surface-2 rounded-lg px-2 py-[7px] grid grid-cols-[48px_minmax(0,1fr)_5rem_10rem_minmax(0,4.5rem)_minmax(0,4.5rem)_max-content] items-center gap-3 transition-all smart-clickable:outline-on-focus smart-clickable:highlight-on-hover'
 
 const updatedDate = computed(() =>
     props.dateUpdated ? dayjs(props.dateUpdated).toDate() : undefined,
@@ -519,7 +525,9 @@ const cssColor = computed(() => {
 
 @container (width < 720px) {
     .project-card--compact {
-        grid-template-columns: 48px minmax(0, 1fr) 5rem 4.5rem 4.5rem 5.5rem;
+        grid-template-columns:
+            48px minmax(0, 1fr) 5rem minmax(0, 4.5rem) minmax(0, 4.5rem)
+            max-content;
     }
 
     .project-card--compact__tags {
@@ -529,7 +537,7 @@ const cssColor = computed(() => {
 
 @container (width < 600px) {
     .project-card--compact {
-        grid-template-columns: 48px minmax(0, 1fr) 5rem 4.5rem 5.5rem;
+        grid-template-columns: 48px minmax(0, 1fr) 5rem minmax(0, 4.5rem) max-content;
     }
 
     .project-card--compact__date {
@@ -539,7 +547,7 @@ const cssColor = computed(() => {
 
 @container (width < 520px) {
     .project-card--compact {
-        grid-template-columns: 48px minmax(0, 1fr) 5rem 5.5rem;
+        grid-template-columns: 48px minmax(0, 1fr) 5rem max-content;
     }
 
     .project-card--compact__downloads {
@@ -549,7 +557,7 @@ const cssColor = computed(() => {
 
 @container (width < 440px) {
     .project-card--compact {
-        grid-template-columns: 48px minmax(0, 1fr) 5.5rem;
+        grid-template-columns: 48px minmax(0, 1fr) max-content;
     }
 
     .project-card--compact__provider {

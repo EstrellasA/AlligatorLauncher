@@ -705,7 +705,7 @@
     "defaultMessage": "点击右上角「开始游戏」即可接收实时日志"
   },
   "console.empty.server-title": {
-    "defaultMessage": "欢迎使用 Axolotl 服务器！"
+    "defaultMessage": "欢迎使用 ALLIGATORZONE 服务器！"
   },
   "console.empty.server-description": {
     "defaultMessage": "点击启动按钮即可启动服务器！"
@@ -866,6 +866,12 @@
   "content.filter.enabled": {
     "defaultMessage": "已启用"
   },
+  "content.filter.type.client-mod": {
+    "message": "客户端 Mod"
+  },
+  "content.filter.type.server-mod": {
+    "message": "服务器 Mod"
+  },
   "content.filter.updates": {
     "defaultMessage": "可更新"
   },
@@ -967,6 +973,9 @@
   },
   "content.page-layout.browse-content": {
     "defaultMessage": "浏览内容"
+  },
+  "content.page-layout.delete-not-allowed": {
+    "message": "所选内容都无法由启动器删除。"
   },
   "content.page-layout.empty.hint": {
     "defaultMessage": "浏览或上传{contentType}以开始使用"
@@ -1082,6 +1091,9 @@
   "content.selection-bar.bulk.updating-waiting": {
     "defaultMessage": "正在更新 {contentType}……"
   },
+  "content.selection-bar.nothing-actionable": {
+    "message": "所选内容都无法由启动器修改。"
+  },
   "content.selection-bar.selected-count": {
     "defaultMessage": "已选中{count, number}个{contentType}"
   },
@@ -1149,7 +1161,7 @@
     "defaultMessage": "游戏目录"
   },
   "creation-flow.modal.custom-setup.game-dir.managed": {
-    "defaultMessage": "Axolotl 目录"
+    "defaultMessage": "ALLIGATORZONE 目录"
   },
   "creation-flow.modal.custom-setup.game-version.load-failed": {
     "defaultMessage": "游戏版本加载失败"
@@ -2656,9 +2668,6 @@
   },
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, other {模组}}"
-  },
-  "project-type.mod.category": {
-    "defaultMessage": "模组"
   },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, other {模组}}"
@@ -4479,7 +4488,7 @@
     "message": "复制文件"
   },
   "drop.symlink_method.copy_desc": {
-    "message": "复制到 Axolotl 目录"
+    "message": "复制到 ALLIGATORZONE 目录"
   },
   "drop.symlink_method.symlink_title": {
     "message": "符号链接"
@@ -4599,7 +4608,7 @@
     "message": "缓存"
   },
   "drop.symlink_method.stats_cache_tooltip": {
-    "message": "Axolotl 缓存"
+    "message": "ALLIGATORZONE 缓存"
   },
   "drop.symlink_method.stats_local": {
     "message": "复用"

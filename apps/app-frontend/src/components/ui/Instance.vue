@@ -24,6 +24,7 @@ import InstanceIcon from '@/components/ui/InstanceIcon.vue'
 import { useMinecraftLaunchError } from '@/composables/useMinecraftLaunchError'
 import { useNetworkStatus } from '@/composables/useNetworkStatus'
 import { trackEvent } from '@/helpers/analytics'
+import { BROWSE_LOCKED_PROJECT_PATH } from '@/helpers/client-mod-browse'
 import { process_listener } from '@/helpers/events'
 import { install_existing_instance, install_pack_to_existing_instance } from '@/helpers/install'
 import { kill, run } from '@/helpers/instance'
@@ -170,7 +171,7 @@ const openFolder = async () => {
 
 const addContent = async () => {
     await router.push({
-        path: `/browse/${props.instance.loader === 'vanilla' ? 'datapack' : 'mod'}`,
+        path: BROWSE_LOCKED_PROJECT_PATH,
         query: { i: props.instance.id },
     })
 }

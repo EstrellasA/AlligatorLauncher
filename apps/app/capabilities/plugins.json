@@ -59,9 +59,6 @@
 					"url": "https://api.purpurmc.org/*"
 				},
 				{
-					"url": "https://update.axlmc.org/*"
-				},
-				{
 					"url": "http://localhost:8000/*"
 				},
 				{
@@ -134,6 +131,7 @@
 			]
 		},
 		"auth:default",
+		"bootstrap:default",
 		"import:default",
 		"jre:default",
 		"logs:default",

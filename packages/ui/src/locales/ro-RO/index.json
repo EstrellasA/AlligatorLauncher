@@ -1415,9 +1415,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mod} other {Moduri}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Moduri"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mod} other {moduri}}"
   },

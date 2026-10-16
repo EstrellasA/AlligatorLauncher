@@ -97,7 +97,21 @@ async fn run_cycle(
     Ok(())
 }
 
+/// Alligator: 本定制版始终关闭遥测上报。
+///
+/// 上游在玩家于设置中开启遥测后，会把心跳发往 `telemetry.axlmc.org`。
+/// 对一个自建服务器启动器来说，让自家玩家的数据流向第三方服务器是不合适的，
+/// 因此这里恒返回 false：`run_cycle` 会走清理分支，把本地队列删掉且不上传。
+///
+/// 如需重新启用，把下面的 `Ok(false)` 换回原来的数据库查询即可。
 async fn is_enabled(state: &State) -> crate::Result<bool> {
+    let _ = state;
+    Ok(false)
+}
+
+/// 原始实现，保留作为参考（当前未被调用）。
+#[allow(dead_code)]
+async fn is_enabled_upstream(state: &State) -> crate::Result<bool> {
     let row = sqlx::query(
 		"SELECT telemetry, telemetry_consent_version FROM settings WHERE id = 0",
 	)

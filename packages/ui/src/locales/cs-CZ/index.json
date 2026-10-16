@@ -1742,9 +1742,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mód} other {Módy}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Módy"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mód} other {módy}}"
   },

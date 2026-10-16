@@ -50,6 +50,17 @@ pub struct EditInstance {
         with = "serde_with::rust::double_option"
     )]
     pub game_dir_override: Option<Option<String>>,
+    /// Per-instance web map address.
+    ///
+    /// Three states have to stay distinguishable, so this is a double option:
+    /// absent = leave the stored value alone, `null` = never configured (the
+    /// frontend then applies the built-in default), `""` = explicitly hidden.
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        with = "serde_with::rust::double_option"
+    )]
+    pub web_map_url: Option<Option<String>>,
 }
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
@@ -186,6 +197,18 @@ pub(crate) async fn edit_instance(
     let mut tx = pool.begin().await?;
     instance_rows::update_instance(&instance, &mut tx).await?;
 
+    // `update_instance` is a compile-time checked query against the `.sqlx`
+    // cache and therefore cannot carry the newer `web_map_url` column; it is
+    // persisted with a runtime statement instead.
+    if patch.web_map_url.is_some() {
+        instance_rows::set_instance_web_map_url(
+            &instance.id,
+            instance.web_map_url.as_deref(),
+            &mut tx,
+        )
+        .await?;
+    }
+
     if let Some(content_set) = content_set.as_mut() {
         content_rows::update_content_set(content_set, &mut tx).await?;
         if loader_projection_changed {
@@ -262,6 +285,12 @@ pub(crate) async fn restore_instance_metadata(
     let launch_overrides = metadata.launch_overrides.clone();
 
     instance_rows::update_instance(&instance, &mut tx).await?;
+    instance_rows::set_instance_web_map_url(
+        &instance.id,
+        instance.web_map_url.as_deref(),
+        &mut tx,
+    )
+    .await?;
     content_rows::update_content_set(&content_set, &mut tx).await?;
     loader_component_rows::replace_loader_components(
         &instance.id,
@@ -317,6 +346,9 @@ fn apply_instance_patch(
     }
     if let Some(game_dir_override) = &patch.game_dir_override {
         instance.game_dir_override = game_dir_override.clone();
+    }
+    if let Some(web_map_url) = &patch.web_map_url {
+        instance.web_map_url = web_map_url.clone();
     }
 
     instance.modified = now;

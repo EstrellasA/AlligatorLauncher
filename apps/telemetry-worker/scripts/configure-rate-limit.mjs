@@ -6,7 +6,7 @@ if (!apiToken || !zoneId) {
 }
 
 const apiBase = `https://api.cloudflare.com/client/v4/zones/${zoneId}/rulesets`
-const ruleDescription = 'Axolotl telemetry batch ingress limit'
+const ruleDescription = 'ALLIGATORZONE telemetry batch ingress limit'
 const telemetryRule = {
     action: 'block',
     description: ruleDescription,
@@ -55,12 +55,12 @@ if (!rateLimitRuleset) {
         method: 'POST',
         body: JSON.stringify({
             kind: 'zone',
-            name: 'Axolotl rate limits',
+            name: 'ALLIGATORZONE rate limits',
             phase: 'http_ratelimit',
             rules: [telemetryRule],
         }),
     })
-    console.log('Created the Axolotl telemetry batch rate-limit rule')
+    console.log('Created the ALLIGATORZONE telemetry batch rate-limit rule')
 } else {
     const existing = await request(`/${rateLimitRuleset.id}`)
     const rules = existing.rules.map(editableRule)
@@ -79,5 +79,5 @@ if (!rateLimitRuleset) {
             rules,
         }),
     })
-    console.log('Updated the Axolotl telemetry batch rate-limit rule')
+    console.log('Updated the ALLIGATORZONE telemetry batch rate-limit rule')
 }

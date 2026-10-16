@@ -929,6 +929,7 @@ mod tests {
                 content_type: modrinth_content_management::ContentType::Mod,
                 selected: Default::default(),
                 excluded_project_ids: Vec::new(),
+                target_project_type: None,
                 display_title: "Modrinth content".to_string(),
                 display_icon: None,
             },

@@ -11,7 +11,7 @@ import {
     install_start_import_plan,
 } from './install'
 
-/** Create an Axolotl record that directly manages an external version folder. */
+/** Create an ALLIGATORZONE record that directly manages an external version folder. */
 export async function create_direct_link_instance(
     name,
     launcherType,

@@ -255,7 +255,6 @@ pub async fn handle_url(sublink: &str) -> crate::Result<CommandPayload> {
             let suffix = match tab {
                 "versions" => "/versions".to_string(),
                 "gallery" => "/gallery".to_string(),
-                "changelog" => "/changelog".to_string(),
                 _ => String::new(),
             };
             return open_route(
@@ -312,7 +311,7 @@ pub async fn handle_url(sublink: &str) -> crate::Result<CommandPayload> {
                 (!query_part.is_empty()).then_some(query_part),
             );
         }
-        "skins" | "worlds" | "screenshots" if first.is_empty() && !extra => {
+        "skins" if first.is_empty() && !extra => {
             return open_route(
                 format!("/{namespace}"),
                 (!query_part.is_empty()).then_some(query_part),

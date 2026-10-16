@@ -32,7 +32,7 @@ const messages = defineMessages({
     engineBody: {
         id: 'app.lab.seed-map.copyright.engine-body',
         defaultMessage:
-            'Biome, terrain, spawn, and structure data is generated locally with cubiomes, Copyright (c) 2020 Cubitect, provided under the MIT License, together with the Axolotl native integration.',
+            'Biome, terrain, spawn, and structure data is generated locally with cubiomes, Copyright (c) 2020 Cubitect, provided under the MIT License, together with the ALLIGATORZONE native integration.',
     },
     viewCubiomes: {
         id: 'app.lab.seed-map.copyright.view-cubiomes',
@@ -45,7 +45,7 @@ const messages = defineMessages({
     disclaimerBody: {
         id: 'app.lab.seed-map.copyright.disclaimer-body',
         defaultMessage:
-            'Minecraft is a trademark of Mojang Synergies AB. Axolotl Launcher is not affiliated with or endorsed by Mojang or MinecraftSearch.',
+            'Minecraft is a trademark of Mojang Synergies AB. ALLIGATORZONE is not affiliated with or endorsed by Mojang or MinecraftSearch.',
     },
 })
 

@@ -5,14 +5,6 @@ import type { RouteRecordRaw } from 'vue-router'
 /** Top-level utility pages that do not belong to a larger content vertical. */
 export const utilityRoutes: RouteRecordRaw[] = [
     {
-        path: '/worlds',
-        name: 'Worlds',
-        component: () => import('@/pages/Worlds.vue'),
-        meta: {
-            breadcrumb: [{ name: 'Worlds' }],
-        },
-    },
-    {
         path: '/create',
         name: 'Create',
         component: () => import('@/pages/Create.vue'),
@@ -44,12 +36,6 @@ export const utilityRoutes: RouteRecordRaw[] = [
             breadcrumb: [{ name: 'Skin selector' }],
             discordActivity: 'Changing skins...',
         },
-    },
-    {
-        path: '/screenshots',
-        name: 'Screenshots',
-        component: () => import('@/pages/Screenshots.vue'),
-        meta: { breadcrumb: [{ name: 'Screenshots' }] },
     },
     {
         path: '/help/drop',

@@ -1679,6 +1679,9 @@ async fn install_file_with_metrics(
         crate::state::get_installed_project_ids_for_instance(
             &request.instance_id,
             None,
+            // Dependency de-duplication stays instance-wide: a required library
+            // the pack already ships is not duplicated into `clientmods/`.
+            None,
             &state,
         )
         .await?;
@@ -1803,6 +1806,7 @@ async fn install_file_with_metrics(
     finalize_install_result(
         &request.instance_id,
         &modrinth_fallbacks,
+        curseforge_install_target(&request),
         &mut result,
         &edge_candidates,
         &state,
@@ -1955,6 +1959,11 @@ async fn enqueue_curseforge_dependencies(
                     });
                     continue;
                 };
+                let dependency_type = dependency_project_type(
+                    managed_project_type(&request.project_type)
+                        .unwrap_or(ProjectType::Mod),
+                    dependency_type,
+                );
                 if let Some(selected) = select_dependency_file(
                     dependency_project_id,
                     request.game_version.clone(),
@@ -2041,12 +2050,19 @@ async fn enqueue_curseforge_dependencies(
 async fn finalize_install_result(
     instance_id: &str,
     modrinth_fallbacks: &[ModrinthFallbackPlan],
+    target_project_type: Option<ProjectType>,
     result: &mut CurseForgeInstallResult,
     edge_candidates: &[CurseForgeDependencyEdgeCandidate],
     state: &State,
 ) -> crate::Result<()> {
-    install_modrinth_fallbacks(instance_id, modrinth_fallbacks, result, state)
-        .await?;
+    install_modrinth_fallbacks(
+        instance_id,
+        modrinth_fallbacks,
+        target_project_type,
+        result,
+        state,
+    )
+    .await?;
 
     result.optional_dependencies.sort_unstable();
     result.optional_dependencies.dedup();
@@ -2331,6 +2347,11 @@ async fn install_resolution_plan_node(
                     });
                 return Ok(false);
             };
+            let project_type = dependency_project_type(
+                managed_project_type(&request.project_type)
+                    .unwrap_or(ProjectType::Mod),
+                project_type,
+            );
             match install_fixed_curseforge_content(
                 request,
                 project_id,
@@ -2541,6 +2562,7 @@ async fn install_fixed_modrinth_content(
             required: true,
             metadata: None,
         },
+        curseforge_install_target(request),
         state,
     )
     .await?;
@@ -2740,6 +2762,7 @@ async fn persist_curseforge_dependency_edges(
 async fn install_modrinth_fallbacks(
     instance_id: &str,
     fallbacks: &[ModrinthFallbackPlan],
+    target_project_type: Option<ProjectType>,
     result: &mut CurseForgeInstallResult,
     state: &State,
 ) -> crate::Result<()> {
@@ -2757,7 +2780,10 @@ async fn install_modrinth_fallbacks(
                 continue;
             }
             match crate::state::instances::commands::install_resolved_dependency(
-                instance_id, dependency, state,
+                instance_id,
+                dependency,
+                target_project_type,
+                state,
             )
             .await
             {
@@ -2981,6 +3007,9 @@ pub async fn preview_install_file(
         crate::state::get_installed_project_ids_for_instance(
             &request.instance_id,
             None,
+            // Dependency de-duplication stays instance-wide: a required library
+            // the pack already ships is not duplicated into `clientmods/`.
+            None,
             &state,
         )
         .await?
@@ -3101,6 +3130,11 @@ pub async fn preview_install_file(
                             });
                             continue;
                         };
+                        let dependency_type = dependency_project_type(
+                            managed_project_type(&request.project_type)
+                                .unwrap_or(ProjectType::Mod),
+                            dependency_type,
+                        );
                         let Some(selected) = select_dependency_file(
                             dependency_project_id,
                             request.game_version.clone(),
@@ -3864,7 +3898,7 @@ pub async fn install_modpack_with_reporter(
                 })?;
                 let folder = content_target_folder(managed_type, None)?;
                 let original_relative_path = format!("{folder}/{}", meta.file_name);
-                let localized_candidate = (managed_type != ProjectType::Mod)
+                let localized_candidate = (!managed_type.is_mod())
                     .then(|| {
                         chinese_file_title_for_curseforge_slug(&project.slug)
                             .and_then(|title| {
@@ -4409,7 +4443,8 @@ async fn retry_modpack_file_install(
         match result {
             Ok(item_result) if !item_result.installed.is_empty() => {
                 let installed_path = &item_result.installed[0].relative_path;
-                if project_type == ProjectType::Mod.get_name()
+                if managed_project_type(project_type)
+                    .is_ok_and(|value| value.is_mod())
                     && Path::new(installed_path).file_name()
                         != Some(std::ffi::OsStr::new(expected_file_name))
                 {
@@ -4866,7 +4901,7 @@ pub(crate) async fn install_local_manifest_files(
                 })?;
                 let folder = content_target_folder(managed_type, None)?;
                 let original_relative_path = format!("{folder}/{}", meta.file_name);
-                let localized_candidate = (managed_type != ProjectType::Mod)
+                let localized_candidate = (!managed_type.is_mod())
                     .then(|| {
                         chinese_file_title_for_curseforge_slug(&project.slug)
                             .and_then(|title| {
@@ -7643,7 +7678,7 @@ async fn install_manual_download(
     let project_type = managed_project_type(&download.project_type)?;
     let target_folder = manual_download_target_folder(download, project_type)?;
     let state = State::get().await?;
-    let localized_candidate = if project_type == ProjectType::Mod {
+    let localized_candidate = if project_type.is_mod() {
         None
     } else {
         chinese_file_title_for_curseforge_slug(&download.project_slug)
@@ -7990,6 +8025,7 @@ async fn resolve_modrinth_fallback_plan(
             selected: Default::default(),
             excluded_project_ids: Vec::new(),
             force_project_ids: Vec::new(),
+            target_project_type: None,
         },
         game_version.to_string(),
         loader,
@@ -8294,6 +8330,9 @@ fn file_matches_dependency_target(
 fn managed_project_type(value: &str) -> crate::Result<ProjectType> {
     match value {
         "mod" => Ok(ProjectType::Mod),
+        "clientmod" | "client_mod" | "clientmods" => {
+            Ok(ProjectType::ClientMod)
+        }
         "datapack" => Ok(ProjectType::DataPack),
         "resourcepack" => Ok(ProjectType::ResourcePack),
         "shader" | "shaderpack" => Ok(ProjectType::ShaderPack),
@@ -8302,6 +8341,37 @@ fn managed_project_type(value: &str) -> crate::Result<ProjectType> {
         ))
         .into()),
     }
+}
+
+/// Resolves the folder a CurseForge dependency file is written to.
+///
+/// A dependency follows the primary file's target folder: a mod pulled in by a
+/// client-mod install belongs in the launcher-managed `clientmods/` folder, not
+/// in the server pack's `mods/` folder. Every other combination keeps the
+/// dependency's own provider-derived project type.
+fn dependency_project_type(
+    primary: ProjectType,
+    dependency: ProjectType,
+) -> ProjectType {
+    if primary == ProjectType::ClientMod && dependency == ProjectType::Mod {
+        ProjectType::ClientMod
+    } else {
+        dependency
+    }
+}
+
+/// Destination-folder override implied by a CurseForge install request.
+///
+/// A `clientmod` request keeps every mod-shaped file of the whole install,
+/// including cross-source Modrinth dependencies, inside `clientmods/`.
+fn curseforge_install_target(
+    request: &CurseForgeInstallRequest,
+) -> Option<ProjectType> {
+    matches!(
+        managed_project_type(&request.project_type),
+        Ok(ProjectType::ClientMod)
+    )
+    .then_some(ProjectType::ClientMod)
 }
 
 fn content_target_folder(
@@ -9390,7 +9460,7 @@ async fn download_installed_file(
     let state = State::get().await?;
     validate_file_name(&file.file_name)?;
     let folder = content_target_folder(project_type, world_name)?;
-    let localized_candidate = if project_type == ProjectType::Mod {
+    let localized_candidate = if project_type.is_mod() {
         None
     } else {
         chinese_file_title_for_curseforge_slug(project_slug)
@@ -9414,7 +9484,7 @@ async fn download_installed_file(
     let full_path = crate::api::instance::get_full_path(instance_id)
         .await?
         .join(&relative_path);
-    if project_type == ProjectType::Mod
+    if project_type.is_mod()
         && let Some(expected_file_name) = expected_file_name
         && Path::new(&relative_path).file_name()
             != Some(std::ffi::OsStr::new(expected_file_name))
@@ -13495,5 +13565,61 @@ mod tests {
         assert!(validate_world_archive_name("WORLD.ZIP").is_ok());
         assert!(validate_world_archive_name("world.rar").is_err());
         assert!(validate_world_archive_name("../world.zip").is_err());
+    }
+
+    /// A client-mod install keeps every mod-shaped file of the install in
+    /// `clientmods/`; a dependency from any other class, and every dependency
+    /// of a non client-mod install, keeps its own provider-derived folder.
+    #[test]
+    fn client_mod_dependencies_follow_the_primary_target_folder() {
+        assert_eq!(
+            dependency_project_type(ProjectType::ClientMod, ProjectType::Mod),
+            ProjectType::ClientMod,
+        );
+        assert_eq!(
+            dependency_project_type(ProjectType::ClientMod, ProjectType::DataPack),
+            ProjectType::DataPack,
+        );
+        assert_eq!(
+            dependency_project_type(ProjectType::Mod, ProjectType::Mod),
+            ProjectType::Mod,
+        );
+        assert_eq!(
+            dependency_project_type(ProjectType::DataPack, ProjectType::Mod),
+            ProjectType::Mod,
+        );
+        assert_eq!(
+            content_target_folder(ProjectType::ClientMod, None).unwrap(),
+            "clientmods",
+        );
+    }
+
+    #[test]
+    fn client_mod_requests_declare_the_clientmods_target() {
+        let request = |project_type: &str| CurseForgeInstallRequest {
+            instance_id: "instance".to_string(),
+            project_id: 1,
+            file_id: 1,
+            project_type: project_type.to_string(),
+            ownership_kind: Default::default(),
+            manual_operation_kind: Default::default(),
+            game_version: None,
+            mod_loader_type: None,
+            world_name: None,
+            install_dependencies: true,
+            excluded_dependency_project_ids: Vec::new(),
+            force_dependency_project_ids: Vec::new(),
+            dependency_plan_id: None,
+            defer_persistence: false,
+            verification_tx: None,
+            pre_resolved_relative_path: None,
+            expected_file_name: None,
+        };
+        assert_eq!(
+            curseforge_install_target(&request("clientmod")),
+            Some(ProjectType::ClientMod),
+        );
+        assert_eq!(curseforge_install_target(&request("mod")), None);
+        assert_eq!(curseforge_install_target(&request("shader")), None);
     }
 }

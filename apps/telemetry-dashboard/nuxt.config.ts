@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     app: {
         head: {
             htmlAttrs: { lang: 'zh-CN' },
-            title: 'Axolotl 遥测中心',
+            title: 'ALLIGATORZONE 遥测中心',
             meta: [
                 { name: 'robots', content: 'noindex, nofollow' },
                 { name: 'color-scheme', content: 'light dark' },

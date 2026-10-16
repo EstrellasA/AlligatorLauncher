@@ -9,7 +9,7 @@ import IconButton from '@modrinth/ui/src/components/base/buttons/IconButton.vue'
 import { defineMessages, useVIntl } from '@modrinth/ui/src/composables/i18n.ts'
 import { type ComponentPublicInstance, resolveComponent } from 'vue'
 
-import AxolotlWordmark from '~/components/brand/AxolotlWordmark.vue'
+import ALLIGATORZONEWordmark from '~/components/brand/AxolotlWordmark.vue'
 
 const NuxtLink = resolveComponent('NuxtLink')
 
@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
 })
 
 const messages = defineMessages({
-    home: { id: 'axolotl-site.navigation.home', defaultMessage: 'Axolotl Launcher home' },
+    home: { id: 'axolotl-site.navigation.home', defaultMessage: 'ALLIGATORZONE home' },
     primary: { id: 'axolotl-site.navigation.primary', defaultMessage: 'Primary navigation' },
     mobile: { id: 'axolotl-site.navigation.mobile', defaultMessage: 'Mobile navigation' },
     features: { id: 'axolotl-site.navigation.features', defaultMessage: 'Features' },
@@ -74,7 +74,7 @@ function openSettings() {
                 :aria-label="formatMessage(messages.home)"
                 class="button-animation w-fit no-underline"
             >
-                <AxolotlWordmark />
+                <ALLIGATORZONEWordmark />
             </NuxtLink>
 
             <nav

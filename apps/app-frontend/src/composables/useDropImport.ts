@@ -17,6 +17,7 @@ import { join } from '@tauri-apps/api/path'
 import { computed, type ComputedRef, nextTick, ref } from 'vue'
 import type { Router } from 'vue-router'
 
+import { BROWSE_LOCKED_PROJECT_TYPE, manualAddTargetProjectType } from '@/helpers/client-mod-browse'
 import { syncConfiguredDirectLinks } from '@/helpers/direct-link-sync'
 import {
     classifyDroppedItem,
@@ -55,7 +56,12 @@ import type { ContentInstallContext } from '@/providers/content-install'
 export type { ClassificationResult, ModrinthLookupResult, ScanResult }
 
 export type ContentFileProjectType =
-    'mod' | 'resourcepack' | 'datapack' | 'shaderpack' | 'schematic'
+    | 'mod'
+    | 'clientmod'
+    | 'resourcepack'
+    | 'datapack'
+    | 'shaderpack'
+    | 'schematic'
 
 export interface PendingInstall {
     type: string
@@ -1151,7 +1157,15 @@ export function useDropImport(options: DropImportOptions) {
                 }
             }
 
-            const projectType = contentFileProjectTypeMap[type]
+            const resolvedContentType = contentFileProjectTypeMap[type]
+            // A mod dropped onto a server instance belongs in the player's own
+            // `clientmods/`: the pack owns `mods/`, and AutoModpack keeps
+            // whatever a player puts there. Every other type, and every other
+            // instance, keeps the backend's folder rules.
+            const projectType =
+                resolvedContentType === BROWSE_LOCKED_PROJECT_TYPE
+                    ? (manualAddTargetProjectType(resolvedContentType) ?? resolvedContentType)
+                    : resolvedContentType
             await add_project_from_path(instId, filePath, projectType, innerBase)
             addNotification({
                 title: formatMessage(messages.dropContentInstalledTitle),
@@ -2428,7 +2442,13 @@ export function useDropImport(options: DropImportOptions) {
         const pending = pendingDropIncompatibility.value
         if (pending) {
             pendingDropIncompatibility.value = null
-            const projectType = contentFileProjectTypeMap[pending.type]
+            const resolvedContentType = contentFileProjectTypeMap[pending.type]
+            // Same rule as the direct drop path: a mod the player chose to
+            // install anyway still goes to `clientmods/` on a server instance.
+            const projectType =
+                resolvedContentType === BROWSE_LOCKED_PROJECT_TYPE
+                    ? (manualAddTargetProjectType(resolvedContentType) ?? resolvedContentType)
+                    : resolvedContentType
             try {
                 await add_project_from_path(pending.instId, pending.filePath, projectType)
                 addNotification({

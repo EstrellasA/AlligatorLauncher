@@ -16,6 +16,7 @@ import {
     get_team,
     get_version_many,
 } from '@/helpers/cache.js'
+import { clientModInstallTarget, isInstalledForContentType } from '@/helpers/client-mod-browse'
 import {
     type CurseForgeFile,
     type CurseForgeInstallResult,
@@ -101,6 +102,7 @@ import { createContentInstallDepNotifications } from './content-install-dep-noti
 import * as contentInstallMessages from './content-install-messages'
 import { createInstallingItemsRegistry } from './content-install-registry'
 import { createInstallSession } from './content-install-session'
+import { confirmServerPackDuplicates } from './pack-duplicate-guard'
 
 export {
     type ContentInstallCallback,
@@ -213,6 +215,25 @@ export function createContentInstall(opts: {
     let modpackInstallModalRef: ModpackInstallModalRef | null = null
     let curseForgeManualDownloadsModalRef: CurseForgeManualDownloadsModalRef | null = null
     let incompatibilityWarningModalRef: ModalRef | null = null
+
+    /**
+     * Asks the player to confirm an install of content the server pack already
+     * provides in its own `mods/` folder. Returns `false` when they back out.
+     */
+    async function confirmPackDuplicates(
+        instanceId: string,
+        candidates: Array<{
+            provider: string
+            projectId: string | number
+            contentType?: string | null
+        }>,
+    ) {
+        return await confirmServerPackDuplicates(
+            contentInstallPreviewModalRef,
+            instanceId,
+            candidates,
+        )
+    }
     let currentProvider: InstallProvider = 'modrinth'
     let currentTargetMode: ContentInstallTargetMode = 'content'
     let currentProject: Labrinth.Projects.v2.Project | null = null
@@ -631,9 +652,18 @@ export function createContentInstall(opts: {
         modalRef?.hide()
     }
 
-    async function removeInstalledCurseForgeProject(instanceId: string, projectId: number) {
+    async function removeInstalledCurseForgeProject(
+        instanceId: string,
+        projectId: number,
+        projectType?: string,
+    ) {
         const content = await get_content_items(instanceId).catch(() => [])
         for (const item of content) {
+            // Only the folder this install targets is replaced; a server-pack
+            // copy in `mods/` stays where it is.
+            if (!isInstalledForContentType(item.file_path ?? item.file_name, projectType)) {
+                continue
+            }
             if (
                 item.provider_refs.some(
                     (reference) =>
@@ -777,12 +807,16 @@ export function createContentInstall(opts: {
                 projectId: curseForgeProject.id,
                 fileId: file.id,
             })
-            await removeInstalledCurseForgeProject(instance.id, curseForgeProject.id)
+            await removeInstalledCurseForgeProject(
+                instance.id,
+                curseForgeProject.id,
+                project.project_type,
+            )
             result = await installCurseForgeFile({
                 instanceId: instance.id,
                 projectId: curseForgeProject.id,
                 fileId: file.id,
-                projectType: project.project_type,
+                projectType: clientModInstallTarget(project.project_type) ?? project.project_type,
                 gameVersion: usesTargetGameVersion(project.project_type)
                     ? instance.game_version
                     : undefined,
@@ -984,12 +1018,25 @@ export function createContentInstall(opts: {
             throw new Error('CurseForge modpacks use the modpack installer')
         }
 
-        await removeInstalledCurseForgeProject(instance.id, curseForgeProject.id)
+        // Asked before anything is removed or previewed: cancelling must leave
+        // the instance exactly as it was, and this is the more consequential
+        // choice than the dependency list that follows.
+        if (!(await confirmCurseForgePackDuplicates(instance, project, curseForgeProject.id))) {
+            return null
+        }
+
+        await removeInstalledCurseForgeProject(
+            instance.id,
+            curseForgeProject.id,
+            project.project_type,
+        )
         const request = {
             instanceId: instance.id,
             projectId: curseForgeProject.id,
             fileId: file.id,
-            projectType: project.project_type,
+            // The content browser installs mods into `clientmods/`; every other
+            // content type keeps its provider-derived folder.
+            projectType: clientModInstallTarget(project.project_type) ?? project.project_type,
             ownershipKind: 'user_added' as const,
             manualOperationKind: 'content_install' as const,
             gameVersion: usesTargetGameVersion(project.project_type)
@@ -1020,6 +1067,24 @@ export function createContentInstall(opts: {
             { ...request, excludedDependencyProjectIds: excludedProjectIds },
             { title: project.title, iconUrl: project.icon_url },
         )
+    }
+
+    /**
+     * The CurseForge twin of [`confirmPackDuplicates`]: CurseForge entries are
+     * keyed as `curseforge:<numeric id>` in the folder-scoped installed list.
+     */
+    async function confirmCurseForgePackDuplicates(
+        instance: InstallTargetInstance,
+        project: Labrinth.Projects.v2.Project,
+        curseForgeProjectId: number,
+    ) {
+        return await confirmPackDuplicates(instance.id, [
+            {
+                provider: 'curseforge',
+                projectId: curseForgeProjectId,
+                contentType: project.project_type,
+            },
+        ])
     }
 
     async function queueCurrentCurseForgeWorld(
@@ -1108,10 +1173,26 @@ export function createContentInstall(opts: {
         if (currentProvider === 'modrinth') {
             if (storeInstance) storeInstance.installing = true
             try {
+                // Asked before the dependency preview: cancelling must leave the
+                // instance untouched, and this is the more consequential choice.
+                if (
+                    !(await confirmPackDuplicates(instance.id, [
+                        {
+                            provider: 'modrinth',
+                            projectId: currentProject.id,
+                            contentType: currentProject.project_type,
+                        },
+                    ]))
+                ) {
+                    if (storeInstance) storeInstance.installing = false
+                    settleCurrentCallback()
+                    return
+                }
                 const request = {
                     project_id: currentProject.id,
                     version_id: version.id,
                     content_type: resolveContentType(currentProject.project_type),
+                    target_project_type: clientModInstallTarget(currentProject.project_type),
                 }
                 const previewPlan = await preview_project_with_dependencies(instance.id, request)
                 const excludedProjectIds = await showInstallPreview(
@@ -1278,10 +1359,26 @@ export function createContentInstall(opts: {
                     return
                 }
             } else {
+                // Asked before the dependency preview: cancelling must leave the
+                // instance untouched.
+                if (
+                    !(await confirmPackDuplicates(instance.id, [
+                        {
+                            provider: 'modrinth',
+                            projectId: project.id,
+                            contentType: project.project_type,
+                        },
+                    ]))
+                ) {
+                    incompatibilityWarningInstalling.value = false
+                    removeInstallingItems(instance.id, [project.id])
+                    return
+                }
                 const request = {
                     project_id: project.id,
                     version_id: version.id,
                     content_type: resolveContentType(project.project_type),
+                    target_project_type: clientModInstallTarget(project.project_type),
                 }
                 const previewPlan = await preview_project_with_dependencies(instance.id, request)
                 const excludedProjectIds = await showInstallPreview(
@@ -1365,6 +1462,7 @@ export function createContentInstall(opts: {
                 project_id: currentProject.id,
                 version_id: version.id,
                 content_type: resolveContentType(currentProject.project_type),
+                target_project_type: clientModInstallTarget(currentProject.project_type),
             }
             const previewPlan = await preview_project_with_dependencies_for_target(
                 installRequest,
@@ -1398,7 +1496,12 @@ export function createContentInstall(opts: {
                 instanceId: '',
                 projectId: curseForgeProject.id,
                 fileId: file.id,
-                projectType: currentProject.project_type,
+                // Must match the folder the install below actually uses, or the
+                // previewed dependencies and manual-download targets disagree
+                // with the install.
+                projectType:
+                    clientModInstallTarget(currentProject.project_type) ??
+                    currentProject.project_type,
                 ownershipKind: 'user_added',
                 manualOperationKind: 'content_install',
                 gameVersion: data.gameVersion,
@@ -1437,6 +1540,7 @@ export function createContentInstall(opts: {
                         project_id: currentProject!.id,
                         version_id: version.id,
                         content_type: resolveContentType(currentProject!.project_type),
+                        target_project_type: clientModInstallTarget(currentProject!.project_type),
                         excluded_project_ids: excludedModrinthProjectIds,
                     },
                     { title: currentProject!.title, iconUrl: currentProject!.icon_url },
@@ -1657,8 +1761,25 @@ export function createContentInstall(opts: {
             if (!version) version = projectVersions[0]
 
             if (isVersionCompatible(version, project, instance)) {
+                // Ask before anything is removed or downloaded: cancelling here
+                // must leave the instance exactly as it was.
+                if (
+                    !(await confirmPackDuplicates(instance.id, [
+                        {
+                            provider: 'modrinth',
+                            projectId: project.id,
+                            contentType: project.project_type,
+                        },
+                    ]))
+                ) {
+                    return
+                }
+                // Only replace a copy that lives in the folder this install
+                // targets. A copy the server pack ships in `mods/` must never be
+                // removed: the player is adding their own version alongside it.
                 for (const [path, file] of Object.entries(instanceProjects)) {
                     if (
+                        isInstalledForContentType(path, project.project_type) &&
                         file.provider_refs.some(
                             (reference) =>
                                 reference.provider === 'modrinth' &&
@@ -1673,6 +1794,7 @@ export function createContentInstall(opts: {
                     project_id: project.id,
                     version_id: version.id,
                     content_type: resolveContentType(project.project_type),
+                    target_project_type: clientModInstallTarget(project.project_type),
                 }
                 const previewPlan = await preview_project_with_dependencies(
                     instance.id,

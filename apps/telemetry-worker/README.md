@@ -1,4 +1,4 @@
-# Axolotl telemetry worker
+# ALLIGATORZONE telemetry worker
 
 This Worker accepts only opted-in launcher heartbeat batches. It stores anonymous usage metadata in D1; error reports and error context are not accepted or persisted.
 

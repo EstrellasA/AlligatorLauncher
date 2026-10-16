@@ -2,8 +2,6 @@
 import {
     ChevronDownIcon,
     ImageIcon,
-    LayoutTemplateIcon,
-    MinimizeIcon,
     TrashIcon,
     UploadIcon,
 } from '@modrinth/assets'
@@ -53,7 +51,6 @@ import {
     deriveAccentVariants,
     type FeatureFlag,
     hexToHsl,
-    type HomeLayout,
     hslToHex,
     parseCustomAccentColor,
 } from '@/store/theme.ts'
@@ -100,7 +97,7 @@ const messages = defineMessages({
     },
     colorThemeDescription: {
         id: 'app.appearance-settings.color-theme.description',
-        defaultMessage: 'Select your preferred color theme for Axolotl Launcher.',
+        defaultMessage: 'Select your preferred color theme for ALLIGATORZONE.',
     },
     accentColorTitle: {
         id: 'app.appearance-settings.accent-color.title',
@@ -294,7 +291,7 @@ const messages = defineMessages({
     },
     closeBehaviorTitle: {
         id: 'app.appearance-settings.close-behavior.title',
-        defaultMessage: 'Choose how to close Axolotl Launcher',
+        defaultMessage: 'Choose how to close ALLIGATORZONE',
     },
     closeBehaviorDescription: {
         id: 'app.appearance-settings.close-behavior.description',
@@ -332,22 +329,6 @@ const messages = defineMessages({
     defaultLandingPageDiscoverContent: {
         id: 'app.appearance-settings.default-landing-page.discover-content',
         defaultMessage: 'Discover content',
-    },
-    homeLayoutTitle: {
-        id: 'app.appearance-settings.home-layout.title',
-        defaultMessage: 'Home layout',
-    },
-    homeLayoutDescription: {
-        id: 'app.appearance-settings.home-layout.description',
-        defaultMessage: 'Choose between Information Home and a focused instance launcher.',
-    },
-    homeLayoutStandard: {
-        id: 'app.appearance-settings.home-layout.standard',
-        defaultMessage: 'Information',
-    },
-    homeLayoutMinimal: {
-        id: 'app.appearance-settings.home-layout.minimal',
-        defaultMessage: 'Minimal',
     },
     homeWidgetBackgroundOpacityTitle: {
         id: 'app.appearance-settings.home-widget-background-opacity.title',
@@ -445,9 +426,7 @@ const messages = defineMessages({
         id: 'app.navigation.discover-content',
         defaultMessage: 'Discover content',
     },
-    navScreenshots: { id: 'app.navigation.screenshots', defaultMessage: 'Screenshots' },
     navLibrary: { id: 'app.navigation.library', defaultMessage: 'Library' },
-    navWorlds: { id: 'app.navigation.worlds', defaultMessage: 'Worlds' },
     navMultiplayer: { id: 'app.navigation.multiplayer', defaultMessage: 'Multiplayer' },
     navSkins: { id: 'app.navigation.skin-selector', defaultMessage: 'Skin selector' },
     navLab: { id: 'app.navigation.lab', defaultMessage: 'Lab' },
@@ -534,9 +513,7 @@ type NavTreeItem = {
 const NAV_TREE_ITEMS: NavTreeItem[] = [
     { id: 'home', label: messages.navHome, group: 'browse' },
     { id: 'discover', label: messages.navDiscover, group: 'browse' },
-    { id: 'screenshots', label: messages.navScreenshots, group: 'browse' },
     { id: 'library', label: messages.navLibrary, group: 'play' },
-    { id: 'worlds', label: messages.navWorlds, group: 'play' },
     { id: 'multiplayer', label: messages.navMultiplayer, group: 'play' },
     { id: 'skins', label: messages.navSkins, group: 'play' },
     { id: 'lab', label: messages.navLab, group: 'tools' },
@@ -630,12 +607,6 @@ function onCustomHexInput(value: string) {
     customAccentHexInput.value = value
     const normalized = value.startsWith('#') ? value : `#${value}`
     if (/^#[0-9a-fA-F]{6}$/.test(normalized)) applyCustomAccent(normalized)
-}
-
-function setHomeLayout(value: string | number) {
-    if (value !== 'standard' && value !== 'minimal') return
-    settings.value.home_layout = value as HomeLayout
-    themeStore.homeLayout = value as HomeLayout
 }
 
 const CUSTOM_BACKGROUND_EXTENSIONS = ['png', 'jpeg', 'jpg', 'webp', 'gif', 'avif', 'bmp']
@@ -1392,46 +1363,6 @@ watch(
             :title="formatMessage(messages.homeNavigationSectionTitle)"
             title-id="settings-target-appearance-home-navigation"
         >
-            <SettingsRow>
-                <template #label>
-                    <span id="settings-target-appearance-home-layout" tabindex="-1">
-                        {{ formatMessage(messages.homeLayoutTitle) }}
-                    </span>
-                </template>
-                <template #description>{{
-                    formatMessage(messages.homeLayoutDescription)
-                }}</template>
-                <template #control>
-                    <div
-                        class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-solid border-surface-4 bg-surface-3 p-1"
-                        role="radiogroup"
-                        :aria-label="formatMessage(messages.homeLayoutTitle)"
-                    >
-                        <Button
-                            :type="settings.home_layout === 'standard' ? 'colored-text' : 'quiet'"
-                            :color="settings.home_layout === 'standard' ? 'brand' : undefined"
-                            native-type="button"
-                            role="radio"
-                            :aria-checked="settings.home_layout === 'standard'"
-                            @click="setHomeLayout('standard')"
-                        >
-                            <LayoutTemplateIcon aria-hidden="true" />
-                            {{ formatMessage(messages.homeLayoutStandard) }}
-                        </Button>
-                        <Button
-                            :type="settings.home_layout === 'minimal' ? 'colored-text' : 'quiet'"
-                            :color="settings.home_layout === 'minimal' ? 'brand' : undefined"
-                            native-type="button"
-                            role="radio"
-                            :aria-checked="settings.home_layout === 'minimal'"
-                            @click="setHomeLayout('minimal')"
-                        >
-                            <MinimizeIcon aria-hidden="true" />
-                            {{ formatMessage(messages.homeLayoutMinimal) }}
-                        </Button>
-                    </div>
-                </template>
-            </SettingsRow>
             <SettingsRow stacked>
                 <template #label>
                     <span id="settings-target-appearance-home-widget-opacity" tabindex="-1">

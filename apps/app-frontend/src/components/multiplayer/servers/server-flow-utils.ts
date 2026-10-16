@@ -77,12 +77,9 @@ let userAgentPromise: Promise<string> | null = null
  */
 function launcherUserAgent(): Promise<string> {
     userAgentPromise ??= Promise.all([getVersion(), osType()]).then(
-        ([version, platform]) =>
-            `garbage-human-studio/axolotl/${version} (${platform}; +https://www.ghs.red)`,
+        ([version, platform]) => `alligatorzone-launcher/${version} (${platform})`,
     )
-    userAgentPromise = userAgentPromise.catch(
-        () => 'garbage-human-studio/axolotl (+https://www.ghs.red)',
-    )
+    userAgentPromise = userAgentPromise.catch(() => 'alligatorzone-launcher')
     return userAgentPromise
 }
 

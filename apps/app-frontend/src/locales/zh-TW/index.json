@@ -459,10 +459,10 @@
     "message": "隱藏至系統匣"
   },
   "app.appearance-settings.close-behavior.title": {
-    "message": "選擇關閉 Axolotl Launcher 的方式"
+    "message": "選擇關閉 ALLIGATORZONE 的方式"
   },
   "app.appearance-settings.color-theme.description": {
-    "message": "請選擇你偏好的 Axolotl Launcher 色彩主題。"
+    "message": "請選擇你偏好的 ALLIGATORZONE 色彩主題。"
   },
   "app.appearance-settings.color-theme.title": {
     "message": "色彩主題"
@@ -553,6 +553,15 @@
   },
   "app.appearance-settings.page-transitions.title": {
     "message": "頁面切換過渡動畫"
+  },
+  "app.appearance-settings.sections.advanced-interface": {
+    "message": "進階介面"
+  },
+  "app.appearance-settings.sections.content-behavior": {
+    "message": "內容行為"
+  },
+  "app.appearance-settings.sections.home-navigation": {
+    "message": "首頁與導覽"
   },
   "app.appearance-settings.select-option": {
     "message": "選擇選項"
@@ -783,7 +792,7 @@
     "message": "記住我的選擇"
   },
   "app.close-launcher.title": {
-    "message": "選擇關閉 Axolotl Launcher 的方式"
+    "message": "選擇關閉 ALLIGATORZONE 的方式"
   },
   "app.close-launcher.tray": {
     "message": "隱藏至系統匣"
@@ -1701,7 +1710,7 @@
     "message": "除錯資訊"
   },
   "app.error.directory-description": {
-    "message": "Axolotl Launcher 無法遷移至所選目錄。請聯絡支援團隊以取得協助，或取消目錄變更。"
+    "message": "ALLIGATORZONE 無法遷移至所選目錄。請聯絡支援團隊以取得協助，或取消目錄變更。"
   },
   "app.error.directory-title": {
     "message": "無法變更應用程式目錄"
@@ -1719,7 +1728,7 @@
     "message": "與 Microsoft、Xbox 或 Minecraft 服務的連線被拒絕。這些服務可能被 hosts 檔案封鎖，請參考支援文章進行修復。"
   },
   "app.error.loader-description": {
-    "message": "Axolotl Launcher 無法找到此實例所需的載入器版本。"
+    "message": "ALLIGATORZONE 無法找到此實例所需的載入器版本。"
   },
   "app.error.loader-fix": {
     "message": "請使用下方按鈕修復此實例。"
@@ -1737,7 +1746,7 @@
     "message": "登入 Minecraft"
   },
   "app.error.network-description": {
-    "message": "Axolotl Launcher 連線 Microsoft 服務時遇到問題，這通常是網路連線不佳造成的。請重試；如果問題持續存在，請參考支援文章。"
+    "message": "ALLIGATORZONE 連線 Microsoft 服務時遇到問題，這通常是網路連線不佳造成的。請重試；如果問題持續存在，請參考支援文章。"
   },
   "app.error.network-issues": {
     "message": "網路問題"
@@ -1758,7 +1767,7 @@
     "message": "正在使用 PC Game Pass、從基岩版轉移，或剛剛購買遊戲？"
   },
   "app.error.permissions-description": {
-    "message": "Axolotl Launcher 無法寫入所選目錄。請調整目錄權限後重試，或取消目錄變更。"
+    "message": "ALLIGATORZONE 無法寫入所選目錄。請調整目錄權限後重試，或取消目錄變更。"
   },
   "app.error.permissions-title": {
     "message": "變更目錄權限"
@@ -1776,7 +1785,7 @@
     "message": "空間不足"
   },
   "app.error.state-description": {
-    "message": "Axolotl Launcher 未能正確載入，可能有檔案損毀或缺少必要檔案。"
+    "message": "ALLIGATORZONE 未能正確載入，可能有檔案損毀或缺少必要檔案。"
   },
   "app.error.state-fix-internet": {
     "message": "檢查網路連線，然後重新啟動應用程式。"
@@ -1788,7 +1797,7 @@
     "message": "重新下載並安裝應用程式。"
   },
   "app.error.state-title": {
-    "message": "Axolotl Launcher 初始化失敗"
+    "message": "ALLIGATORZONE 初始化失敗"
   },
   "app.error.support-article": {
     "message": "支援文章"
@@ -2378,6 +2387,123 @@
   "app.instance.create-shortcut": {
     "message": "建立捷徑"
   },
+  "app.instance.dependencies.all-sources": {
+    "message": "所有來源"
+  },
+  "app.instance.dependencies.all-statuses": {
+    "message": "所有狀態"
+  },
+  "app.instance.dependencies.all-types": {
+    "message": "所有類型"
+  },
+  "app.instance.dependencies.cycle": {
+    "message": "循環依賴"
+  },
+  "app.instance.dependencies.cycle-reference": {
+    "message": "循環依賴在此繼續"
+  },
+  "app.instance.dependencies.direct-dependencies": {
+    "message": "直接依賴"
+  },
+  "app.instance.dependencies.direct-dependents": {
+    "message": "直接依賴方"
+  },
+  "app.instance.dependencies.disabled": {
+    "message": "已停用"
+  },
+  "app.instance.dependencies.file": {
+    "message": "檔案 {file}"
+  },
+  "app.instance.dependencies.graph-direction": {
+    "message": "箭頭從依賴方指向它使用的內容。"
+  },
+  "app.instance.dependencies.graph-hint": {
+    "message": "拖曳畫布以瀏覽關係；拖曳卡片可調整配置。"
+  },
+  "app.instance.dependencies.graph-view": {
+    "message": "關係圖"
+  },
+  "app.instance.dependencies.header": {
+    "message": "依賴關係"
+  },
+  "app.instance.dependencies.isolated-summary": {
+    "message": "{count, number} 個孤立項目未顯示在關係圖中。"
+  },
+  "app.instance.dependencies.local-discovered": {
+    "message": "本機發現"
+  },
+  "app.instance.dependencies.missing": {
+    "message": "遺失"
+  },
+  "app.instance.dependencies.no-content": {
+    "message": "沒有可分析的內容。"
+  },
+  "app.instance.dependencies.no-dependencies": {
+    "message": "找不到依賴關係。"
+  },
+  "app.instance.dependencies.no-graph-relations": {
+    "message": "目前篩選條件下沒有可顯示的關係。"
+  },
+  "app.instance.dependencies.no-matches": {
+    "message": "沒有依賴項符合這些篩選條件。"
+  },
+  "app.instance.dependencies.only-related": {
+    "message": "只顯示相關內容"
+  },
+  "app.instance.dependencies.orphaned": {
+    "message": "孤立依賴"
+  },
+  "app.instance.dependencies.pack-managed": {
+    "message": "由模組包管理"
+  },
+  "app.instance.dependencies.reference": {
+    "message": "在其他位置被引用"
+  },
+  "app.instance.dependencies.required-by": {
+    "message": "依賴方"
+  },
+  "app.instance.dependencies.requires": {
+    "message": "依賴項"
+  },
+  "app.instance.dependencies.reset-zoom": {
+    "message": "重設關係圖檢視"
+  },
+  "app.instance.dependencies.search": {
+    "message": "搜尋依賴項……"
+  },
+  "app.instance.dependencies.show-isolated": {
+    "message": "顯示孤立內容"
+  },
+  "app.instance.dependencies.source": {
+    "message": "來源"
+  },
+  "app.instance.dependencies.stats": {
+    "message": "{nodes, number} 個項目，{edges, number} 個關係"
+  },
+  "app.instance.dependencies.status": {
+    "message": "狀態"
+  },
+  "app.instance.dependencies.tree-view": {
+    "message": "依賴樹"
+  },
+  "app.instance.dependencies.unresolved": {
+    "message": "未解析"
+  },
+  "app.instance.dependencies.unresolved-label": {
+    "message": "依賴詳細資料無法使用。"
+  },
+  "app.instance.dependencies.user-added": {
+    "message": "使用者新增"
+  },
+  "app.instance.dependencies.version": {
+    "message": "版本 {version}"
+  },
+  "app.instance.dependencies.zoom-in": {
+    "message": "放大"
+  },
+  "app.instance.dependencies.zoom-out": {
+    "message": "縮小"
+  },
   "app.instance.disable-selected": {
     "message": "停用所選項"
   },
@@ -2939,8 +3065,38 @@
   "app.instances.add-content": {
     "message": "新增內容"
   },
+  "app.instances.batch-edit-groups.add": {
+    "message": "新增"
+  },
+  "app.instances.batch-edit-groups.add-to-group-title": {
+    "message": "新增實例到「{groupName}」"
+  },
+  "app.instances.batch-edit-groups.added": {
+    "message": "已新增"
+  },
+  "app.instances.batch-edit-groups.cancel": {
+    "message": "取消"
+  },
+  "app.instances.batch-edit-groups.create": {
+    "message": "建立分組"
+  },
+  "app.instances.batch-edit-groups.group-name": {
+    "message": "分組名稱"
+  },
+  "app.instances.batch-edit-groups.group-name-placeholder": {
+    "message": "輸入分組名稱"
+  },
   "app.instances.batch-edit-groups.header": {
     "message": "建立分組"
+  },
+  "app.instances.batch-edit-groups.no-instances-found": {
+    "message": "未找到實例"
+  },
+  "app.instances.batch-edit-groups.save-changes": {
+    "message": "儲存"
+  },
+  "app.instances.batch-edit-groups.search-instance": {
+    "message": "搜尋實例"
   },
   "app.instances.copy-path": {
     "message": "複製路徑"
@@ -2957,6 +3113,27 @@
   "app.instances.group-by": {
     "message": "分組方式"
   },
+  "app.instances.group.add-to-group": {
+    "message": "新增到分組"
+  },
+  "app.instances.group.collapse": {
+    "message": "折疊分組"
+  },
+  "app.instances.group.delete-description": {
+    "message": "此分組中的實例將被取消分組。"
+  },
+  "app.instances.group.delete-group": {
+    "message": "刪除分組"
+  },
+  "app.instances.group.edit-name": {
+    "message": "編輯分組名稱"
+  },
+  "app.instances.group.empty": {
+    "message": "拖放實例到此處添加。"
+  },
+  "app.instances.group.expand": {
+    "message": "展開分組"
+  },
   "app.instances.group.game-version": {
     "message": "遊戲版本"
   },
@@ -2966,47 +3143,11 @@
   "app.instances.group.loader": {
     "message": "載入器"
   },
-  "app.instances.group.none": {
-    "message": "無"
-  },
-  "app.instances.group.ungrouped": {
-    "message": "無分組"
-  },
-  "app.instances.group.pinned": {
-    "message": "已置頂"
-  },
-  "app.instances.group.empty": {
-    "message": "拖放實例到此處添加。"
-  },
-  "app.instances.group.edit-name": {
-    "message": "編輯分組名稱"
-  },
-  "app.instances.group.delete-group": {
-    "message": "刪除分組"
-  },
-  "app.instances.group.delete-description": {
-    "message": "此分組中的實例將被取消分組。"
-  },
-  "app.instances.group.move-up": {
-    "message": "上移分組"
-  },
   "app.instances.group.move-down": {
     "message": "下移分組"
   },
-  "app.instances.group.add-to-group": {
-    "message": "新增到分組"
-  },
-  "app.instances.group.new-instance": {
-    "message": "新建實例"
-  },
-  "app.instances.group.collapse": {
-    "message": "折疊分組"
-  },
-  "app.instances.group.expand": {
-    "message": "展開分組"
-  },
-  "app.instances.group.rename-group": {
-    "message": "重新命名分組"
+  "app.instances.group.move-up": {
+    "message": "上移分組"
   },
   "app.instances.group.name-empty": {
     "message": "分組名稱不能為空。"
@@ -3014,53 +3155,20 @@
   "app.instances.group.name-too-long": {
     "message": "分組名稱不能超過 {maxLength} 個字元。"
   },
-  "app.instances.batch-edit-groups.add-to-group-title": {
-    "message": "新增實例到「{groupName}」"
+  "app.instances.group.new-instance": {
+    "message": "新建實例"
   },
-  "app.instances.batch-edit-groups.group-name": {
-    "message": "分組名稱"
+  "app.instances.group.none": {
+    "message": "無"
   },
-  "app.instances.batch-edit-groups.group-name-placeholder": {
-    "message": "輸入分組名稱"
+  "app.instances.group.pinned": {
+    "message": "已置頂"
   },
-  "app.instances.batch-edit-groups.search-instance": {
-    "message": "搜尋實例"
+  "app.instances.group.rename-group": {
+    "message": "重新命名分組"
   },
-  "app.instances.batch-edit-groups.no-instances-found": {
-    "message": "未找到實例"
-  },
-  "app.instances.batch-edit-groups.add": {
-    "message": "新增"
-  },
-  "app.instances.batch-edit-groups.added": {
-    "message": "已新增"
-  },
-  "app.instances.batch-edit-groups.cancel": {
-    "message": "取消"
-  },
-  "app.instances.batch-edit-groups.create": {
-    "message": "建立分組"
-  },
-  "app.instances.batch-edit-groups.save-changes": {
-    "message": "儲存"
-  },
-  "app.library.group.new": {
-    "message": "新建分組"
-  },
-  "app.library.selection.new-group": {
-    "message": "新建分組"
-  },
-  "app.library.selection.remove-from-group": {
-    "message": "移出分組"
-  },
-  "app.library.context-menu.pin-instance": {
-    "message": "置頂實例"
-  },
-  "app.library.context-menu.unpin-instance": {
-    "message": "取消置頂"
-  },
-  "app.library.context-menu.remove-from-group": {
-    "message": "移出分組"
+  "app.instances.group.ungrouped": {
+    "message": "無分組"
   },
   "app.instances.pin-to-home": {
     "message": "固定到首頁"
@@ -3077,44 +3185,44 @@
   "app.instances.selected-count": {
     "message": "已選擇 {count} 個"
   },
+  "app.instances.sort-by": {
+    "message": "排序方式"
+  },
   "app.instances.sort.date-created": {
     "message": "建立日期"
   },
   "app.instances.sort.date-modified": {
     "message": "修改日期"
   },
+  "app.instances.sort.direction.asc-alphabetical": {
+    "message": "A–Z 正序"
+  },
+  "app.instances.sort.direction.asc-date": {
+    "message": "最早的在前"
+  },
+  "app.instances.sort.direction.asc-recency": {
+    "message": "最早遊玩在前"
+  },
+  "app.instances.sort.direction.asc-version": {
+    "message": "舊版本在前"
+  },
+  "app.instances.sort.direction.desc-alphabetical": {
+    "message": "Z–A 倒序"
+  },
+  "app.instances.sort.direction.desc-date": {
+    "message": "最新的在前"
+  },
+  "app.instances.sort.direction.desc-recency": {
+    "message": "最近遊玩在前"
+  },
+  "app.instances.sort.direction.desc-version": {
+    "message": "新版本在前"
+  },
   "app.instances.sort.last-played": {
     "message": "上次遊玩"
   },
   "app.instances.sort.name": {
     "message": "名稱"
-  },
-  "app.instances.sort-by": {
-    "message": "排序方式"
-  },
-  "app.instances.sort.direction.asc-alphabetical": {
-    "message": "A–Z 正序"
-  },
-  "app.instances.sort.direction.desc-alphabetical": {
-    "message": "Z–A 倒序"
-  },
-  "app.instances.sort.direction.asc-version": {
-    "message": "舊版本在前"
-  },
-  "app.instances.sort.direction.desc-version": {
-    "message": "新版本在前"
-  },
-  "app.instances.sort.direction.asc-recency": {
-    "message": "最早遊玩在前"
-  },
-  "app.instances.sort.direction.desc-recency": {
-    "message": "最近遊玩在前"
-  },
-  "app.instances.sort.direction.asc-date": {
-    "message": "最早的在前"
-  },
-  "app.instances.sort.direction.desc-date": {
-    "message": "最新的在前"
   },
   "app.instances.unpin-from-home": {
     "message": "取消固定"
@@ -3437,27 +3545,6 @@
   "app.lab.gradient-text.title": {
     "message": "漸變文字生成器"
   },
-  "app.lab.skin-editor.description": {
-    "message": "在本機建立和編輯 Minecraft 玩家外觀。"
-  },
-  "app.lab.skin-editor.export-skin": {
-    "message": "Minecraft 外觀 PNG"
-  },
-  "app.lab.skin-editor.load-error-description": {
-    "message": "嵌入式編輯器未能完成載入，請再試一次。"
-  },
-  "app.lab.skin-editor.load-error-title": {
-    "message": "無法載入外觀編輯器"
-  },
-  "app.lab.skin-editor.loading": {
-    "message": "正在載入外觀編輯器"
-  },
-  "app.lab.skin-editor.retry": {
-    "message": "再試一次"
-  },
-  "app.lab.skin-editor.title": {
-    "message": "外觀編輯器"
-  },
   "app.lab.mod-translation.active-count": {
     "message": "{count} 個任務進行中"
   },
@@ -3642,7 +3729,7 @@
     "message": "紅石"
   },
   "app.lab.recipe-generator.copyright.disclaimer-body": {
-    "message": "Minecraft 素材版權歸 Mojang Studios / Microsoft 所有，僅用於識別相容的遊戲內容。Axolotl Launcher 與 Mojang Studios 或 Microsoft 無關聯，也未獲得其認可。"
+    "message": "Minecraft 素材版權歸 Mojang Studios / Microsoft 所有，僅用於識別相容的遊戲內容。ALLIGATORZONE 與 Mojang Studios 或 Microsoft 無關聯，也未獲得其認可。"
   },
   "app.lab.recipe-generator.copyright.disclaimer-heading": {
     "message": "非官方工具"
@@ -4422,13 +4509,13 @@
     "message": "複製 /tp"
   },
   "app.lab.seed-map.copyright.disclaimer-body": {
-    "message": "Minecraft 是 Mojang Synergies AB 的商標。Axolotl Launcher 與 Mojang 或 MinecraftSearch 均無隸屬關係，也未獲得其認可。"
+    "message": "Minecraft 是 Mojang Synergies AB 的商標。ALLIGATORZONE 與 Mojang 或 MinecraftSearch 均無隸屬關係，也未獲得其認可。"
   },
   "app.lab.seed-map.copyright.disclaimer-heading": {
     "message": "非官方工具"
   },
   "app.lab.seed-map.copyright.engine-body": {
-    "message": "群系、地形、出生點與結構數據由 cubiomes 和 Axolotl 原生集成在本地生成。cubiomes 版權所有 (c) 2020 Cubitect，並依據 MIT 許可證提供。"
+    "message": "群系、地形、出生點與結構數據由 cubiomes 和 ALLIGATORZONE 原生集成在本地生成。cubiomes 版權所有 (c) 2020 Cubitect，並依據 MIT 許可證提供。"
   },
   "app.lab.seed-map.copyright.engine-heading": {
     "message": "本地地圖引擎"
@@ -4814,6 +4901,27 @@
   "app.lab.seed-map.zoom-to-show": {
     "message": "放大以顯示{layer}"
   },
+  "app.lab.skin-editor.description": {
+    "message": "在本機建立和編輯 Minecraft 玩家外觀。"
+  },
+  "app.lab.skin-editor.export-skin": {
+    "message": "Minecraft 外觀 PNG"
+  },
+  "app.lab.skin-editor.load-error-description": {
+    "message": "嵌入式編輯器未能完成載入，請再試一次。"
+  },
+  "app.lab.skin-editor.load-error-title": {
+    "message": "無法載入外觀編輯器"
+  },
+  "app.lab.skin-editor.loading": {
+    "message": "正在載入外觀編輯器"
+  },
+  "app.lab.skin-editor.retry": {
+    "message": "再試一次"
+  },
+  "app.lab.skin-editor.title": {
+    "message": "外觀編輯器"
+  },
   "app.lab.title": {
     "message": "實驗室"
   },
@@ -4823,11 +4931,29 @@
   "app.lab.tool-count-plural": {
     "message": "{count} 個工具"
   },
+  "app.library.context-menu.pin-instance": {
+    "message": "置頂實例"
+  },
+  "app.library.context-menu.remove-from-group": {
+    "message": "移出分組"
+  },
+  "app.library.context-menu.unpin-instance": {
+    "message": "取消置頂"
+  },
   "app.library.create-instance": {
     "message": "建立新實例"
   },
+  "app.library.group.new": {
+    "message": "新建分組"
+  },
   "app.library.no-instances": {
     "message": "未找到實例"
+  },
+  "app.library.selection.new-group": {
+    "message": "新建分組"
+  },
+  "app.library.selection.remove-from-group": {
+    "message": "移出分組"
   },
   "app.library.tabs.all-instances": {
     "message": "全部實例"
@@ -5162,6 +5288,9 @@
   "app.multiplayer.hongshi.cached": {
     "message": "（快取）"
   },
+  "app.multiplayer.hongshi.cancel": {
+    "message": "取消"
+  },
   "app.multiplayer.hongshi.closed": {
     "message": "紅石聯機 2 房間已關閉。重新建立後會獲得新的聯機地址。"
   },
@@ -5174,35 +5303,29 @@
   "app.multiplayer.hongshi.detected-port": {
     "message": "{instance} — 埠 {port}"
   },
-  "app.multiplayer.hongshi.cancel": {
-    "message": "取消"
-  },
-  "app.multiplayer.hongshi.no-nodes": {
-    "message": "目前沒有已發布的中轉節點，請重新整理列表後重試。"
-  },
   "app.multiplayer.hongshi.error.build-unavailable": {
     "message": "適用於當前裝置的紅石聯機 2 核心暫未發布，請稍後重試。"
-  },
-  "app.multiplayer.hongshi.error.node-list": {
-    "message": "無法取得中轉節點，請檢查網路並重新整理列表。"
-  },
-  "app.multiplayer.hongshi.error.node-unavailable": {
-    "message": "中轉節點未能建立房間，請重新整理節點列表或選擇其他節點。"
-  },
-  "app.multiplayer.hongshi.error.invalid-port": {
-    "message": "請輸入 1 到 65535 之間的本地埠。"
   },
   "app.multiplayer.hongshi.error.install": {
     "message": "無法安裝紅石聯機 2 核心，請檢查網路後重試。"
   },
-  "app.multiplayer.hongshi.error.kernel-start": {
-    "message": "紅石聯機 2 核心未能建立房間，請重試或開啟日誌。"
+  "app.multiplayer.hongshi.error.invalid-port": {
+    "message": "請輸入 1 到 65535 之間的本地埠。"
   },
   "app.multiplayer.hongshi.error.kernel-exit": {
     "message": "紅石聯機 2 核心意外退出，請重新建立房間或開啟日誌。"
   },
   "app.multiplayer.hongshi.error.kernel-output": {
     "message": "紅石聯機 2 核心回傳了無效地址或輸出，請開啟日誌查看詳情。"
+  },
+  "app.multiplayer.hongshi.error.kernel-start": {
+    "message": "紅石聯機 2 核心未能建立房間，請重試或開啟日誌。"
+  },
+  "app.multiplayer.hongshi.error.node-list": {
+    "message": "無法取得中轉節點，請檢查網路並重新整理列表。"
+  },
+  "app.multiplayer.hongshi.error.node-unavailable": {
+    "message": "中轉節點未能建立房間，請重新整理節點列表或選擇其他節點。"
   },
   "app.multiplayer.hongshi.error.unknown": {
     "message": "無法建立紅石聯機 2 房間，請重試或開啟日誌。"
@@ -5212,6 +5335,9 @@
   },
   "app.multiplayer.hongshi.manual-port": {
     "message": "手動輸入埠"
+  },
+  "app.multiplayer.hongshi.no-nodes": {
+    "message": "目前沒有已發布的中轉節點，請重新整理列表後重試。"
   },
   "app.multiplayer.hongshi.node": {
     "message": "中轉節點"
@@ -5724,10 +5850,10 @@
     "message": "瀏覽時直接翻譯 Modrinth 項目的標題、摘要和介紹。保留原文、雙語同屏，或者讓譯文站 C 位，都由你決定。"
   },
   "app.onboarding.translation.title": {
-    "message": "翻譯，是 Axolotl 的拿手活"
+    "message": "翻譯，是 ALLIGATORZONE 的拿手活"
   },
   "app.onboarding.updates.description": {
-    "message": "決定 Axolotl 何時檢查更新，以及是否替你安裝。"
+    "message": "決定 ALLIGATORZONE 何時檢查更新，以及是否替你安裝。"
   },
   "app.onboarding.updates.title": {
     "message": "保持在線"
@@ -5751,7 +5877,7 @@
     "message": "Discord 執行時顯示你當前使用啟動器或遊玩的狀態。"
   },
   "app.privacy-consent.intro": {
-    "message": "選擇 Axolotl 可以傳送或展示的內容。確認前不會傳送任何遙測。"
+    "message": "選擇 ALLIGATORZONE 可以傳送或展示的內容。確認前不會傳送任何遙測。"
   },
   "app.privacy-consent.privacy-policy": {
     "message": "閱讀隱私政策"
@@ -5788,18 +5914,6 @@
   },
   "app.project.install-context.install-content-to-instance": {
     "message": "將內容安裝至實例"
-  },
-  "app.project.modpack-server.created-description": {
-    "message": "{name} 已就緒。請在多人遊戲中配置並啟動。"
-  },
-  "app.project.modpack-server.created-title": {
-    "message": "伺服器已建立"
-  },
-  "app.project.modpack-server.open": {
-    "message": "開啟伺服器"
-  },
-  "app.project.modpack-server.start": {
-    "message": "開服"
   },
   "app.project.mcarchive.install": {
     "message": "安裝"
@@ -5839,6 +5953,18 @@
   },
   "app.project.mcarchive.versions": {
     "message": "版本"
+  },
+  "app.project.modpack-server.created-description": {
+    "message": "{name} 已就緒。請在多人遊戲中配置並啟動。"
+  },
+  "app.project.modpack-server.created-title": {
+    "message": "伺服器已建立"
+  },
+  "app.project.modpack-server.open": {
+    "message": "開啟伺服器"
+  },
+  "app.project.modpack-server.start": {
+    "message": "開服"
   },
   "app.project.open-in-mcmod": {
     "message": "在 MC 百科中打開"
@@ -5924,6 +6050,32 @@
   "app.server.adding": {
     "message": "正在新增..."
   },
+  "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
+  "app.server.changelog.file-count": "{count, plural, one {# file} other {# files}}",
+  "app.server.changelog.generation": "Generation {seq}",
+  "app.server.changelog.kind-added": "Added",
+  "app.server.changelog.kind-added-tooltip": "This generation added the mod.",
+  "app.server.changelog.kind-changed": "Changed",
+  "app.server.changelog.kind-changed-tooltip": "This generation updated the mod.",
+  "app.server.changelog.kind-removed": "Removed",
+  "app.server.changelog.kind-removed-tooltip": "This generation removed the mod.",
+  "app.server.changelog.load-failed": "Could not read the update notes.",
+  "app.server.changelog.loading": "Reading the published pack history...",
+  "app.server.changelog.mods-heading": "Mods",
+  "app.server.changelog.mods-loading": "Loading mod details...",
+  "app.server.changelog.mods-unavailable": "These mods are no longer installed here, so only their file names are known.",
+  "app.server.changelog.more-files": "Show more changed files",
+  "app.server.changelog.no-history": "No instance on this computer has an AutoModpack history yet. Launch the pack once and the changes the server published will appear here.",
+  "app.server.changelog.no-notes": "No patch notes were published with this generation.",
+  "app.server.changelog.open-project": "Open the project page for {name}",
+  "app.server.changelog.open-project-search": "Search for {name} online - this mod declares no project page of its own",
+  "app.server.changelog.other-heading": "Other changed files",
+  "app.server.changelog.published": "Published {date}",
+  "app.server.changelog.refresh": "Refresh",
+  "app.server.changelog.restore": "Rollback of generation {seq}",
+  "app.server.changelog.retry": "Try again",
+  "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
+  "app.server.changelog.title": "Pack update notes",
   "app.server.compatibility-warning": {
     "message": "這個伺服器可能無法與所有實例相容。"
   },
@@ -6010,6 +6162,33 @@
   },
   "app.servers.loading": {
     "message": "載入中"
+  },
+  "app.servers.modpack.background-hint": {
+    "message": "您可以關閉此視窗，下載將在背景持續進行。"
+  },
+  "app.servers.modpack.current-file": {
+    "message": "正在安裝 {file}"
+  },
+  "app.servers.modpack.done": {
+    "message": "安裝完成"
+  },
+  "app.servers.modpack.download-in-background": {
+    "message": "背景下載"
+  },
+  "app.servers.modpack.downloading": {
+    "message": "正在下載整合包檔案..."
+  },
+  "app.servers.modpack.first-run-crashed": {
+    "message": "伺服器在首次啟動時當機。請檢查所選 Java 版本是否相容，然後重試。"
+  },
+  "app.servers.modpack.preparing": {
+    "message": "正在準備伺服器..."
+  },
+  "app.servers.modpack.unsupported-loader-description": {
+    "message": "此整合包使用 {loader}，但 ALLIGATORZONE 目前僅支援原版、Fabric 與 Quilt 整合包伺服器端。{loader} 支援即將推出。"
+  },
+  "app.servers.modpack.unsupported-loader-title": {
+    "message": "{loader} 伺服器端暫不支援"
   },
   "app.servers.port.change": {
     "message": "修改連接埠"
@@ -6356,11 +6535,11 @@
   "app.servers.status.crashed": {
     "message": "已崩潰"
   },
-  "app.servers.status.downloading": {
-    "message": "下載中"
-  },
   "app.servers.status.created": {
     "message": "未設定"
+  },
+  "app.servers.status.downloading": {
+    "message": "下載中"
   },
   "app.servers.status.eula-pending": {
     "message": "待同意 EULA"
@@ -6373,6 +6552,18 @@
   },
   "app.servers.status.starting": {
     "message": "啟動中"
+  },
+  "app.servers.type.fabric": {
+    "message": "Fabric"
+  },
+  "app.servers.type.forge": {
+    "message": "Forge"
+  },
+  "app.servers.type.paper": {
+    "message": "Paper"
+  },
+  "app.servers.type.vanilla": {
+    "message": "原版"
   },
   "app.servers.wizard.background-hint": {
     "message": "您可以關閉此視窗，下載將在背景繼續進行。"
@@ -6443,45 +6634,6 @@
   "app.servers.wizard.type-title": {
     "message": "伺服器端類型"
   },
-  "app.servers.type.vanilla": {
-    "message": "原版"
-  },
-  "app.servers.type.fabric": {
-    "message": "Fabric"
-  },
-  "app.servers.type.paper": {
-    "message": "Paper"
-  },
-  "app.servers.type.forge": {
-    "message": "Forge"
-  },
-  "app.servers.modpack.downloading": {
-    "message": "正在下載整合包檔案..."
-  },
-  "app.servers.modpack.preparing": {
-    "message": "正在準備伺服器..."
-  },
-  "app.servers.modpack.done": {
-    "message": "安裝完成"
-  },
-  "app.servers.modpack.current-file": {
-    "message": "正在安裝 {file}"
-  },
-  "app.servers.modpack.background-hint": {
-    "message": "您可以關閉此視窗，下載將在背景持續進行。"
-  },
-  "app.servers.modpack.first-run-crashed": {
-    "message": "伺服器在首次啟動時當機。請檢查所選 Java 版本是否相容，然後重試。"
-  },
-  "app.servers.modpack.download-in-background": {
-    "message": "背景下載"
-  },
-  "app.servers.modpack.unsupported-loader-title": {
-    "message": "{loader} 伺服器端暫不支援"
-  },
-  "app.servers.modpack.unsupported-loader-description": {
-    "message": "此整合包使用 {loader}，但 Axolotl 目前僅支援原版、Fabric 與 Quilt 整合包伺服器端。{loader} 支援即將推出。"
-  },
   "app.settings.about.afdian": {
     "message": "在愛發電贊助"
   },
@@ -6489,7 +6641,7 @@
     "message": "支持專案持續開發"
   },
   "app.settings.about.attribution": {
-    "message": "Axolotl Launcher 是開源專案 Modrinth 程式碼庫的修改版本。"
+    "message": "ALLIGATORZONE 是開源專案 Modrinth 程式碼庫的修改版本。"
   },
   "app.settings.about.community-support": {
     "message": "專案與社群"
@@ -6519,7 +6671,7 @@
     "message": "授權條款與來源聲明"
   },
   "app.settings.about.not-affiliated": {
-    "message": "Modrinth 是 Rinth, Inc. 的商標。Axolotl Launcher 與 Rinth, Inc. 無關聯，亦未獲得其認可。"
+    "message": "Modrinth 是 Rinth, Inc. 的商標。ALLIGATORZONE 與 Rinth, Inc. 無關聯，亦未獲得其認可。"
   },
   "app.settings.about.original-source": {
     "message": "Modrinth 原始碼"
@@ -6590,15 +6742,6 @@
   "app.settings.defaults.fullscreen-description": {
     "message": "啟動時覆寫 options.txt 檔案，使遊戲以全螢幕模式執行。"
   },
-  "app.settings.defaults.maximize-window": {
-    "message": "最大化視窗"
-  },
-  "app.settings.defaults.maximize-window-description": {
-    "message": "啟動時最大化 Minecraft 視窗。"
-  },
-  "app.settings.defaults.maximize-window.unsupported": {
-    "message": "目前的作業系統暫不支援。"
-  },
   "app.settings.defaults.height": {
     "message": "高度"
   },
@@ -6613,6 +6756,15 @@
   },
   "app.settings.defaults.java-arguments-placeholder": {
     "message": "輸入 Java 參數..."
+  },
+  "app.settings.defaults.maximize-window": {
+    "message": "最大化視窗"
+  },
+  "app.settings.defaults.maximize-window-description": {
+    "message": "啟動時最大化 Minecraft 視窗。"
+  },
+  "app.settings.defaults.maximize-window.unsupported": {
+    "message": "目前的作業系統暫不支援。"
   },
   "app.settings.defaults.memory": {
     "message": "分配記憶體"
@@ -6644,6 +6796,18 @@
   "app.settings.defaults.pre-launch-placeholder": {
     "message": "輸入啟動前指令..."
   },
+  "app.settings.defaults.sections.after-launch": {
+    "message": "啟動後行為"
+  },
+  "app.settings.defaults.sections.environment": {
+    "message": "環境變數"
+  },
+  "app.settings.defaults.sections.launch-hooks": {
+    "message": "啟動掛鉤"
+  },
+  "app.settings.defaults.sections.window-behavior": {
+    "message": "視窗行為"
+  },
   "app.settings.defaults.width": {
     "message": "寬度"
   },
@@ -6665,11 +6829,59 @@
   "app.settings.developer-mode-enabled": {
     "message": "開發人員模式已啟用。"
   },
+  "app.settings.developer.feature-flags-section-title": {
+    "message": "功能旗標"
+  },
   "app.settings.downloading": {
     "message": "正在下載 v{version}"
   },
+  "app.settings.feature-flags.advanced-filters-collapsed": {
+    "message": "預設摺疊進階篩選"
+  },
+  "app.settings.feature-flags.always-show-app-controls": {
+    "message": "一律顯示應用程式控制項"
+  },
+  "app.settings.feature-flags.auto-install-dependencies": {
+    "message": "自動安裝相依項"
+  },
+  "app.settings.feature-flags.i18n-debug": {
+    "message": "翻譯偵錯"
+  },
+  "app.settings.feature-flags.page-path": {
+    "message": "頁面路徑"
+  },
+  "app.settings.feature-flags.page-transitions": {
+    "message": "頁面切換動畫"
+  },
+  "app.settings.feature-flags.project-background": {
+    "message": "專案背景"
+  },
   "app.settings.feature-flags.reset-to-default": {
     "message": "恢復預設值"
+  },
+  "app.settings.feature-flags.server-project-qa": {
+    "message": "伺服器專案問答"
+  },
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+    "message": "一律以位元組顯示伺服器記憶體"
+  },
+  "app.settings.feature-flags.show-instance-play-time": {
+    "message": "顯示實例遊玩時間"
+  },
+  "app.settings.feature-flags.show-version-environment-column": {
+    "message": "顯示版本環境欄"
+  },
+  "app.settings.feature-flags.skip-non-essential-warnings": {
+    "message": "略過非必要警告"
+  },
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
+    "message": "略過未知整合包警告"
+  },
+  "app.settings.feature-flags.worlds-in-home": {
+    "message": "在首頁顯示世界"
+  },
+  "app.settings.feature-flags.worlds-tab": {
+    "message": "世界分頁"
   },
   "app.settings.groups.data-privacy": {
     "message": "資料與隱私"
@@ -6779,23 +6991,26 @@
   "app.settings.privacy.discord-rpc-description": {
     "message": "在 Discord 中顯示你當前使用啟動器或遊玩的狀態。"
   },
+  "app.settings.privacy.section-title": {
+    "message": "隱私與資料分享"
+  },
   "app.settings.privacy.telemetry": {
     "message": "允許遙測"
   },
   "app.settings.privacy.telemetry-description": {
     "message": "傳送匿名每日活躍訊號和脫敏的啟動器錯誤報告。絕不上傳 Minecraft 日誌或賬戶憑據。"
   },
+  "app.settings.resources.add-minecraft-directory": {
+    "message": "新增 .minecraft 目錄"
+  },
   "app.settings.resources.app-cache": {
     "message": "應用程式快取"
   },
   "app.settings.resources.app-cache-description": {
-    "message": "Axolotl Launcher 會快取資料以加快載入速度。清除快取會強制應用程式重新載入資料，並可能暫時降低速度。"
+    "message": "ALLIGATORZONE 會快取資料以加快載入速度。清除快取會強制應用程式重新載入資料，並可能暫時降低速度。"
   },
   "app.settings.resources.app-directory": {
     "message": "應用程式目錄"
-  },
-  "app.settings.resources.axolotl-data-directory": {
-    "message": "Axolotl 資料目錄"
   },
   "app.settings.resources.app-directory-description": {
     "message": "啟動器用於儲存全部遊戲檔案的目錄。變更後將在重新啟動啟動器後生效。"
@@ -6803,29 +7018,8 @@
   "app.settings.resources.app-directory-description-portable": {
     "message": "正在以便攜模式運行，所有數據已固定在程序目錄下，無法修改。"
   },
-  "app.settings.resources.minecraft-directories": {
-    "message": "Minecraft 目錄"
-  },
-  "app.settings.resources.minecraft-directories-description": {
-    "message": "新增一或多個供實例使用的外部 .minecraft 資料夾。這些資料夾會與 Axolotl 資料分開保存。"
-  },
-  "app.settings.resources.minecraft-directory-mode": {
-    "message": "遊戲目錄模式"
-  },
-  "app.settings.resources.minecraft-directory-mode.isolated": {
-    "message": "版本隔離"
-  },
-  "app.settings.resources.minecraft-directory-mode.shared": {
-    "message": "共用 .minecraft 目錄"
-  },
-  "app.settings.resources.add-minecraft-directory": {
-    "message": "新增 .minecraft 目錄"
-  },
-  "app.settings.resources.select-minecraft-directory": {
-    "message": "選擇 .minecraft 目錄"
-  },
-  "app.settings.resources.remove-minecraft-directory": {
-    "message": "移除 .minecraft 目錄"
+  "app.settings.resources.axolotl-data-directory": {
+    "message": "ALLIGATORZONE 資料目錄"
   },
   "app.settings.resources.concurrency.manual": {
     "message": "手動"
@@ -6874,6 +7068,21 @@
   },
   "app.settings.resources.maximum-writes-description": {
     "message": "啟動器同時寫入磁碟的最大檔案數。如果經常出現 I/O 錯誤，請降低此值；變更將在重新啟動應用程式後生效。"
+  },
+  "app.settings.resources.minecraft-directories": {
+    "message": "Minecraft 目錄"
+  },
+  "app.settings.resources.minecraft-directories-description": {
+    "message": "新增一或多個供實例使用的外部 .minecraft 資料夾。這些資料夾會與 ALLIGATORZONE 資料分開保存。"
+  },
+  "app.settings.resources.minecraft-directory-mode": {
+    "message": "遊戲目錄模式"
+  },
+  "app.settings.resources.minecraft-directory-mode.isolated": {
+    "message": "版本隔離"
+  },
+  "app.settings.resources.minecraft-directory-mode.shared": {
+    "message": "共用 .minecraft 目錄"
   },
   "app.settings.resources.minecraft-file-source": {
     "message": "Minecraft 文件、載入器與 Java"
@@ -6977,14 +7186,32 @@
   "app.settings.resources.purge-confirm-title": {
     "message": "確定要清除快取嗎？"
   },
+  "app.settings.resources.remove-minecraft-directory": {
+    "message": "移除 .minecraft 目錄"
+  },
   "app.settings.resources.reset-import-directory": {
     "message": "使用系統 Downloads 資料夾"
+  },
+  "app.settings.resources.sections.data-storage": {
+    "message": "資料目錄與快取"
+  },
+  "app.settings.resources.sections.download-behavior": {
+    "message": "下載行為"
+  },
+  "app.settings.resources.sections.missing-content": {
+    "message": "缺少的內容"
+  },
+  "app.settings.resources.sections.network-authentication": {
+    "message": "網路驗證"
   },
   "app.settings.resources.select-directory": {
     "message": "選擇新的應用程式目錄"
   },
   "app.settings.resources.select-import-directory": {
     "message": "選擇監控目錄"
+  },
+  "app.settings.resources.select-minecraft-directory": {
+    "message": "選擇 .minecraft 目錄"
   },
   "app.settings.resources.source.automatic": {
     "message": "自動（推薦）"
@@ -7212,7 +7439,7 @@
     "message": "將 Release 資料複製到 Beta？"
   },
   "app.settings.updates.channel.description": {
-    "message": "選擇 Axolotl 接收的啟動器版本。"
+    "message": "選擇 ALLIGATORZONE 接收的啟動器版本。"
   },
   "app.settings.updates.channel.label": {
     "message": "管道"
@@ -7224,7 +7451,7 @@
     "message": "穩定且經過測試的新功能與修正，更新頻率較慢。"
   },
   "app.settings.updates.channel.restart-description": {
-    "message": "立即重新啟動 Axolotl 以開始使用新的更新管道，或稍後手動重新啟動。"
+    "message": "立即重新啟動 ALLIGATORZONE 以開始使用新的更新管道，或稍後手動重新啟動。"
   },
   "app.settings.updates.channel.restart-development-description": {
     "message": "手動重新啟動開發工作階段後，新的更新管道才會生效。"
@@ -7243,6 +7470,18 @@
   },
   "app.settings.updates.channel.title": {
     "message": "更新管道"
+  },
+  "app.settings.updates.check": {
+    "message": "檢查更新"
+  },
+  "app.settings.updates.check.title": {
+    "message": "檢查更新"
+  },
+  "app.settings.updates.checking": {
+    "message": "正在檢查更新..."
+  },
+  "app.settings.updates.current-version": {
+    "message": "目前版本 {version}"
   },
   "app.settings.updates.database-isolation.active": {
     "message": "正在使用"
@@ -7263,7 +7502,7 @@
     "message": "資料庫隔離"
   },
   "app.settings.updates.database-operation.active-target": {
-    "message": "無法覆寫目前正在使用的資料庫。請先重新啟動 Axolotl 並切換更新管道。"
+    "message": "無法覆寫目前正在使用的資料庫。請先重新啟動 ALLIGATORZONE 並切換更新管道。"
   },
   "app.settings.updates.database-operation.beta-to-release": {
     "message": "從 Beta 複製到 Release"
@@ -7281,7 +7520,7 @@
     "message": "覆寫資料庫？"
   },
   "app.settings.updates.database-operation.failed": {
-    "message": "無法複製資料庫。請確認 Axolotl 未在使用目標資料庫。"
+    "message": "無法複製資料庫。請確認 ALLIGATORZONE 未在使用目標資料庫。"
   },
   "app.settings.updates.database-operation.label": {
     "message": "資料庫操作"
@@ -7291,27 +7530,6 @@
   },
   "app.settings.updates.database-operation.success": {
     "message": "已成功將 {source} 複製到 {target}。"
-  },
-  "app.settings.updates.check": {
-    "message": "檢查更新"
-  },
-  "app.settings.updates.check.title": {
-    "message": "檢查更新"
-  },
-  "app.settings.updates.checking": {
-    "message": "正在檢查更新..."
-  },
-  "app.settings.updates.current-version": {
-    "message": "目前版本 {version}"
-  },
-  "app.settings.updates.latest-version": {
-    "message": "最新 {channel} 版本：{version}"
-  },
-  "app.settings.updates.latest-version-unavailable": {
-    "message": "最新版本暫時無法取得"
-  },
-  "app.settings.updates.latest-version-loading": {
-    "message": "正在取得"
   },
   "app.settings.updates.disabled": {
     "message": "此組建已停用更新功能。"
@@ -7327,6 +7545,15 @@
   },
   "app.settings.updates.immediate-fetch.beta-description": {
     "message": "Beta 更新一律立即可用。"
+  },
+  "app.settings.updates.latest-version": {
+    "message": "最新 {channel} 版本：{version}"
+  },
+  "app.settings.updates.latest-version-loading": {
+    "message": "正在取得"
+  },
+  "app.settings.updates.latest-version-unavailable": {
+    "message": "最新版本暫時無法取得"
   },
   "app.settings.updates.offline": {
     "message": "請連線至網際網路後再檢查更新。"
@@ -7350,7 +7577,7 @@
     "message": "只有透過加密簽章驗證的更新才會被安裝。"
   },
   "app.settings.updates.up-to-date": {
-    "message": "Axolotl 已是最新版本。"
+    "message": "ALLIGATORZONE 已是最新版本。"
   },
   "app.sidebar.collapse": {
     "message": "收起邊欄"
@@ -7494,13 +7721,13 @@
     "message": "小鬼當家"
   },
   "app.skins.sign-in.axolotl-alt": {
-    "message": "Axolotl Launcher"
+    "message": "ALLIGATORZONE"
   },
   "app.skins.sign-in.button": {
     "message": "登入"
   },
   "app.skins.sign-in.description": {
-    "message": "請登入你的 Minecraft 帳號以使用 Axolotl Launcher 的外觀管理功能。"
+    "message": "請登入你的 Minecraft 帳號以使用 ALLIGATORZONE 的外觀管理功能。"
   },
   "app.skins.sign-in.title": {
     "message": "請登入"
@@ -7600,6 +7827,9 @@
   },
   "app.translation-settings.display-mode.translation-only": {
     "message": "僅譯文"
+  },
+  "app.translation-settings.display-section-title": {
+    "message": "翻譯顯示"
   },
   "app.translation-settings.google-ip-pool": {
     "message": "可用: {count}"
@@ -7722,16 +7952,16 @@
     "message": "此版本暫未內建更新公告，請前往官網查看完整更新日誌。"
   },
   "app.update-announcement.unknown-title": {
-    "message": "Axolotl Launcher 已更新"
+    "message": "ALLIGATORZONE 已更新"
   },
   "app.update-announcement.version": {
     "message": "版本 {version}"
   },
   "app.update-popup.body.download-complete": {
-    "message": "Axolotl Launcher v{version} 已完成下載！立即重新載入以更新，或在關閉 Axolotl Launcher 時自動更新。"
+    "message": "ALLIGATORZONE v{version} 已完成下載！立即重新載入以更新，或在關閉 ALLIGATORZONE 時自動更新。"
   },
   "app.update-popup.body.metered": {
-    "message": "Axolotl Launcher v{version} 現已推出！由於你目前使用的是計量付費網路，我們並未自動下載更新。"
+    "message": "ALLIGATORZONE v{version} 現已推出！由於你目前使用的是計量付費網路，我們並未自動下載更新。"
   },
   "app.update-popup.changelog": {
     "message": "更新日誌"
@@ -7761,7 +7991,7 @@
     "message": "正在安裝版本 {version}"
   },
   "app.warning.running-as-admin": {
-    "message": "Axolotl 正在以系統管理員身分執行。此模式無法拖曳匯入檔案，請以一般權限重新啟動啟動器。"
+    "message": "ALLIGATORZONE 正在以系統管理員身分執行。此模式無法拖曳匯入檔案，請以一般權限重新啟動啟動器。"
   },
   "app.world-editor.allow-commands.label": {
     "message": "允許作弊"
@@ -8208,7 +8438,7 @@
     "message": "光影包"
   },
   "drop.help.title": {
-    "message": "我可以拖入什麼到 Axolotl？"
+    "message": "我可以拖入什麼到 ALLIGATORZONE？"
   },
   "drop.help.worlds-desc": {
     "message": "拖放存檔文件夾來導入到實例。"
@@ -8720,15 +8950,6 @@
   "instance.settings.tabs.window.fullscreen.description": {
     "message": "使遊戲啟動時進入全螢幕模式（透過 options.txt）。"
   },
-  "instance.settings.tabs.window.maximize-window": {
-    "message": "最大化視窗"
-  },
-  "instance.settings.tabs.window.maximize-window.description": {
-    "message": "啟動時最大化 Minecraft 視窗。"
-  },
-  "instance.settings.tabs.window.maximize-window.unsupported": {
-    "message": "目前的作業系統暫不支援。"
-  },
   "instance.settings.tabs.window.height": {
     "message": "高度"
   },
@@ -8737,6 +8958,15 @@
   },
   "instance.settings.tabs.window.height.enter": {
     "message": "輸入高度..."
+  },
+  "instance.settings.tabs.window.maximize-window": {
+    "message": "最大化視窗"
+  },
+  "instance.settings.tabs.window.maximize-window.description": {
+    "message": "啟動時最大化 Minecraft 視窗。"
+  },
+  "instance.settings.tabs.window.maximize-window.unsupported": {
+    "message": "目前的作業系統暫不支援。"
   },
   "instance.settings.tabs.window.width": {
     "message": "寬度"
@@ -9132,7 +9362,7 @@
     "message": "{count} 個精確選擇"
   },
   "instance.upgrade.customize.custom.description": {
-    "message": "為所選內容固定精確版本，其餘相依關係由 Axolotl 求解。"
+    "message": "為所選內容固定精確版本，其餘相依關係由 ALLIGATORZONE 求解。"
   },
   "instance.upgrade.customize.custom.discard-switch": {
     "message": "捨棄並切換"
@@ -9237,7 +9467,7 @@
     "message": "繼續前請處理自訂衝突。"
   },
   "instance.upgrade.customize.search-limit.body": {
-    "message": "Axolotl 無法在搜尋上限內找到方案。請放寬一項自訂選擇。"
+    "message": "ALLIGATORZONE 無法在搜尋上限內找到方案。請放寬一項自訂選擇。"
   },
   "instance.upgrade.customize.search-limit.title": {
     "message": "已達搜尋上限"
@@ -9991,209 +10221,5 @@
   },
   "unknown-pack-warning-modal.warning.title": {
     "message": "未知檔案警告"
-  },
-  "app.instance.dependencies.all-sources": {
-    "message": "所有來源"
-  },
-  "app.instance.dependencies.all-statuses": {
-    "message": "所有狀態"
-  },
-  "app.instance.dependencies.all-types": {
-    "message": "所有類型"
-  },
-  "app.instance.dependencies.cycle": {
-    "message": "循環依賴"
-  },
-  "app.instance.dependencies.cycle-reference": {
-    "message": "循環依賴在此繼續"
-  },
-  "app.instance.dependencies.direct-dependencies": {
-    "message": "直接依賴"
-  },
-  "app.instance.dependencies.direct-dependents": {
-    "message": "直接依賴方"
-  },
-  "app.instance.dependencies.disabled": {
-    "message": "已停用"
-  },
-  "app.instance.dependencies.file": {
-    "message": "檔案 {file}"
-  },
-  "app.instance.dependencies.graph-hint": {
-    "message": "拖曳畫布以瀏覽關係；拖曳卡片可調整配置。"
-  },
-  "app.instance.dependencies.graph-view": {
-    "message": "關係圖"
-  },
-  "app.instance.dependencies.header": {
-    "message": "依賴關係"
-  },
-  "app.instance.dependencies.isolated-summary": {
-    "message": "{count, number} 個孤立項目未顯示在關係圖中。"
-  },
-  "app.instance.dependencies.local-discovered": {
-    "message": "本機發現"
-  },
-  "app.instance.dependencies.missing": {
-    "message": "遺失"
-  },
-  "app.instance.dependencies.no-content": {
-    "message": "沒有可分析的內容。"
-  },
-  "app.instance.dependencies.no-dependencies": {
-    "message": "找不到依賴關係。"
-  },
-  "app.instance.dependencies.no-graph-relations": {
-    "message": "目前篩選條件下沒有可顯示的關係。"
-  },
-  "app.instance.dependencies.graph-direction": {
-    "message": "箭頭從依賴方指向它使用的內容。"
-  },
-  "app.instance.dependencies.no-matches": {
-    "message": "沒有依賴項符合這些篩選條件。"
-  },
-  "app.instance.dependencies.only-related": {
-    "message": "只顯示相關內容"
-  },
-  "app.instance.dependencies.orphaned": {
-    "message": "孤立依賴"
-  },
-  "app.instance.dependencies.pack-managed": {
-    "message": "由模組包管理"
-  },
-  "app.instance.dependencies.reference": {
-    "message": "在其他位置被引用"
-  },
-  "app.instance.dependencies.required-by": {
-    "message": "依賴方"
-  },
-  "app.instance.dependencies.requires": {
-    "message": "依賴項"
-  },
-  "app.instance.dependencies.reset-zoom": {
-    "message": "重設關係圖檢視"
-  },
-  "app.instance.dependencies.search": {
-    "message": "搜尋依賴項……"
-  },
-  "app.instance.dependencies.show-isolated": {
-    "message": "顯示孤立內容"
-  },
-  "app.instance.dependencies.source": {
-    "message": "來源"
-  },
-  "app.instance.dependencies.stats": {
-    "message": "{nodes, number} 個項目，{edges, number} 個關係"
-  },
-  "app.instance.dependencies.status": {
-    "message": "狀態"
-  },
-  "app.instance.dependencies.tree-view": {
-    "message": "依賴樹"
-  },
-  "app.instance.dependencies.unresolved": {
-    "message": "未解析"
-  },
-  "app.instance.dependencies.unresolved-label": {
-    "message": "依賴詳細資料無法使用。"
-  },
-  "app.instance.dependencies.user-added": {
-    "message": "使用者新增"
-  },
-  "app.instance.dependencies.version": {
-    "message": "版本 {version}"
-  },
-  "app.instance.dependencies.zoom-in": {
-    "message": "放大"
-  },
-  "app.instance.dependencies.zoom-out": {
-    "message": "縮小"
-  },
-  "app.appearance-settings.sections.advanced-interface": {
-    "message": "進階介面"
-  },
-  "app.appearance-settings.sections.content-behavior": {
-    "message": "內容行為"
-  },
-  "app.appearance-settings.sections.home-navigation": {
-    "message": "首頁與導覽"
-  },
-  "app.settings.defaults.sections.after-launch": {
-    "message": "啟動後行為"
-  },
-  "app.settings.defaults.sections.environment": {
-    "message": "環境變數"
-  },
-  "app.settings.defaults.sections.launch-hooks": {
-    "message": "啟動掛鉤"
-  },
-  "app.settings.defaults.sections.window-behavior": {
-    "message": "視窗行為"
-  },
-  "app.settings.developer.feature-flags-section-title": {
-    "message": "功能旗標"
-  },
-  "app.settings.privacy.section-title": {
-    "message": "隱私與資料分享"
-  },
-  "app.settings.resources.sections.data-storage": {
-    "message": "資料目錄與快取"
-  },
-  "app.settings.resources.sections.download-behavior": {
-    "message": "下載行為"
-  },
-  "app.settings.resources.sections.missing-content": {
-    "message": "缺少的內容"
-  },
-  "app.settings.resources.sections.network-authentication": {
-    "message": "網路驗證"
-  },
-  "app.translation-settings.display-section-title": {
-    "message": "翻譯顯示"
-  },
-  "app.settings.feature-flags.project-background": {
-    "message": "專案背景"
-  },
-  "app.settings.feature-flags.page-path": {
-    "message": "頁面路徑"
-  },
-  "app.settings.feature-flags.worlds-tab": {
-    "message": "世界分頁"
-  },
-  "app.settings.feature-flags.worlds-in-home": {
-    "message": "在首頁顯示世界"
-  },
-  "app.settings.feature-flags.server-project-qa": {
-    "message": "伺服器專案問答"
-  },
-  "app.settings.feature-flags.show-version-environment-column": {
-    "message": "顯示版本環境欄"
-  },
-  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
-    "message": "一律以位元組顯示伺服器記憶體"
-  },
-  "app.settings.feature-flags.always-show-app-controls": {
-    "message": "一律顯示應用程式控制項"
-  },
-  "app.settings.feature-flags.skip-non-essential-warnings": {
-    "message": "略過非必要警告"
-  },
-  "app.settings.feature-flags.skip-unknown-pack-warning": {
-    "message": "略過未知整合包警告"
-  },
-  "app.settings.feature-flags.i18n-debug": {
-    "message": "翻譯偵錯"
-  },
-  "app.settings.feature-flags.show-instance-play-time": {
-    "message": "顯示實例遊玩時間"
-  },
-  "app.settings.feature-flags.page-transitions": {
-    "message": "頁面切換動畫"
-  },
-  "app.settings.feature-flags.advanced-filters-collapsed": {
-    "message": "預設摺疊進階篩選"
-  },
-  "app.settings.feature-flags.auto-install-dependencies": {
-    "message": "自動安裝相依項"
   }
 }

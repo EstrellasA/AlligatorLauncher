@@ -1,62 +1,9 @@
 <template>
     <template v-if="loading">
-        <Teleport to="#sidebar-teleport-target">
-            <ProjectPageSkeleton variant="sidebar" />
-        </Teleport>
         <ProjectPageSkeleton />
     </template>
     <div v-else-if="data">
         <UpgradeProjectReturnBar />
-        <Teleport to="#sidebar-teleport-target">
-            <ProjectSidebarCompatibility
-                v-if="!isServerProject"
-                :project="data"
-                :tags="{ loaders: allLoaders, gameVersions: allGameVersions }"
-                :project-v3="projectV3"
-                :platform-action="(platform) => browseByProjectFilter('loader', platform)"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarServerInfo
-                v-if="isServerProject"
-                :project-v3="projectV3"
-                :tags="{ loaders: allLoaders, gameVersions: allGameVersions }"
-                :required-content="serverRequiredContent"
-                :recommended-version="serverRecommendedVersion"
-                :supported-versions="serverSupportedVersions"
-                :loaders="serverModpackLoaders"
-                :ping="serverPing"
-                :status-online="serverStatusOnline"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarLinks
-                link-target="_blank"
-                :project="data"
-                :project-v3="projectV3"
-                :mcmod-url="mcmodUrl"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarTags
-                :project="data"
-                :tag-action="(tag) => browseByProjectFilter('category', tag)"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarCreators
-                :organization="organization"
-                :members="members"
-                :org-link="(slug) => `https://modrinth.com/organization/${slug}`"
-                :user-link="(username) => `https://modrinth.com/user/${username}`"
-                link-target="_blank"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarDetails
-                :project="data"
-                :has-versions="versions.length > 0"
-                :link-target="`_blank`"
-                :hide-license="isServerProject"
-                :show-followers="isServerProject"
-                class="project-sidebar-section"
-            />
-        </Teleport>
         <div class="flex flex-col gap-4 p-6">
             <div
                 v-if="projectInstallContext && projectInstallContext.showInstallHeader !== false"
@@ -194,40 +141,48 @@
                                 )
                             }}
                         </Button>
-                        <Button
-                            v-if="showSwitchVersion && onVersionsPage"
-                            v-tooltip="installButtonTooltip"
-                            size="xl"
-                            disabled
-                            ><CheckIcon />
-                            {{ formatMessage(commonMessages.installedLabel) }}
-                        </Button>
-                        <Button v-else-if="showSwitchVersion" size="xl" @click="goToVersions"
-                            ><SwapIcon />
-                            {{ formatMessage(messages.switchVersion) }}
-                        </Button>
-                        <Button
-                            v-else
-                            v-tooltip="installButtonTooltip"
-                            type="colored"
-                            color="brand"
-                            size="xl"
-                            :disabled="installButtonDisabled"
-                            @click="install(null)"
-                            ><SpinnerIcon
-                                v-if="installButtonLoading && !installButtonInstalled"
-                                class="animate-spin"
-                            />
-                            <DownloadIcon
-                                v-else-if="
-                                    !installButtonInstalled &&
-                                    !serverProjectSelected &&
-                                    !cartProjectSelected
-                                "
-                            />
-                            <CheckIcon v-else />
-                            {{ installButtonLabel }}
-                        </Button>
+                        <!--
+                            Reached from an instance's content list the page is
+                            read-only, so the install / switch-version cluster is
+                            withheld entirely; description, versions, gallery and
+                            the project links stay available.
+                        -->
+                        <template v-if="!isInstanceContentContext">
+                            <Button
+                                v-if="showSwitchVersion && onVersionsPage"
+                                v-tooltip="installButtonTooltip"
+                                size="xl"
+                                disabled
+                                ><CheckIcon />
+                                {{ formatMessage(commonMessages.installedLabel) }}
+                            </Button>
+                            <Button v-else-if="showSwitchVersion" size="xl" @click="goToVersions"
+                                ><SwapIcon />
+                                {{ formatMessage(messages.switchVersion) }}
+                            </Button>
+                            <Button
+                                v-else
+                                v-tooltip="installButtonTooltip"
+                                type="colored"
+                                color="brand"
+                                size="xl"
+                                :disabled="installButtonDisabled"
+                                @click="install(null)"
+                                ><SpinnerIcon
+                                    v-if="installButtonLoading && !installButtonInstalled"
+                                    class="animate-spin"
+                                />
+                                <DownloadIcon
+                                    v-else-if="
+                                        !installButtonInstalled &&
+                                        !serverProjectSelected &&
+                                        !cartProjectSelected
+                                    "
+                                />
+                                <CheckIcon v-else />
+                                {{ installButtonLabel }}
+                            </Button>
+                        </template>
                         <!-- 开服功能暂有问题，隐藏该按钮
 						<Transition name="start-server">
 							<Button
@@ -349,6 +304,7 @@
                     :members="members"
                     :instance="instance"
                     :install="install"
+                    :show-install="!isInstanceContentContext"
                     :installed="installed"
                     :installing="installing"
                     :installed-version="installedVersion"
@@ -457,12 +413,6 @@ import {
     ProjectBackgroundGradient,
     ProjectHeader,
     ProjectPageSkeleton,
-    ProjectSidebarCompatibility,
-    ProjectSidebarCreators,
-    ProjectSidebarDetails,
-    ProjectSidebarLinks,
-    ProjectSidebarServerInfo,
-    ProjectSidebarTags,
     requestInstall,
     SelectedProjectsFloatingBar,
     usesTargetGameVersion,
@@ -493,6 +443,7 @@ import {
     get_version,
     get_version_many,
 } from '@/helpers/cache.js'
+import { isInstalledForContentType } from '@/helpers/client-mod-browse'
 import { isFavoriteContentType } from '@/helpers/content-favorites'
 import { resolveMcmodUrl } from '@/helpers/content-search'
 import { resolveDownloadUrl } from '@/helpers/download-url'
@@ -508,7 +459,6 @@ import { getDisplayInstanceIcon } from '@/helpers/instance-icons'
 import { get_loader_versions as getLoaderManifest } from '@/helpers/metadata'
 import { get_by_instance_id } from '@/helpers/process'
 import { projectGalleryTranslationSegments } from '@/helpers/project-gallery'
-import { createProjectBrowseLocation } from '@/helpers/project-links'
 import { get_categories, get_game_versions, get_loaders } from '@/helpers/tags'
 import {
     autoTranslateHintMessages,
@@ -728,12 +678,6 @@ async function toggleFavorite() {
         .catch(handleError)
 }
 
-function browseByProjectFilter(filter, value) {
-    const projectType = isServerProject.value ? 'server' : data.value?.project_type
-    if (!projectType) return
-    void router.push(createProjectBrowseLocation(projectType, filter, value))
-}
-
 const installed = ref(false)
 const installedVersion = ref(null)
 const isServerProject = ref(false)
@@ -806,6 +750,22 @@ function buildBrowseHref(path) {
     return qs ? `${path}?${qs}` : path
 }
 
+/**
+ * True when this page was opened from an instance's content list
+ * (`?i=<instance>&from=instance-content`, the marker the instance mod list and
+ * the dependency graph set).
+ *
+ * Content reached that way is already part of the instance, so the page is a
+ * read-only information view: no install affordance may appear, or the player
+ * can add a second copy of a mod the instance already has. The check reads the
+ * route marker only, so it never depends on the project's loaded or installed
+ * state, and the client-mod Browse flow (which installs into `clientmods/`) is
+ * unaffected.
+ */
+const isInstanceContentContext = computed(
+    () => route.query.from === 'instance-content' && typeof route.query.i === 'string',
+)
+
 const projectDescriptionHref = computed(() => buildProjectHref(`/project/${route.params.id}`))
 const versionsHref = computed(() =>
     buildProjectHref(`/project/${route.params.id}/versions`, instanceFilters.value),
@@ -813,7 +773,7 @@ const versionsHref = computed(() =>
 const projectGalleryHref = computed(() => buildProjectHref(`/project/${route.params.id}/gallery`))
 
 const instanceContentBackUrl = computed(() => {
-    if (route.query.from !== 'instance-content' || typeof route.query.i !== 'string') return null
+    if (!isInstanceContentContext.value || typeof route.query.i !== 'string') return null
     if (instance.value?.id !== route.query.i) return null
     return `/instance/${encodeURIComponent(route.query.i)}`
 })
@@ -835,6 +795,7 @@ const fromBrowse = computed(
 const cartEligible = computed(
     () =>
         fromBrowse.value &&
+        !isInstanceContentContext.value &&
         !!data.value &&
         ['mod', 'resourcepack', 'datapack', 'shader'].includes(data.value.project_type),
 )
@@ -1089,13 +1050,18 @@ async function fetchProjectData() {
     )
 
     if (instanceProjects.value) {
-        const installedFile = Object.values(instanceProjects.value).find((x) =>
-            x.provider_refs.some(
-                (reference) =>
-                    reference.provider === 'modrinth' &&
-                    String(reference.project_id) === data.value.id,
-            ),
-        )
+        // The installed state is target-aware: browsed mods install into
+        // `clientmods/`, so a copy the server pack ships in `mods/` must not
+        // disable the install button or report a version as installed.
+        const installedFile = Object.entries(instanceProjects.value).find(
+            ([relativePath, file]) =>
+                isInstalledForContentType(relativePath, data.value.project_type) &&
+                file.provider_refs.some(
+                    (reference) =>
+                        reference.provider === 'modrinth' &&
+                        String(reference.project_id) === data.value.id,
+                ),
+        )?.[1]
         if (installedFile?.origin_provider === 'modrinth') {
             installed.value = true
             installedVersion.value = installedFile.modrinth?.version_id ?? null
@@ -1343,6 +1309,11 @@ watch(
 )
 
 async function install(version) {
+    // Opened from an instance's content list the page is read-only: the item is
+    // already part of that instance, so no affordance may start an install.
+    // Adding a client mod deliberately goes through the client-mod Browse flow.
+    if (isInstanceContentContext.value) return
+
     if (serverProjectInstallContext.value && data.value) {
         if (serverProjectSelected.value) {
             serverInstallContent.removeQueuedServerInstall(data.value.id)
@@ -1454,12 +1425,18 @@ async function install(version) {
 const options = ref(null)
 const handleRightClick = (event) => {
     options.value.showMenu(event, data.value, [
-        {
-            name: 'install',
-        },
-        {
-            type: 'divider',
-        },
+        // No install entry when the page was opened from an instance's content
+        // list; the item there is already part of that instance.
+        ...(isInstanceContentContext.value
+            ? []
+            : [
+                  {
+                      name: 'install',
+                  },
+                  {
+                      type: 'divider',
+                  },
+              ]),
         {
             name: 'open_link',
         },

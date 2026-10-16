@@ -22,6 +22,12 @@ export interface BrowseProjectTabOptions {
     datapacks?: boolean
     servers?: boolean
     favorites?: boolean
+    /**
+     * The launcher's content browser only offers client-side mods. When set,
+     * only the `Mods` tab (and Favorites, which is not a project type) is
+     * produced, so no other project type is reachable from Browse.
+     */
+    modsOnly?: boolean
 }
 
 export interface BrowseProjectTabVisibilityInput {
@@ -57,6 +63,22 @@ export function createBrowseProjectTabs(
     suffix = '',
     options: BrowseProjectTabOptions = {},
 ): BrowseProjectTab[] {
+    if (options.modsOnly) {
+        return [
+            {
+                label: labels.mods,
+                href: `/browse/mod${suffix}`,
+                shown: true,
+            },
+            {
+                label: labels.favorites,
+                href: `/browse/favorites${suffix}`,
+                shown: options.favorites ?? true,
+                onboardingId: 'browse-favorites-tab',
+            },
+        ]
+    }
+
     return [
         {
             label: labels.modpacks,

@@ -2971,7 +2971,7 @@ pub async fn test_provider(
         provider_id,
         model_id,
         system_prompt: "Reply with a short plain-text greeting.".to_string(),
-        user_prompt: "Hello from Axolotl Launcher".to_string(),
+        user_prompt: "Hello from ALLIGATORZONE".to_string(),
         mode: AiTextMode::Default,
         response_format: AiTextResponseFormat::Text,
     })

@@ -11,7 +11,12 @@
             "
         >
             <template #actions="{ version }">
+                <!--
+                    Withheld when the page was opened from an instance's content
+                    list: the item is already part of that instance.
+                -->
                 <Button
+                    v-if="showInstall"
                     v-tooltip="
                         !installed
                             ? formatMessage(commonMessages.installButton)
@@ -108,6 +113,15 @@ const props = defineProps({
     install: {
         type: Function,
         required: true,
+    },
+    /**
+     * Whether this list may offer an install action. `false` when the page was
+     * opened from an instance's content list, where the item is already part of
+     * that instance.
+     */
+    showInstall: {
+        type: Boolean,
+        default: true,
     },
     installed: {
         type: Boolean,

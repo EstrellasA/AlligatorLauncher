@@ -890,6 +890,12 @@
   "content.filter.enabled": {
     "defaultMessage": "Enabled"
   },
+  "content.filter.type.client-mod": {
+    "message": "Client Mod"
+  },
+  "content.filter.type.server-mod": {
+    "message": "Server Mod"
+  },
   "content.filter.updates": {
     "defaultMessage": "Update available"
   },
@@ -991,6 +997,9 @@
   },
   "content.page-layout.browse-content": {
     "defaultMessage": "Browse content"
+  },
+  "content.page-layout.delete-not-allowed": {
+    "message": "Nothing in this selection can be deleted by the launcher."
   },
   "content.page-layout.empty.hint": {
     "defaultMessage": "Browse or upload {contentType} to get started"
@@ -1106,6 +1115,9 @@
   "content.selection-bar.bulk.updating-waiting": {
     "defaultMessage": "Updating {contentType}..."
   },
+  "content.selection-bar.nothing-actionable": {
+    "message": "Nothing in this selection can be changed by the launcher."
+  },
   "content.selection-bar.selected-count": {
     "defaultMessage": "{count, number} {contentType} selected"
   },
@@ -1173,7 +1185,7 @@
     "defaultMessage": "Game directory"
   },
   "creation-flow.modal.custom-setup.game-dir.managed": {
-    "defaultMessage": "Axolotl directory"
+    "defaultMessage": "ALLIGATORZONE directory"
   },
   "creation-flow.modal.custom-setup.game-version-type.alpha": {
     "defaultMessage": "April Fools"
@@ -1437,7 +1449,7 @@
     "defaultMessage": "Confirm"
   },
   "drop.symlink_method.copy_desc": {
-    "defaultMessage": "Copy to Axolotl directory"
+    "defaultMessage": "Copy to ALLIGATORZONE directory"
   },
   "drop.symlink_method.copy_title": {
     "defaultMessage": "Copy files"
@@ -1542,7 +1554,7 @@
     "defaultMessage": "Cache"
   },
   "drop.symlink_method.stats_cache_tooltip": {
-    "defaultMessage": "Axolotl cache"
+    "defaultMessage": "ALLIGATORZONE cache"
   },
   "drop.symlink_method.stats_files": {
     "defaultMessage": "{files} files"
@@ -3064,9 +3076,6 @@
   },
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mod} other {Mods}}"
-  },
-  "project-type.mod.category": {
-    "defaultMessage": "Mods"
   },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mod} other {mods}}"

@@ -73,3 +73,23 @@ test('browse project tab visibility follows the selected instance capabilities',
         { modpacks: false, mods: true, datapacks: false, servers: false },
     )
 })
+
+test('the locked content browser only offers mods', () => {
+    const tabs = createBrowseProjectTabs(labels, '?i=instance-id', {
+        ...getBrowseProjectTabOptions({
+            instance: { game_version: '1.20.1', loader: 'fabric' },
+            hasInstanceContext: true,
+        }),
+        modsOnly: true,
+    })
+
+    assert.deepEqual(
+        tabs.map((tab) => tab.label),
+        ['Mods', 'Favorites'],
+    )
+    assert.equal(tabs[0].href, '/browse/mod?i=instance-id')
+    assert.equal(
+        tabs.some((tab) => /(resourcepack|datapack|shader|world|server|modpack)/.test(tab.href)),
+        false,
+    )
+})

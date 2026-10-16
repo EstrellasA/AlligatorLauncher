@@ -24,6 +24,13 @@ pub struct InstallProjectWithDependenciesRequest {
     pub excluded_project_ids: Vec<String>,
     #[serde(default)]
     pub force_project_ids: Vec<String>,
+    /// Explicit, opt-in destination folder for the install. The content browser
+    /// sends `clientmod` so its installs land in the instance's `clientmods/`
+    /// folder and can never write the server pack's `mods/` folder. Omitted (or
+    /// `null`) keeps the historical behaviour of deriving the folder from the
+    /// version's loaders.
+    #[serde(default)]
+    pub target_project_type: Option<ProjectType>,
 }
 
 #[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
@@ -114,6 +121,7 @@ pub async fn install_project_with_dependencies(
     let metadata = super::get::get(instance_id).await?.ok_or_else(|| {
         crate::ErrorKind::InputError("Unknown instance".to_string())
     })?;
+    let target_project_type = request.target_project_type;
     let plan = crate::state::instances::commands::resolve_install_plan(
         instance_id,
         crate::state::instances::commands::InstanceInstallProjectRequest {
@@ -123,6 +131,7 @@ pub async fn install_project_with_dependencies(
             selected: request.selected,
             excluded_project_ids: request.excluded_project_ids,
             force_project_ids: request.force_project_ids,
+            target_project_type,
         },
         &state,
     )
@@ -135,6 +144,7 @@ pub async fn install_project_with_dependencies(
         match crate::state::instances::commands::install_resolved_content_plan(
             &instance_id,
             &install_plan,
+            target_project_type,
             &state,
         )
         .await
@@ -201,6 +211,7 @@ pub async fn preview_project_with_dependencies(
             selected: request.selected,
             excluded_project_ids: request.excluded_project_ids,
             force_project_ids: request.force_project_ids,
+            target_project_type: request.target_project_type,
         },
         &state,
     )
@@ -222,6 +233,7 @@ pub async fn preview_project_with_dependencies_for_target(
             selected: request.selected,
             excluded_project_ids: request.excluded_project_ids,
             force_project_ids: request.force_project_ids,
+            target_project_type: request.target_project_type,
         },
         game_version,
         loader,
@@ -244,6 +256,7 @@ pub async fn queue_project_with_dependencies(
         request.content_type,
         request.selected,
         request.excluded_project_ids,
+        request.target_project_type,
         display_title,
         display_icon,
     )

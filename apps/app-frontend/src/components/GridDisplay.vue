@@ -44,6 +44,7 @@ import InstanceGroupModal from '@/components/ui/modal/InstanceGroupModal.vue'
 import { UNGROUPED_GROUP_KEY, useGridGrouping } from '@/composables/useGridGrouping'
 import { FAVORITES_GROUP_ID, useInstanceGroups } from '@/composables/useInstanceGroups'
 import { trackEvent } from '@/helpers/analytics'
+import { BROWSE_LOCKED_PROJECT_PATH } from '@/helpers/client-mod-browse'
 import { process_listener } from '@/helpers/events'
 import { install_duplicate_instance } from '@/helpers/install'
 import { kill, remove, run, set_pinned } from '@/helpers/instance'
@@ -581,7 +582,7 @@ function getInstanceProxy(instanceId) {
         openFolder: () => showInstanceInFolder(instanceId),
         addContent: () =>
             router.push({
-                path: `/browse/${instanceData.loader === 'vanilla' ? 'datapack' : 'mod'}`,
+                path: BROWSE_LOCKED_PROJECT_PATH,
                 query: { i: instanceId },
             }),
     }

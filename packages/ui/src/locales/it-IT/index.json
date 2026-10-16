@@ -1832,9 +1832,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "Mod"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Mod"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "mod"
   },

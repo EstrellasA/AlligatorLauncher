@@ -20,7 +20,7 @@ const CONFIG_SCHEMA_VERSION: u32 = 1;
 
 #[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "snake_case")]
-pub struct AxolotlConfigFile {
+pub struct ALLIGATORZONEConfigFile {
     pub schema_version: u32,
     pub instance_id: String,
     pub path: String,
@@ -30,14 +30,14 @@ pub struct AxolotlConfigFile {
     pub update_channel: String,
     pub symlink_target: Option<String>,
     pub groups: Vec<String>,
-    pub content_set: AxolotlContentSet,
+    pub content_set: ALLIGATORZONEContentSet,
     pub link: crate::state::instances::InstanceLink,
     pub launch_overrides: InstanceLaunchOverridesData,
 }
 
 #[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "snake_case")]
-pub struct AxolotlContentSet {
+pub struct ALLIGATORZONEContentSet {
     pub source_kind: String,
     pub game_version: String,
     pub protocol_version: Option<u32>,
@@ -45,7 +45,7 @@ pub struct AxolotlContentSet {
     pub loader_version: Option<String>,
 }
 
-/// Imports an Axolotl instance by reading `axolotl_config.json` and applying
+/// Imports an ALLIGATORZONE instance by reading `axolotl_config.json` and applying
 /// the migratable fields to the new profile. Invalid or unsupported configs
 /// fall back to the generic instance import so the game files still arrive.
 pub(crate) async fn import_axolotl(
@@ -61,18 +61,18 @@ pub(crate) async fn import_axolotl(
         .await
         .unwrap_or_else(|error| {
             tracing::warn!(
-                "Axolotl import: could not read {}: {error}; falling back to generic import",
+                "ALLIGATORZONE import: could not read {}: {error}; falling back to generic import",
                 config_path.display()
             );
             (String::new(), encoding_rs::UTF_8)
         })
         .0;
 
-    let config = match serde_json::from_str::<AxolotlConfigFile>(&content) {
+    let config = match serde_json::from_str::<ALLIGATORZONEConfigFile>(&content) {
         Ok(config) => config,
         Err(error) => {
             tracing::warn!(
-                "Axolotl import: invalid config {}: {error}; falling back to generic import",
+                "ALLIGATORZONE import: invalid config {}: {error}; falling back to generic import",
                 config_path.display()
             );
             return generic::import_generic(
@@ -88,7 +88,7 @@ pub(crate) async fn import_axolotl(
         }
     };
     tracing::debug!(
-        "Axolotl import: config instance_id={} path={} generated_at={} symlink_target={:?}",
+        "ALLIGATORZONE import: config instance_id={} path={} generated_at={} symlink_target={:?}",
         config.instance_id,
         config.path,
         config.generated_at,
@@ -99,7 +99,7 @@ pub(crate) async fn import_axolotl(
         || config.content_set.game_version.trim().is_empty()
     {
         tracing::warn!(
-            "Axolotl import: unsupported schema or missing game version for {}; falling back to generic import",
+            "ALLIGATORZONE import: unsupported schema or missing game version for {}; falling back to generic import",
             config_path.display()
         );
         return generic::import_generic(

@@ -169,9 +169,9 @@ pub fn uses_unobfuscated_minecraft(game_version: &str) -> bool {
 /// `2.9.4-nightly-20150209`). HMCL itself never classpaths native jars and
 /// its first-wins native extraction over self-contained official Cleanroom
 /// manifests keeps the old LWJGL 2 native out of the natives directory, so
-/// dropping the carrier is an Axolotl-side strengthening for merged
+/// dropping the carrier is an ALLIGATORZONE-side strengthening for merged
 /// direct links, not an HMCL library rule. The vanilla JNA platform and the
-/// Mojang ICU bundle are removed by the pre-existing Axolotl Cleanroom rule
+/// Mojang ICU bundle are removed by the pre-existing ALLIGATORZONE Cleanroom rule
 /// (not HMCL logic): with Cleanroom's newer JNA line on the classpath the
 /// 1.12.2-era `net.java.dev.jna:platform` and `com.ibm.icu:icu4j-core-mojang`
 /// carry conflicting runtime-class versions. The Cleanroom LWJGL 3 line
@@ -913,7 +913,7 @@ mod tests {
     fn cleanroom_normalization_removes_lwjgl2_family_and_legacy_mojang_conflicts()
      {
         // The vanilla LWJGL 2 family (binding, util at 2.9.4-nightly-20150209,
-        // natives carrier at any version) plus the pre-existing Axolotl
+        // natives carrier at any version) plus the pre-existing ALLIGATORZONE
         // Cleanroom rule targets (vanilla JNA platform, Mojang ICU) are
         // removed. The Cleanroom LWJGL 3 line, lwjglxx, the version-scoped
         // lwjgl_util at other versions, and the Cleanroom JNA core stay.

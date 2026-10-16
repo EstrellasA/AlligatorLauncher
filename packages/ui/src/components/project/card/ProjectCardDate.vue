@@ -43,8 +43,11 @@ const tooltip = computed(() =>
 </script>
 
 <template>
-    <div v-tooltip="tooltip" class="flex items-center gap-2 smart-clickable:allow-pointer-events">
+    <div
+        v-tooltip="tooltip"
+        class="flex min-w-0 items-center gap-2 smart-clickable:allow-pointer-events"
+    >
         <component :is="types[props.type].icon" class="size-5 shrink-0" />
-        {{ capitalizeString(formatRelativeTime(date)) }}
+        <span class="min-w-0 truncate">{{ capitalizeString(formatRelativeTime(date)) }}</span>
     </div>
 </template>

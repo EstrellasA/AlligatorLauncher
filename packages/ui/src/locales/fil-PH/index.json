@@ -971,9 +971,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Mod} other {na Mod}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Mga Mod"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {mod} other {na mod}}"
   },

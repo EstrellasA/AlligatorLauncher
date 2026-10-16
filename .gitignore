@@ -123,3 +123,6 @@ apps/app/resources/blockbench-skin/
 
 #local development script
 start-dev.ps1
+
+# 子代理类型检查日志（临时）
+vue-tsc-*.log

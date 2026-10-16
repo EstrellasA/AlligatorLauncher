@@ -104,6 +104,10 @@ pub(crate) async fn create_instance(
             linked_version_json_path: None,
             linked_game_dir_mode: None,
             game_dir_override: input.game_dir_override,
+            // A new instance is "never configured": the web map address is set
+            // later (per instance, from the launcher UI), and until then the
+            // frontend applies the built-in default from `server-config.ts`.
+            web_map_url: None,
             created: now,
             modified: now,
             last_played: None,

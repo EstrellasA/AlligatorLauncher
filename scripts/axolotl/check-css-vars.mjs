@@ -90,14 +90,6 @@ allow('runtime-set', [
 		'packages/ui/src/components/base/FloatingActionBar.vue :style `--floating-action-bar-right-offset`',
 	],
 	[
-		'home-free-grid-column-pitch',
-		'apps/app-frontend/src/components/home/HomeDashboard.vue :style `--home-free-grid-column-pitch`',
-	],
-	[
-		'home-free-grid-row-pitch',
-		'apps/app-frontend/src/components/home/HomeDashboard.vue :style `--home-free-grid-row-pitch`',
-	],
-	[
 		'home-greeting-font-family',
 		'apps/app-frontend/src/components/home/HomeGreeting.vue :style `--home-greeting-font-family`',
 	],
@@ -106,20 +98,12 @@ allow('runtime-set', [
 		'apps/app-frontend/src/components/home/HomeGreeting.vue :style `--home-greeting-font-size`',
 	],
 	[
-		'home-widget-bg-opacity',
-		'apps/app-frontend/src/store/theme.ts setProperty `--home-widget-bg-opacity`',
-	],
-	[
 		'minecraft-text-color',
 		'apps/app-frontend/src/pages/LabGradientText.vue :style `--minecraft-text-color`',
 	],
 	[
 		'minecraft-text-shadow-color',
 		'apps/app-frontend/src/pages/LabGradientText.vue :style `--minecraft-text-shadow-color`',
-	],
-	[
-		'onboarding-dialogue-reserved-space',
-		'apps/app-frontend/src/components/ui/onboarding/useOnboardingTour.ts setProperty `--onboarding-dialogue-reserved-space`',
 	],
 	[
 		'property-progress',

@@ -581,9 +581,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {מוד} other {מודים}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "מודים"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {מוד} other {מודים}}"
   },

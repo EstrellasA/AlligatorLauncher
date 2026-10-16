@@ -21,7 +21,6 @@ import {
 import dayjs from 'dayjs'
 import { computed, onUnmounted, ref, watch } from 'vue'
 
-import HomeGreeting from '@/components/home/HomeGreeting.vue'
 import InstanceIcon from '@/components/ui/InstanceIcon.vue'
 import { useMinecraftLaunchError } from '@/composables/useMinecraftLaunchError'
 import { useNetworkStatus } from '@/composables/useNetworkStatus'
@@ -36,7 +35,6 @@ import { handleSevereError } from '@/store/error'
 const props = defineProps<{
     instances: GameInstance[]
     selectedInstanceId?: string | null
-    playerName?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -207,167 +205,187 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <section
-        data-onboarding-id="home-instances"
-        class="minimal-home-stage flex min-w-0 items-center justify-center px-6 pb-14 pt-8"
-    >
-        <div class="flex w-full max-w-3xl flex-col items-center text-center">
-            <HomeGreeting :player-name="playerName" variant="minimal" />
-
-            <template v-if="selectedInstance">
-                <Card class="mb-0 mt-10 w-full text-left">
-                    <div
-                        class="grid min-w-0 grid-cols-1 items-center gap-5 sm:grid-cols-[minmax(0,1fr)_auto]"
+    <section data-onboarding-id="home-instances" class="min-w-0">
+        <template v-if="selectedInstance">
+            <Card class="home-glass-card mb-0 w-full text-left">
+                <div
+                    class="grid min-w-0 grid-cols-1 items-center gap-5 sm:grid-cols-[minmax(0,1fr)_auto]"
+                >
+                    <router-link
+                        :to="`/instance/${encodeURIComponent(selectedInstance.id)}`"
+                        class="group flex min-w-0 items-center gap-5 rounded-lg text-inherit no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-shadow"
                     >
-                        <router-link
-                            :to="`/instance/${encodeURIComponent(selectedInstance.id)}`"
-                            class="group flex min-w-0 items-center gap-5 rounded-lg text-inherit no-underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-shadow"
-                        >
-                            <InstanceIcon
-                                class="size-20 shrink-0 transition-transform group-hover:scale-[1.03]"
-                                :icon-path="selectedInstance.icon_path"
-                                :instance-id="selectedInstance.id"
-                                :loader="selectedInstance.loader"
-                            />
-                            <div class="flex min-w-0 flex-1 flex-col gap-1.5">
-                                <h2
-                                    class="m-0 truncate text-xl font-bold text-[var(--color-text-primary)] group-hover:underline"
-                                >
-                                    {{ selectedInstance.name }}
-                                </h2>
-                                <div
-                                    class="flex min-w-0 flex-wrap gap-x-4 gap-y-1 text-sm text-[var(--color-text-tertiary)]"
-                                >
-                                    <span class="flex min-w-0 items-center gap-1.5 capitalize">
-                                        <GameIcon class="size-4 shrink-0" aria-hidden="true" />
-                                        <span class="truncate">
-                                            {{ selectedInstance.loader }}
-                                            {{ selectedInstance.game_version }}
-                                        </span>
+                        <InstanceIcon
+                            class="size-20 shrink-0 transition-transform group-hover:scale-[1.03]"
+                            :icon-path="selectedInstance.icon_path"
+                            :instance-id="selectedInstance.id"
+                            :loader="selectedInstance.loader"
+                        />
+                        <div class="flex min-w-0 flex-1 flex-col gap-1.5">
+                            <h2
+                                class="m-0 truncate text-xl font-bold text-[var(--color-text-primary)] group-hover:underline"
+                            >
+                                {{ selectedInstance.name }}
+                            </h2>
+                            <div
+                                class="flex min-w-0 flex-wrap gap-x-4 gap-y-1 text-sm text-[var(--color-text-tertiary)]"
+                            >
+                                <span class="flex min-w-0 items-center gap-1.5 capitalize">
+                                    <GameIcon class="size-4 shrink-0" aria-hidden="true" />
+                                    <span class="truncate">
+                                        {{ selectedInstance.loader }}
+                                        {{ selectedInstance.game_version }}
                                     </span>
-                                    <span class="flex min-w-0 items-center gap-1.5">
-                                        <TimerIcon class="size-4 shrink-0" aria-hidden="true" />
-                                        <span class="truncate">{{ lastPlayed }}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </router-link>
-
-                        <div class="flex min-h-11 shrink-0 items-center justify-end gap-2">
-                            <Button
-                                v-if="running"
-                                type="colored"
-                                color="red"
-                                size="xl"
-                                class="w-36 justify-center"
-                                @click="stopInstance"
-                                ><StopCircleIcon aria-hidden="true" />
-                                <span class="truncate">{{
-                                    formatMessage(commonMessages.stopButton)
-                                }}</span>
-                            </Button>
-                            <Button v-else-if="busy" size="xl" class="w-36 justify-center" disabled
-                                ><SpinnerIcon class="animate-spin" aria-hidden="true" />
-                                <span class="truncate">
-                                    {{
-                                        formatMessage(
-                                            installing
-                                                ? commonMessages.installingLabel
-                                                : messages.loading,
-                                        )
-                                    }}
                                 </span>
-                            </Button>
-                            <Button
-                                v-else-if="installed"
-                                type="colored"
-                                color="brand"
-                                size="xl"
-                                class="w-36 justify-center"
-                                @click="playInstance"
-                                ><PlayIcon aria-hidden="true" />
-                                <span class="truncate">{{
-                                    formatMessage(commonMessages.playButton)
-                                }}</span>
-                            </Button>
-                            <Button
-                                v-else
-                                v-tooltip="
-                                    offline
-                                        ? formatMessage(messages.offlineInstalledOnly)
-                                        : undefined
-                                "
-                                type="colored"
-                                color="brand"
-                                size="xl"
-                                class="w-36 justify-center"
-                                :disabled="offline"
-                                @click="installInstance"
-                                ><DownloadIcon aria-hidden="true" />
-                                <span class="truncate">{{
-                                    formatMessage(commonMessages.installButton)
-                                }}</span>
-                            </Button>
-
-                            <Button
-                                v-tooltip="formatMessage(messages.changeInstance)"
-                                type="quiet"
-                                size="xl"
-                                circular
-                                icon-only
-                                :aria-label="formatMessage(messages.changeInstance)"
-                                @click="emit('choose')"
-                                ><ListIcon aria-hidden="true" />
-                            </Button>
+                                <span class="flex min-w-0 items-center gap-1.5">
+                                    <TimerIcon class="size-4 shrink-0" aria-hidden="true" />
+                                    <span class="truncate">{{ lastPlayed }}</span>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </Card>
-            </template>
+                    </router-link>
 
-            <template v-else>
-                <Card class="mb-0 mt-10 w-full text-left">
-                    <div class="flex min-w-0 flex-wrap items-center gap-4">
-                        <div
-                            class="flex size-16 shrink-0 items-center justify-center rounded-lg bg-surface-4 text-[var(--color-text-tertiary)]"
-                        >
-                            <ListIcon class="size-7" aria-hidden="true" />
-                        </div>
-                        <div class="min-w-48 flex-1">
-                            <h2 class="m-0 text-lg font-bold text-[var(--color-text-primary)]">
+                    <div class="flex min-h-11 shrink-0 items-center justify-end gap-2">
+                        <Button
+                            v-if="running"
+                            type="colored"
+                            color="red"
+                            size="xl"
+                            class="home-launch-primary w-36 justify-center"
+                            @click="stopInstance"
+                            ><StopCircleIcon aria-hidden="true" />
+                            <span class="truncate">{{
+                                formatMessage(commonMessages.stopButton)
+                            }}</span>
+                        </Button>
+                        <Button
+                            v-else-if="busy"
+                            size="xl"
+                            class="home-launch-primary w-36 justify-center"
+                            disabled
+                            ><SpinnerIcon class="animate-spin" aria-hidden="true" />
+                            <span class="truncate">
                                 {{
                                     formatMessage(
-                                        instances.length > 0
-                                            ? messages.chooseInstance
-                                            : messages.noInstances,
+                                        installing
+                                            ? commonMessages.installingLabel
+                                            : messages.loading,
                                     )
                                 }}
-                            </h2>
-                        </div>
+                            </span>
+                        </Button>
                         <Button
+                            v-else-if="installed"
                             type="colored"
                             color="brand"
                             size="xl"
-                            @click="instances.length > 0 ? emit('choose') : emit('create')"
-                        >
-                            <ListIcon v-if="instances.length > 0" aria-hidden="true" />
-                            <PlusIcon v-else aria-hidden="true" />
+                            class="home-launch-primary w-36 justify-center"
+                            @click="playInstance"
+                            ><PlayIcon aria-hidden="true" />
+                            <span class="truncate">{{
+                                formatMessage(commonMessages.playButton)
+                            }}</span>
+                        </Button>
+                        <Button
+                            v-else
+                            v-tooltip="
+                                offline ? formatMessage(messages.offlineInstalledOnly) : undefined
+                            "
+                            type="colored"
+                            color="brand"
+                            size="xl"
+                            class="home-launch-primary w-36 justify-center"
+                            :disabled="offline"
+                            @click="installInstance"
+                            ><DownloadIcon aria-hidden="true" />
+                            <span class="truncate">{{
+                                formatMessage(commonMessages.installButton)
+                            }}</span>
+                        </Button>
+
+                        <Button
+                            v-tooltip="formatMessage(messages.changeInstance)"
+                            type="quiet"
+                            size="xl"
+                            circular
+                            icon-only
+                            :aria-label="formatMessage(messages.changeInstance)"
+                            @click="emit('choose')"
+                            ><ListIcon aria-hidden="true" />
+                        </Button>
+                    </div>
+                </div>
+            </Card>
+        </template>
+
+        <template v-else>
+            <Card class="home-glass-card mb-0 w-full text-left">
+                <div class="flex min-w-0 flex-wrap items-center gap-4">
+                    <div
+                        class="flex size-16 shrink-0 items-center justify-center rounded-lg bg-surface-4 text-[var(--color-text-tertiary)]"
+                    >
+                        <ListIcon class="size-7" aria-hidden="true" />
+                    </div>
+                    <div class="min-w-48 flex-1">
+                        <h2 class="m-0 text-lg font-bold text-[var(--color-text-primary)]">
                             {{
                                 formatMessage(
                                     instances.length > 0
                                         ? messages.chooseInstance
-                                        : messages.createInstance,
+                                        : messages.noInstances,
                                 )
                             }}
-                        </Button>
+                        </h2>
                     </div>
-                </Card>
-            </template>
-        </div>
+                    <Button
+                        type="colored"
+                        color="brand"
+                        size="xl"
+                        class="home-launch-primary"
+                        @click="instances.length > 0 ? emit('choose') : emit('create')"
+                    >
+                        <ListIcon v-if="instances.length > 0" aria-hidden="true" />
+                        <PlusIcon v-else aria-hidden="true" />
+                        {{
+                            formatMessage(
+                                instances.length > 0
+                                    ? messages.chooseInstance
+                                    : messages.createInstance,
+                            )
+                        }}
+                    </Button>
+                </div>
+            </Card>
+        </template>
     </section>
 </template>
 
 <style scoped>
-.minimal-home-stage {
-    min-height: calc(100vh - var(--top-bar-height) - 4rem);
+/* The most-clicked control on the page gets a small lift and a deeper shadow. */
+.home-launch-primary {
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.home-launch-primary:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px -12px color-mix(in srgb, var(--color-brand) 70%, transparent);
+}
+
+.home-glass-card {
+    background: color-mix(in srgb, var(--surface-card, var(--surface-3)) 70%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: color-mix(in srgb, var(--color-brand) 18%, transparent);
+    box-shadow: 0 18px 40px -30px color-mix(in srgb, var(--color-brand) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-launch-primary,
+    .home-launch-primary:not(:disabled):hover {
+        transition: none;
+        transform: none;
+    }
 }
 </style>

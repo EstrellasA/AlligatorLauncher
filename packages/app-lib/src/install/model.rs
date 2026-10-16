@@ -560,6 +560,7 @@ mod tests {
                     linked_version_json_path: None,
                     linked_game_dir_mode: None,
                     game_dir_override: None,
+                    web_map_url: None,
                     created: now,
                     modified: now,
                     last_played: None,
@@ -1812,6 +1813,11 @@ pub enum InstallRequest {
         selected: ResolutionPreferences,
         #[serde(default)]
         excluded_project_ids: Vec<String>,
+        /// Opt-in destination-folder override. `clientmod` keeps a browse
+        /// install inside the instance's `clientmods/` folder; `None` derives
+        /// the folder from each version's loaders, as before.
+        #[serde(default)]
+        target_project_type: Option<crate::state::ProjectType>,
         display_title: String,
         #[serde(default)]
         display_icon: Option<String>,
@@ -1861,6 +1867,10 @@ pub enum InstallContentBatchItem {
         excluded_project_ids: Vec<String>,
         #[serde(default)]
         force_project_ids: Vec<String>,
+        /// Opt-in destination-folder override; see
+        /// [`InstallRequest::InstallContent`].
+        #[serde(default)]
+        target_project_type: Option<crate::state::ProjectType>,
     },
     CurseForge {
         request: CurseForgeInstallRequest,

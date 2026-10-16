@@ -443,6 +443,7 @@ import { postUpgradeNoticeQueryKey, usePostUpgradeNotice } from '@/composables/u
 import { useSymlinkWarningDismiss } from '@/composables/useSymlinkWarningDismiss'
 import { trackEvent } from '@/helpers/analytics'
 import { get_project_v3 } from '@/helpers/cache.js'
+import { BROWSE_LOCKED_PROJECT_PATH } from '@/helpers/client-mod-browse'
 import { instance_listener, process_listener } from '@/helpers/events'
 import {
     install_existing_instance,
@@ -920,7 +921,7 @@ const handleOptionsClick = async (args: { option: string; item: unknown }) => {
             break
         case 'add_content':
             await router.push({
-                path: `/browse/${instance.value?.loader === 'vanilla' ? 'datapack' : 'mod'}`,
+                path: BROWSE_LOCKED_PROJECT_PATH,
                 query: { i: props.id },
             })
             break

@@ -8,7 +8,7 @@ use std::{env, fs};
 const DATA_DIR_SUFFIX_VAR: &str = "AXOLOTL_DATA_DIR_SUFFIX";
 
 /// Public service defaults for downstream builds that have no `.env`.
-/// Private Modrinth services remain disabled by Axolotl capabilities at runtime.
+/// Private Modrinth services remain disabled by ALLIGATORZONE capabilities at runtime.
 const MODRINTH_ENV_DEFAULTS: &[(&str, &str)] = &[
     ("MODRINTH_API_BASE_URL", "https://api.modrinth.com"),
     ("MODRINTH_API_URL", "https://api.modrinth.com/v2/"),

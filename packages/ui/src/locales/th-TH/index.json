@@ -401,9 +401,6 @@
   "project-type.all": {
     "defaultMessage": "ทั้งหมด"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "ม็อด"
-  },
   "project-type.modpack.category": {
     "defaultMessage": "ม็อดแพ็ก"
   },

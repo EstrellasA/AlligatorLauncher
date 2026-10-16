@@ -1700,9 +1700,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural,one {Mod} other {Modok}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Modok"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "mod"
   },

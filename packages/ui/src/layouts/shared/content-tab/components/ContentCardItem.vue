@@ -98,10 +98,21 @@ interface Props {
     postUpgradeWarningTooltip?: string | null
     toggleDisabled?: boolean
     toggleDisabledTooltip?: string | null
+    /**
+     * The launcher may not enable/disable this row (a server-owned file), so no
+     * toggle is rendered. The content table derives this — like `hideDelete` —
+     * from the row's `writeProtected` capability.
+     */
+    hideToggle?: boolean
     dependencyBadge?: {
         autoDependency: boolean
         orphaned: boolean
     } | null
+    /**
+     * Informational badge provided by the host (label + optional tooltip),
+     * rendered with the row's other badges. It never carries an action.
+     */
+    noticeBadge?: { label: string; tooltip?: string | null } | null
     showCheckbox?: boolean
     hideDelete?: boolean
     hideActions?: boolean
@@ -142,7 +153,9 @@ const props = withDefaults(defineProps<Props>(), {
     postUpgradeWarningTooltip: undefined,
     toggleDisabled: false,
     toggleDisabledTooltip: undefined,
+    hideToggle: false,
     dependencyBadge: null,
+    noticeBadge: null,
     showCheckbox: false,
     hideDelete: false,
     hideActions: false,
@@ -591,6 +604,13 @@ const deleteHovered = ref(false)
                                     : formatMessage(messages.dependencyBadge)
                             }}
                         </span>
+                        <span
+                            v-if="noticeBadge"
+                            v-tooltip="noticeBadge.tooltip ?? undefined"
+                            class="shrink-0 rounded-md bg-surface-3 px-1.5 py-0.5 text-xs font-medium leading-4 text-[var(--color-text-tertiary)]"
+                        >
+                            {{ noticeBadge.label }}
+                        </span>
                         <slot name="title-badges" />
                     </div>
 
@@ -784,7 +804,7 @@ const deleteHovered = ref(false)
             </template>
 
             <Toggle
-                v-if="enabled !== undefined"
+                v-if="enabled !== undefined && !hideToggle"
                 v-tooltip="
                     isToggleDisabled && (toggleDisabledTooltip || disabledTooltip)
                         ? (toggleDisabledTooltip ?? disabledTooltip)

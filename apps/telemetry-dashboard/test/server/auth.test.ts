@@ -55,7 +55,7 @@ describe('Cloudflare Access authentication', () => {
         const session = await verifyAccessJwt(await token(privateKey), settings, publicKey)
         expect(session).toMatchObject({
             identity: { name: 'Fixture Operator', email: 'fixture@example.invalid' },
-            organization: 'Axolotl-Launcher',
+            organization: 'ALLIGATORZONE-Launcher',
             mock: false,
             dataSource: 'production',
         })

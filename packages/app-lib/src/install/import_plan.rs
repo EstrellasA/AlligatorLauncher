@@ -80,15 +80,15 @@ pub struct ImportPlanSnapshot {
 
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(rename_all = "snake_case")]
-struct AxolotlConfigMetadata {
+struct ALLIGATORZONEConfigMetadata {
     schema_version: Option<u32>,
     #[serde(default)]
-    content_set: AxolotlContentSetMetadata,
+    content_set: ALLIGATORZONEContentSetMetadata,
 }
 
 #[derive(Debug, Clone, Default, Deserialize)]
 #[serde(rename_all = "snake_case")]
-struct AxolotlContentSetMetadata {
+struct ALLIGATORZONEContentSetMetadata {
     #[serde(default)]
     game_version: Option<String>,
     #[serde(default)]
@@ -450,13 +450,13 @@ fn detect_import_plan_info(
     }
 }
 
-fn read_axolotl_config(source: &Path) -> Option<AxolotlConfigMetadata> {
+fn read_axolotl_config(source: &Path) -> Option<ALLIGATORZONEConfigMetadata> {
     let path = source.join("axolotl_config.json");
     if !path.is_file() {
         return None;
     }
     let content = std::fs::read_to_string(&path).ok()?;
-    let config: AxolotlConfigMetadata = serde_json::from_str(&content).ok()?;
+    let config: ALLIGATORZONEConfigMetadata = serde_json::from_str(&content).ok()?;
     (config.schema_version == Some(1)).then_some(config)
 }
 
@@ -490,7 +490,7 @@ async fn scan_import_plan(
         loader == "labymod" || loader.starts_with("labymod-")
     }) {
         return Err(crate::ErrorKind::InputError(
-            "Unsupported loader LabyMod: Axolotl does not install, update, or repair LabyMod instances"
+            "Unsupported loader LabyMod: ALLIGATORZONE does not install, update, or repair LabyMod instances"
                 .to_string(),
         )
         .into());

@@ -15,7 +15,7 @@ use uuid::Uuid;
 /// Resolves the directory whose game content (`mods`, `resourcepacks`, ...)
 /// belongs to this instance.
 ///
-/// Ordinary instances own their profile directory under Axolotl's instances
+/// Ordinary instances own their profile directory under ALLIGATORZONE's instances
 /// folder, honouring a per-instance `game_dir_override`
 /// (`DirectoryInfo::instance_game_dir`). Directly associated instances have no
 /// profile directory: their content lives inside the externally managed
@@ -23,7 +23,7 @@ use uuid::Uuid;
 /// isolation (`versions/<id>` gameDir) is honored; the shared linked
 /// `.minecraft` root is the fallback when the dialect resolution cannot be
 /// completed (see `launcher::linked_game_dir`).
-pub(crate) fn instance_content_root(
+pub fn instance_content_root(
     directories: &DirectoryInfo,
     instance: &Instance,
 ) -> crate::Result<PathBuf> {
@@ -80,7 +80,7 @@ pub(crate) async fn sync_instance_content_files(
         .map(|snapshot| snapshot.dirty_paths.clone())
         .unwrap_or_default();
     let content_root = instance_content_root(&state.directories, instance)?;
-    // The hash-cache layer resolves key paths against Axolotl's own instances
+    // The hash-cache layer resolves key paths against ALLIGATORZONE's own instances
     // folder (`state/cache.rs`). For directly associated instances the
     // absolute linked root is passed as the "instance path": joining an
     // absolute path replaces the base, so the cache layer hashes the linked
@@ -276,7 +276,7 @@ pub(crate) async fn sync_instance_content_files(
         // Re-extract metadata written before dependency extraction existed:
         // legacy JSON parses with `dependencies: None` and needs one pass
         // through the updated extractor.
-        let extract_metadata = project_type == ProjectType::Mod
+        let extract_metadata = project_type.is_mod()
             && file
                 .local_mod_data
                 .as_ref()
@@ -291,7 +291,9 @@ pub(crate) async fn sync_instance_content_files(
         let extract_icon = file.icon_path.is_none()
             && matches!(
                 project_type,
-                ProjectType::Mod | ProjectType::ResourcePack
+                ProjectType::Mod
+                    | ProjectType::ClientMod
+                    | ProjectType::ResourcePack
             );
         if !extract_metadata && !extract_icon {
             continue;
@@ -827,7 +829,7 @@ mod tests {
         );
 
         // A second refresh re-hashes the existing row. It must continue to
-        // use the linked external root rather than the Axolotl profile path.
+        // use the linked external root rather than the ALLIGATORZONE profile path.
         let refreshed = sync_instance_content_files(&instance, &state)
             .await
             .unwrap();

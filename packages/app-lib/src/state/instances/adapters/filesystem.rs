@@ -239,7 +239,9 @@ pub(crate) fn is_scannable_project_path(
     };
 
     match project_type {
-        ProjectType::Mod => extension.eq_ignore_ascii_case("jar"),
+        ProjectType::Mod | ProjectType::ClientMod => {
+            extension.eq_ignore_ascii_case("jar")
+        }
         ProjectType::DataPack
         | ProjectType::ResourcePack
         | ProjectType::ShaderPack => extension.eq_ignore_ascii_case("zip"),
@@ -312,6 +314,78 @@ mod tests {
             project_type_from_relative_path("config/example.json"),
             None
         );
+    }
+
+    #[test]
+    fn clientmods_scan_as_client_mods_next_to_the_server_mods_folder() {
+        let root = tempdir().unwrap();
+        let instance_dir = root.path().join("inst");
+        fs::create_dir_all(instance_dir.join("mods")).unwrap();
+        fs::create_dir_all(instance_dir.join("clientmods")).unwrap();
+        fs::write(instance_dir.join("mods/server-mod.jar"), "server").unwrap();
+        fs::write(instance_dir.join("clientmods/client-mod.jar"), "client")
+            .unwrap();
+        fs::write(
+            instance_dir.join("clientmods/client-mod.jar.disabled"),
+            "off",
+        )
+        .unwrap();
+        fs::write(instance_dir.join("clientmods/notes.txt"), "notes").unwrap();
+
+        let files = scan_content_files(root.path(), "inst").unwrap();
+        let mut paths = files
+            .iter()
+            .map(|file| file.relative_path.as_str())
+            .collect::<Vec<_>>();
+        paths.sort_unstable();
+        assert_eq!(
+            paths,
+            vec![
+                "clientmods/client-mod.jar",
+                "clientmods/client-mod.jar.disabled",
+                "mods/server-mod.jar",
+            ],
+            "only jars are scanned, and `.disabled` files are indexed as disabled"
+        );
+        assert!(
+            !files
+                .iter()
+                .find(|file| {
+                    file.relative_path == "clientmods/client-mod.jar.disabled"
+                })
+                .unwrap()
+                .enabled
+        );
+
+        assert_eq!(
+            project_type_from_relative_path("clientmods/client-mod.jar"),
+            Some(ProjectType::ClientMod)
+        );
+        assert_eq!(
+            project_type_from_relative_path(
+                "clientmods/client-mod.jar.disabled"
+            ),
+            Some(ProjectType::ClientMod)
+        );
+        assert_eq!(
+            project_type_from_relative_path("mods/server-mod.jar"),
+            Some(ProjectType::Mod)
+        );
+        // The server pack keeps its own folder: a client mod never resolves to
+        // (or is written into) the AutoModpack-managed `mods/` directory.
+        assert_eq!(ProjectType::Mod.get_folder(), "mods");
+        assert_eq!(ProjectType::ClientMod.get_folder(), "clientmods");
+        assert!(ProjectType::ClientMod.is_mod());
+        assert!(ProjectType::Mod.is_mod());
+        assert!(!ProjectType::ResourcePack.is_mod());
+        assert!(is_scannable_project_path(
+            ProjectType::ClientMod,
+            "clientmods/client-mod.jar"
+        ));
+        assert!(!is_scannable_project_path(
+            ProjectType::ClientMod,
+            "clientmods/notes.txt"
+        ));
     }
 
     #[test]

@@ -333,6 +333,7 @@ async fn get_content_snapshot_inner(
             source_kind: entry.map(|entry| entry.source_kind),
             external,
             loader: local_mod.as_ref().and_then(|meta| meta.loader.clone()),
+            display_url: local_mod.as_ref().and_then(|meta| meta.url.clone()),
         };
         items.push(snapshot_item(
             Some(file.id.clone()),
@@ -1737,6 +1738,7 @@ mod tests {
             source_kind: Some(ContentSourceKind::Local),
             external: false,
             loader: None,
+            display_url: None,
         }
     }
 

@@ -8,7 +8,7 @@ import { invoke } from '@tauri-apps/api/core'
 
 import type { HomeDashboardConfig } from '@/components/home/home-dashboard'
 import type { Hooks, MemorySettings } from '@/helpers/types'
-import type { AccentColorSetting, ColorTheme, FeatureFlag, HomeLayout } from '@/store/theme.ts'
+import type { AccentColorSetting, ColorTheme, FeatureFlag } from '@/store/theme.ts'
 import { DEFAULT_FEATURE_FLAGS } from '@/store/theme.ts'
 
 export type { BrowseContentDisplayMode, BrowseContentProjectType } from './browse-display-mode.ts'
@@ -167,7 +167,6 @@ export type AppSettings = DohSettings & {
     transparent_background_blur: boolean
     sidebar_instance_count: number
     auto_hide_downloads_button: boolean
-    home_layout: HomeLayout
     minimal_home_instance_id: string | null
     close_behavior: 'ask' | 'close' | 'lightweight'
     log_level: 'error' | 'warn' | 'info' | 'debug' | 'trace'

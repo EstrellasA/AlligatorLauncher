@@ -478,6 +478,7 @@ async fn read_only_upgrade_source(
                 source_kind: None,
                 external: true,
                 loader: None,
+                display_url: None,
             }),
             capabilities: ContentItemCapabilities::default(),
             dependency: None,
@@ -757,7 +758,7 @@ fn source_shader_runtime(
         return ShaderRuntime::OptiFine;
     }
     if snapshot.items.iter().any(|item| {
-        item.project_type == ProjectType::Mod
+        item.project_type.is_mod()
             && item
                 .content
                 .as_ref()
@@ -1640,7 +1641,7 @@ async fn load_curseforge_candidates(
         project_id,
         CurseForgeFilesRequest {
             game_version: Some(target.game_version.clone()),
-            mod_loader_type: (project_type == ProjectType::Mod)
+            mod_loader_type: (project_type.is_mod())
                 .then(|| curseforge_loader_type(target.mod_loader))
                 .flatten(),
             game_version_type_id: None,
@@ -1859,9 +1860,11 @@ fn modrinth_version_matches(
         return false;
     }
     match project_type {
-        ProjectType::Mod => version.loaders.iter().any(|loader| {
-            loader.eq_ignore_ascii_case(target.mod_loader.as_str())
-        }),
+        ProjectType::Mod | ProjectType::ClientMod => {
+            version.loaders.iter().any(|loader| {
+                loader.eq_ignore_ascii_case(target.mod_loader.as_str())
+            })
+        }
         ProjectType::ShaderPack => shader_loader_matches(
             version.loaders.iter().map(String::as_str),
             target.shader_runtime,
@@ -1888,9 +1891,11 @@ fn curseforge_file_matches(
         return false;
     }
     match project_type {
-        ProjectType::Mod => file.game_versions.iter().any(|value| {
-            value.eq_ignore_ascii_case(target.mod_loader.as_str())
-        }),
+        ProjectType::Mod | ProjectType::ClientMod => {
+            file.game_versions.iter().any(|value| {
+                value.eq_ignore_ascii_case(target.mod_loader.as_str())
+            })
+        }
         ProjectType::ShaderPack => shader_loader_matches(
             file.game_versions.iter().map(String::as_str),
             target.shader_runtime,
@@ -6960,6 +6965,7 @@ mod tests {
                 source_kind: Some(ContentSourceKind::Local),
                 external: provider.is_none(),
                 loader: None,
+                display_url: None,
             }),
             capabilities: ContentItemCapabilities::default(),
             dependency: Some(crate::state::ContentDependencyInfo {

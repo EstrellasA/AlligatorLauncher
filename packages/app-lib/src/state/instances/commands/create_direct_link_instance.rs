@@ -98,6 +98,9 @@ pub(crate) async fn create_direct_link_instance(
         // Directly associated instances resolve their game directory from the
         // link metadata; the managed `game_dir_override` never applies.
         game_dir_override: None,
+        // Never configured: the web map address is a per-instance launcher
+        // setting, set from the UI after the instance exists.
+        web_map_url: None,
         created: now,
         modified: now,
         last_played: None,

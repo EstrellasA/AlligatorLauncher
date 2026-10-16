@@ -1847,9 +1847,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, one {Modificación} other {Modificaciones}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Modificaciones"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, one {modificación} other {modificaciones}}"
   },

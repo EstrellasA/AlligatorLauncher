@@ -96,7 +96,6 @@ const abilities: Record<string, SettingAbility> = {
     auto_hide_downloads_button: bool('auto_hide_downloads_button'),
     close_behavior: text('close_behavior'),
     log_level: text('log_level'),
-    home_layout: text('home_layout'),
     sidebar_instance_count: int('sidebar_instance_count'),
     show_files_tab_in_instances: bool('show_files_tab_in_instances'),
     show_worlds_tab_in_instances: bool('show_worlds_tab_in_instances'),

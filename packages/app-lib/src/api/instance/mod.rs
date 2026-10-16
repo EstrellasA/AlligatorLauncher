@@ -1,6 +1,8 @@
 //! Theseus instance management interface
 
+mod automodpack;
 mod backup;
+mod bootstrap;
 mod content;
 mod core_components;
 mod export_mrpack;
@@ -27,6 +29,11 @@ mod synced_packs_axolotl;
 pub(crate) mod synced_servers;
 mod upgrade;
 
+pub use self::automodpack::{
+    AutomodpackChange, AutomodpackChangeKind, AutomodpackChangelog,
+    AutomodpackDirectoryGroup, AutomodpackGeneration,
+    AutomodpackUnavailableReason, get_automodpack_changelog,
+};
 pub use self::backup::{
     BackupDeleteSummary, BackupExclusion, BackupExclusionKind, BackupOperation,
     BackupOperationState, BackupOperationType, BackupRepositoryStatus,
@@ -53,6 +60,11 @@ pub(crate) use self::backup::{
     begin_instance_deletion, cancel_instance_deletion, delete_instance_backups,
     ensure_backup_eligible_edit, has_active_instance_operation,
     lock_instance_maintenance, move_default_repository_for_launcher_directory,
+};
+pub use self::bootstrap::{
+    BundledModAsset, BundledModResult, BundledModState, BundledModStateEntry,
+    BundledModStatus, BundledModsStatusReport, InstallBundledModsReport,
+    bundled_mods_need_repair, bundled_mods_status, install_bundled_mods,
 };
 pub(crate) use self::content::resolve_content_change_actions;
 pub use self::content::{

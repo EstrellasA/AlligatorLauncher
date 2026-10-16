@@ -5,6 +5,7 @@ import { computed, ref, watch } from 'vue'
 import type ContentInstallPreviewModal from '@/components/ui/ContentInstallPreviewModal.vue'
 import type { ContentInstallPreviewData } from '@/components/ui/ContentInstallPreviewModal.vue'
 import { get_project_many, get_version_many } from '@/helpers/cache.js'
+import { clientModInstallTarget, installedSnapshotItems } from '@/helpers/client-mod-browse'
 import {
     compareContentIdentities,
     type ContentIdentity,
@@ -45,6 +46,7 @@ import {
     provideContentSelection,
     toModrinthContentType,
 } from '@/providers/content-selection-types'
+import { confirmServerPackDuplicates } from '@/providers/pack-duplicate-guard'
 import { useTheming } from '@/store/state'
 
 export {
@@ -199,7 +201,9 @@ export function createContentSelection({
             }
             return []
         }
-        const unresolvedInputs = contentIdentityInputsFromSnapshot(snapshot.items)
+        const unresolvedInputs = contentIdentityInputsFromSnapshot(
+            installedSnapshotItems(snapshot.items),
+        )
         const modrinthIds = unresolvedInputs
             .filter((input) => input.provider === 'modrinth')
             .map((input) => input.projectId)
@@ -213,7 +217,7 @@ export function createContentSelection({
                 .then((projects) => (projects ?? []) as Labrinth.Projects.v2.Project[]),
             getCurseForgeProjects([...new Set(curseForgeIds)]).catch(() => []),
         ])
-        const inputs = contentIdentityInputsFromSnapshot(snapshot.items, {
+        const inputs = contentIdentityInputsFromSnapshot(installedSnapshotItems(snapshot.items), {
             modrinth: new Map(
                 modrinthProjects.map((project) => [
                     project.id,
@@ -469,6 +473,7 @@ export function createContentSelection({
             project_id: item.projectId,
             version_id: item.versionId || null,
             content_type: toModrinthContentType(item.contentType),
+            target_project_type: clientModInstallTarget(item.contentType),
             selected: {
                 game_versions: item.preferences?.gameVersions ?? [],
                 loaders: item.preferences?.loaders ?? [],
@@ -602,7 +607,7 @@ export function createContentSelection({
             instanceId: instance.id,
             projectId,
             fileId,
-            projectType: item.contentType,
+            projectType: clientModInstallTarget(item.contentType) ?? item.contentType,
             ownershipKind: 'user_added',
             manualOperationKind: 'content_install',
             gameVersion: usesTargetGameVersion(item.contentType)
@@ -830,6 +835,7 @@ export function createContentSelection({
                     project_id: selection.item.projectId,
                     version_id: selection.item.versionId,
                     content_type: toModrinthContentType(selection.item.contentType),
+                    target_project_type: clientModInstallTarget(selection.item.contentType),
                     selected: {
                         game_versions: selection.item.preferences?.gameVersions ?? [],
                         loaders: selection.item.preferences?.loaders ?? [],
@@ -888,7 +894,9 @@ export function createContentSelection({
                 instanceId: instance.id,
                 projectId,
                 fileId,
-                projectType: selection.item.contentType,
+                projectType:
+                    clientModInstallTarget(selection.item.contentType) ??
+                    selection.item.contentType,
                 ownershipKind: 'user_added',
                 manualOperationKind: 'content_install',
                 gameVersion: usesTargetGameVersion(selection.item.contentType)
@@ -946,7 +954,8 @@ export function createContentSelection({
             instanceId: instance.id,
             projectId: Number(selection.item.providerProjectId),
             fileId: Number(selection.item.versionId),
-            projectType: selection.item.contentType,
+            projectType:
+                clientModInstallTarget(selection.item.contentType) ?? selection.item.contentType,
             ownershipKind: 'user_added',
             manualOperationKind: 'content_install',
             gameVersion: usesTargetGameVersion(selection.item.contentType)
@@ -1039,10 +1048,26 @@ export function createContentSelection({
         for (const selection of prepared) {
             if (!includedKeys.has(selection.item.key)) remove(selection.item.key)
         }
+        // Warn once for the whole batch, not once per project: `included` is
+        // exactly what is about to be installed, and the prompt reports how many
+        // of those the server pack already provides in its own `mods/` folder.
+        const included = prepared.filter((candidate) => includedKeys.has(candidate.item.key))
+        const packDuplicatesApproved = await confirmServerPackDuplicates(
+            previewModal,
+            instance.id,
+            included.map((selection) => ({
+                provider: selection.item.provider,
+                projectId: selection.item.providerProjectId,
+                contentType: selection.item.contentType,
+            })),
+        )
+        if (!packDuplicatesApproved) {
+            state.value = 'idle'
+            return false
+        }
         state.value = 'queueing'
         progress.value = { completed: 0, total: includedKeys.size }
         const queueFailures = new Set(failed)
-        const included = prepared.filter((candidate) => includedKeys.has(candidate.item.key))
         try {
             const batchItems: InstallContentBatchItem[] = []
             for (const selection of included) {
@@ -1054,6 +1079,7 @@ export function createContentSelection({
                         project_id: selection.item.projectId,
                         version_id: selection.item.versionId,
                         content_type: toModrinthContentType(selection.item.contentType),
+                        target_project_type: clientModInstallTarget(selection.item.contentType),
                         selected: {
                             game_versions: selection.item.preferences?.gameVersions ?? [],
                             loaders: selection.item.preferences?.loaders ?? [],

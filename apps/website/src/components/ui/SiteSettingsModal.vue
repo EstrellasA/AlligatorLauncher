@@ -34,7 +34,7 @@ const messages = defineMessages({
     title: { id: 'axolotl-settings.title', defaultMessage: 'Display settings' },
     description: {
         id: 'axolotl-settings.description',
-        defaultMessage: 'Customize how Axolotl looks and reads on this device.',
+        defaultMessage: 'Customize how ALLIGATORZONE looks and reads on this device.',
     },
     close: { id: 'axolotl-settings.close', defaultMessage: 'Close settings' },
     appearanceTitle: { id: 'axolotl-settings.appearance.title', defaultMessage: 'Appearance' },
@@ -46,7 +46,7 @@ const messages = defineMessages({
     downloadsTitle: { id: 'axolotl-settings.downloads.title', defaultMessage: 'Downloads' },
     downloadsDescription: {
         id: 'axolotl-settings.downloads.description',
-        defaultMessage: 'Choose where Axolotl Launcher installers are downloaded from.',
+        defaultMessage: 'Choose where ALLIGATORZONE installers are downloaded from.',
     },
     downloadSourceTitle: {
         id: 'axolotl-settings.download-source.title',
@@ -71,7 +71,7 @@ const messages = defineMessages({
     },
     downloadSourceUpdateServerDescription: {
         id: 'axolotl-settings.download-source.update-server.description',
-        defaultMessage: 'Download through the official Axolotl update service.',
+        defaultMessage: 'Download through the official ALLIGATORZONE update service.',
     },
     downloadSourceGithub: {
         id: 'axolotl-settings.download-source.github',
@@ -88,7 +88,7 @@ const messages = defineMessages({
     themeTitle: { id: 'axolotl-settings.theme.title', defaultMessage: 'Color theme' },
     themeDescription: {
         id: 'axolotl-settings.theme.description',
-        defaultMessage: 'Select your preferred color theme for Axolotl on this device.',
+        defaultMessage: 'Select your preferred color theme for ALLIGATORZONE on this device.',
     },
     interfaceTitle: { id: 'axolotl-settings.interface.title', defaultMessage: 'Interface' },
     interfaceDescription: {
@@ -341,7 +341,7 @@ onBeforeUnmount(() => {
                             >
                                 <img src="/axolotl.png" alt="" />
                                 <div>
-                                    <strong>Axolotl Launcher</strong>
+                                    <strong>ALLIGATORZONE</strong>
                                     <span>Website {{ new Date().getFullYear() }}</span>
                                 </div>
                             </div>

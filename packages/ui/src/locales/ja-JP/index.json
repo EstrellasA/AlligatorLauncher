@@ -1715,9 +1715,6 @@
   "project-type.mod.capital": {
     "defaultMessage": "{count, plural, other{#個のMod}}"
   },
-  "project-type.mod.category": {
-    "defaultMessage": "Mod"
-  },
   "project-type.mod.lowercase": {
     "defaultMessage": "{count, plural, other{#個のMod}}"
   },

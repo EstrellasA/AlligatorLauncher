@@ -48,7 +48,6 @@ export type ColorTheme = (typeof THEME_OPTIONS)[number]
 export type AccentColor = (typeof ACCENT_COLOR_OPTIONS)[number]
 export type CustomAccentColor = `custom:#${string}`
 export type AccentColorSetting = AccentColor | 'system' | CustomAccentColor
-export type HomeLayout = 'standard' | 'minimal'
 export type CloseBehavior = 'ask' | 'close' | 'lightweight'
 
 /**
@@ -148,7 +147,6 @@ export type ThemeStore = {
     hiddenNavItems: string[]
     sidebarInstanceCount: number
     autoHideDownloadsButton: boolean
-    homeLayout: HomeLayout
     minimalHomeInstanceId: string | null
     closeBehavior: CloseBehavior
 
@@ -158,7 +156,6 @@ export type ThemeStore = {
     quickScrollEnabled: boolean
     /** Per-nav-item quick jump shortcuts (Ctrl/Cmd + number), off by default. */
     shortcutNavHome: boolean
-    shortcutNavWorlds: boolean
     shortcutNavDiscover: boolean
     shortcutNavSkins: boolean
     shortcutNavMultiplayer: boolean
@@ -181,7 +178,7 @@ export type ThemeStore = {
 
 export const DEFAULT_THEME_STORE: ThemeStore = {
     selectedTheme: 'dark',
-    selectedAccentColor: 'pink',
+    selectedAccentColor: 'purple',
     systemAccentColor: null,
     systemAccentSupported: null,
     advancedRendering: true,
@@ -200,7 +197,6 @@ export const DEFAULT_THEME_STORE: ThemeStore = {
     hiddenNavItems: [],
     sidebarInstanceCount: 0,
     autoHideDownloadsButton: false,
-    homeLayout: 'standard',
     minimalHomeInstanceId: null,
     closeBehavior: 'ask',
 
@@ -208,7 +204,6 @@ export const DEFAULT_THEME_STORE: ThemeStore = {
     quickScrollEnabled: false,
 
     shortcutNavHome: false,
-    shortcutNavWorlds: false,
     shortcutNavDiscover: false,
     shortcutNavSkins: false,
     shortcutNavMultiplayer: false,

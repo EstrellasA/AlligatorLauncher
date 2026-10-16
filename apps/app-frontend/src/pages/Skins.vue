@@ -173,7 +173,7 @@ const messages = defineMessages({
     },
     axolotlAlt: {
         id: 'app.skins.sign-in.axolotl-alt',
-        defaultMessage: 'Axolotl Launcher',
+        defaultMessage: 'ALLIGATORZONE',
     },
     signInTitle: {
         id: 'app.skins.sign-in.title',
@@ -182,29 +182,11 @@ const messages = defineMessages({
     signInDescription: {
         id: 'app.skins.sign-in.description',
         defaultMessage:
-            'Please sign into your Minecraft account to use the skin management features of Axolotl Launcher.',
+            'Please sign into your Minecraft account to use the skin management features of ALLIGATORZONE.',
     },
     signInButton: {
         id: 'app.skins.sign-in.button',
         defaultMessage: 'Sign In',
-    },
-    offlineCompatibility: {
-        id: 'app.skins.offline-account.compatibility',
-        defaultMessage:
-            'Offline skins are applied locally with a resource pack. Compatibility is best on Minecraft 1.6–1.19.2; newer versions are supported on a best-effort basis. The skin is not uploaded to Mojang, may also replace other default-skinned players on your client, and some skin mods or server plugins may override it.',
-    },
-    offlineCompatibilityTitle: {
-        id: 'app.skins.offline-account.compatibility-title',
-        defaultMessage: 'Offline skin compatibility',
-    },
-    thirdPartyManagementTitle: {
-        id: 'app.skins.third-party-account.title',
-        defaultMessage: 'Third-party skin management',
-    },
-    thirdPartyManagementDescription: {
-        id: 'app.skins.third-party-account.description',
-        defaultMessage:
-            'Skins for this account are managed by its Yggdrasil provider. Open the provider website to change skins or capes.',
     },
     savedTab: {
         id: 'app.skins.tabs.saved',
@@ -923,7 +905,16 @@ function getBakedSkinTextures(skin: Skin): RenderResult | undefined {
 
 async function login() {
     if (offline.value) return
-    accountsCard.value?.login()
+
+    // The account card is mounted only on the home page, so on any other route
+    // there is no handle to call. Send the player to the page that has it
+    // rather than silently doing nothing.
+    if (!accountsCard.value) {
+        void router.push('/')
+        return
+    }
+
+    accountsCard.value.login()
 }
 
 function openAddSkinFileBrowser() {
@@ -1142,32 +1133,6 @@ await refreshSelectedAccount()
         :proceed-label="formatMessage(commonMessages.deleteLabel)"
         @proceed="deleteSkin"
     />
-    <Teleport
-        v-if="currentUser && currentAccountType === 'offline'"
-        to="#sidebar-default-teleport-target"
-    >
-        <section class="p-4">
-            <h3 class="m-0 text-base font-semibold text-[var(--color-text-default)]">
-                {{ formatMessage(messages.offlineCompatibilityTitle) }}
-            </h3>
-            <p class="mb-0 mt-2 text-sm leading-6 text-[var(--color-text-tertiary)]">
-                {{ formatMessage(messages.offlineCompatibility) }}
-            </p>
-        </section>
-    </Teleport>
-    <Teleport
-        v-if="currentUser && currentAccountType === 'yggdrasil'"
-        to="#sidebar-default-teleport-target"
-    >
-        <section class="p-4">
-            <h3 class="m-0 text-base font-semibold text-[var(--color-text-default)]">
-                {{ formatMessage(messages.thirdPartyManagementTitle) }}
-            </h3>
-            <p class="mb-0 mt-2 text-sm leading-6 text-[var(--color-text-tertiary)]">
-                {{ formatMessage(messages.thirdPartyManagementDescription) }}
-            </p>
-        </section>
-    </Teleport>
 
     <div
         v-if="currentUser"
@@ -1345,12 +1310,11 @@ await refreshSelectedAccount()
                 </p>
                 <Button
                     v-if="!offline"
-                    v-show="accountsCard"
                     type="colored"
                     color="brand"
-                    :disabled="accountsCard.loginDisabled"
+                    :disabled="accountsCard?.loginDisabled ?? false"
                     @click="login"
-                    ><LogInIcon v-if="!accountsCard.loginDisabled" />
+                    ><LogInIcon v-if="!accountsCard?.loginDisabled" />
                     <SpinnerIcon v-else class="animate-spin" />
                     {{ formatMessage(messages.signInButton) }}
                 </Button>

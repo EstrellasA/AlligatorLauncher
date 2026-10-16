@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router'
 
 import BrowseInstanceSelector from '@/components/browse/BrowseInstanceSelector.vue'
 import InstanceIcon from '@/components/ui/InstanceIcon.vue'
+import { CLIENT_MOD_TARGET_PROJECT_TYPE } from '@/helpers/client-mod-browse'
 import {
     import_mcarchive_content,
     install_mcarchive_content,
@@ -106,7 +107,9 @@ function createRequest(version: McArchiveModVersion, file: McArchiveFile) {
         projectSlug: project.value.slug,
         versionId: version.uuid,
         fileId: file.uuid,
-        projectType: 'mod',
+        // The content browser installs mods into the launcher-managed
+        // `clientmods/` folder, never the server pack's `mods/` folder.
+        projectType: CLIENT_MOD_TARGET_PROJECT_TYPE,
     } satisfies McArchiveContentInstallRequest
 }
 

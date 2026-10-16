@@ -545,7 +545,7 @@ impl ModpackContentInstallContext {
             return manifest_path.to_string();
         };
 
-        if project_type == ProjectType::Mod {
+        if project_type.is_mod() {
             return manifest_path.to_string();
         }
         let Some(title) = file

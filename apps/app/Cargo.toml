@@ -3,7 +3,7 @@ name = "theseus_gui"
 # The actual version is set by the theseus-build workflow on tagging
 version = "1.9.8"
 edition.workspace = true
-description = "Axolotl Launcher is a cross-platform Minecraft launcher"
+description = "Alligator Launcher is a cross-platform Minecraft launcher"
 homepage = "https://www.ghs.red"
 license = "GPL-3.0-only"
 
@@ -115,7 +115,11 @@ default = ["custom-protocol"]
 # this feature is used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
 custom-protocol = ["tauri/custom-protocol"]
-updater = []
+# NOTE(Alligator): there is deliberately no `updater` feature. This fork has no
+# update server and never registers `tauri-plugin-updater`, so a feature that
+# toggled the shipped updater implementation would only re-introduce a doomed
+# update check. The plugin dependency is kept solely for its config schema, so
+# the signing pubkey kept in `tauri-release.conf.json` stays valid.
 
 [lints]
 workspace = true

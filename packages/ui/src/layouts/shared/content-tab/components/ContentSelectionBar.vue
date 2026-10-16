@@ -84,10 +84,22 @@ const messages = defineMessages({
         id: 'content.selection-bar.all-already-disabled',
         defaultMessage: 'All selected content is already disabled',
     },
+    nothingActionable: {
+        id: 'content.selection-bar.nothing-actionable',
+        defaultMessage: 'Nothing in this selection can be changed by the launcher.',
+    },
 })
 
 interface Props {
     selectedItems: ContentItem[]
+    /**
+     * The subset of the selection the launcher may actually change. Rows whose
+     * row-level capability forbids writing (the server's own folder) are not in
+     * it, so pressing "enable/disable" over a selection that only holds those
+     * rows is offered as nothing-to-do instead of a silent no-op. Defaults to
+     * the whole selection.
+     */
+    actionableItems?: ContentItem[]
     contentTypeLabel?: string
     isBusy?: boolean
     busyTooltip?: string | null
@@ -103,6 +115,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+    actionableItems: undefined,
     contentTypeLabel: undefined,
     isBusy: false,
     busyTooltip: undefined,
@@ -146,15 +159,20 @@ function itemTitleTooltip(item: ContentItem) {
     return { content: autoToHTML(resolveItemTitle(item)), html: true }
 }
 
+const actionableItems = computed(() => props.actionableItems ?? props.selectedItems)
+
+/** True when the selection holds nothing the launcher is allowed to change. */
+const nothingActionable = computed(() => actionableItems.value.length === 0)
+
 const allDisabled = computed(
     () =>
-        !props.selectedItems.some(
+        !actionableItems.value.some(
             (item) => canToggleContentItem(item) && isEnabledContentItem(item),
         ),
 )
 const allEnabled = computed(
     () =>
-        !props.selectedItems.some(
+        !actionableItems.value.some(
             (item) => canToggleContentItem(item) && isDisabledContentItem(item),
         ),
 )
@@ -268,9 +286,11 @@ const bulkProgressMessage = computed(() => {
                 v-tooltip="
                     isBusy && busyTooltip
                         ? busyTooltip
-                        : allEnabled
-                          ? formatMessage(messages.allAlreadyEnabled)
-                          : formatMessage(commonMessages.enableButton)
+                        : nothingActionable
+                          ? formatMessage(messages.nothingActionable)
+                          : allEnabled
+                            ? formatMessage(messages.allAlreadyEnabled)
+                            : formatMessage(commonMessages.enableButton)
                 "
                 type="quiet"
                 :disabled="isBusy || allEnabled"
@@ -282,9 +302,11 @@ const bulkProgressMessage = computed(() => {
                 v-tooltip="
                     isBusy && busyTooltip
                         ? busyTooltip
-                        : allDisabled
-                          ? formatMessage(messages.allAlreadyDisabled)
-                          : formatMessage(commonMessages.disableButton)
+                        : nothingActionable
+                          ? formatMessage(messages.nothingActionable)
+                          : allDisabled
+                            ? formatMessage(messages.allAlreadyDisabled)
+                            : formatMessage(commonMessages.disableButton)
                 "
                 type="quiet"
                 :disabled="isBusy || allDisabled"

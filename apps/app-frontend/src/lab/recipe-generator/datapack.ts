@@ -25,7 +25,7 @@ export type DatapackTag = {
 
 export type DatapackSaveSource = PackFile[] | Blob
 
-const PACK_DESCRIPTION = 'Axolotl Recipe Generator'
+const PACK_DESCRIPTION = 'ALLIGATORZONE Recipe Generator'
 
 function formatDatapackTimestamp(date: Date): string {
     const pad = (value: number) => String(value).padStart(2, '0')
@@ -35,7 +35,7 @@ function formatDatapackTimestamp(date: Date): string {
 }
 
 export function createDatapackFileName(version: JavaVersionId, date = new Date()): string {
-    return `axolotl-recipes-${version}-${formatDatapackTimestamp(date)}.zip`
+    return `alligatorzone-recipes-${version}-${formatDatapackTimestamp(date)}.zip`
 }
 
 export function createDatapackDescription(productNames: readonly string[]): string {

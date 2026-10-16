@@ -7,7 +7,7 @@ use super::DirectLinkedLaunch;
 /// Runtime storage adapters keep mode-specific path rules out of callers.
 #[derive(Debug, Clone)]
 pub(crate) enum InstanceRuntimeAdapter {
-    AxolotlManaged { game_dir: PathBuf },
+    ALLIGATORZONEManaged { game_dir: PathBuf },
     MinecraftShared { direct: DirectLinkedLaunch },
     MinecraftIsolated { direct: DirectLinkedLaunch },
 }
@@ -22,7 +22,7 @@ impl InstanceRuntimeAdapter {
             return Ok(external);
         }
 
-        Ok(Self::AxolotlManaged {
+        Ok(Self::ALLIGATORZONEManaged {
             game_dir: directories.instance_game_dir(instance),
         })
     }
@@ -64,7 +64,7 @@ impl InstanceRuntimeAdapter {
 
     pub(crate) fn direct_link(&self) -> Option<&DirectLinkedLaunch> {
         match self {
-            Self::AxolotlManaged { .. } => None,
+            Self::ALLIGATORZONEManaged { .. } => None,
             Self::MinecraftShared { direct }
             | Self::MinecraftIsolated { direct } => Some(direct),
         }
@@ -72,7 +72,7 @@ impl InstanceRuntimeAdapter {
 
     pub(crate) fn game_dir(&self) -> PathBuf {
         match self {
-            Self::AxolotlManaged { game_dir } => game_dir.clone(),
+            Self::ALLIGATORZONEManaged { game_dir } => game_dir.clone(),
             Self::MinecraftShared { direct } => match direct.resolve() {
                 Ok(resolved) => resolved.game_dir,
                 Err(error) => {
@@ -153,7 +153,7 @@ mod tests {
     fn managed_legacy_launch_uses_expanded_resources_directory() {
         let root = tempfile::tempdir().unwrap();
         let directories = directories(root.path());
-        let runtime = InstanceRuntimeAdapter::AxolotlManaged {
+        let runtime = InstanceRuntimeAdapter::ALLIGATORZONEManaged {
             game_dir: root.path().join("instance"),
         };
 

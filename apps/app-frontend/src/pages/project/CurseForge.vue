@@ -1,45 +1,9 @@
 <template>
     <template v-if="loading">
-        <Teleport to="#sidebar-teleport-target">
-            <ProjectPageSkeleton variant="sidebar" />
-        </Teleport>
         <ProjectPageSkeleton />
     </template>
     <div v-else-if="data">
         <UpgradeProjectReturnBar />
-        <Teleport to="#sidebar-teleport-target">
-            <ProjectSidebarCompatibility
-                :project="data"
-                :tags="{ loaders: allLoaders, gameVersions: allGameVersions }"
-                :platform-action="(platform) => browseByProjectFilter('loader', platform)"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarLinks
-                link-target="_blank"
-                :project="data"
-                :mcmod-url="mcmodUrl"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarTags
-                :project="data"
-                :tag-action="(tag) => browseByProjectFilter('category', tag)"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarCreators
-                :members="members"
-                :org-link="() => data.links.website_url"
-                :user-link="(username) => authorLinks[username] ?? data.links.website_url"
-                link-target="_blank"
-                class="project-sidebar-section"
-            />
-            <ProjectSidebarDetails
-                :project="data"
-                :has-versions="versions.length > 0"
-                hide-license
-                link-target="_blank"
-                class="project-sidebar-section"
-            />
-        </Teleport>
 
         <div class="flex flex-col gap-4 p-6">
             <Teleport
@@ -79,7 +43,7 @@
                         }}
                     </Button>
                     <Button
-                        v-if="managedProjectType || isWorldMap"
+                        v-if="(managedProjectType || isWorldMap) && canInstall"
                         type="colored"
                         color="brand"
                         size="xl"
@@ -164,7 +128,7 @@
                 </template>
             </ProjectHeader>
             <SelectedProjectsFloatingBar
-                v-if="cartInstallContext"
+                v-if="canInstall && cartInstallContext"
                 :install-context="cartInstallContext"
             />
             <BrowseInstanceSelector
@@ -217,6 +181,7 @@
             >
                 <template #actions="{ version }">
                     <Button
+                        v-if="canInstall"
                         v-tooltip="
                             formatMessage(
                                 isWorldMap
@@ -283,11 +248,6 @@ import {
     ProjectHeader,
     ProjectPageSkeleton,
     ProjectPageVersions,
-    ProjectSidebarCompatibility,
-    ProjectSidebarCreators,
-    ProjectSidebarDetails,
-    ProjectSidebarLinks,
-    ProjectSidebarTags,
     SelectedProjectsFloatingBar,
     usesTargetGameVersion,
     useVIntl,
@@ -310,7 +270,6 @@ import {
     getCurseForgeProject,
 } from '@/helpers/curseforge'
 import { projectGalleryTranslationSegments } from '@/helpers/project-gallery'
-import { createProjectBrowseLocation, type ProjectBrowseFilter } from '@/helpers/project-links'
 import { get_game_versions, get_loaders } from '@/helpers/tags'
 import {
     autoTranslateHintMessages,
@@ -522,6 +481,15 @@ const cartEligible = computed(
         (fromBrowse.value || instanceContentTarget.value !== null) &&
         ['mod', 'resourcepack', 'shader', 'datapack', 'world'].includes(projectType.value),
 )
+/**
+ * Whether this page may offer an install action.
+ *
+ * `false` in the instance content context (`?i=<instance>&from=instance-content`):
+ * the project is already part of that instance, so the page is a read-only
+ * information view there. Adding a client mod deliberately goes through the
+ * client-mod Browse flow instead.
+ */
+const canInstall = computed(() => !fromInstanceContent.value)
 const cartProjectKey = computed(() =>
     project.value ? makeContentSelectionKey('curseforge', project.value.id.toString()) : '',
 )
@@ -544,13 +512,15 @@ const cartInstallContext = computed(() => {
             (typeof route.query.b === 'string' ? route.query.b : `/browse/${projectType.value}`),
         backLabel: fromInstanceContent.value ? formatMessage(messages.backToInstanceContent) : '',
         heading: '',
-        selectedProjects: contentSelection.selectedProjects.value,
-        isInstallingSelected: ['validating', 'reviewing', 'queueing'].includes(
-            contentSelection.state.value,
-        ),
+        // Opened from an instance's content list the header is navigation only:
+        // nothing may be queued or installed from that context.
+        selectedProjects: canInstall.value ? contentSelection.selectedProjects.value : [],
+        isInstallingSelected:
+            canInstall.value &&
+            ['validating', 'reviewing', 'queueing'].includes(contentSelection.state.value),
         installProgress: contentSelection.progress.value,
         clearSelected: contentSelection.clear,
-        installSelected: contentSelection.installSelected,
+        installSelected: canInstall.value ? contentSelection.installSelected : undefined,
     }
 })
 
@@ -649,29 +619,6 @@ const data = computed(() => {
         })),
     }
 })
-
-function browseByProjectFilter(filter: ProjectBrowseFilter, value: string) {
-    if (!data.value?.project_type) return
-    void router.push(createProjectBrowseLocation(data.value.project_type, filter, value))
-}
-
-const members = computed(() =>
-    (project.value?.authors ?? []).map((author, index) => ({
-        id: author.id.toString(),
-        role: index === 0 ? 'Owner' : 'Author',
-        is_owner: index === 0,
-        accepted: true,
-        user: {
-            id: author.id.toString(),
-            username: author.name,
-            avatar_url: '',
-        },
-    })),
-)
-
-const authorLinks = computed(() =>
-    Object.fromEntries((project.value?.authors ?? []).map((author) => [author.name, author.url])),
-)
 
 const versions = computed(() =>
     files.value.map((file) => {
@@ -847,6 +794,9 @@ watch(
 
 async function installSelected(fileId: string | null) {
     if (!project.value) return
+    // Opened from an instance's content list the page is read-only, so no
+    // affordance may start an install; this guards every caller too.
+    if (!canInstall.value) return
     if (cartEligible.value && !contentSelection.targetInstance.value) {
         await contentSelection.refreshInstances()
         browseInstanceSelector.value?.show()

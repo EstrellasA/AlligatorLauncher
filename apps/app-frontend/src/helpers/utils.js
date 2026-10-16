@@ -62,7 +62,7 @@ export async function showLauncherLogsFolder() {
 
 export async function exportErrorLogs(
     errorMessage,
-    fileNamePrefix = 'Axolotl Launcher error logs',
+    fileNamePrefix = 'ALLIGATORZONE error logs',
 ) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
     const outputPath = await save({
@@ -86,7 +86,7 @@ export async function exportLauncherLogs({
     includeSystemInfo = true,
     includeInstanceLogs = false,
     includeCrashAnalysis = false,
-    fileNamePrefix = 'Axolotl Launcher logs',
+    fileNamePrefix = 'ALLIGATORZONE logs',
 } = {}) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
     const outputPath = await save({
@@ -114,7 +114,7 @@ export async function exportLauncherLogs({
 
 export async function createInstanceShortcut(instanceName, instanceId, options = {}) {
     const outputPath = await save({
-        defaultPath: `Axolotl - ${instanceName}`,
+        defaultPath: `ALLIGATORZONE - ${instanceName}`,
     })
 
     if (!outputPath) return null

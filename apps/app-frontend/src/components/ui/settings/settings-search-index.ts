@@ -24,7 +24,7 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         label: message('app.appearance-settings.color-theme.title', 'Color theme'),
         description: message(
             'app.appearance-settings.color-theme.description',
-            'Select your preferred color theme for Axolotl Launcher.',
+            'Select your preferred color theme for ALLIGATORZONE.',
         ),
     },
     {
@@ -104,12 +104,6 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         categoryId: 'home-navigation',
         targetId: 'settings-target-appearance-hidden-nav-items',
         label: message('app.appearance-settings.hidden-nav-items.title', 'Navigation items'),
-    },
-    {
-        id: 'appearance-home-layout',
-        categoryId: 'home-navigation',
-        targetId: 'settings-target-appearance-home-layout',
-        label: message('app.appearance-settings.home-layout.title', 'Home layout'),
     },
     {
         id: 'appearance-default-landing-page',
@@ -236,16 +230,6 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         ),
     },
     {
-        id: 'shortcuts-nav-worlds',
-        categoryId: 'shortcut-settings',
-        targetId: 'settings-target-shortcuts-nav',
-        label: message('app.shortcut-settings.nav-worlds', 'Worlds'),
-        description: message(
-            'app.shortcut-settings.nav-worlds-description',
-            'Jump to your worlds.',
-        ),
-    },
-    {
         id: 'shortcuts-nav-discover',
         categoryId: 'shortcut-settings',
         targetId: 'settings-target-shortcuts-nav',
@@ -352,7 +336,7 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         targetId: 'settings-target-appearance-close-behavior',
         label: message(
             'app.appearance-settings.close-behavior.title',
-            'Choose how to close Axolotl Launcher',
+            'Choose how to close ALLIGATORZONE',
         ),
         keywords: [
             message('app.appearance-settings.close-behavior.close', 'Close directly'),
@@ -496,7 +480,7 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         label: message('app.settings.privacy.external-scheme', 'Allow external links'),
         description: message(
             'app.settings.privacy.external-scheme-description',
-            'Respond to axolotl:// links from browsers and other apps.',
+            'Respond to ALLIGATORZONEzone:// links from browsers and other apps.',
         ),
     },
     {
@@ -506,7 +490,7 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         label: message('app.settings.privacy.privileged-scheme', 'Allow privileged link actions'),
         description: message(
             'app.settings.privacy.privileged-scheme-description',
-            'Let axolotl:// links change settings and stop game processes.',
+            'Let ALLIGATORZONEzone:// links change settings and stop game processes.',
         ),
     },
     // The instance-sync category had no entries at all, so none of its rows
@@ -698,7 +682,7 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         id: 'storage-app-directory',
         categoryId: 'storage-backups',
         targetId: 'settings-target-storage-app-directory',
-        label: message('app.settings.resources.axolotl-data-directory', 'Axolotl data directory'),
+        label: message('app.settings.resources.ALLIGATORZONE-data-directory', 'ALLIGATORZONE data directory'),
     },
     {
         id: 'storage-minecraft-directories',
@@ -728,18 +712,6 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         id: 'updates-history',
         categoryId: 'updates',
         label: message('app.settings.updates.announcements.history', 'Release history'),
-    },
-    {
-        id: 'about-product',
-        categoryId: 'about',
-        targetId: 'settings-target-about-product',
-        label: message('app.settings.tabs.about', 'About'),
-    },
-    {
-        id: 'about-replay-tour',
-        categoryId: 'about',
-        targetId: 'settings-target-about-replay-tour',
-        label: message('app.settings.about.replay-onboarding', 'Replay tour'),
     },
     {
         id: 'feature-flags',

@@ -98,6 +98,15 @@ pub struct Instance {
     /// metadata instead.
     #[serde(default)]
     pub game_dir_override: Option<String>,
+    /// Web map address embedded by the launcher's map page.
+    ///
+    /// `None` means "never configured": the frontend then falls back to the
+    /// built-in default in `apps/app-frontend/src/server-config.ts`. `Some("")`
+    /// is an explicit "hide the map" and must never be replaced by that default,
+    /// which is why this stays an `Option` instead of defaulting to an empty
+    /// string at the storage layer.
+    #[serde(default)]
+    pub web_map_url: Option<String>,
     pub created: DateTime<Utc>,
     pub modified: DateTime<Utc>,
     pub last_played: Option<DateTime<Utc>>,

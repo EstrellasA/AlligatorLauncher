@@ -9,6 +9,7 @@ import {
     CurseForgeIcon,
     ExternalIcon,
     FileArchiveIcon,
+    FolderOpenIcon,
     GenericListIcon,
     GlobeIcon,
     GridIcon,
@@ -29,7 +30,6 @@ import type {
 } from '@modrinth/ui'
 import {
     BrowsePageLayout,
-    BrowseSidebar,
     Button,
     commonMessages,
     CreationFlowModal,
@@ -78,6 +78,12 @@ import {
     get_search_results_v3,
     get_version_many,
 } from '@/helpers/cache.js'
+import {
+    BROWSE_LOCKED_PROJECT_PATH,
+    BROWSE_LOCKED_PROJECT_TYPE,
+    isServerBrowseVisit,
+    withClientSideFacet,
+} from '@/helpers/client-mod-browse'
 import { type FavoriteContentType, isFavoriteContentType } from '@/helpers/content-favorites'
 import {
     bilingualTitle,
@@ -173,8 +179,32 @@ const router = useRouter()
 const route = useRoute()
 
 void contentFavorites.load().catch(handleError)
-const projectType = ref<ProjectType>(route.params.projectType as ProjectType)
+const routeProjectType = ref<ProjectType>(route.params.projectType as ProjectType)
 const WORLD_BROWSE_PROJECT_TYPE = 'world' as ProjectType
+
+/**
+ * True unless this Browse visit belongs to a server / multiplayer vertical.
+ * Outside those, the launcher locks Browse to client-side mods.
+ */
+const isLockedToClientMods = computed(
+    () =>
+        !isServerBrowseVisit(routeProjectType.value, {
+            sid: route.query.sid,
+            wid: route.query.wid,
+            from: route.query.from,
+        }),
+)
+
+/**
+ * The project type this Browse visit actually browses. Locked to `mod` for the
+ * launcher's content browser, so the project-type control, the search facets
+ * and every install path agree; server flows keep their own scope.
+ */
+const projectType = computed<ProjectType>(() =>
+    isLockedToClientMods.value
+        ? (BROWSE_LOCKED_PROJECT_TYPE as ProjectType)
+        : routeProjectType.value,
+)
 const isWorldMapBrowse = computed(() => projectType.value === WORLD_BROWSE_PROJECT_TYPE)
 const isWorldMapContext = computed(() => route.query.from === 'world-maps')
 
@@ -472,6 +502,17 @@ if (isFromWorlds.value && route.params.projectType !== 'server') {
 
 enforceSetupModpackRoute(route.params.projectType as string | undefined)
 
+// The launcher's content browser is locked to mods. A deep link or a stale
+// entry point that asks for another content vertical is redirected to the
+// locked route; server / multiplayer visits keep their own project type.
+if (isLockedToClientMods.value && route.params.projectType !== BROWSE_LOCKED_PROJECT_TYPE) {
+    debugLog('browse project type locked, redirecting', {
+        from: route.params.projectType,
+        to: BROWSE_LOCKED_PROJECT_TYPE,
+    })
+    void router.replace({ path: BROWSE_LOCKED_PROJECT_PATH, query: route.query })
+}
+
 const scopedInstalledProjectIds = computed(() =>
     installedProjectIdsInstanceId.value === activeInstance.value?.id
         ? (installedProjectIds.value ?? [])
@@ -544,7 +585,10 @@ async function refreshInstalledProjectIds() {
         return changed
     }
 
-    const ids = await getInstalledProjectIds(requestInstanceId).catch(handleError)
+    // Only `clientmods/` counts as installed here: a copy of the same mod that
+    // the server pack ships in `mods/` must not disable the install button, so
+    // the player can still add their own version to the launcher's folder.
+    const ids = await getInstalledProjectIds(requestInstanceId, ['clientmod']).catch(handleError)
     if (
         ids &&
         requestId === installedProjectRequestId &&
@@ -817,6 +861,33 @@ const messages = defineMessages({
         id: 'app.browse.discover-content',
         defaultMessage: 'Discover content',
     },
+    discoverClientMods: {
+        id: 'app.browse.client-mods.title',
+        defaultMessage: 'Discover content · Client mods',
+    },
+    clientModsNotice: {
+        id: 'app.browse.client-mods.notice',
+        defaultMessage:
+            "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed.",
+    },
+    installToMyMods: {
+        id: 'app.browse.client-mods.install',
+        defaultMessage: 'Install to my mods',
+    },
+    // The compact row is 64px tall and also carries the download count, the
+    // updated date and the tag chips, so the label above measures 143.6px and
+    // would squeeze the title column to nothing. This keeps the same promise —
+    // the install goes to the player's client-side mods, not the pack's — in
+    // the 118px the dense row can afford. `installToMyModsTooltip` still names
+    // the exact folder.
+    installToMyModsCompact: {
+        id: 'app.browse.client-mods.install-compact',
+        defaultMessage: 'Install to client',
+    },
+    installToMyModsTooltip: {
+        id: 'app.browse.client-mods.install-tooltip',
+        defaultMessage: "Installs into this instance's clientmods folder",
+    },
     discoverServers: {
         id: 'app.browse.discover-servers',
         defaultMessage: 'Discover servers',
@@ -1042,7 +1113,9 @@ const browseTitle = computed(() =>
             ? messages.discoverServers
             : isWorldMapBrowse.value
               ? messages.discoverMaps
-              : messages.discoverContent,
+              : isLockedToClientMods.value
+                ? messages.discoverClientMods
+                : messages.discoverContent,
     ),
 )
 watch(
@@ -1113,10 +1186,10 @@ watch(
             if (newType !== 'modpack') return
         }
 
-        if (!newType || newType === projectType.value) return
+        if (!newType || newType === routeProjectType.value) return
 
-        debugLog('projectType route param changed', { from: projectType.value, to: newType })
-        projectType.value = newType
+        debugLog('projectType route param changed', { from: routeProjectType.value, to: newType })
+        routeProjectType.value = newType
         // SPA tab switch reuses this instance; remount used to reset scroll.
         document.querySelector('.app-viewport')?.scrollTo({ top: 0 })
     },
@@ -1178,11 +1251,16 @@ const selectableProjectTypes = computed(() => {
             favorites: formatMessage(messages.favoritesProjectType),
         },
         suffix,
-        getBrowseProjectTabOptions({
-            instance: activeInstance.value,
-            hasInstanceContext: !!instance.value,
-            isServerInstance: isServerInstance.value,
-        }),
+        {
+            ...getBrowseProjectTabOptions({
+                instance: activeInstance.value,
+                hasInstanceContext: !!instance.value,
+                isServerInstance: isServerInstance.value,
+            }),
+            // The launcher's content browser offers client-side mods only, so
+            // the other project-type tabs must not be reachable from it.
+            modsOnly: isLockedToClientMods.value,
+        },
     )
 })
 
@@ -1493,6 +1571,21 @@ function isBrowseContentProvider(provider: unknown): provider is BrowseContentPr
     )
 }
 
+/**
+ * Where an install issued from this page lands. Inside the locked content
+ * browser every browsed mod goes to the instance's own `clientmods/` folder, so
+ * the action says so instead of offering a bare "Install".
+ */
+const contentBrowserInstallLabel = computed(() =>
+    isLockedToClientMods.value ? messages.installToMyMods : commonMessages.installButton,
+)
+const contentBrowserInstallCompactLabel = computed(() =>
+    isLockedToClientMods.value ? messages.installToMyModsCompact : commonMessages.installButton,
+)
+const contentBrowserInstallTooltip = computed(() =>
+    isLockedToClientMods.value ? formatMessage(messages.installToMyModsTooltip) : undefined,
+)
+
 function getCardActions(
     result: Labrinth.Search.v2.ResultSearchProject | Labrinth.Search.v3.ResultSearchProject,
     currentProjectType: string,
@@ -1648,12 +1741,20 @@ function getCardActions(
                         : isSelected
                           ? messages.selected
                           : activeInstance.value
-                            ? commonMessages.installButton
+                            ? contentBrowserInstallLabel.value
                             : messages.chooseInstance,
                 ),
+                tooltip: contentBrowserInstallTooltip.value,
+                // The compact row needs the short form of the same promise, and
+                // it must not fall back to the long label the moment an instance
+                // is selected (that is what widened the button past its column).
                 compactLabel:
-                    !isInstalled && !isSelected && !activeInstance.value
-                        ? formatMessage(messages.add)
+                    !isInstalled && !isSelected
+                        ? formatMessage(
+                              activeInstance.value
+                                  ? contentBrowserInstallCompactLabel.value
+                                  : messages.add,
+                          )
                         : undefined,
                 icon: isSelected || isInstalled ? CheckIcon : PlusIcon,
                 disabled: isInstalled,
@@ -1676,17 +1777,20 @@ function getCardActions(
         : isInstalled
           ? commonMessages.installedLabel
           : shouldUseInstallIcon
-            ? commonMessages.installButton
+            ? contentBrowserInstallLabel.value
             : messages.addToAnInstance
     const compactInstallLabel =
-        !isInstalling && !isInstalled && !shouldUseInstallIcon
-            ? formatMessage(messages.add)
+        !isInstalling && !isInstalled
+            ? formatMessage(
+                  shouldUseInstallIcon ? contentBrowserInstallCompactLabel.value : messages.add,
+              )
             : undefined
 
     return [
         {
             key: 'install',
             label: formatMessage(installActionLabel),
+            tooltip: contentBrowserInstallTooltip.value,
             compactLabel: compactInstallLabel,
             icon: isInstalling ? SpinnerIcon : isInstalled ? CheckIcon : PlusIcon,
             iconClass: isInstalling ? 'animate-spin' : undefined,
@@ -2051,6 +2155,12 @@ interface DirectModrinthProject {
     id: string
     slug?: string
     project_types?: string[]
+    /**
+     * Labrinth v3 project environments. The content browser only offers
+     * client-usable mods, so the directly injected Chinese-title candidates
+     * have to honour the same lock as the `client_side` search facet.
+     */
+    environment?: string[]
     name: string
     summary: string
     published?: string
@@ -2126,6 +2236,29 @@ function applyChineseTranslation(
     }
 }
 
+/**
+ * Labrinth v3 environment values that mean "a player can run this on the
+ * client". Mirrors the `client_side IN [required, optional]` search facet for
+ * the Chinese-title candidates that are injected without a search request.
+ */
+const CLIENT_USABLE_ENVIRONMENTS = new Set([
+    'client_only',
+    'client_only_server_optional',
+    'client_and_server',
+    'singleplayer_only',
+    'client_or_server',
+    'client_or_server_prefers_both',
+])
+
+function isClientUsableProject(project: { environment?: string[] }) {
+    const environments = project.environment ?? []
+    // An absent environment list must not hide a mod the facet search returned.
+    return (
+        environments.length === 0 ||
+        environments.some((value) => CLIENT_USABLE_ENVIRONMENTS.has(value))
+    )
+}
+
 function matchesDirectModrinthFilters(
     project: DirectModrinthProject,
     gameVersion: string | undefined,
@@ -2133,6 +2266,7 @@ function matchesDirectModrinthFilters(
     categoryValues: string[],
 ) {
     if (!project.project_types?.includes(projectType.value)) return false
+    if (isLockedToClientMods.value && !isClientUsableProject(project)) return false
     if (gameVersion && !project.game_versions?.includes(gameVersion)) return false
     if (loader && !project.loaders?.includes(loader)) return false
     const modrinthCategories = categoryValues.filter(
@@ -2353,6 +2487,13 @@ async function search(requestParams: string, signal: AbortSignal) {
             modrinthRequestParams,
             chineseResolution.modrinthQuery,
         )
+    }
+    // "只搜索客户端模组": the launcher's content browser must only ever offer
+    // mods a player can run on the client. The `project_types = mod` half of the
+    // lock comes from the locked `projectType` above; this adds the client-side
+    // half. Server verticals keep their own Modrinth filters.
+    if (isLockedToClientMods.value && includeModrinth) {
+        modrinthRequestParams = withClientSideFacet(modrinthRequestParams)
     }
     const providerRequestGroupId = crypto.randomUUID()
     const modrinthRequestId = `${providerRequestGroupId}:modrinth`
@@ -3349,6 +3490,13 @@ provideBrowseManager({
                 </ContextMenu>
             </template>
             <template #above-results>
+                <!-- The lock is otherwise invisible: say where an install lands. -->
+                <div v-if="isLockedToClientMods" class="flex items-center gap-2 px-1 pb-1 text-sm">
+                    <FolderOpenIcon class="size-3.5 shrink-0 text-[var(--color-text-tertiary)]" />
+                    <p class="m-0 text-[var(--color-text-tertiary)]">
+                        {{ formatMessage(messages.clientModsNotice) }}
+                    </p>
+                </div>
                 <div
                     v-if="searchNotice"
                     class="flex items-center gap-2 px-1 pb-1 text-sm"
@@ -3407,8 +3555,5 @@ provideBrowseManager({
             @select="selectTargetInstance"
             @cancel-switch="cancelTargetInstanceSwitch"
         />
-        <Teleport to="#sidebar-teleport-target">
-            <BrowseSidebar />
-        </Teleport>
     </div>
 </template>

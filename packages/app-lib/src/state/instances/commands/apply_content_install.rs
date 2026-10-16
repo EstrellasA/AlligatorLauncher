@@ -97,6 +97,15 @@ pub(crate) struct InstanceInstallProjectRequest {
     pub selected: ResolutionPreferences,
     pub excluded_project_ids: Vec<String>,
     pub force_project_ids: Vec<String>,
+    /// Opt-in override for the instance-relative folder the resolved plan's
+    /// files are written to. `None` keeps the historical behaviour of deriving
+    /// the folder from each version's loaders, which always means the server
+    /// pack's `mods/` folder for mods.
+    ///
+    /// The content browser sets this to [`ProjectType::ClientMod`] so a browse
+    /// install can never write into `mods/`; the primary file *and* every
+    /// dependency resolved for the same request follow it.
+    pub target_project_type: Option<ProjectType>,
 }
 
 struct CachedEntryContentProvider<'a> {
@@ -276,6 +285,7 @@ async fn resolve_install_plan_with_cache(
         crate::state::get_installed_project_ids_for_instance(
             instance_id,
             None,
+            None,
             state,
         )
         .await?;
@@ -434,16 +444,24 @@ pub(crate) async fn resolve_install_plan_for_target_with_policy(
 pub(crate) async fn install_resolved_content_plan(
     instance_id: &str,
     plan: &ResolveContentPlan,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<Vec<String>> {
-    install_resolved_content_plan_with_reporter(instance_id, plan, None, state)
-        .await
+    install_resolved_content_plan_with_reporter(
+        instance_id,
+        plan,
+        None,
+        target_project_type,
+        state,
+    )
+    .await
 }
 
 pub(crate) async fn install_resolved_content_plan_with_reporter(
     instance_id: &str,
     plan: &ResolveContentPlan,
     reporter: Option<crate::install::InstallProgressReporter>,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<Vec<String>> {
     let total_bytes = resolved_plan_total_bytes(plan, state).await?;
@@ -468,6 +486,7 @@ pub(crate) async fn install_resolved_content_plan_with_reporter(
                     content.dependent_on_version_id.clone(),
                     None,
                     reporter,
+                    target_project_type,
                     state,
                 )
                 .await?;
@@ -580,6 +599,11 @@ pub(crate) async fn switch_project_version_with_dependencies_preserving_name(
     let content_type = ProjectType::get_from_loaders(version.loaders.clone())
         .map(ContentType::from)
         .unwrap_or(ContentType::Mod);
+    // A version switch has to keep a client-side mod inside `clientmods/`.
+    // Without the override the generic path re-derives `mods/` from the new
+    // version's loaders and silently moves the file into the server pack's
+    // folder. Every other project type keeps the historical behaviour.
+    let target_project_type = client_mod_update_target(project_path);
     let plan = resolve_update_plan(
         instance_id,
         InstanceInstallProjectRequest {
@@ -589,6 +613,7 @@ pub(crate) async fn switch_project_version_with_dependencies_preserving_name(
             selected: ResolutionPreferences::default(),
             excluded_project_ids: Vec::new(),
             force_project_ids: Vec::new(),
+            target_project_type,
         },
         state,
     )
@@ -631,6 +656,7 @@ pub(crate) async fn switch_project_version_with_dependencies_preserving_name(
         ContentSourceKind::Local,
         ownership_kind,
         primary_progress,
+        target_project_type,
         state,
     )
     .await?;
@@ -662,6 +688,7 @@ pub(crate) async fn switch_project_version_with_dependencies_preserving_name(
                 DownloadReason::Dependency,
                 true,
                 progress,
+                target_project_type,
                 state,
             )
             .await?,
@@ -735,6 +762,7 @@ pub(crate) async fn prepare_modrinth_content_change_action(
             selected: ResolutionPreferences::default(),
             excluded_project_ids: Vec::new(),
             force_project_ids: Vec::new(),
+            target_project_type: None,
         },
         None,
         DependencyPolicy::RequiredOnly,
@@ -991,11 +1019,16 @@ async fn rename_project_file(
     Ok(())
 }
 
+/// Materializes one already-resolved plan entry.
+///
+/// `target_project_type` overrides the folder the file is written to; `None`
+/// keeps the historical loader-derived behaviour.
 pub(crate) async fn add_resolved_content(
     instance_id: &str,
     content: &ResolvedContent,
     reason: DownloadReason,
     auto_dependency: bool,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<String> {
     add_resolved_content_with_progress(
@@ -1004,6 +1037,7 @@ pub(crate) async fn add_resolved_content(
         reason,
         auto_dependency,
         None,
+        target_project_type,
         state,
     )
     .await
@@ -1015,6 +1049,7 @@ async fn add_resolved_content_with_progress(
     reason: DownloadReason,
     auto_dependency: bool,
     progress: Option<ResolvedContentDownloadProgress>,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<String> {
     let path = add_project_from_version_with_progress(
@@ -1025,6 +1060,7 @@ async fn add_resolved_content_with_progress(
         ContentSourceKind::Local,
         ContentOwnershipKind::UserAdded,
         progress,
+        target_project_type,
         state,
     )
     .await?;
@@ -1055,6 +1091,7 @@ async fn add_resolved_content_with_progress(
 pub(crate) async fn install_resolved_dependency(
     instance_id: &str,
     content: &ResolvedContent,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<String> {
     add_resolved_content_with_progress(
@@ -1063,6 +1100,60 @@ pub(crate) async fn install_resolved_dependency(
         DownloadReason::Dependency,
         true,
         None,
+        target_project_type,
+        state,
+    )
+    .await
+}
+
+/// Picks the instance-relative folder owner for one downloaded version.
+///
+/// An explicit opt-in target always wins, so a browse install can write
+/// `clientmods/` regardless of what the version's loaders would imply. Without
+/// an override this is exactly `ProjectType::get_from_loaders`, which keeps the
+/// generic install path's default behaviour (`mods/` for every mod) unchanged.
+pub(crate) fn resolve_download_project_type(
+    target_project_type: Option<ProjectType>,
+    loaders: Vec<String>,
+) -> Option<ProjectType> {
+    target_project_type.or_else(|| ProjectType::get_from_loaders(loaders))
+}
+
+/// Install target for a project file that is already recorded in the instance.
+///
+/// A version swap must keep a client-side mod inside `clientmods/`; without
+/// this the generic path re-derives `mods/` from the new version's loaders and
+/// silently moves the file into the server pack's folder. Every other project
+/// type keeps the historical loader-derived behaviour.
+pub(crate) fn client_mod_update_target(
+    project_path: &str,
+) -> Option<ProjectType> {
+    matches!(
+        project_type_for_file_path(project_path),
+        Some(ProjectType::ClientMod)
+    )
+    .then_some(ProjectType::ClientMod)
+}
+
+/// [`add_project_from_version`] with an explicit destination-folder override.
+pub(crate) async fn add_project_from_version_to_target(
+    instance_id: &str,
+    version_id: &str,
+    reason: DownloadReason,
+    dependent_on_version_id: Option<String>,
+    ownership_kind: ContentOwnershipKind,
+    target_project_type: Option<ProjectType>,
+    state: &State,
+) -> crate::Result<String> {
+    add_project_from_version_with_progress(
+        instance_id,
+        version_id,
+        reason,
+        dependent_on_version_id,
+        ContentSourceKind::Local,
+        ownership_kind,
+        None,
+        target_project_type,
         state,
     )
     .await
@@ -1268,6 +1359,7 @@ pub(crate) async fn add_project_from_version(
         source_kind,
         ownership_kind,
         None,
+        None,
         state,
     )
     .await
@@ -1282,6 +1374,7 @@ pub(crate) async fn add_project_from_version_with_progress(
     source_kind: ContentSourceKind,
     ownership_kind: ContentOwnershipKind,
     progress: Option<ResolvedContentDownloadProgress>,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<String> {
     let downloaded = download_project_version_with_progress(
@@ -1290,6 +1383,7 @@ pub(crate) async fn add_project_from_version_with_progress(
         reason,
         dependent_on_version_id,
         progress,
+        target_project_type,
         state,
     )
     .await?;
@@ -1317,6 +1411,7 @@ pub(crate) async fn download_project_version(
         reason,
         dependent_on_version_id,
         None,
+        None,
         state,
     )
     .await
@@ -1338,6 +1433,7 @@ pub(crate) async fn download_project_version_with_progress(
     reason: DownloadReason,
     dependent_on_version_id: Option<String>,
     progress: Option<ResolvedContentDownloadProgress>,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<DownloadedProjectVersion> {
     download_project_version_with_reporting(
@@ -1347,6 +1443,7 @@ pub(crate) async fn download_project_version_with_progress(
         dependent_on_version_id,
         progress,
         None,
+        target_project_type,
         state,
     )
     .await
@@ -1367,6 +1464,7 @@ pub(crate) async fn download_project_version_with_reporter(
         dependent_on_version_id,
         None,
         Some(reporter),
+        None,
         state,
     )
     .await
@@ -1379,6 +1477,7 @@ async fn download_project_version_with_reporting(
     dependent_on_version_id: Option<String>,
     progress: Option<ResolvedContentDownloadProgress>,
     reporter: Option<crate::install::InstallProgressReporter>,
+    target_project_type: Option<ProjectType>,
     state: &State,
 ) -> crate::Result<DownloadedProjectVersion> {
     let prepared = prepare_version_download(
@@ -1480,12 +1579,15 @@ async fn download_project_version_with_reporting(
     } else {
         fetch::sha1_file_async(&prepared.path).await?.1
     };
-    let project_type = ProjectType::get_from_loaders(prepared.loaders.clone())
-        .ok_or_else(|| {
-            crate::ErrorKind::InputError(format!(
-                "Unable to infer project type for version {version_id}"
-            ))
-        })?;
+    let project_type = resolve_download_project_type(
+        target_project_type,
+        prepared.loaders.clone(),
+    )
+    .ok_or_else(|| {
+        crate::ErrorKind::InputError(format!(
+            "Unable to infer project type for version {version_id}"
+        ))
+    })?;
 
     Ok(DownloadedProjectVersion {
         file_name: prepared.file_name,
@@ -1692,7 +1794,7 @@ pub(crate) async fn add_downloaded_project_version(
         version_id,
     } = downloaded;
     let scope = resolve_content_scope(instance_id, None, state).await?;
-    let localized_candidate = if project_type == ProjectType::Mod {
+    let localized_candidate = if project_type.is_mod() {
         None
     } else {
         modrinth_chinese_file_name_candidate(&project_id, &file_name, state)
@@ -1903,7 +2005,7 @@ pub(crate) async fn materialize_project_download_batch(
     let mut sources = Vec::with_capacity(downloads.len());
     let mut destinations = std::collections::HashSet::new();
     for download in downloads {
-        let localized = if download.project_type == ProjectType::Mod {
+        let localized = if download.project_type.is_mod() {
             None
         } else {
             modrinth_chinese_file_name_candidate(
@@ -2551,7 +2653,7 @@ async fn add_project_bytes_with_provider(
     .await?;
     fetch::write(&full_path, &bytes, &state.io_semaphore).await?;
 
-    let local_mod_data = if project_type == ProjectType::Mod {
+    let local_mod_data = if project_type.is_mod() {
         crate::mod_metadata::extract_mod_metadata(&bytes)
             .and_then(|meta| serde_json::to_string(&meta).ok())
     } else {
@@ -3855,7 +3957,7 @@ pub(crate) async fn rollback_project(
     remove_stale_backups(&folder, active_base, None).await;
 
     let local_mod_data = if project_type_for_file_path(&final_relative_path)
-        == Some(ProjectType::Mod)
+        .is_some_and(|project_type| project_type.is_mod())
     {
         tokio::fs::read(join_content_path(&base, &final_relative_path))
             .await
@@ -4053,7 +4155,7 @@ async fn index_existing_file(
             ))
         })?;
 
-    let local_mod_data = if project_type == ProjectType::Mod {
+    let local_mod_data = if project_type.is_mod() {
         // Read the file bytes, extract mod metadata
         match tokio::fs::read(&full_path).await {
             Ok(data) => {
@@ -4241,9 +4343,72 @@ mod tests {
         assert_eq!(tokio::fs::read(second).await.unwrap(), b"original");
     }
 
+    /// The generic install path must keep deriving the folder from the
+    /// version's loaders, i.e. `mods/` for every mod.
     #[test]
-    fn resource_pack_target_preferences_ignore_game_version() {
+    fn download_project_type_without_override_keeps_loader_derived_folder() {
         assert_eq!(
+            resolve_download_project_type(None, vec!["fabric".to_string()]),
+            Some(ProjectType::Mod)
+        );
+        assert_eq!(
+            resolve_download_project_type(None, vec!["quilt".to_string()]),
+            Some(ProjectType::Mod)
+        );
+        assert_eq!(
+            resolve_download_project_type(None, vec!["iris".to_string()]),
+            Some(ProjectType::ShaderPack)
+        );
+        assert_eq!(
+            resolve_download_project_type(None, vec!["datapack".to_string()]),
+            Some(ProjectType::DataPack)
+        );
+        assert_eq!(resolve_download_project_type(None, Vec::new()), None);
+    }
+
+    /// A browse install opts in to `clientmods/` and the override must beat
+    /// the loader-derived answer for the primary file and its dependencies.
+    #[test]
+    fn download_project_type_override_targets_clientmods() {
+        for loaders in [
+            vec!["fabric".to_string()],
+            vec!["forge".to_string()],
+            vec!["iris".to_string()],
+        ] {
+            let resolved = resolve_download_project_type(
+                Some(ProjectType::ClientMod),
+                loaders,
+            )
+            .expect("override must resolve");
+            assert_eq!(resolved, ProjectType::ClientMod);
+            assert_eq!(resolved.get_folder(), "clientmods");
+            assert_eq!(resolved.get_name(), "clientmod");
+            // `clientmods/` is still a mod everywhere the loader, metadata and
+            // update logic is concerned.
+            assert!(resolved.is_mod());
+        }
+    }
+
+    #[test]
+    fn client_mod_update_target_only_claims_clientmods_paths() {
+        assert_eq!(
+            client_mod_update_target("clientmods/sodium.jar"),
+            Some(ProjectType::ClientMod)
+        );
+        assert_eq!(
+            client_mod_update_target("clientmods/sodium.jar.disabled"),
+            Some(ProjectType::ClientMod)
+        );
+        // The server pack's own folder and every other project type keep the
+        // historical loader-derived behaviour.
+        assert_eq!(client_mod_update_target("mods/sodium.jar"), None);
+        assert_eq!(client_mod_update_target("shaderpacks/x.zip"), None);
+        assert_eq!(client_mod_update_target("datapacks/x.zip"), None);
+        assert_eq!(client_mod_update_target("unknown/x.jar"), None);
+    }
+
+    #[test]
+    fn resource_pack_target_preferences_ignore_game_version() {        assert_eq!(
             target_preferences(
                 "26.2".to_string(),
                 ModLoader::NeoForge,
