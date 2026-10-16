@@ -87,6 +87,40 @@ export function modProjectUrl(item: ModLinkSource): string | null {
 }
 
 /**
+ * The Modrinth project id a rail may navigate to, or `null` when the row has no
+ * real project behind it.
+ *
+ * Matched rows carry a genuine Modrinth id in `project.id`; unmatched ones carry
+ * a synthetic `local:<mod_id>` or `local:file:<hash>`. Only the former names a
+ * project that exists, so only the former may become an in-app link — a `local:`
+ * id would route to a project page that cannot resolve.
+ *
+ * Deliberately independent of `origin_provider`: the launcher resolves local
+ * jars by sha1 against Modrinth and stores the match in its own table, so a
+ * matched row can still report no origin provider. `modProjectUrl()` therefore
+ * cannot be used to decide this — for a matched row it skips its provider branch
+ * entirely and returns the jar's declared homepage or a search.
+ */
+export function modrinthProjectIdForNavigation(item: {
+    project?: { id?: string | null } | null
+}): string | null {
+    const projectId = item.project?.id?.trim()
+    if (!projectId || projectId.startsWith('local:')) return null
+    return projectId
+}
+
+/**
+ * The slug a Modrinth project route prefers, falling back to the id at the call
+ * site. `null` when the row has no real project or only a synthetic slug.
+ */
+export function modrinthProjectSlug(item: {
+    project?: { slug?: string | null } | null
+}): string | null {
+    const slug = item.project?.slug?.trim()
+    return slug && !slug.startsWith('local:') ? slug : null
+}
+
+/**
  * mcmod.cn has no public API and a hand-kept mod → page table would rot with
  * every pack update, so the wiki button is deliberately a search. `www.mcmod.cn/s`
  * redirects here, and the search host is the stable entry point.

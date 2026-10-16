@@ -193,8 +193,44 @@ export interface AutomodpackChangelogView {
     generations: AutomodpackGeneration[]
     /** Set when `available`. */
     skippedLines: number
+    /**
+     * How many policy-only republishes were dropped from `generations`.
+     *
+     * Counted, not silently discarded: the shape of the history is still worth
+     * one line of context even though a card for each would be pure noise.
+     */
+    silentGenerations: number
     /** Set when not `available`; why there is nothing to show. */
     reason?: AutomodpackUnavailable
+}
+
+/**
+ * Whether a generation says anything to a player.
+ *
+ * A **policy-only republish** — AutoModpack re-publishing because the pack's
+ * rules changed, with `contentToken` unmoved and `changes` empty — carries
+ * nothing: no files, no notes. Rendering one produces a large card reading
+ * "no files changed" over "no patch notes were published", which is what the
+ * user objected to with 「这两个啥都没有为什么要显示」.
+ *
+ * Both must be empty to hide it. A republish the operator annotated **is**
+ * worth showing, so notes alone keep a generation.
+ *
+ * The reader deliberately still returns these; hiding is a presentation choice,
+ * kept here so the backend keeps a complete, honest record of the history.
+ */
+export function isSilentGeneration(generation: AutomodpackGeneration): boolean {
+    const changed = generation.changedFiles ?? 0
+    const emptyChanges = (generation.changes?.length ?? 0) === 0
+    const noNotes = !generation.notes?.trim()
+    return changed === 0 && emptyChanges && noNotes
+}
+
+/** The generations worth rendering, in the order the reader returned them. */
+export function renderableGenerations(
+    generations: readonly AutomodpackGeneration[],
+): AutomodpackGeneration[] {
+    return generations.filter((generation) => !isSilentGeneration(generation))
 }
 
 /** One candidate instance's answer, in the order the page should prefer them. */
@@ -227,13 +263,16 @@ export function resolveAutomodpackView(
     for (const candidate of candidates) {
         const changelog = candidate.changelog
         if (changelog && isAutomodpackChangelog(changelog) && changelog.available) {
+            // `isAutomodpackChangelog` proves this is an array, so a payload that
+            // lied about it never reaches the page's `.length`.
+            const all = changelog.generations ?? []
+            const generations = renderableGenerations(all)
             return {
                 available: true,
                 instanceId: candidate.instanceId,
-                // `isAutomodpackChangelog` proves this is an array, so a payload
-                // that lied about it never reaches the page's `.length`.
-                generations: changelog.generations,
+                generations,
                 skippedLines: changelog.skippedLines ?? 0,
+                silentGenerations: all.length - generations.length,
             }
         }
         if (reason === null && changelog?.unavailableReason) {
@@ -241,5 +280,11 @@ export function resolveAutomodpackView(
         }
     }
 
-    return { available: false, generations: [], skippedLines: 0, reason: reason ?? fallbackReason }
+    return {
+        available: false,
+        generations: [],
+        skippedLines: 0,
+        silentGenerations: 0,
+        reason: reason ?? fallbackReason,
+    }
 }

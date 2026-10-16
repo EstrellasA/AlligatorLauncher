@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PlayIcon, RefreshCwIcon, ServerIcon, SpinnerIcon, UsersIcon } from '@modrinth/assets'
 import { Button, defineMessages, formatLoaderLabel, useVIntl } from '@modrinth/ui'
-import { computed, ref } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 
 import { useMinecraftLaunchError } from '@/composables/useMinecraftLaunchError'
 import {
@@ -12,6 +12,7 @@ import {
     useServerOverview,
 } from '@/composables/useServerOverview'
 import { trackEvent } from '@/helpers/analytics'
+import { generatePlayerHeadBlob } from '@/helpers/rendering/batch-skin-renderer'
 import { resolveServerWebMapUrl } from '@/helpers/server-web-map'
 import type { GameInstance } from '@/helpers/types'
 import { ensureManagedServerWorldExists, start_join_server } from '@/helpers/worlds'
@@ -204,11 +205,101 @@ const emptyPlayerListMessage = computed(() =>
  */
 const failedHeads = ref<ReadonlySet<string>>(new Set())
 
-/** The rendered head the ping's own UUID earns, or the name-based last resort. */
+/**
+ * Heads are drawn **locally**, the same way the account chip at the top of this
+ * page draws its own: `generatePlayerHeadBlob` takes the raw skin, draws the
+ * face and then draws the hat layer four pixels larger, so the second layer
+ * overhangs the head the way it does in game. A plain third-party head only
+ * overlays a face-sized hat, which for a skin whose hair is close in colour to
+ * the head reads as one flat layer — which is exactly what players reported.
+ *
+ * The raw skin comes from Minotar's `/skin` path, which serves the 64x64 texture
+ * with `Access-Control-Allow-Origin: *`, so the canvas is not tainted.
+ */
+const localHeads = ref<ReadonlyMap<string, string>>(new Map())
+const pendingHeadRenders = new Map<string, Promise<void>>()
+const createdHeadUrls = new Set<string>()
+
+function skinTextureUrl(player: ServerPlayer) {
+    return `https://minotar.net/skin/${encodeURIComponent(player.uuid || player.name)}`
+}
+
+/**
+ * The renderer only accepts a 64x64 texture. Legacy 64x32 skins keep the head
+ * and the hat in the same place, so padding the canvas to 64x64 is enough for a
+ * head — but they have to be padded first rather than handed over as they are.
+ */
+async function loadNormalizedSkin(url: string): Promise<string> {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        img.onload = () => resolve(img)
+        img.onerror = () => reject(new Error(`skin texture failed to load: ${url}`))
+        img.src = url
+    })
+
+    if (image.width === 64 && image.height === 64) return url
+
+    const canvas = document.createElement('canvas')
+    canvas.width = 64
+    canvas.height = 64
+    const context = canvas.getContext('2d')
+    if (!context) throw new Error('Could not get 2D context for the skin texture')
+
+    context.imageSmoothingEnabled = false
+    context.drawImage(image, 0, 0)
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, 'image/png'),
+    )
+    if (!blob) throw new Error('Could not normalise the skin texture')
+
+    const normalizedUrl = URL.createObjectURL(blob)
+    createdHeadUrls.add(normalizedUrl)
+    return normalizedUrl
+}
+
+async function renderHeadLocally(player: ServerPlayer) {
+    const key = serverPlayerKey(player)
+    if (localHeads.value.has(key) || pendingHeadRenders.has(key)) return
+
+    const render = (async () => {
+        try {
+            const skinUrl = await loadNormalizedSkin(skinTextureUrl(player))
+            const blob = await generatePlayerHeadBlob(skinUrl)
+            const url = URL.createObjectURL(blob)
+            createdHeadUrls.add(url)
+            localHeads.value = new Map(localHeads.value).set(key, url)
+        } catch {
+            // Unreachable or unusable textures cannot be drawn here; the
+            // third-party head below stays the fallback for those players.
+        } finally {
+            pendingHeadRenders.delete(key)
+        }
+    })()
+
+    pendingHeadRenders.set(key, render)
+    await render
+}
+
+watch(
+    players,
+    (list) => {
+        for (const player of list.slice(0, MAX_VISIBLE_PLAYERS)) void renderHeadLocally(player)
+    },
+    { immediate: true },
+)
+
+/**
+ * The locally drawn head once it is ready; until then (and for players it cannot
+ * draw) the third-party head, which is also the last resort if that image fails.
+ */
 function playerHeadSrc(player: ServerPlayer) {
-    if (player.uuid && !failedHeads.value.has(serverPlayerKey(player))) {
-        return playerHeadUrl(player.uuid)
-    }
+    const key = serverPlayerKey(player)
+    const local = localHeads.value.get(key)
+    if (local) return local
+
+    if (player.uuid && !failedHeads.value.has(key)) return playerHeadUrl(player.uuid)
     return playerHeadFallbackUrl(player.name)
 }
 
@@ -220,6 +311,12 @@ function onPlayerHeadError(player: ServerPlayer) {
     next.add(key)
     failedHeads.value = next
 }
+
+onUnmounted(() => {
+    for (const url of createdHeadUrls) URL.revokeObjectURL(url)
+    createdHeadUrls.clear()
+    pendingHeadRenders.clear()
+})
 
 const joinDisabledReason = computed(() => {
     if (state.value === 'offline') return formatMessage(messages.joinOffline)
@@ -548,16 +645,16 @@ async function joinServer() {
 }
 
 /*
- * The middle of the card. The floor is one head (2rem) plus a little air, so an
- * empty server still reads as a laid-out row and the region cannot collapse; the
- * extra height comes out of the empty space this area had below the status line.
- * It is also the region that gives way first: the card scrolls itself rather than
- * growing the row.
+ * The middle of the card. The floor is one head (2.25rem) plus a little air, so
+ * an empty server still reads as a laid-out row and the region cannot collapse;
+ * the extra height comes out of the empty space this area had below the status
+ * line. It is also the region that gives way first: the card scrolls itself
+ * rather than growing the row.
  */
 .server-card__players {
     display: flex;
     flex: 1 1 auto;
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -628,33 +725,31 @@ async function joinServer() {
 .player-row {
     display: flex;
     align-items: center;
+    /* The drawn head carries the hat layer as an overhang, so neighbours are
+       spaced apart: an overlap would clip the hair of the head underneath. */
+    gap: 0.25rem;
 }
 
 .player-chip {
     position: relative;
     display: block;
-    /* A front-face head reads at a glance; anything smaller turns into a smudge. */
-    width: 2rem;
-    height: 2rem;
-}
-
-/* A touch of overlap groups the row without hiding a face behind its neighbour. */
-.player-chip + .player-chip {
-    margin-left: -0.125rem;
+    /* 36px: the local render is 72px (a 64px face plus a 4px hat overhang), so
+       this is an exact 2:1 downscale and the visible face stays 32px — the same
+       numbers the account chip uses. */
+    width: 2.25rem;
+    height: 2.25rem;
 }
 
 .player-chip__head {
     display: block;
     width: 100%;
     height: 100%;
-    /* The source is the 8x8 face (hat layer composited) scaled up, so it is kept
-       as pixel art rather than smoothed, and framed like the Minecraft head icon
-       it is. `cover` fills that frame exactly. */
-    border-radius: 3px;
-    border: 1px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
-    background: var(--surface-4);
+    /* Both the drawn head and the third-party fallback are pixel art scaled by a
+       whole number (or, for the fallback, by ~1.8), so nearest-neighbour keeps
+       the skin pixels — and the hat layer — intact. No frame: the account chip
+       shows its head bare too. */
     image-rendering: pixelated;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .player-chip--more {

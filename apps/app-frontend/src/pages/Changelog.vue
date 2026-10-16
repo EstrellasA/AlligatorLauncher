@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GlobeIcon, RefreshCwIcon } from '@modrinth/assets'
+import { ExternalIcon, GlobeIcon, RefreshCwIcon } from '@modrinth/assets'
 import {
     ContentCard as ContentCardItem,
     type ContentCardProject,
@@ -11,6 +11,7 @@ import {
 } from '@modrinth/ui'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type {
     AutomodpackChangeKind,
@@ -18,11 +19,13 @@ import type {
     AutomodpackGeneration,
     AutomodpackUnavailable,
 } from '@/helpers/automodpack-payload'
+import { resolveChangelogProjectAction } from '@/helpers/changelog-project-link'
 import { get_content_items_by_paths } from '@/helpers/instance'
-import { modDisplayName, modProjectUrl } from '@/helpers/mod-links'
+import { modDisplayName } from '@/helpers/mod-links'
 import { loadAutomodpackChangelog } from '@/helpers/server-changelog'
 
 const { formatMessage, locale } = useVIntl()
+const router = useRouter()
 
 const messages = defineMessages({
     title: {
@@ -83,7 +86,11 @@ const messages = defineMessages({
     },
     openProjectPage: {
         id: 'app.server.changelog.open-project',
-        defaultMessage: 'Open the project page for {name}',
+        defaultMessage: 'Open the project page for {name} in the launcher',
+    },
+    openProjectExternal: {
+        id: 'app.server.changelog.open-project-external',
+        defaultMessage: 'Open {name} on its own site (leaves the launcher)',
     },
     openProjectSearch: {
         id: 'app.server.changelog.open-project-search',
@@ -94,6 +101,11 @@ const messages = defineMessages({
         id: 'app.server.changelog.skipped-lines',
         defaultMessage:
             '{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}',
+    },
+    silentGenerations: {
+        id: 'app.server.changelog.silent-generations',
+        defaultMessage:
+            '{count, plural, one {# further generation only republished the pack rules, with no file or note changes.} other {# further generations only republished the pack rules, with no file or note changes.}}',
     },
     fileCount: {
         id: 'app.server.changelog.file-count',
@@ -119,6 +131,11 @@ const messages = defineMessages({
         defaultMessage:
             'No instance on this computer has an AutoModpack history yet. Launch the pack once and the changes the server published will appear here.',
     },
+    noRenderableGenerations: {
+        id: 'app.server.changelog.nothing-to-show',
+        defaultMessage:
+            'The server has published pack generations, but none of them changed a file or carried patch notes, so there is nothing to report yet.',
+    },
 })
 
 /**
@@ -133,9 +150,14 @@ const error = ref<string | null>(null)
 /**
  * The rendered state. Always an array and always a number, so the template's
  * `.length` and `> 0` reads cannot throw however the backend answered.
+ *
+ * `generations` holds only the generations worth showing: a policy-only
+ * republish with no notes is dropped by `resolveAutomodpackView`, and the count
+ * that were dropped comes back as `silentGenerations` for one line of context.
  */
 const generations = ref<AutomodpackGeneration[]>([])
 const skippedLines = ref(0)
+const silentGenerations = ref(0)
 const instanceId = ref<string | null>(null)
 /** Why there is nothing to show, when no instance has a history. */
 const unavailableReason = ref<AutomodpackUnavailable | null>(null)
@@ -163,6 +185,7 @@ async function load(force = false) {
         generations.value = resolved.generations
         instanceId.value = resolved.instanceId ?? null
         skippedLines.value = resolved.skippedLines
+        silentGenerations.value = resolved.silentGenerations
         unavailableReason.value = resolved.reason ?? null
         if (force) {
             modsByGeneration.value = {}
@@ -322,35 +345,69 @@ function cardOwner(item: ContentItem): ContentOwner | undefined {
 }
 
 /**
- * Where a changed mod's card links, reusing the mod list's own resolution: the
- * homepage the jar declares first, then a matched provider page, then a search.
- * A mod that declares nothing still gets a search link, so the row's button is
- * never rendered dead — a row without a derivable URL simply gets no button.
+ * Where one changed mod's card goes.
+ *
+ * The launcher resolves the pack's jars to real Modrinth projects (by sha1, at
+ * sync time), so most rows open the launcher's **own** project page — the point
+ * of this page is to keep the player inside the launcher. A row the launcher
+ * could not match keeps the mod's own site instead, and a row with neither gets
+ * no action at all rather than a dead button.
  */
-function projectHref(item: ContentItem): string | null {
-    return modProjectUrl(item)
+function projectAction(item: ContentItem) {
+    return resolveChangelogProjectAction(item, instanceId.value)
 }
 
-function projectLinkLabel(item: ContentItem): string {
+/**
+ * The card title's destination. An in-app row links straight to the launcher's
+ * project page — the title is the biggest target on the card, so it carries the
+ * primary affordance. A row with only an external site gets no title link: the
+ * title must not silently leave the launcher.
+ */
+function projectRoute(item: ContentItem) {
+    const action = projectAction(item)
+    if (action?.kind !== 'in_app') return undefined
+    return { path: action.path, query: action.query }
+}
+
+function actionLabel(item: ContentItem, action: ReturnType<typeof projectAction>): string {
     const name = modDisplayName(item)
-    const declaresPage = Boolean(item.display_url?.trim())
-    return formatMessage(declaresPage ? messages.openProjectPage : messages.openProjectSearch, {
-        name,
-    })
+    if (action?.kind === 'in_app') {
+        return formatMessage(messages.openProjectPage, { name })
+    }
+    return formatMessage(
+        action?.declared ? messages.openProjectExternal : messages.openProjectSearch,
+        { name },
+    )
 }
 
-/** The row's only action: open the mod's own declared page in the browser. */
+/** The row's action: navigate in-app, or open the mod's own site. */
 function cardInlineActions(item: ContentItem): ContentRowInlineAction[] {
-    const href = projectHref(item)
-    if (!href) return []
+    const action = projectAction(item)
+    if (!action) return []
+    const label = actionLabel(item, action)
+    if (action.kind === 'in_app') {
+        return [
+            {
+                id: 'open-project-page',
+                label,
+                icon: GlobeIcon,
+                action: () => void openProjectInApp(action),
+            },
+        ]
+    }
     return [
         {
-            id: 'open-project-page',
-            label: projectLinkLabel(item),
-            icon: GlobeIcon,
-            action: () => void openExternal(href),
+            id: 'open-project-external',
+            label,
+            icon: ExternalIcon,
+            action: () => void openExternal(action.url),
         },
     ]
+}
+
+/** In-app navigation through the router, so the page stays inside the launcher. */
+async function openProjectInApp(action: { path: string; query: Record<string, string> }) {
+    await router.push({ path: action.path, query: action.query })
 }
 
 async function openExternal(href: string) {
@@ -414,6 +471,14 @@ onMounted(() => {
             >
                 {{ formatMessage(messages.errorTitle) }}
             </p>
+            <!--
+                A history exists but every generation in it was a policy-only
+                republish. Saying "nothing published yet" would be untrue, so
+                this case gets its own sentence.
+            -->
+            <p v-else-if="silentGenerations > 0" class="m-0 mb-3 text-secondary">
+                {{ formatMessage(messages.noRenderableGenerations) }}
+            </p>
             <p v-else class="m-0 mb-3 text-secondary">
                 {{ formatMessage(messages.noHistory) }}
             </p>
@@ -429,6 +494,9 @@ onMounted(() => {
         <div v-else class="min-h-0 flex-1 overflow-y-auto pb-6">
             <p v-if="skippedLines > 0" class="mb-3 text-sm text-orange">
                 {{ formatMessage(messages.skippedLines, { count: skippedLines }) }}
+            </p>
+            <p v-if="silentGenerations > 0" class="mb-3 text-sm text-secondary">
+                {{ formatMessage(messages.silentGenerations, { count: silentGenerations }) }}
             </p>
 
             <article
@@ -483,7 +551,7 @@ onMounted(() => {
                             v-for="item in modsFor(generation.seq)"
                             :key="item.id"
                             :project="cardProject(item)"
-                            :project-link="projectHref(item) ?? undefined"
+                            :project-link="projectRoute(item)"
                             :version="item.version ?? undefined"
                             :owner="cardOwner(item)"
                             :notice-badge="kindBadge(generation, item)"

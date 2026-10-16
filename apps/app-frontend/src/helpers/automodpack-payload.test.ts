@@ -5,9 +5,30 @@ import {
     AUTOMODPACK_WIRE_SHAPE,
     emptyAutomodpackChangelog,
     isAutomodpackChangelog,
+    isSilentGeneration,
+    renderableGenerations,
     resolveAutomodpackView,
     type AutomodpackChangelog,
+    type AutomodpackGeneration,
 } from './automodpack-payload.ts'
+
+/**
+ * A generation as the reader emits one. Defaults describe a published
+ * generation that changed something, which is the case the page must keep.
+ */
+function generation(fields: Partial<AutomodpackGeneration> = {}): AutomodpackGeneration {
+    return {
+        seq: 1,
+        createdAt: '2026-10-01T07:58:53.977887468Z',
+        notes: '',
+        contentToken: 'a'.repeat(40),
+        changedFiles: 1,
+        modPaths: ['mods/A.jar'],
+        changes: [],
+        directories: [],
+        ...fields,
+    }
+}
 
 /**
  * The update-notes page crashed on this payload:
@@ -146,7 +167,7 @@ test('a healthy first candidate wins', () => {
             instanceId: 'home',
             changelog: {
                 available: true,
-                generations: [{ seq: 3 }] as never,
+                generations: [generation({ seq: 3, changedFiles: 2 })],
                 skippedLines: 2,
             },
         },
@@ -156,6 +177,7 @@ test('a healthy first candidate wins', () => {
     assert.equal(view.instanceId, 'home')
     assert.equal(view.generations.length, 1)
     assert.equal(view.skippedLines, 2)
+    assert.equal(view.silentGenerations, 0)
 })
 
 /** The crash path: a rejected or malformed payload must not produce a throw. */
@@ -209,6 +231,97 @@ test('no candidates at all still yields a renderable state', () => {
     ]) {
         assert.equal(view.generations.length, 0)
         assert.equal(view.skippedLines, 0)
+        assert.equal(view.silentGenerations, 0)
     }
     assert.equal(resolveAutomodpackView([], 'unreachable').reason, 'unreachable')
+})
+
+/**
+ * Policy-only republishes: `contentToken` unmoved, `changes` empty. The real
+ * pack has two of them, and rendering each produced a large card reading "no
+ * files changed" over "no patch notes were published" — the noise the user
+ * objected to with 「这两个啥都没有为什么要显示」.
+ */
+test('a generation with no changes and no notes is silent', () => {
+    assert.equal(isSilentGeneration(generation({ changedFiles: 0, changes: [], notes: '' })), true)
+    assert.equal(
+        isSilentGeneration(generation({ changedFiles: 0, changes: [], notes: '   \n ' })),
+        true,
+    )
+})
+
+test('a silent republish the operator annotated is NOT hidden', () => {
+    // The requirement: only hide a generation when *both* are empty. Notes are
+    // the whole reason this generation exists.
+    assert.equal(
+        isSilentGeneration(generation({ changedFiles: 0, changes: [], notes: 'Rules only.' })),
+        false,
+    )
+})
+
+test('a generation with changes but no notes is NOT hidden', () => {
+    assert.equal(
+        isSilentGeneration(generation({ changedFiles: 3, changes: [], notes: '' })),
+        false,
+    )
+})
+
+test('only the silent generations are dropped from the list', () => {
+    const kept = generation({ seq: 1, changedFiles: 1108 })
+    const silent = generation({ seq: 2, changedFiles: 0, changes: [], notes: '' })
+    const silentWithNotes = generation({ seq: 3, changedFiles: 0, changes: [], notes: 'Rollback.' })
+
+    const renderable = renderableGenerations([kept, silent, silentWithNotes])
+    assert.deepEqual(
+        renderable.map((entry) => entry.seq),
+        [1, 3],
+    )
+})
+
+test('the view drops silent generations but counts them', () => {
+    const view = resolveAutomodpackView([
+        {
+            instanceId: 'home',
+            changelog: {
+                available: true,
+                skippedLines: 0,
+                generations: [
+                    generation({ seq: 3, changedFiles: 0, changes: [], notes: '' }),
+                    generation({ seq: 2, changedFiles: 0, changes: [], notes: '' }),
+                    generation({ seq: 1, changedFiles: 1108 }),
+                ],
+            },
+        },
+    ])
+
+    assert.equal(view.available, true)
+    assert.deepEqual(
+        view.generations.map((entry) => entry.seq),
+        [1],
+    )
+    // Counted, not swallowed: the page says how many were hidden.
+    assert.equal(view.silentGenerations, 2)
+})
+
+test('a history of only silent republishes renders the empty state, not a blank page', () => {
+    const view = resolveAutomodpackView([
+        {
+            instanceId: 'home',
+            changelog: {
+                available: true,
+                skippedLines: 0,
+                generations: [
+                    generation({ seq: 2, changedFiles: 0, changes: [], notes: '' }),
+                    generation({ seq: 1, changedFiles: 0, changes: [], notes: '' }),
+                ],
+            },
+        },
+    ])
+
+    // No cards to draw, and the page's `generations.length === 0` branch is
+    // reachable — with `silentGenerations > 0` it says the history exists but
+    // carries nothing, rather than claiming nothing was ever published.
+    assert.equal(view.generations.length, 0)
+    assert.equal(view.silentGenerations, 2)
+    assert.equal(view.available, true)
 })
