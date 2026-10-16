@@ -1,216 +1,462 @@
 {
-  "app.action-bar.downloading-java": {
+    "app.action-bar.downloading-java": {
     "message": "جاز تنزيل إصدار جافا {version}"
   },
-  "app.action-bar.downloading-update": {
+    "app.action-bar.downloading-update": {
     "message": "تحميل التحديث"
   },
-  "app.action-bar.downloads": {
+    "app.action-bar.downloads": {
     "message": "التنزيلات"
   },
-  "app.action-bar.hide-more-running-instances": {
+    "app.action-bar.hide-more-running-instances": {
     "message": "إخفاء المزيد من الحالات قيد التشغيل"
   },
-  "app.action-bar.make-primary-instance": {
+    "app.action-bar.make-primary-instance": {
     "message": "إنشاء نسخة أساسية"
   },
-  "app.action-bar.no-instances-running": {
+    "app.action-bar.no-instances-running": {
     "message": "لا توجد نسخ قيد التشغيل"
   },
-  "app.action-bar.offline": {
+    "app.action-bar.offline": {
     "message": "غير متصل"
   },
-  "app.action-bar.primary-instance": {
+    "app.action-bar.primary-instance": {
     "message": "النسخة ألرئيسية"
   },
-  "app.action-bar.reload-to-update": {
+    "app.action-bar.reload-to-update": {
     "message": "أعد التشغيل للتحديث"
   },
-  "app.action-bar.show-more-running-instances": {
+    "app.action-bar.show-more-running-instances": {
     "message": "عرض المزيد من النسخ قيد التشغيل"
   },
-  "app.action-bar.stop-instance": {
+    "app.action-bar.stop-instance": {
     "message": "إيقاف النسخة"
   },
-  "app.action-bar.update": {
+    "app.action-bar.update": {
     "message": "تحديث"
   },
-  "app.action-bar.view-active-downloads": {
+    "app.action-bar.view-active-downloads": {
     "message": "عرض التحميلات الفعالة"
   },
-  "app.action-bar.view-instance": {
+    "app.action-bar.view-instance": {
     "message": "عرض النسخة"
   },
-  "app.action-bar.view-logs": {
+    "app.action-bar.view-logs": {
     "message": "عرض التسجيل"
   },
-  "app.appearance-settings.advanced-rendering.description": {
+    "app.appearance-settings.advanced-rendering.description": {
     "message": "يتيح العرض المتقدم لتأثيرات مثل التشويش الذي قد تسبب مشكلات في الأداء دون استخدام العرض المسرع بالأجهزة."
   },
-  "app.appearance-settings.advanced-rendering.title": {
+    "app.appearance-settings.advanced-rendering.title": {
     "message": "العرض المتقدم"
   },
-  "app.appearance-settings.color-theme.description": {
+    "app.appearance-settings.color-theme.description": {
     "message": "اختر لون سمتك المفضل من أجل تطبيق ALLIGATORZONE."
   },
-  "app.appearance-settings.color-theme.title": {
+    "app.appearance-settings.color-theme.title": {
     "message": "لون السمة"
   },
-  "app.appearance-settings.default-landing-page.description": {
+    "app.appearance-settings.default-landing-page.description": {
     "message": "غير الصفحة التي يفتح عليها المشغل."
   },
-  "app.appearance-settings.default-landing-page.home": {
+    "app.appearance-settings.default-landing-page.home": {
     "message": "صفحة الرئيسية"
   },
-  "app.appearance-settings.default-landing-page.library": {
+    "app.appearance-settings.default-landing-page.library": {
     "message": "مكتبة"
   },
-  "app.appearance-settings.default-landing-page.title": {
+    "app.appearance-settings.default-landing-page.title": {
     "message": "الصفحة الرئيسة الافتراضية"
   },
-  "app.appearance-settings.hide-nametag.description": {
+    "app.appearance-settings.hide-nametag.description": {
     "message": "ألغ تفعيل عرض الاسم فوق لاعبك في صفحة المظاهر."
   },
-  "app.appearance-settings.hide-nametag.title": {
+    "app.appearance-settings.hide-nametag.title": {
     "message": "إخفاء عرض الاسم"
   },
-  "app.appearance-settings.sections.advanced-interface": {
+    "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-  "app.appearance-settings.sections.content-behavior": {
+    "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-  "app.appearance-settings.sections.home-navigation": {
+    "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-  "app.auth-servers.unreachable.body": {
+    "app.auth-servers.unreachable.body": {
     "message": "قد تكون خوادم مصادقة ماينكرافت معطلة حاليًا. تحقق من اتصالك بالإنترنت وحاول مرة أخرى لاحقًا."
   },
-  "app.auth-servers.unreachable.header": {
+    "app.auth-servers.unreachable.header": {
     "message": "تعذر الوصول إلى خوادم المصادقة"
   },
-  "app.browse.add-to-instance": {
+    "app.browse.add-to-instance": {
     "message": "أضف للنموذج"
   },
-  "app.browse.add-to-instance-name": {
+    "app.browse.add-to-instance-name": {
     "message": "أضف للنموذج {instanceName}"
   },
-  "app.browse.added": {
+    "app.browse.added": {
     "message": "مضاف"
   },
-  "app.browse.already-added": {
+    "app.browse.already-added": {
     "message": "مضاف فعلا"
   },
-  "app.browse.back-to-instance": {
+    "app.browse.back-to-instance": {
     "message": "العودة للنموذج"
   },
-  "app.browse.discover-content": {
+    "app.browse.client-mods.install": {
+    "message": "Install to my mods"
+  },
+    "app.browse.client-mods.install-compact": {
+    "message": "Install to client"
+  },
+    "app.browse.client-mods.install-tooltip": {
+    "message": "Installs into this instance's clientmods folder"
+  },
+    "app.browse.client-mods.notice": {
+    "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
+  },
+    "app.browse.client-mods.title": {
+    "message": "Discover content · Client mods"
+  },
+    "app.browse.discover-content": {
     "message": "استكشف محتوى"
   },
-  "app.browse.discover-servers": {
+    "app.browse.discover-servers": {
     "message": "استكشف خوادم"
   },
-  "app.browse.hide-added-servers": {
+    "app.browse.hide-added-servers": {
     "message": "إخفاء الخوادم المضافة مسبقًا"
   },
-  "app.browse.server.installing": {
+    "app.browse.server.installing": {
     "message": "جاري التثبيت"
   },
-  "app.export-modal.description-placeholder": {
+    "app.content-install.preview.pack-duplicate-confirm": {
+    "message": "Install my copy anyway"
+  },
+    "app.content-install.preview.pack-duplicate-consequence": {
+    "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
+  },
+    "app.content-install.preview.pack-duplicate-description": {
+    "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
+  },
+    "app.content-install.preview.pack-duplicate-header": {
+    "message": "Already provided by the server pack"
+  },
+    "app.export-modal.description-placeholder": {
     "message": "أدخل وصف التعديل..."
   },
-  "app.export-modal.export-button": {
+    "app.export-modal.export-button": {
     "message": "تصدير"
   },
-  "app.export-modal.header": {
+    "app.export-modal.header": {
     "message": "تصدير حزمة التعديل"
   },
-  "app.export-modal.modpack-name-label": {
+    "app.export-modal.modpack-name-label": {
     "message": "إسم حزمة التعديل"
   },
-  "app.export-modal.modpack-name-placeholder": {
+    "app.export-modal.modpack-name-placeholder": {
     "message": "إسم حزمة التعديل"
   },
-  "app.export-modal.version-number-label": {
+    "app.export-modal.version-number-label": {
     "message": "رقم الإصدار"
   },
-  "app.export-modal.version-number-placeholder": {
+    "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-  "app.instance.confirm-delete.admonition-body": {
+    "app.first-run-bootstrap.dismiss": {
+    "message": "Continue anyway"
+  },
+    "app.first-run-bootstrap.failed.bundled-mods": {
+    "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
+  },
+    "app.first-run-bootstrap.failed.details": {
+    "message": "Technical details"
+  },
+    "app.first-run-bootstrap.failed.instance-creation": {
+    "message": "The game instance could not be created. Check your network connection and try again."
+  },
+    "app.first-run-bootstrap.failed.instance-id-missing": {
+    "message": "The launcher could not tell which instance was created. Please report this to the server team."
+  },
+    "app.first-run-bootstrap.failed.title": {
+    "message": "Setup could not be finished"
+  },
+    "app.first-run-bootstrap.failed.unknown": {
+    "message": "Something went wrong while setting up your game."
+  },
+    "app.first-run-bootstrap.file-progress": {
+    "message": "File {current} of {total}"
+  },
+    "app.first-run-bootstrap.phase.downloading-minecraft": {
+    "message": "Downloading the game files…"
+  },
+    "app.first-run-bootstrap.phase.finishing": {
+    "message": "Finishing up…"
+  },
+    "app.first-run-bootstrap.phase.installing-loader": {
+    "message": "Installing the mod loader…"
+  },
+    "app.first-run-bootstrap.phase.preparing": {
+    "message": "Preparing your game…"
+  },
+    "app.first-run-bootstrap.repair.subtitle": {
+    "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
+  },
+    "app.first-run-bootstrap.repair.success-text": {
+    "message": "The missing files were added back. You can start playing now."
+  },
+    "app.first-run-bootstrap.repair.title": {
+    "message": "Finishing your game setup"
+  },
+    "app.first-run-bootstrap.retry": {
+    "message": "Try again"
+  },
+    "app.first-run-bootstrap.server-missing.text": {
+    "message": "Add {address} to your instance manually, or use the join button on the home page."
+  },
+    "app.first-run-bootstrap.server-missing.title": {
+    "message": "The server was not added automatically"
+  },
+    "app.first-run-bootstrap.step.creating-instance": {
+    "message": "Creating your game instance"
+  },
+    "app.first-run-bootstrap.step.installing-mods": {
+    "message": "Installing the required mods"
+  },
+    "app.first-run-bootstrap.step.registering-server": {
+    "message": "Adding the server to your instance"
+  },
+    "app.first-run-bootstrap.subtitle": {
+    "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
+  },
+    "app.first-run-bootstrap.success.text": {
+    "message": "The instance was created with the mods this server needs. You can start playing now."
+  },
+    "app.first-run-bootstrap.success.title": {
+    "message": "Your game is ready"
+  },
+    "app.first-run-bootstrap.title": {
+    "message": "Setting up your game"
+  },
+    "app.home.server-status.checking": {
+    "message": "Checking..."
+  },
+    "app.home.server-status.join": {
+    "message": "Join server"
+  },
+    "app.home.server-status.join.no-instance": {
+    "message": "Choose a home instance before joining the server."
+  },
+    "app.home.server-status.join.not-installed": {
+    "message": "This instance is still installing. Join once it is ready."
+  },
+    "app.home.server-status.join.offline": {
+    "message": "The server is offline right now."
+  },
+    "app.home.server-status.joining": {
+    "message": "Joining..."
+  },
+    "app.home.server-status.latency": {
+    "message": "{latency} ms"
+  },
+    "app.home.server-status.loading": {
+    "message": "Fetching the latest server status..."
+  },
+    "app.home.server-status.offline": {
+    "message": "Offline"
+  },
+    "app.home.server-status.offline.body": {
+    "message": "It may be under maintenance — ask in the group chat? The web map often still works."
+  },
+    "app.home.server-status.offline.body.no-map": {
+    "message": "It may be under maintenance — ask in the group chat?"
+  },
+    "app.home.server-status.offline.title": {
+    "message": "The server is offline right now"
+  },
+    "app.home.server-status.online": {
+    "message": "Online"
+  },
+    "app.home.server-status.players.empty": {
+    "message": "Nobody is online right now — the world is all yours."
+  },
+    "app.home.server-status.players.more": {
+    "message": "+{count}"
+  },
+    "app.home.server-status.players.stale": {
+    "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
+  },
+    "app.home.server-status.players.title": {
+    "message": "Players online"
+  },
+    "app.home.server-status.players.unavailable": {
+    "message": "The server does not publish its player list, so only the count is shown."
+  },
+    "app.home.server-status.refresh": {
+    "message": "Refresh status"
+  },
+    "app.home.server-status.version": {
+    "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
+  },
+    "app.instance.confirm-delete.admonition-body": {
     "message": "سيتم حذف جميع البيانات الخاصة لنموذجك نهائيًا، بما في ذلك عوالمك والتكوينات وكل المحتوى المثبت."
   },
-  "app.instance.confirm-delete.admonition-header": {
+    "app.instance.confirm-delete.admonition-header": {
     "message": "لا يمكن التراجع عن هذا الإجراء"
   },
-  "app.instance.confirm-delete.delete-button": {
+    "app.instance.confirm-delete.delete-button": {
     "message": "حذف النموذج"
   },
-  "app.instance.confirm-delete.header": {
+    "app.instance.confirm-delete.header": {
     "message": "حذف النموذج"
   },
-  "app.instance.modpack-already-installed.body": {
+    "app.instance.modpack-already-installed.body": {
     "message": "حُزْمَة التعديل مثبته مسبقًا فعلًا في نموذج <bold>{instanceName}</bold>. هل أنت متأكد بإرادة نسخه؟"
   },
-  "app.instance.modpack-already-installed.create": {
+    "app.instance.modpack-already-installed.create": {
     "message": "إنشاء"
   },
-  "app.instance.modpack-already-installed.header": {
+    "app.instance.modpack-already-installed.header": {
     "message": "حُزْمَة التعديل مثبتة فعلًا"
   },
-  "app.instance.modpack-already-installed.instance": {
+    "app.instance.modpack-already-installed.instance": {
     "message": "النموذج"
   },
-  "app.instance.mods.content-type-project": {
+    "app.instance.mods.content-type-project": {
     "message": "مشروع"
   },
-  "app.instance.mods.project-was-added": {
+    "app.instance.mods.folder-note": {
+    "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
+  },
+    "app.instance.mods.player-added.badge": {
+    "message": "Player-added"
+  },
+    "app.instance.mods.player-added.hint": {
+    "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
+  },
+    "app.instance.mods.project-was-added": {
     "message": "تمت إضافة \"{name}\""
   },
-  "app.instance.mods.projects-were-added": {
+    "app.instance.mods.projects-were-added": {
     "message": "تمت إضافة {count} مشروع"
   },
-  "app.instance.mods.share-text": {
+    "app.instance.mods.share-text": {
     "message": "تحقق من المشاريع التي أستخدمها في حزمة التعديل الخاص بي!"
   },
-  "app.instance.mods.share-title": {
+    "app.instance.mods.share-title": {
     "message": "مشاركة محتوى حُزْمَة التعديل"
   },
-  "app.instance.mods.successfully-uploaded": {
+    "app.instance.mods.successfully-uploaded": {
     "message": "تم الرفع بنجاح"
   },
-  "app.instance.worlds.add-server": {
+    "app.instance.worlds.add-server": {
     "message": "أضف خادم"
   },
-  "app.instance.worlds.browse-servers": {
+    "app.instance.worlds.browse-servers": {
     "message": "تصفح الخوادم"
   },
-  "app.instance.worlds.filter-modded": {
+    "app.instance.worlds.filter-modded": {
     "message": "معدّل"
   },
-  "app.instance.worlds.filter-offline": {
+    "app.instance.worlds.filter-offline": {
     "message": "مفصول"
   },
-  "app.instance.worlds.filter-online": {
+    "app.instance.worlds.filter-online": {
     "message": "يعمل"
   },
-  "app.instance.worlds.filter-vanilla": {
+    "app.instance.worlds.filter-vanilla": {
     "message": "الأصلي"
   },
-  "app.instance.worlds.no-worlds-description": {
+    "app.instance.worlds.no-worlds-description": {
     "message": "أضف خادما أو تصفح لكي تبدأ"
   },
-  "app.instance.worlds.no-worlds-heading": {
+    "app.instance.worlds.no-worlds-heading": {
     "message": "لم تتم إضافة أي من الخوادم أو العوالم"
   },
-  "app.instance.worlds.search-worlds-placeholder": {
+    "app.instance.worlds.search-worlds-placeholder": {
     "message": "ابحث بين ال{count} عوالم..."
   },
-  "app.project.install-context.back-to-browse": {
+    "app.mods.change-instance": {
+    "message": "Change instance"
+  },
+    "app.mods.conflict.badge": {
+    "message": "Server copy takes over"
+  },
+    "app.mods.conflict.summary": {
+    "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
+  },
+    "app.mods.conflict.tooltip": {
+    "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
+  },
+    "app.mods.count": {
+    "message": "{count, plural, one {# file} other {# files}}"
+  },
+    "app.mods.disabled": {
+    "message": "Disabled"
+  },
+    "app.mods.folder-missing": {
+    "message": "This folder does not exist in the instance yet."
+  },
+    "app.mods.link.mcmod": {
+    "message": "Search {name} on the MC Mod wiki"
+  },
+    "app.mods.link.project": {
+    "message": "Open the project page for {name}"
+  },
+    "app.mods.load-failed": {
+    "message": "Could not read this folder."
+  },
+    "app.mods.loading": {
+    "message": "Loading files…"
+  },
+    "app.mods.no-instance": {
+    "message": "No installed instance is available."
+  },
+    "app.mods.ownership.local-discovered": {
+    "message": "Found in the folder"
+  },
+    "app.mods.ownership.pack-managed": {
+    "message": "Managed by the server pack"
+  },
+    "app.mods.ownership.user-added": {
+    "message": "Added by you"
+  },
+    "app.mods.picker.no-instances": {
+    "message": "No installed instances are available."
+  },
+    "app.mods.picker.no-results": {
+    "message": "No matching instances"
+  },
+    "app.mods.picker.search": {
+    "message": "Search instances"
+  },
+    "app.mods.picker.select": {
+    "message": "Choose {name}"
+  },
+    "app.mods.picker.title": {
+    "message": "Choose an instance"
+  },
+    "app.mods.refresh": {
+    "message": "Refresh"
+  },
+    "app.mods.retry": {
+    "message": "Try again"
+  },
+    "app.navigation.changelog": {
+    "message": "Update notes"
+  },
+    "app.navigation.server-map": {
+    "message": "Server map"
+  },
+    "app.project.install-context.back-to-browse": {
     "message": "العودة إلى الاستكشاف"
   },
-  "app.project.install-context.install-content-to-instance": {
+    "app.project.install-context.install-content-to-instance": {
     "message": "تثبيت المحتويات الى النموذج"
+  },
+    "app.server.avatar.open-skin-selector": {
+    "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
   "app.server.changelog.file-count": "{count, plural, one {# file} other {# files}}",
@@ -238,511 +484,568 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-  "app.settings.defaults.sections.after-launch": {
+    "app.server.map.loading": {
+    "message": "Loading the map..."
+  },
+    "app.server.map.not-embeddable.body": {
+    "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
+  },
+    "app.server.map.not-embeddable.title": {
+    "message": "This map cannot be embedded"
+  },
+    "app.server.map.open-in-browser": {
+    "message": "Open in browser"
+  },
+    "app.server.map.reload": {
+    "message": "Reload map"
+  },
+    "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-  "app.settings.defaults.sections.environment": {
+    "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-  "app.settings.defaults.sections.launch-hooks": {
+    "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-  "app.settings.defaults.sections.window-behavior": {
+    "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-  "app.settings.developer-mode-enabled": {
+    "app.settings.developer-mode-enabled": {
     "message": "تم تفعيل وضع المطوّر."
   },
-  "app.settings.developer.feature-flags-section-title": {
+    "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-  "app.settings.downloading": {
+    "app.settings.downloading": {
     "message": "جار تنزيل الإصدار {version}"
   },
-  "app.settings.feature-flags.advanced-filters-collapsed": {
+    "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-  "app.settings.feature-flags.always-show-app-controls": {
+    "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-  "app.settings.feature-flags.auto-install-dependencies": {
+    "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-  "app.settings.feature-flags.i18n-debug": {
+    "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-  "app.settings.feature-flags.page-path": {
+    "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-  "app.settings.feature-flags.page-transitions": {
+    "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-  "app.settings.feature-flags.project-background": {
+    "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-  "app.settings.feature-flags.server-project-qa": {
+    "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-  "app.settings.feature-flags.show-instance-play-time": {
+    "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-  "app.settings.feature-flags.show-version-environment-column": {
+    "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-  "app.settings.feature-flags.skip-non-essential-warnings": {
+    "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-  "app.settings.feature-flags.skip-unknown-pack-warning": {
+    "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-  "app.settings.feature-flags.worlds-in-home": {
+    "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-  "app.settings.feature-flags.worlds-tab": {
+    "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-  "app.settings.privacy.section-title": {
+    "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-  "app.settings.resources.sections.data-storage": {
+    "app.settings.resources.ALLIGATORZONE-data-directory": {
+    "message": "ALLIGATORZONE data directory"
+  },
+    "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-  "app.settings.resources.sections.download-behavior": {
+    "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-  "app.settings.resources.sections.missing-content": {
+    "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-  "app.settings.resources.sections.network-authentication": {
+    "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-  "app.skins.add-button": {
+    "app.settings.updates.channel.state-description": {
+    "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
+  },
+    "app.settings.updates.manual.description": {
+    "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
+  },
+    "app.settings.updates.manual.distribution": {
+    "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
+  },
+    "app.settings.updates.manual.title": {
+    "message": "Automatic updates are off"
+  },
+    "app.skins.add-button": {
     "message": "إضافة مظهر"
   },
-  "app.skins.add-button.drag-and-drop": {
+    "app.skins.add-button.drag-and-drop": {
     "message": "أسحب ثم أفلت"
   },
-  "app.skins.apply-button": {
+    "app.skins.apply-button": {
     "message": "تطبيق"
   },
-  "app.skins.delete-button": {
+    "app.skins.delete-button": {
     "message": "حذف المظهر"
   },
-  "app.skins.delete-modal.description": {
+    "app.skins.delete-modal.description": {
     "message": "سيتم حذف المظهر بشكل نهائي، ولايمكن إرجاعه."
   },
-  "app.skins.delete-modal.title": {
+    "app.skins.delete-modal.title": {
     "message": "هل أنت متأكد من حذف المظهر هذا؟"
   },
-  "app.skins.edit-button": {
+    "app.skins.edit-button": {
     "message": "تعديل المظهر"
   },
-  "app.skins.modal.add-skin-button": {
+    "app.skins.modal.add-skin-button": {
     "message": "إضافة المظهر"
   },
-  "app.skins.modal.add-title": {
+    "app.skins.modal.add-title": {
     "message": "إضافة المظهر"
   },
-  "app.skins.modal.cape-fallback-name": {
+    "app.skins.modal.cape-fallback-name": {
     "message": "رداء"
   },
-  "app.skins.modal.cape-section": {
+    "app.skins.modal.cape-section": {
     "message": "رداء"
   },
-  "app.skins.modal.edit-title": {
+    "app.skins.modal.edit-title": {
     "message": "تعديل المظهر"
   },
-  "app.skins.modal.make-edit-first-tooltip": {
+    "app.skins.modal.make-edit-first-tooltip": {
     "message": "عدل المظهر أولا للحفظ !"
   },
-  "app.skins.modal.no-cape-tooltip": {
+    "app.skins.modal.no-cape-tooltip": {
     "message": "بدون رداء"
   },
-  "app.skins.modal.none-cape-option": {
+    "app.skins.modal.none-cape-option": {
     "message": "لا شيء"
   },
-  "app.skins.modal.save-skin-button": {
+    "app.skins.modal.save-skin-button": {
     "message": "حفظ المظهر"
   },
-  "app.skins.modal.saving-tooltip": {
+    "app.skins.modal.saving-tooltip": {
     "message": "حفظ..."
   },
-  "app.skins.modal.upload-skin-first-tooltip": {
+    "app.skins.modal.upload-skin-first-tooltip": {
     "message": "أرفع المظهر أولا !"
   },
-  "app.skins.preview.edit-button": {
+    "app.skins.preview.edit-button": {
     "message": "تعديل المظهر"
   },
-  "app.skins.previewing-badge": {
+    "app.skins.previewing-badge": {
     "message": "أستعراض"
   },
-  "app.skins.rate-limit.title": {
+    "app.skins.rate-limit.title": {
     "message": "تمهل !"
   },
-  "app.skins.sign-in.title": {
+    "app.skins.sign-in.title": {
     "message": "الرجاء تسجيل الدخول"
   },
-  "app.skins.title": {
+    "app.skins.title": {
     "message": "اختيار المظهر"
   },
-  "app.translation-settings.display-section-title": {
+    "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-  "app.update-popup.body.download-complete": {
+    "app.update-popup.body.download-complete": {
     "message": "انتهى تنزيل تطبيق ALLIGATORZONEv{version}. أعد التحميل للتحديث الآن، أو تلقائيًا عند إغلاق تطبيق ALLIGATORZONE."
   },
-  "app.update-popup.body.metered": {
+    "app.update-popup.body.metered": {
     "message": "تطبيق ALLIGATORZONEv{version} متاح الآن! وبما أنك متصل بشبكة مقيّدة، لم نقم بتنزيله تلقائيًا."
   },
-  "app.update-popup.changelog": {
+    "app.update-popup.changelog": {
     "message": "سجل التغيير"
   },
-  "app.update-popup.download": {
+    "app.update-popup.download": {
     "message": "تنزيل ({size})"
   },
-  "app.update-popup.download-complete": {
+    "app.update-popup.download-complete": {
     "message": "اكتمل التنزيل"
   },
-  "app.update-popup.title": {
+    "app.update-popup.title": {
     "message": "تحديث متاح"
   },
-  "app.update.complete-toast.text": {
+    "app.update.complete-toast.text": {
     "message": "انقر هنا لعرض سجلّ التغييرات."
   },
-  "app.update.complete-toast.title": {
+    "app.update.complete-toast.title": {
     "message": "تم تثبيت الإصدار {version} بنجاح!"
   },
-  "app.world.server-modal.placeholder-address": {
+    "app.world.server-modal.placeholder-address": {
     "message": "مثال (example.modrinth.gg)"
   },
-  "app.world.server-modal.select-an-option": {
+    "app.world.server-modal.select-an-option": {
     "message": "حدد خيارا"
   },
-  "app.world.world-item.incompatible-version": {
+    "app.world.world-item.incompatible-version": {
     "message": "إصدار غير مطابق ({version})"
   },
-  "app.world.world-item.not-played-yet": {
+    "app.world.world-item.not-played-yet": {
     "message": "لم يتم اللعب به"
   },
-  "app.world.world-item.offline": {
+    "app.world.world-item.offline": {
     "message": "مفصول"
   },
-  "app.world.world-item.players-online": {
+    "app.world.world-item.players-online": {
     "message": "{count} متصل حاليا"
   },
-  "friends.action.add-friend": {
+    "friends.action.add-friend": {
     "message": "إضافة صديق"
   },
-  "friends.action.view-friend-requests": {
+    "friends.action.view-friend-requests": {
     "message": "{count} {count, plural, one {طلب صداقة} other {طلبات صداقة}}"
   },
-  "friends.add-friend.submit": {
+    "friends.add-friend.submit": {
     "message": "إرسال طلب صداقة"
   },
-  "friends.add-friend.title": {
+    "friends.add-friend.title": {
     "message": "جار إضافة صديق"
   },
-  "friends.add-friend.username.description": {
+    "friends.add-friend.username.description": {
     "message": "قد يختلف عن اسم المستخدم الخاص بهم في ماينكرافت!"
   },
-  "friends.add-friend.username.placeholder": {
+    "friends.add-friend.username.placeholder": {
     "message": "أدخل اسم مستخدم Modrinth..."
   },
-  "friends.add-friend.username.title": {
+    "friends.add-friend.username.title": {
     "message": "ما اسم مستخدم صديقك في Modrinth؟"
   },
-  "friends.add-friends-to-share": {
+    "friends.add-friends-to-share": {
     "message": "<link>أضف أصدقاء</link> لمعرفة ما الذي يلعبونه!"
   },
-  "friends.friend.cancel-request": {
+    "friends.friend.cancel-request": {
     "message": "إلغاء الطلب"
   },
-  "friends.friend.remove-friend": {
+    "friends.friend.remove-friend": {
     "message": "إزالة صديق"
   },
-  "friends.friend.request-sent": {
+    "friends.friend.request-sent": {
     "message": "إرسال طلب الصداقة"
   },
-  "friends.friend.view-profile": {
+    "friends.friend.view-profile": {
     "message": "عرض الملف الشخصي"
   },
-  "friends.heading": {
+    "friends.heading": {
     "message": "أصدقاء"
   },
-  "friends.heading.active": {
+    "friends.heading.active": {
     "message": "نشط"
   },
-  "friends.heading.offline": {
+    "friends.heading.offline": {
     "message": "غير متصل"
   },
-  "friends.heading.online": {
+    "friends.heading.online": {
     "message": "متصل"
   },
-  "friends.heading.pending": {
+    "friends.heading.pending": {
     "message": "قيد الانتظار"
   },
-  "friends.no-friends-match": {
+    "friends.no-friends-match": {
     "message": "لا يوجد أصدقاء يطابقون ‎''{query}''‎"
   },
-  "friends.search-friends-placeholder": {
+    "friends.search-friends-placeholder": {
     "message": "ابحث عن الأصدقاء..."
   },
-  "friends.section.heading": {
+    "friends.section.heading": {
     "message": "{title} - {count}"
   },
-  "friends.sign-in-to-add-friends": {
+    "friends.sign-in-to-add-friends": {
     "message": "<link>سجّل الدخول إلى حساب Modrinth</link> لإضافة الأصدقاء ومعرفة ما الذي يلعبونه!"
   },
-  "instance.add-server.add-and-play": {
+    "instance.add-server.add-and-play": {
     "message": "إضافة واللعب"
   },
-  "instance.add-server.add-server": {
+    "instance.add-server.add-server": {
     "message": "إضافة خادم"
   },
-  "instance.add-server.resource-pack.disabled": {
+    "instance.add-server.resource-pack.disabled": {
     "message": "معطَّل"
   },
-  "instance.add-server.resource-pack.enabled": {
+    "instance.add-server.resource-pack.enabled": {
     "message": "مفعَّل"
   },
-  "instance.add-server.resource-pack.prompt": {
+    "instance.add-server.resource-pack.prompt": {
     "message": "موجه الأوامر"
   },
-  "instance.add-server.title": {
+    "instance.add-server.title": {
     "message": "إضافة خادم"
   },
-  "instance.edit-server.title": {
+    "instance.edit-server.title": {
     "message": "تعديل خادم"
   },
-  "instance.files.adding-files": {
+    "instance.files.adding-files": {
     "message": "إضافة ملفات ({completed}\\{total})"
   },
-  "instance.files.save-as": {
+    "instance.files.save-as": {
     "message": "حفظ ك..."
   },
-  "instance.server-modal.address": {
+    "instance.server-modal.address": {
     "message": "العنوان"
   },
-  "instance.server-modal.name": {
+    "instance.server-modal.name": {
     "message": "الاسم"
   },
-  "instance.server-modal.placeholder-name": {
+    "instance.server-modal.placeholder-name": {
     "message": "خادم Minecraft"
   },
-  "instance.server-modal.resource-pack": {
+    "instance.server-modal.resource-pack": {
     "message": "حزمة الموارد"
   },
-  "instance.settings.tabs.general": {
+    "instance.settings.tabs.general": {
     "message": "عام"
   },
-  "instance.settings.tabs.general.delete": {
+    "instance.settings.tabs.general.delete": {
     "message": "حذف النسخة"
   },
-  "instance.settings.tabs.general.delete.button": {
+    "instance.settings.tabs.general.delete.button": {
     "message": "حذف النسخة"
   },
-  "instance.settings.tabs.general.delete.description": {
+    "instance.settings.tabs.general.delete.description": {
     "message": "يحذف النسخة نهائيًا من جهازك، بما في ذلك عوالمك، إعداداتك، وجميع المحتويات المثبّتة. كن حذرًا، فبمجرد حذف النسخة لن تكون هناك أي طريقة لاستعادتها."
   },
-  "instance.settings.tabs.general.deleting.button": {
+    "instance.settings.tabs.general.deleting.button": {
     "message": "جاري الحذف..."
   },
-  "instance.settings.tabs.general.duplicate-button": {
+    "instance.settings.tabs.general.duplicate-button": {
     "message": "نسخ"
   },
-  "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
+    "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
     "message": "لا يمكن النسخ أثناء التثبيت."
   },
-  "instance.settings.tabs.general.duplicate-instance": {
+    "instance.settings.tabs.general.duplicate-instance": {
     "message": "نسخة النسخة"
   },
-  "instance.settings.tabs.general.duplicate-instance.description": {
+    "instance.settings.tabs.general.duplicate-instance.description": {
     "message": "ينشئ نسخة من هذا النموذج شاملا عوالمه, تعديلاتها النصيه, إلخ..."
   },
-  "instance.settings.tabs.general.edit-icon": {
+    "instance.settings.tabs.general.edit-icon": {
     "message": "تعديل الأيقونة"
   },
-  "instance.settings.tabs.general.edit-icon.remove": {
+    "instance.settings.tabs.general.edit-icon.remove": {
     "message": "أزل الأيقونة"
   },
-  "instance.settings.tabs.general.edit-icon.replace": {
+    "instance.settings.tabs.general.edit-icon.replace": {
     "message": "استبدل الأيقونة"
   },
-  "instance.settings.tabs.general.edit-icon.select": {
+    "instance.settings.tabs.general.edit-icon.select": {
     "message": "اختر الأيقونة"
   },
-  "instance.settings.tabs.general.name": {
+    "instance.settings.tabs.general.name": {
     "message": "الاسم"
   },
-  "instance.settings.tabs.hooks": {
+    "instance.settings.tabs.general.web-map": {
+    "message": "Web map"
+  },
+    "instance.settings.tabs.general.web-map.default-note": {
+    "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
+  },
+    "instance.settings.tabs.general.web-map.description": {
+    "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
+  },
+    "instance.settings.tabs.general.web-map.hidden-note": {
+    "message": "The map is hidden for this instance, and its page is disabled."
+  },
+    "instance.settings.tabs.general.web-map.hide": {
+    "message": "Hide map"
+  },
+    "instance.settings.tabs.general.web-map.input-label": {
+    "message": "Map address"
+  },
+    "instance.settings.tabs.general.web-map.invalid": {
+    "message": "Enter a full address starting with http:// or https://."
+  },
+    "instance.settings.tabs.general.web-map.placeholder": {
+    "message": "https://map.example.com/"
+  },
+    "instance.settings.tabs.general.web-map.save": {
+    "message": "Save"
+  },
+    "instance.settings.tabs.hooks": {
     "message": "إجراءات تشغيل إضافية"
   },
-  "instance.settings.tabs.hooks.custom-hooks": {
+    "instance.settings.tabs.hooks.custom-hooks": {
     "message": "إجراءات تشغيل إضافية مخصصة"
   },
-  "instance.settings.tabs.hooks.description": {
+    "instance.settings.tabs.hooks.description": {
     "message": "إجراءات التشغيل المضافة تسمح للمستخدمين المتقدمين بإنشاء أوامر نظامية محددة قبل و عند تشغيل اللعبة."
   },
-  "instance.settings.tabs.hooks.post-exit": {
+    "instance.settings.tabs.hooks.post-exit": {
     "message": "ما بعد الخروج"
   },
-  "instance.settings.tabs.hooks.post-exit.description": {
+    "instance.settings.tabs.hooks.post-exit.description": {
     "message": "يتم تشغيله بعد إغلاق اللعبة."
   },
-  "instance.settings.tabs.hooks.post-exit.enter": {
+    "instance.settings.tabs.hooks.post-exit.enter": {
     "message": "أدخل أمر ما بعد الخروج..."
   },
-  "instance.settings.tabs.hooks.pre-launch": {
+    "instance.settings.tabs.hooks.pre-launch": {
     "message": "ما قبل الإطلاق"
   },
-  "instance.settings.tabs.hooks.pre-launch.description": {
+    "instance.settings.tabs.hooks.pre-launch.description": {
     "message": "يتم تشغيله قبل بَدْء تشغيل النسخة."
   },
-  "instance.settings.tabs.hooks.pre-launch.enter": {
+    "instance.settings.tabs.hooks.pre-launch.enter": {
     "message": "أدخل أمر ما قبل الإطلاق..."
   },
-  "instance.settings.tabs.hooks.title": {
+    "instance.settings.tabs.hooks.title": {
     "message": "خطافات تشغيل اللعبة"
   },
-  "instance.settings.tabs.hooks.wrapper": {
+    "instance.settings.tabs.hooks.wrapper": {
     "message": "مُغلِّف"
   },
-  "instance.settings.tabs.hooks.wrapper.description": {
+    "instance.settings.tabs.hooks.wrapper.description": {
     "message": "أمر غلاف لتشغيل ماينكرافت."
   },
-  "instance.settings.tabs.hooks.wrapper.enter": {
+    "instance.settings.tabs.hooks.wrapper.enter": {
     "message": "أدخل أمر الغلاف..."
   },
-  "instance.settings.tabs.installation": {
+    "instance.settings.tabs.installation": {
     "message": "تثبيت"
   },
-  "instance.settings.tabs.installation.loader-version": {
+    "instance.settings.tabs.installation.loader-version": {
     "message": "إصدار {loader}"
   },
-  "instance.settings.tabs.java": {
+    "instance.settings.tabs.java": {
     "message": "جافا والذاكرة"
   },
-  "instance.settings.tabs.java.environment-variables": {
+    "instance.settings.tabs.java.environment-variables": {
     "message": "المتغيرات البيئية"
   },
-  "instance.settings.tabs.java.java-arguments": {
+    "instance.settings.tabs.java.java-arguments": {
     "message": "وسائط جافا"
   },
-  "instance.settings.tabs.java.java-installation": {
+    "instance.settings.tabs.java.java-installation": {
     "message": "تثبيت جافا"
   },
-  "instance.settings.tabs.java.java-memory": {
+    "instance.settings.tabs.java.java-memory": {
     "message": "الذاكرة المخصَّصة"
   },
-  "instance.settings.tabs.java.java-path-placeholder": {
+    "instance.settings.tabs.java.java-path-placeholder": {
     "message": "/path/to/java"
   },
-  "instance.settings.tabs.window": {
+    "instance.settings.tabs.window": {
     "message": "النافذة"
   },
-  "instance.settings.tabs.window.custom-window-settings": {
+    "instance.settings.tabs.window.custom-window-settings": {
     "message": "إعدادات نافذة مخصّصة"
   },
-  "instance.settings.tabs.window.fullscreen": {
+    "instance.settings.tabs.window.fullscreen": {
     "message": "ملء الشاشة"
   },
-  "instance.settings.tabs.window.fullscreen.description": {
+    "instance.settings.tabs.window.fullscreen.description": {
     "message": "جعل اللعبة تبدأ في وضع ملء الشاشة عند التشغيل (باستخدام ‎options.txt)."
   },
-  "instance.settings.tabs.window.height": {
+    "instance.settings.tabs.window.height": {
     "message": "الارتفاع"
   },
-  "instance.settings.tabs.window.height.description": {
+    "instance.settings.tabs.window.height.description": {
     "message": "ارتفاع نافذة اللعبة عند التشغيل."
   },
-  "instance.settings.tabs.window.height.enter": {
+    "instance.settings.tabs.window.height.enter": {
     "message": "أدخل الارتفاع..."
   },
-  "instance.settings.tabs.window.width": {
+    "instance.settings.tabs.window.width": {
     "message": "العرض"
   },
-  "instance.settings.tabs.window.width.description": {
+    "instance.settings.tabs.window.width.description": {
     "message": "عرض نافذة اللعبة عند التشغيل."
   },
-  "instance.settings.tabs.window.width.enter": {
+    "instance.settings.tabs.window.width.enter": {
     "message": "أدخل العرض..."
   },
-  "instance.worlds.a_minecraft_server": {
+    "instance.worlds.a_minecraft_server": {
     "message": "خادم ماين كرافت"
   },
-  "instance.worlds.cant_connect": {
+    "instance.worlds.cant_connect": {
     "message": "لا يمكن الاتصال بالخادم"
   },
-  "instance.worlds.copy_address": {
+    "instance.worlds.copy_address": {
     "message": "نسخ العنوان"
   },
-  "instance.worlds.game_already_open": {
+    "instance.worlds.game_already_open": {
     "message": "النسخة مفتوحة بالفعل"
   },
-  "instance.worlds.hardcore": {
+    "instance.worlds.hardcore": {
     "message": "وضع الهاردكور"
   },
-  "instance.worlds.incompatible_server": {
+    "instance.worlds.incompatible_server": {
     "message": "الخادم غير متوافق"
   },
-  "instance.worlds.linked_server": {
+    "instance.worlds.linked_server": {
     "message": "تدار بواسطة مشروع الخادم"
   },
-  "instance.worlds.no_contact": {
+    "instance.worlds.no_contact": {
     "message": "تعذّر الاتصال بالخادم"
   },
-  "instance.worlds.no_server_quick_play": {
+    "instance.worlds.no_server_quick_play": {
     "message": "يمكنك الدخول مباشرة إلى الخوادم فقط على ماين كرافت Alpha 1.0.5+"
   },
-  "instance.worlds.no_singleplayer_quick_play": {
+    "instance.worlds.no_singleplayer_quick_play": {
     "message": "يمكنك الدخول مباشرة إلى عوالم اللعب الفردي فقط على ماين كرافت ‎1.20+‎"
   },
-  "instance.worlds.play_instance": {
+    "instance.worlds.play_instance": {
     "message": "تشغيل النسخة"
   },
-  "instance.worlds.view_instance": {
+    "instance.worlds.view_instance": {
     "message": "عرض النسخة"
   },
-  "instance.worlds.world_in_use": {
+    "instance.worlds.world_in_use": {
     "message": "العالم قيد الاستخدام"
   },
-  "minecraft-account.label": {
+    "minecraft-account.label": {
     "message": "حساب ماينكرافت"
   },
-  "minecraft-account.select-account": {
+    "minecraft-account.select-account": {
     "message": "اختيار الحساب"
   },
-  "minecraft-account.sign-in": {
+    "minecraft-account.sign-in": {
     "message": "سجل دخولك لـ ماينكرافت"
   },
-  "search.filter.locked.instance": {
+    "search.filter.locked.instance": {
     "message": "مقدَّم من النسخة"
   },
-  "search.filter.locked.instance-game-version.title": {
+    "search.filter.locked.instance-game-version.title": {
     "message": "إصدار اللعبة مقدَّم من النسخة"
   },
-  "search.filter.locked.instance-loader.title": {
+    "search.filter.locked.instance-loader.title": {
     "message": "المحمّل مقدَّم من النسخة"
   },
-  "search.filter.locked.instance.sync": {
+    "search.filter.locked.instance.sync": {
     "message": "مزامنة مع النسخة"
   },
-  "search.filter.locked.server": {
+    "search.filter.locked.server": {
     "message": "يقدمها الخادم"
   },
-  "search.filter.locked.server-environment.title": {
+    "search.filter.locked.server-environment.title": {
     "message": "يمكن إضافة التعديلات **المحليه** فقط إلى نموذج الخادم"
   },
-  "search.filter.locked.server-game-version.title": {
+    "search.filter.locked.server-game-version.title": {
     "message": "يتم توفير نسخة اللعبة من قبل الخادم"
   },
-  "search.filter.locked.server-loader.title": {
+    "search.filter.locked.server-loader.title": {
     "message": "يتم توفير المحمّل من قبل الخادم"
   },
-  "unknown-pack-warning-modal.dont-show-again": {
+    "unknown-pack-warning-modal.dont-show-again": {
     "message": "لا تعرض هذا التحذير مجددا"
   }
 }

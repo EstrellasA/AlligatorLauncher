@@ -1,267 +1,513 @@
 {
-  "app.action-bar.downloading-java": {
+    "app.action-bar.downloading-java": {
     "message": "Завантаження Java {version}"
   },
-  "app.action-bar.downloading-update": {
+    "app.action-bar.downloading-update": {
     "message": "Завантаження оновлення"
   },
-  "app.action-bar.downloads": {
+    "app.action-bar.downloads": {
     "message": "Завантаження"
   },
-  "app.action-bar.hide-more-running-instances": {
+    "app.action-bar.hide-more-running-instances": {
     "message": "Приховати більше запущених профілів"
   },
-  "app.action-bar.make-primary-instance": {
+    "app.action-bar.make-primary-instance": {
     "message": "Зробити основним профілем"
   },
-  "app.action-bar.no-instances-running": {
+    "app.action-bar.no-instances-running": {
     "message": "Немає запущених профілів"
   },
-  "app.action-bar.offline": {
+    "app.action-bar.offline": {
     "message": "Поза мережею"
   },
-  "app.action-bar.primary-instance": {
+    "app.action-bar.primary-instance": {
     "message": "Основний профіль"
   },
-  "app.action-bar.reload-to-update": {
+    "app.action-bar.reload-to-update": {
     "message": "Перезавантаження для оновлення"
   },
-  "app.action-bar.show-more-running-instances": {
+    "app.action-bar.show-more-running-instances": {
     "message": "Показати більше запущених профілів"
   },
-  "app.action-bar.stop-instance": {
+    "app.action-bar.stop-instance": {
     "message": "Зупинити профіль"
   },
-  "app.action-bar.update": {
+    "app.action-bar.update": {
     "message": "Оновлення"
   },
-  "app.action-bar.view-active-downloads": {
+    "app.action-bar.view-active-downloads": {
     "message": "Переглянути активні завантаження"
   },
-  "app.action-bar.view-instance": {
+    "app.action-bar.view-instance": {
     "message": "Переглянути профіль"
   },
-  "app.action-bar.view-logs": {
+    "app.action-bar.view-logs": {
     "message": "Переглянути журнали"
   },
-  "app.appearance-settings.advanced-rendering.description": {
+    "app.appearance-settings.advanced-rendering.description": {
     "message": "Дозволяє розширене промальовування, як-от ефекти розмиття, які можуть спричиняти проблеми з продуктивністю без апаратно-прискореного промальовування."
   },
-  "app.appearance-settings.advanced-rendering.title": {
+    "app.appearance-settings.advanced-rendering.title": {
     "message": "Розширене промальовування"
   },
-  "app.appearance-settings.color-theme.description": {
+    "app.appearance-settings.color-theme.description": {
     "message": "Виберіть бажану колірну тему для ALLIGATORZONE."
   },
-  "app.appearance-settings.color-theme.title": {
+    "app.appearance-settings.color-theme.title": {
     "message": "Колірна тема"
   },
-  "app.appearance-settings.default-landing-page.description": {
+    "app.appearance-settings.default-landing-page.description": {
     "message": "Змініть сторінку, на якій відкривається запускач."
   },
-  "app.appearance-settings.default-landing-page.home": {
+    "app.appearance-settings.default-landing-page.home": {
     "message": "Головна"
   },
-  "app.appearance-settings.default-landing-page.library": {
+    "app.appearance-settings.default-landing-page.library": {
     "message": "Бібліотека"
   },
-  "app.appearance-settings.default-landing-page.title": {
+    "app.appearance-settings.default-landing-page.title": {
     "message": "Усталена цільова сторінка"
   },
-  "app.appearance-settings.hide-nametag.description": {
+    "app.appearance-settings.hide-nametag.description": {
     "message": "Вимикає ім'я над вашим гравцем на сторінці скінів."
   },
-  "app.appearance-settings.hide-nametag.title": {
+    "app.appearance-settings.hide-nametag.title": {
     "message": "Приховати ім'я"
   },
-  "app.appearance-settings.minimize-launcher.description": {
+    "app.appearance-settings.minimize-launcher.description": {
     "message": "Згортає запускач під час запуску процесу Minecraft."
   },
-  "app.appearance-settings.minimize-launcher.title": {
+    "app.appearance-settings.minimize-launcher.title": {
     "message": "Мінімізувати запускач"
   },
-  "app.appearance-settings.native-decorations.description": {
+    "app.appearance-settings.native-decorations.description": {
     "message": "Використовувати рамку системного вікна (потрібно перезапустити програму)."
   },
-  "app.appearance-settings.native-decorations.title": {
+    "app.appearance-settings.native-decorations.title": {
     "message": "Системне оформлення"
   },
-  "app.appearance-settings.sections.advanced-interface": {
+    "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-  "app.appearance-settings.sections.content-behavior": {
+    "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-  "app.appearance-settings.sections.home-navigation": {
+    "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-  "app.appearance-settings.select-option": {
+    "app.appearance-settings.select-option": {
     "message": "Виберіть опцію"
   },
-  "app.appearance-settings.show-play-time.description": {
+    "app.appearance-settings.show-play-time.description": {
     "message": "Показує, скільки часу ви провели в цьому профілі."
   },
-  "app.appearance-settings.show-play-time.title": {
+    "app.appearance-settings.show-play-time.title": {
     "message": "Час гри"
   },
-  "app.appearance-settings.toggle-sidebar.description": {
+    "app.appearance-settings.toggle-sidebar.description": {
     "message": "Умикає можливість перемикання бокової панелі."
   },
-  "app.appearance-settings.toggle-sidebar.title": {
+    "app.appearance-settings.toggle-sidebar.title": {
     "message": "Перемикання бокової панелі"
   },
-  "app.appearance-settings.unknown-pack-warning.description": {
+    "app.appearance-settings.unknown-pack-warning.description": {
     "message": "Якщо ви спробуєте встановити файл пакета Modrinth (.mrpack), який не розміщено на Modrinth, ми переконаємося, що ви розумієте ризики, перш ніж установлювати його."
   },
-  "app.appearance-settings.unknown-pack-warning.title": {
+    "app.appearance-settings.unknown-pack-warning.title": {
     "message": "Попередження перед установленням невідомих збірок"
   },
-  "app.auth-servers.unreachable.body": {
+    "app.auth-servers.unreachable.body": {
     "message": "Сервери автентифікації Minecraft можуть зараз не працювати. Перевірте з’єднання з інтернетом та спробуйте пізніше."
   },
-  "app.auth-servers.unreachable.header": {
+    "app.auth-servers.unreachable.header": {
     "message": "Не вдається зв’язатися зі серверами автентифікації"
   },
-  "app.browse.add-servers-to-instance": {
+    "app.browse.add-servers-to-instance": {
     "message": "Додавання сервера до профілю"
   },
-  "app.browse.add-to-an-instance": {
+    "app.browse.add-to-an-instance": {
     "message": "Додати до профілю"
   },
-  "app.browse.add-to-instance": {
+    "app.browse.add-to-instance": {
     "message": "Додати до профілю"
   },
-  "app.browse.add-to-instance-name": {
+    "app.browse.add-to-instance-name": {
     "message": "Додати до «{instanceName}»"
   },
-  "app.browse.added": {
+    "app.browse.added": {
     "message": "Додано"
   },
-  "app.browse.already-added": {
+    "app.browse.already-added": {
     "message": "Уже додано"
   },
-  "app.browse.back-to-instance": {
+    "app.browse.back-to-instance": {
     "message": "Назад до профілю"
   },
-  "app.browse.discover-content": {
+    "app.browse.client-mods.install": {
+    "message": "Install to my mods"
+  },
+    "app.browse.client-mods.install-compact": {
+    "message": "Install to client"
+  },
+    "app.browse.client-mods.install-tooltip": {
+    "message": "Installs into this instance's clientmods folder"
+  },
+    "app.browse.client-mods.notice": {
+    "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
+  },
+    "app.browse.client-mods.title": {
+    "message": "Discover content · Client mods"
+  },
+    "app.browse.discover-content": {
     "message": "Дослідити вміст"
   },
-  "app.browse.discover-servers": {
+    "app.browse.discover-servers": {
     "message": "Дослідити сервера"
   },
-  "app.browse.hide-added-servers": {
+    "app.browse.hide-added-servers": {
     "message": "Сховати наявні сервери"
   },
-  "app.browse.project-type.modpacks": {
+    "app.browse.project-type.modpacks": {
     "message": "Збірки"
   },
-  "app.browse.server-instance-content-warning": {
+    "app.browse.server-instance-content-warning": {
     "message": "Додавання вмісту може порушити сумісність при приєднанні до сервера. Усі додані матеріали також будуть утрачені під час оновлення вмісту профілю сервера."
   },
-  "app.browse.server.installing": {
+    "app.browse.server.installing": {
     "message": "Установлення"
   },
-  "app.content-install.no-compatible-versions": {
+    "app.content-install.no-compatible-versions": {
     "message": "Жодна доступна версія не сумісна з {compatibilityLabel}. Виберіть версію, щоб усе одно її встановити. Залежності не встановлюватимуться автоматично."
   },
-  "app.export-modal.description-placeholder": {
+    "app.content-install.preview.pack-duplicate-confirm": {
+    "message": "Install my copy anyway"
+  },
+    "app.content-install.preview.pack-duplicate-consequence": {
+    "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
+  },
+    "app.content-install.preview.pack-duplicate-description": {
+    "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
+  },
+    "app.content-install.preview.pack-duplicate-header": {
+    "message": "Already provided by the server pack"
+  },
+    "app.export-modal.description-placeholder": {
     "message": "Уведіть опис збірки…"
   },
-  "app.export-modal.export-button": {
+    "app.export-modal.export-button": {
     "message": "Експортувати"
   },
-  "app.export-modal.header": {
+    "app.export-modal.header": {
     "message": "Експортувати збірку"
   },
-  "app.export-modal.modpack-name-label": {
+    "app.export-modal.modpack-name-label": {
     "message": "Назва збірки"
   },
-  "app.export-modal.modpack-name-placeholder": {
+    "app.export-modal.modpack-name-placeholder": {
     "message": "Назва збірки"
   },
-  "app.export-modal.version-number-label": {
+    "app.export-modal.version-number-label": {
     "message": "Номер версії"
   },
-  "app.export-modal.version-number-placeholder": {
+    "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-  "app.instance.confirm-delete.admonition-body": {
+    "app.first-run-bootstrap.dismiss": {
+    "message": "Continue anyway"
+  },
+    "app.first-run-bootstrap.failed.bundled-mods": {
+    "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
+  },
+    "app.first-run-bootstrap.failed.details": {
+    "message": "Technical details"
+  },
+    "app.first-run-bootstrap.failed.instance-creation": {
+    "message": "The game instance could not be created. Check your network connection and try again."
+  },
+    "app.first-run-bootstrap.failed.instance-id-missing": {
+    "message": "The launcher could not tell which instance was created. Please report this to the server team."
+  },
+    "app.first-run-bootstrap.failed.title": {
+    "message": "Setup could not be finished"
+  },
+    "app.first-run-bootstrap.failed.unknown": {
+    "message": "Something went wrong while setting up your game."
+  },
+    "app.first-run-bootstrap.file-progress": {
+    "message": "File {current} of {total}"
+  },
+    "app.first-run-bootstrap.phase.downloading-minecraft": {
+    "message": "Downloading the game files…"
+  },
+    "app.first-run-bootstrap.phase.finishing": {
+    "message": "Finishing up…"
+  },
+    "app.first-run-bootstrap.phase.installing-loader": {
+    "message": "Installing the mod loader…"
+  },
+    "app.first-run-bootstrap.phase.preparing": {
+    "message": "Preparing your game…"
+  },
+    "app.first-run-bootstrap.repair.subtitle": {
+    "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
+  },
+    "app.first-run-bootstrap.repair.success-text": {
+    "message": "The missing files were added back. You can start playing now."
+  },
+    "app.first-run-bootstrap.repair.title": {
+    "message": "Finishing your game setup"
+  },
+    "app.first-run-bootstrap.retry": {
+    "message": "Try again"
+  },
+    "app.first-run-bootstrap.server-missing.text": {
+    "message": "Add {address} to your instance manually, or use the join button on the home page."
+  },
+    "app.first-run-bootstrap.server-missing.title": {
+    "message": "The server was not added automatically"
+  },
+    "app.first-run-bootstrap.step.creating-instance": {
+    "message": "Creating your game instance"
+  },
+    "app.first-run-bootstrap.step.installing-mods": {
+    "message": "Installing the required mods"
+  },
+    "app.first-run-bootstrap.step.registering-server": {
+    "message": "Adding the server to your instance"
+  },
+    "app.first-run-bootstrap.subtitle": {
+    "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
+  },
+    "app.first-run-bootstrap.success.text": {
+    "message": "The instance was created with the mods this server needs. You can start playing now."
+  },
+    "app.first-run-bootstrap.success.title": {
+    "message": "Your game is ready"
+  },
+    "app.first-run-bootstrap.title": {
+    "message": "Setting up your game"
+  },
+    "app.home.server-status.checking": {
+    "message": "Checking..."
+  },
+    "app.home.server-status.join": {
+    "message": "Join server"
+  },
+    "app.home.server-status.join.no-instance": {
+    "message": "Choose a home instance before joining the server."
+  },
+    "app.home.server-status.join.not-installed": {
+    "message": "This instance is still installing. Join once it is ready."
+  },
+    "app.home.server-status.join.offline": {
+    "message": "The server is offline right now."
+  },
+    "app.home.server-status.joining": {
+    "message": "Joining..."
+  },
+    "app.home.server-status.latency": {
+    "message": "{latency} ms"
+  },
+    "app.home.server-status.loading": {
+    "message": "Fetching the latest server status..."
+  },
+    "app.home.server-status.offline": {
+    "message": "Offline"
+  },
+    "app.home.server-status.offline.body": {
+    "message": "It may be under maintenance — ask in the group chat? The web map often still works."
+  },
+    "app.home.server-status.offline.body.no-map": {
+    "message": "It may be under maintenance — ask in the group chat?"
+  },
+    "app.home.server-status.offline.title": {
+    "message": "The server is offline right now"
+  },
+    "app.home.server-status.online": {
+    "message": "Online"
+  },
+    "app.home.server-status.players.empty": {
+    "message": "Nobody is online right now — the world is all yours."
+  },
+    "app.home.server-status.players.more": {
+    "message": "+{count}"
+  },
+    "app.home.server-status.players.stale": {
+    "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
+  },
+    "app.home.server-status.players.title": {
+    "message": "Players online"
+  },
+    "app.home.server-status.players.unavailable": {
+    "message": "The server does not publish its player list, so only the count is shown."
+  },
+    "app.home.server-status.refresh": {
+    "message": "Refresh status"
+  },
+    "app.home.server-status.version": {
+    "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
+  },
+    "app.instance.confirm-delete.admonition-body": {
     "message": "Усі дані вашого профілю будуть видалені назавжди, включно з вашими світами, налаштуваннями та всім установленим умістом."
   },
-  "app.instance.confirm-delete.admonition-header": {
+    "app.instance.confirm-delete.admonition-header": {
     "message": "Ця дія є незворотною"
   },
-  "app.instance.confirm-delete.delete-button": {
+    "app.instance.confirm-delete.delete-button": {
     "message": "Видалити профіль"
   },
-  "app.instance.confirm-delete.header": {
+    "app.instance.confirm-delete.header": {
     "message": "Видалити профіль"
   },
-  "app.instance.modpack-already-installed.body": {
+    "app.instance.modpack-already-installed.body": {
     "message": "Ця збірка вже встановлена в профілі <bold>«{instanceName}»</bold>. Дійсно бажаєте її клонувати?"
   },
-  "app.instance.modpack-already-installed.create": {
+    "app.instance.modpack-already-installed.create": {
     "message": "Створити"
   },
-  "app.instance.modpack-already-installed.header": {
+    "app.instance.modpack-already-installed.header": {
     "message": "Збірку вже встановлено"
   },
-  "app.instance.modpack-already-installed.instance": {
+    "app.instance.modpack-already-installed.instance": {
     "message": "Профіль"
   },
-  "app.instance.mods.content-type-project": {
+    "app.instance.mods.content-type-project": {
     "message": "проєкт"
   },
-  "app.instance.mods.project-was-added": {
+    "app.instance.mods.folder-note": {
+    "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
+  },
+    "app.instance.mods.player-added.badge": {
+    "message": "Player-added"
+  },
+    "app.instance.mods.player-added.hint": {
+    "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
+  },
+    "app.instance.mods.project-was-added": {
     "message": "«{name}» було додано"
   },
-  "app.instance.mods.projects-were-added": {
+    "app.instance.mods.projects-were-added": {
     "message": "{count} проєктів було додано"
   },
-  "app.instance.mods.share-text": {
+    "app.instance.mods.share-text": {
     "message": "Погляньте на проєкти, які я використовую у своїй збірці!"
   },
-  "app.instance.mods.share-title": {
+    "app.instance.mods.share-title": {
     "message": "Поширення вмісту збірки"
   },
-  "app.instance.mods.successfully-uploaded": {
+    "app.instance.mods.successfully-uploaded": {
     "message": "Успішно вивантажено"
   },
-  "app.instance.worlds.add-server": {
+    "app.instance.worlds.add-server": {
     "message": "Додати сервер"
   },
-  "app.instance.worlds.browse-servers": {
+    "app.instance.worlds.browse-servers": {
     "message": "Переглянути сервери"
   },
-  "app.instance.worlds.filter-modded": {
+    "app.instance.worlds.filter-modded": {
     "message": "Модифіковано"
   },
-  "app.instance.worlds.filter-offline": {
+    "app.instance.worlds.filter-offline": {
     "message": "Поза мережею"
   },
-  "app.instance.worlds.filter-online": {
+    "app.instance.worlds.filter-online": {
     "message": "У мережі"
   },
-  "app.instance.worlds.filter-vanilla": {
+    "app.instance.worlds.filter-vanilla": {
     "message": "Стандартний"
   },
-  "app.instance.worlds.no-worlds-description": {
+    "app.instance.worlds.no-worlds-description": {
     "message": "Додати сервер або переглянути, щоб почати"
   },
-  "app.instance.worlds.no-worlds-heading": {
+    "app.instance.worlds.no-worlds-heading": {
     "message": "Сервера або світи не додано"
   },
-  "app.instance.worlds.search-worlds-placeholder": {
+    "app.instance.worlds.search-worlds-placeholder": {
     "message": "Пошук {count} світів…"
   },
-  "app.project.install-button.already-installed": {
+    "app.mods.change-instance": {
+    "message": "Change instance"
+  },
+    "app.mods.conflict.badge": {
+    "message": "Server copy takes over"
+  },
+    "app.mods.conflict.summary": {
+    "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
+  },
+    "app.mods.conflict.tooltip": {
+    "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
+  },
+    "app.mods.count": {
+    "message": "{count, plural, one {# file} other {# files}}"
+  },
+    "app.mods.disabled": {
+    "message": "Disabled"
+  },
+    "app.mods.folder-missing": {
+    "message": "This folder does not exist in the instance yet."
+  },
+    "app.mods.link.mcmod": {
+    "message": "Search {name} on the MC Mod wiki"
+  },
+    "app.mods.link.project": {
+    "message": "Open the project page for {name}"
+  },
+    "app.mods.load-failed": {
+    "message": "Could not read this folder."
+  },
+    "app.mods.loading": {
+    "message": "Loading files…"
+  },
+    "app.mods.no-instance": {
+    "message": "No installed instance is available."
+  },
+    "app.mods.ownership.local-discovered": {
+    "message": "Found in the folder"
+  },
+    "app.mods.ownership.pack-managed": {
+    "message": "Managed by the server pack"
+  },
+    "app.mods.ownership.user-added": {
+    "message": "Added by you"
+  },
+    "app.mods.picker.no-instances": {
+    "message": "No installed instances are available."
+  },
+    "app.mods.picker.no-results": {
+    "message": "No matching instances"
+  },
+    "app.mods.picker.search": {
+    "message": "Search instances"
+  },
+    "app.mods.picker.select": {
+    "message": "Choose {name}"
+  },
+    "app.mods.picker.title": {
+    "message": "Choose an instance"
+  },
+    "app.mods.refresh": {
+    "message": "Refresh"
+  },
+    "app.mods.retry": {
+    "message": "Try again"
+  },
+    "app.navigation.changelog": {
+    "message": "Update notes"
+  },
+    "app.navigation.server-map": {
+    "message": "Server map"
+  },
+    "app.project.install-button.already-installed": {
     "message": "Проєкт уже встановлено"
   },
-  "app.project.install-context.back-to-browse": {
+    "app.project.install-context.back-to-browse": {
     "message": "Повернутися до дослідження"
   },
-  "app.project.install-context.install-content-to-instance": {
+    "app.project.install-context.install-content-to-instance": {
     "message": "Установити вміст до профілю"
+  },
+    "app.server.avatar.open-skin-selector": {
+    "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
   "app.server.changelog.file-count": "{count, plural, one {# file} other {# files}}",
@@ -289,649 +535,706 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-  "app.settings.defaults.sections.after-launch": {
+    "app.server.map.loading": {
+    "message": "Loading the map..."
+  },
+    "app.server.map.not-embeddable.body": {
+    "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
+  },
+    "app.server.map.not-embeddable.title": {
+    "message": "This map cannot be embedded"
+  },
+    "app.server.map.open-in-browser": {
+    "message": "Open in browser"
+  },
+    "app.server.map.reload": {
+    "message": "Reload map"
+  },
+    "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-  "app.settings.defaults.sections.environment": {
+    "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-  "app.settings.defaults.sections.launch-hooks": {
+    "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-  "app.settings.defaults.sections.window-behavior": {
+    "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-  "app.settings.developer-mode-enabled": {
+    "app.settings.developer-mode-enabled": {
     "message": "Увімкнено режим розробника."
   },
-  "app.settings.developer.feature-flags-section-title": {
+    "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-  "app.settings.downloading": {
+    "app.settings.downloading": {
     "message": "Завантаження v{version}"
   },
-  "app.settings.feature-flags.advanced-filters-collapsed": {
+    "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-  "app.settings.feature-flags.always-show-app-controls": {
+    "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-  "app.settings.feature-flags.auto-install-dependencies": {
+    "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-  "app.settings.feature-flags.i18n-debug": {
+    "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-  "app.settings.feature-flags.page-path": {
+    "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-  "app.settings.feature-flags.page-transitions": {
+    "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-  "app.settings.feature-flags.project-background": {
+    "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-  "app.settings.feature-flags.server-project-qa": {
+    "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-  "app.settings.feature-flags.show-instance-play-time": {
+    "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-  "app.settings.feature-flags.show-version-environment-column": {
+    "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-  "app.settings.feature-flags.skip-non-essential-warnings": {
+    "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-  "app.settings.feature-flags.skip-unknown-pack-warning": {
+    "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-  "app.settings.feature-flags.worlds-in-home": {
+    "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-  "app.settings.feature-flags.worlds-tab": {
+    "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-  "app.settings.privacy.section-title": {
+    "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-  "app.settings.resources.sections.data-storage": {
+    "app.settings.resources.ALLIGATORZONE-data-directory": {
+    "message": "ALLIGATORZONE data directory"
+  },
+    "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-  "app.settings.resources.sections.download-behavior": {
+    "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-  "app.settings.resources.sections.missing-content": {
+    "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-  "app.settings.resources.sections.network-authentication": {
+    "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-  "app.skins.add-button": {
+    "app.settings.updates.channel.state-description": {
+    "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
+  },
+    "app.settings.updates.manual.description": {
+    "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
+  },
+    "app.settings.updates.manual.distribution": {
+    "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
+  },
+    "app.settings.updates.manual.title": {
+    "message": "Automatic updates are off"
+  },
+    "app.skins.add-button": {
     "message": "Додати скін"
   },
-  "app.skins.add-button.drag-and-drop": {
+    "app.skins.add-button.drag-and-drop": {
     "message": "Перетягніть сюди"
   },
-  "app.skins.apply-button": {
+    "app.skins.apply-button": {
     "message": "Застосувати"
   },
-  "app.skins.delete-button": {
+    "app.skins.delete-button": {
     "message": "Видалити скін"
   },
-  "app.skins.delete-modal.description": {
+    "app.skins.delete-modal.description": {
     "message": "Це видалить вибраний скін назавжди. Ця дія не може бути скасована."
   },
-  "app.skins.delete-modal.title": {
+    "app.skins.delete-modal.title": {
     "message": "Ви дійсно бажаєте видалити цей скін?"
   },
-  "app.skins.dropped-file-error.text": {
+    "app.skins.dropped-file-error.text": {
     "message": "Неможливо відкрити вибраний файл."
   },
-  "app.skins.dropped-file-error.title": {
+    "app.skins.dropped-file-error.title": {
     "message": "Помилка обробки файлу"
   },
-  "app.skins.edit-button": {
+    "app.skins.edit-button": {
     "message": "Редагувати скін"
   },
-  "app.skins.modal.add-skin-button": {
+    "app.skins.modal.add-skin-button": {
     "message": "Додати скін"
   },
-  "app.skins.modal.add-title": {
+    "app.skins.modal.add-title": {
     "message": "Додавання скіна"
   },
-  "app.skins.modal.arm-style-section": {
+    "app.skins.modal.arm-style-section": {
     "message": "Стиль рук"
   },
-  "app.skins.modal.arm-style-slim": {
+    "app.skins.modal.arm-style-slim": {
     "message": "Тонкі"
   },
-  "app.skins.modal.arm-style-wide": {
+    "app.skins.modal.arm-style-wide": {
     "message": "Широкі"
   },
-  "app.skins.modal.cape-fallback-name": {
+    "app.skins.modal.cape-fallback-name": {
     "message": "Плащ"
   },
-  "app.skins.modal.cape-section": {
+    "app.skins.modal.cape-section": {
     "message": "Плащ"
   },
-  "app.skins.modal.edit-title": {
+    "app.skins.modal.edit-title": {
     "message": "Редагування скіна"
   },
-  "app.skins.modal.make-edit-first-tooltip": {
+    "app.skins.modal.make-edit-first-tooltip": {
     "message": "Спершу відредагуйте скін!"
   },
-  "app.skins.modal.no-cape-tooltip": {
+    "app.skins.modal.no-cape-tooltip": {
     "message": "Без плаща"
   },
-  "app.skins.modal.none-cape-option": {
+    "app.skins.modal.none-cape-option": {
     "message": "Немає"
   },
-  "app.skins.modal.replace-texture-button": {
+    "app.skins.modal.replace-texture-button": {
     "message": "Замінити текстуру"
   },
-  "app.skins.modal.save-skin-button": {
+    "app.skins.modal.save-skin-button": {
     "message": "Зберегти скін"
   },
-  "app.skins.modal.saving-tooltip": {
+    "app.skins.modal.saving-tooltip": {
     "message": "Збереження…"
   },
-  "app.skins.modal.texture-section": {
+    "app.skins.modal.texture-section": {
     "message": "Текстура"
   },
-  "app.skins.modal.upload-skin-first-tooltip": {
+    "app.skins.modal.upload-skin-first-tooltip": {
     "message": "Спершу завантажте скін!"
   },
-  "app.skins.preview.edit-button": {
+    "app.skins.preview.edit-button": {
     "message": "Редагувати скін"
   },
-  "app.skins.previewing-badge": {
+    "app.skins.previewing-badge": {
     "message": "Попередній перегляд"
   },
-  "app.skins.rate-limit.text": {
+    "app.skins.rate-limit.text": {
     "message": "Ви змінюєте скін занадто часто. Сервери Mojang тимчасово заблокували подальші запити. Зачекайте трохи, перш ніж спробувати знову."
   },
-  "app.skins.rate-limit.title": {
+    "app.skins.rate-limit.title": {
     "message": "Повільніше!"
   },
-  "app.skins.reorder-error.text": {
+    "app.skins.reorder-error.text": {
     "message": "Ваше замовлення скінів не вдалося зберегти."
   },
-  "app.skins.reorder-error.title": {
+    "app.skins.reorder-error.title": {
     "message": "Не вдалося змінити порядок скінів"
   },
-  "app.skins.section.builders-and-biomes": {
+    "app.skins.section.builders-and-biomes": {
     "message": "Builders & Biomes"
   },
-  "app.skins.section.chase-the-skies": {
+    "app.skins.section.chase-the-skies": {
     "message": "Chase the Skies"
   },
-  "app.skins.section.default-skins": {
+    "app.skins.section.default-skins": {
     "message": "Усталені скіни"
   },
-  "app.skins.section.minecon-earth-2017": {
+    "app.skins.section.minecon-earth-2017": {
     "message": "MINECON Earth 2017"
   },
-  "app.skins.section.modrinth": {
+    "app.skins.section.modrinth": {
     "message": "Modrinth"
   },
-  "app.skins.section.mounts-of-mayhem": {
+    "app.skins.section.mounts-of-mayhem": {
     "message": "Mounts of Mayhem"
   },
-  "app.skins.section.saved-skins": {
+    "app.skins.section.saved-skins": {
     "message": "Збережені скіни"
   },
-  "app.skins.section.striding-hero": {
+    "app.skins.section.striding-hero": {
     "message": "Striding Hero"
   },
-  "app.skins.section.the-copper-age": {
+    "app.skins.section.the-copper-age": {
     "message": "The Copper Age"
   },
-  "app.skins.section.the-garden-awakens": {
+    "app.skins.section.the-garden-awakens": {
     "message": "The Garden Awakens"
   },
-  "app.skins.section.tiny-takeover": {
+    "app.skins.section.tiny-takeover": {
     "message": "Tiny Takeover"
   },
-  "app.skins.sign-in.axolotl-alt": {
+    "app.skins.sign-in.axolotl-alt": {
     "message": "ALLIGATORZONE"
   },
-  "app.skins.sign-in.button": {
+    "app.skins.sign-in.button": {
     "message": "Увійдіть"
   },
-  "app.skins.sign-in.description": {
+    "app.skins.sign-in.description": {
     "message": "Будь ласка, увійдіть у свій обліковий запис Minecraft, щоб використовувати особливості керування скінами в ALLIGATORZONE."
   },
-  "app.skins.sign-in.title": {
+    "app.skins.sign-in.title": {
     "message": "Увійдіть"
   },
-  "app.skins.title": {
+    "app.skins.title": {
     "message": "Вибір скіну"
   },
-  "app.translation-settings.display-section-title": {
+    "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-  "app.update-popup.body.download-complete": {
+    "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} завантажено. Перезапустіть, щоб оновити зараз, або це відбудеться автоматично після закриття застосунку."
   },
-  "app.update-popup.body.metered": {
+    "app.update-popup.body.metered": {
     "message": "ALLIGATORZONE v{version} вже доступно! Оскільки ви використовуєте лімітне підключення, ми не завантажили його автоматично."
   },
-  "app.update-popup.changelog": {
+    "app.update-popup.changelog": {
     "message": "Журнал змін"
   },
-  "app.update-popup.download": {
+    "app.update-popup.download": {
     "message": "Завантажити ({size})"
   },
-  "app.update-popup.download-complete": {
+    "app.update-popup.download-complete": {
     "message": "Завантаження завершено"
   },
-  "app.update-popup.reload": {
+    "app.update-popup.reload": {
     "message": "Перезавантаження для оновлення"
   },
-  "app.update-popup.title": {
+    "app.update-popup.title": {
     "message": "Доступне оновлення"
   },
-  "app.update.complete-toast.text": {
+    "app.update.complete-toast.text": {
     "message": "Натисніть тут, щоб переглянути журнал змін."
   },
-  "app.update.complete-toast.title": {
+    "app.update.complete-toast.title": {
     "message": "Версію {version} успішно встановлено!"
   },
-  "app.world.server-modal.placeholder-address": {
+    "app.world.server-modal.placeholder-address": {
     "message": "example.modrinth.gg"
   },
-  "app.world.server-modal.select-an-option": {
+    "app.world.server-modal.select-an-option": {
     "message": "Виберіть опцію"
   },
-  "app.world.world-item.incompatible-version": {
+    "app.world.world-item.incompatible-version": {
     "message": "Несумісна версія {version}"
   },
-  "app.world.world-item.not-played-yet": {
+    "app.world.world-item.not-played-yet": {
     "message": "Ще не зіграно"
   },
-  "app.world.world-item.offline": {
+    "app.world.world-item.offline": {
     "message": "Не в мережі"
   },
-  "app.world.world-item.players-online": {
+    "app.world.world-item.players-online": {
     "message": "{count} у мережі"
   },
-  "friends.action.add-friend": {
+    "friends.action.add-friend": {
     "message": "Додати друга"
   },
-  "friends.action.view-friend-requests": {
+    "friends.action.view-friend-requests": {
     "message": "{count} запит{count, plural, one { у} few {и в} many {ів у} other {у в}} друзі"
   },
-  "friends.add-friend.submit": {
+    "friends.add-friend.submit": {
     "message": "Надіслати запит у друзі"
   },
-  "friends.add-friend.title": {
+    "friends.add-friend.title": {
     "message": "Додавання друга"
   },
-  "friends.add-friend.username.description": {
+    "friends.add-friend.username.description": {
     "message": "Може відрізнятися від його або її імені користувача Minecraft!"
   },
-  "friends.add-friend.username.placeholder": {
+    "friends.add-friend.username.placeholder": {
     "message": "Уведіть ім’я користувача…"
   },
-  "friends.add-friend.username.title": {
+    "friends.add-friend.username.title": {
     "message": "Яке ім’я користувача Modrinth у вашого друга?"
   },
-  "friends.add-friends-to-share": {
+    "friends.add-friends-to-share": {
     "message": "<link>Додайте друзів</link>, щоб бачити, у що вони грають!"
   },
-  "friends.friend.cancel-request": {
+    "friends.friend.cancel-request": {
     "message": "Скасувати запит"
   },
-  "friends.friend.remove-friend": {
+    "friends.friend.remove-friend": {
     "message": "Видалити друга"
   },
-  "friends.friend.request-sent": {
+    "friends.friend.request-sent": {
     "message": "Запит у друзі надіслано"
   },
-  "friends.friend.view-profile": {
+    "friends.friend.view-profile": {
     "message": "Переглянути профіль"
   },
-  "friends.heading": {
+    "friends.heading": {
     "message": "Друзі"
   },
-  "friends.heading.active": {
+    "friends.heading.active": {
     "message": "Активний"
   },
-  "friends.heading.offline": {
+    "friends.heading.offline": {
     "message": "Поза мережею"
   },
-  "friends.heading.online": {
+    "friends.heading.online": {
     "message": "У мережі"
   },
-  "friends.heading.pending": {
+    "friends.heading.pending": {
     "message": "Очікується"
   },
-  "friends.no-friends-match": {
+    "friends.no-friends-match": {
     "message": "Немає друзів, які збігаються з «{query}»"
   },
-  "friends.search-friends-placeholder": {
+    "friends.search-friends-placeholder": {
     "message": "Пошук друзів…"
   },
-  "friends.section.heading": {
+    "friends.section.heading": {
     "message": "{title} — {count}"
   },
-  "friends.sign-in-to-add-friends": {
+    "friends.sign-in-to-add-friends": {
     "message": "<link>Увійдіть в обліковий запис Modrinth</link>, щоб додати друзів і бачити, у що вони грають!"
   },
-  "instance.add-server.add-and-play": {
+    "instance.add-server.add-and-play": {
     "message": "Додати та грати"
   },
-  "instance.add-server.add-server": {
+    "instance.add-server.add-server": {
     "message": "Додати сервер"
   },
-  "instance.add-server.resource-pack.disabled": {
+    "instance.add-server.resource-pack.disabled": {
     "message": "Вимкнено"
   },
-  "instance.add-server.resource-pack.enabled": {
+    "instance.add-server.resource-pack.enabled": {
     "message": "Увімкнено"
   },
-  "instance.add-server.resource-pack.prompt": {
+    "instance.add-server.resource-pack.prompt": {
     "message": "Запитувати"
   },
-  "instance.add-server.title": {
+    "instance.add-server.title": {
     "message": "Додати сервер"
   },
-  "instance.edit-server.title": {
+    "instance.edit-server.title": {
     "message": "Редагувати сервер"
   },
-  "instance.files.adding-files": {
+    "instance.files.adding-files": {
     "message": "Додавання файлів ({completed}/{total})"
   },
-  "instance.files.save-as": {
+    "instance.files.save-as": {
     "message": "Зберегти як…"
   },
-  "instance.server-modal.address": {
+    "instance.server-modal.address": {
     "message": "Адреса"
   },
-  "instance.server-modal.name": {
+    "instance.server-modal.name": {
     "message": "Назва"
   },
-  "instance.server-modal.placeholder-name": {
+    "instance.server-modal.placeholder-name": {
     "message": "Сервер Minecraft"
   },
-  "instance.server-modal.resource-pack": {
+    "instance.server-modal.resource-pack": {
     "message": "Пакет ресурсів"
   },
-  "instance.settings.tabs.general": {
+    "instance.settings.tabs.general": {
     "message": "Загальні"
   },
-  "instance.settings.tabs.general.delete": {
+    "instance.settings.tabs.general.delete": {
     "message": "Видалити профіль"
   },
-  "instance.settings.tabs.general.delete.button": {
+    "instance.settings.tabs.general.delete.button": {
     "message": "Видалити профіль"
   },
-  "instance.settings.tabs.general.delete.description": {
+    "instance.settings.tabs.general.delete.description": {
     "message": "Назавжди видаляє профіль з вашого пристрою, включно з вашими світами, налаштуваннями та всім установленим умістом. Будьте обережні, після видалення, відновити профіль буде неможливо."
   },
-  "instance.settings.tabs.general.deleting.button": {
+    "instance.settings.tabs.general.deleting.button": {
     "message": "Видалення…"
   },
-  "instance.settings.tabs.general.duplicate-button": {
+    "instance.settings.tabs.general.duplicate-button": {
     "message": "Клонувати"
   },
-  "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
+    "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
     "message": "Неможливо клонувати під час установлення."
   },
-  "instance.settings.tabs.general.duplicate-instance": {
+    "instance.settings.tabs.general.duplicate-instance": {
     "message": "Клонувати профіль"
   },
-  "instance.settings.tabs.general.duplicate-instance.description": {
+    "instance.settings.tabs.general.duplicate-instance.description": {
     "message": "Створює копію профілю, включно зі світами, налаштуваннями, модами тощо."
   },
-  "instance.settings.tabs.general.edit-icon": {
+    "instance.settings.tabs.general.edit-icon": {
     "message": "Редагувати значок"
   },
-  "instance.settings.tabs.general.edit-icon.remove": {
+    "instance.settings.tabs.general.edit-icon.remove": {
     "message": "Прибрати значок"
   },
-  "instance.settings.tabs.general.edit-icon.replace": {
+    "instance.settings.tabs.general.edit-icon.replace": {
     "message": "Замінити значок"
   },
-  "instance.settings.tabs.general.edit-icon.select": {
+    "instance.settings.tabs.general.edit-icon.select": {
     "message": "Вибрати значок"
   },
-  "instance.settings.tabs.general.name": {
+    "instance.settings.tabs.general.name": {
     "message": "Назва"
   },
-  "instance.settings.tabs.general.update-channel": {
+    "instance.settings.tabs.general.update-channel": {
     "message": "Випуск оновлення"
   },
-  "instance.settings.tabs.general.update-channel.alpha": {
+    "instance.settings.tabs.general.update-channel.alpha": {
     "message": "Альфа"
   },
-  "instance.settings.tabs.general.update-channel.alpha.description": {
+    "instance.settings.tabs.general.update-channel.alpha.description": {
     "message": "Випуски, бета- та альфа-версії будуть показуватися як доступні оновлення."
   },
-  "instance.settings.tabs.general.update-channel.beta": {
+    "instance.settings.tabs.general.update-channel.beta": {
     "message": "Бета"
   },
-  "instance.settings.tabs.general.update-channel.beta.description": {
+    "instance.settings.tabs.general.update-channel.beta.description": {
     "message": "Випуски та бета-версії будуть показуватися як доступні оновлення."
   },
-  "instance.settings.tabs.general.update-channel.release": {
+    "instance.settings.tabs.general.update-channel.release": {
     "message": "Випуск"
   },
-  "instance.settings.tabs.general.update-channel.release.description": {
+    "instance.settings.tabs.general.update-channel.release.description": {
     "message": "Тільки випуски версії будуть показуватися як доступні оновлення."
   },
-  "instance.settings.tabs.general.update-channel.select": {
+    "instance.settings.tabs.general.update-channel.select": {
     "message": "Оберіть випуск оновлення"
   },
-  "instance.settings.tabs.hooks": {
+    "instance.settings.tabs.general.web-map": {
+    "message": "Web map"
+  },
+    "instance.settings.tabs.general.web-map.default-note": {
+    "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
+  },
+    "instance.settings.tabs.general.web-map.description": {
+    "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
+  },
+    "instance.settings.tabs.general.web-map.hidden-note": {
+    "message": "The map is hidden for this instance, and its page is disabled."
+  },
+    "instance.settings.tabs.general.web-map.hide": {
+    "message": "Hide map"
+  },
+    "instance.settings.tabs.general.web-map.input-label": {
+    "message": "Map address"
+  },
+    "instance.settings.tabs.general.web-map.invalid": {
+    "message": "Enter a full address starting with http:// or https://."
+  },
+    "instance.settings.tabs.general.web-map.placeholder": {
+    "message": "https://map.example.com/"
+  },
+    "instance.settings.tabs.general.web-map.save": {
+    "message": "Save"
+  },
+    "instance.settings.tabs.hooks": {
     "message": "Гуки запуску"
   },
-  "instance.settings.tabs.hooks.custom-hooks": {
+    "instance.settings.tabs.hooks.custom-hooks": {
     "message": "Користувацькі гуки запуску"
   },
-  "instance.settings.tabs.hooks.description": {
+    "instance.settings.tabs.hooks.description": {
     "message": "Гуки дозволяють досвідченим користувачам використовувати певні системні команди до та після запуску гри."
   },
-  "instance.settings.tabs.hooks.post-exit": {
+    "instance.settings.tabs.hooks.post-exit": {
     "message": "Після виходу"
   },
-  "instance.settings.tabs.hooks.post-exit.description": {
+    "instance.settings.tabs.hooks.post-exit.description": {
     "message": "Запускається після закриття гри."
   },
-  "instance.settings.tabs.hooks.post-exit.enter": {
+    "instance.settings.tabs.hooks.post-exit.enter": {
     "message": "Уведіть команду, що виконуватиметься після виходу…"
   },
-  "instance.settings.tabs.hooks.pre-launch": {
+    "instance.settings.tabs.hooks.pre-launch": {
     "message": "Перед запуском"
   },
-  "instance.settings.tabs.hooks.pre-launch.description": {
+    "instance.settings.tabs.hooks.pre-launch.description": {
     "message": "Запускається перед відкриттям профілю."
   },
-  "instance.settings.tabs.hooks.pre-launch.enter": {
+    "instance.settings.tabs.hooks.pre-launch.enter": {
     "message": "Уведіть команду, що виконуватиметься перед запуском…"
   },
-  "instance.settings.tabs.hooks.title": {
+    "instance.settings.tabs.hooks.title": {
     "message": "Гуки запуску гри"
   },
-  "instance.settings.tabs.hooks.wrapper": {
+    "instance.settings.tabs.hooks.wrapper": {
     "message": "Обгортач"
   },
-  "instance.settings.tabs.hooks.wrapper.description": {
+    "instance.settings.tabs.hooks.wrapper.description": {
     "message": "Обгортальна команда для запуску Minecraft."
   },
-  "instance.settings.tabs.hooks.wrapper.enter": {
+    "instance.settings.tabs.hooks.wrapper.enter": {
     "message": "Уведіть обгортальну команду…"
   },
-  "instance.settings.tabs.installation": {
+    "instance.settings.tabs.installation": {
     "message": "Інсталяція"
   },
-  "instance.settings.tabs.installation.loader-version": {
+    "instance.settings.tabs.installation.loader-version": {
     "message": "Версія {loader}"
   },
-  "instance.settings.tabs.java": {
+    "instance.settings.tabs.java": {
     "message": "Java та пам’ять"
   },
-  "instance.settings.tabs.java.custom-environment-variables": {
+    "instance.settings.tabs.java.custom-environment-variables": {
     "message": "Власні змінні середовища"
   },
-  "instance.settings.tabs.java.custom-java-arguments": {
+    "instance.settings.tabs.java.custom-java-arguments": {
     "message": "Власні аргументи Java"
   },
-  "instance.settings.tabs.java.custom-memory-allocation": {
+    "instance.settings.tabs.java.custom-memory-allocation": {
     "message": "Власний розподіл пам'яті"
   },
-  "instance.settings.tabs.java.enter-environment-variables": {
+    "instance.settings.tabs.java.enter-environment-variables": {
     "message": "Уведіть змінні середовища…"
   },
-  "instance.settings.tabs.java.enter-java-arguments": {
+    "instance.settings.tabs.java.enter-java-arguments": {
     "message": "Уведіть аргументи Java…"
   },
-  "instance.settings.tabs.java.environment-variables": {
+    "instance.settings.tabs.java.environment-variables": {
     "message": "Змінні середовища"
   },
-  "instance.settings.tabs.java.java-arguments": {
+    "instance.settings.tabs.java.java-arguments": {
     "message": "Аргументи Java"
   },
-  "instance.settings.tabs.java.java-installation": {
+    "instance.settings.tabs.java.java-installation": {
     "message": "Інсталяції Java"
   },
-  "instance.settings.tabs.java.java-memory": {
+    "instance.settings.tabs.java.java-memory": {
     "message": "Виділена пам’ять"
   },
-  "instance.settings.tabs.java.java-path-placeholder": {
+    "instance.settings.tabs.java.java-path-placeholder": {
     "message": "/шлях/до/java"
   },
-  "instance.settings.tabs.window": {
+    "instance.settings.tabs.window": {
     "message": "Вікно"
   },
-  "instance.settings.tabs.window.custom-window-settings": {
+    "instance.settings.tabs.window.custom-window-settings": {
     "message": "Користувацькі налаштування вікна"
   },
-  "instance.settings.tabs.window.fullscreen": {
+    "instance.settings.tabs.window.fullscreen": {
     "message": "Повний екран"
   },
-  "instance.settings.tabs.window.fullscreen.description": {
+    "instance.settings.tabs.window.fullscreen.description": {
     "message": "Запускати гру в повноекранному режимі (за допомогою options.txt)."
   },
-  "instance.settings.tabs.window.height": {
+    "instance.settings.tabs.window.height": {
     "message": "Висота"
   },
-  "instance.settings.tabs.window.height.description": {
+    "instance.settings.tabs.window.height.description": {
     "message": "Висота ігрового вікна під час запуску."
   },
-  "instance.settings.tabs.window.height.enter": {
+    "instance.settings.tabs.window.height.enter": {
     "message": "Уведіть висоту…"
   },
-  "instance.settings.tabs.window.width": {
+    "instance.settings.tabs.window.width": {
     "message": "Ширина"
   },
-  "instance.settings.tabs.window.width.description": {
+    "instance.settings.tabs.window.width.description": {
     "message": "Ширина ігрового вікна під час запуску."
   },
-  "instance.settings.tabs.window.width.enter": {
+    "instance.settings.tabs.window.width.enter": {
     "message": "Уведіть ширину…"
   },
-  "instance.worlds.a_minecraft_server": {
+    "instance.worlds.a_minecraft_server": {
     "message": "Сервер Minecraft"
   },
-  "instance.worlds.cant_connect": {
+    "instance.worlds.cant_connect": {
     "message": "Неможливо під’єднатися до сервера"
   },
-  "instance.worlds.copy_address": {
+    "instance.worlds.copy_address": {
     "message": "Скопіювати адресу"
   },
-  "instance.worlds.game_already_open": {
+    "instance.worlds.game_already_open": {
     "message": "Профіль вже запущений"
   },
-  "instance.worlds.hardcore": {
+    "instance.worlds.hardcore": {
     "message": "Режим гардкору"
   },
-  "instance.worlds.incompatible_server": {
+    "instance.worlds.incompatible_server": {
     "message": "Сервер несумісний"
   },
-  "instance.worlds.linked_server": {
+    "instance.worlds.linked_server": {
     "message": "Керується серверним проєктом"
   },
-  "instance.worlds.no_contact": {
+    "instance.worlds.no_contact": {
     "message": "Не вдалося зв’язатися зі сервером"
   },
-  "instance.worlds.no_server_quick_play": {
+    "instance.worlds.no_server_quick_play": {
     "message": "Запускатися у сервери напряму можливо лише починаючи з версії Minecraft Alpha 1.0.5"
   },
-  "instance.worlds.no_singleplayer_quick_play": {
+    "instance.worlds.no_singleplayer_quick_play": {
     "message": "Запускатися у світи напряму можливо лише починаючи з версії Minecraft 1.20"
   },
-  "instance.worlds.play_instance": {
+    "instance.worlds.play_instance": {
     "message": "Грати у профіль"
   },
-  "instance.worlds.view_instance": {
+    "instance.worlds.view_instance": {
     "message": "Переглянути профіль"
   },
-  "instance.worlds.world_in_use": {
+    "instance.worlds.world_in_use": {
     "message": "Світ наразі використовується"
   },
-  "minecraft-account.label": {
+    "minecraft-account.label": {
     "message": "Обліковий запис Minecraft"
   },
-  "minecraft-account.not-signed-in": {
+    "minecraft-account.not-signed-in": {
     "message": "Не авторизовано"
   },
-  "minecraft-account.remove-account": {
+    "minecraft-account.remove-account": {
     "message": "Видалити обліковий запис"
   },
-  "minecraft-account.select-account": {
+    "minecraft-account.select-account": {
     "message": "Обрати обліковий запис"
   },
-  "minecraft-account.sign-in": {
+    "minecraft-account.sign-in": {
     "message": "Увійти в Minecraft"
   },
-  "search.filter.locked.instance": {
+    "search.filter.locked.instance": {
     "message": "Надано профілем"
   },
-  "search.filter.locked.instance-game-version.title": {
+    "search.filter.locked.instance-game-version.title": {
     "message": "Версія гри надана профілем"
   },
-  "search.filter.locked.instance-loader.title": {
+    "search.filter.locked.instance-loader.title": {
     "message": "Завантажувач наданий профілем"
   },
-  "search.filter.locked.instance.sync": {
+    "search.filter.locked.instance.sync": {
     "message": "Синхронізувати з профілем"
   },
-  "search.filter.locked.server": {
+    "search.filter.locked.server": {
     "message": "Надано сервером"
   },
-  "search.filter.locked.server-environment.title": {
+    "search.filter.locked.server-environment.title": {
     "message": "До профілю сервера можна додавати лише клієнтські моди"
   },
-  "search.filter.locked.server-game-version.title": {
+    "search.filter.locked.server-game-version.title": {
     "message": "Версія гри надана сервером"
   },
-  "search.filter.locked.server-loader.title": {
+    "search.filter.locked.server-loader.title": {
     "message": "Завантажувач наданий сервером"
   },
-  "unknown-pack-warning-modal.body": {
+    "unknown-pack-warning-modal.body": {
     "message": "Файл перевірятиметься лише, якщо його завантажено на Modrinth, незалежно від його формату (включно з .mrpack)."
   },
-  "unknown-pack-warning-modal.dont-show-again": {
+    "unknown-pack-warning-modal.dont-show-again": {
     "message": "Не показувати більше це попередження"
   },
-  "unknown-pack-warning-modal.header": {
+    "unknown-pack-warning-modal.header": {
     "message": "Підтвердити встановлення"
   },
-  "unknown-pack-warning-modal.install-anyway": {
+    "unknown-pack-warning-modal.install-anyway": {
     "message": "Усе одно встановити"
   },
-  "unknown-pack-warning-modal.malware-statement": {
+    "unknown-pack-warning-modal.malware-statement": {
     "message": "Шкідливе програмне забезпечення часто поширюють через файли збірок, які публікуються на таких платформах, як Discord."
   },
-  "unknown-pack-warning-modal.warning.body": {
+    "unknown-pack-warning-modal.warning.body": {
     "message": "Ми не змогли знайти цей файл на Modrinth. Ми рекомендуємо встановлювати файли лише з тих джерел яким ви довіряєте."
   },
-  "unknown-pack-warning-modal.warning.title": {
+    "unknown-pack-warning-modal.warning.title": {
     "message": "Попередження про невідомий файл"
   }
 }
