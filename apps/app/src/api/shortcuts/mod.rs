@@ -222,8 +222,11 @@ fn instance_launch_url(
     server: Option<String>,
     singleplayer_world: Option<String>,
 ) -> Url {
-    let mut launch_url =
-        Url::parse("axolotl://launch").expect("static launch URL should parse");
+    let mut launch_url = Url::parse(&format!(
+        "{}://launch",
+        theseus::brand::DEEP_LINK_SCHEME
+    ))
+    .expect("static launch URL should parse");
 
     launch_url
         .query_pairs_mut()
@@ -306,6 +309,9 @@ mod tests {
 
     #[test]
     fn launch_url_uses_the_registered_scheme_and_encodes_values() {
+        // Spelled out rather than derived from `DEEP_LINK_SCHEME`: the point
+        // of this assertion is to fail if the scheme stops matching the one
+        // registered in `tauri.conf.json`, which a derived value would hide.
         let url = instance_launch_url(
             "instance id/测试",
             Some("example.org:25565".to_string()),
@@ -314,8 +320,13 @@ mod tests {
 
         assert_eq!(
             url.as_str(),
-            "axolotl://launch?instance_id=instance+id%2F%E6%B5%8B%E8%AF%95&server=example.org%3A25565"
+            "alligatorzone://launch?instance_id=instance+id%2F%E6%B5%8B%E8%AF%95&server=example.org%3A25565"
         );
+    }
+
+    #[test]
+    fn deep_link_scheme_matches_the_registered_scheme() {
+        assert_eq!(theseus::brand::DEEP_LINK_SCHEME, "alligatorzone");
     }
 
     #[test]

@@ -8138,7 +8138,7 @@ dons-lightning-rod-mod
 rainglow@
 nethers-delight-fabric|下界乐事（Fabric 版） (Nether's Delight (Fabric))
 quicksand-neoforge@|流沙（NeoForge） (Quicksand (NeoForge))
-axolotl-bucket-fix-forge@|美西螈桶修复 Forge 版 (ALLIGATORZONE Bucket Fix (Forge))
+axolotl-bucket-fix-forge@|美西螈桶修复 Forge 版 (Axolotl Bucket Fix (Forge))
 scape-and-run-parasites-survival-addon-by-nocube
 scape-and-run-parasites-nests-addon-by-nocube
 @emiffect

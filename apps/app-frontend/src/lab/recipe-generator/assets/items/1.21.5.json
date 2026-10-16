@@ -4934,7 +4934,7 @@
 		},
 		{
 			"id": "minecraft:axolotl_bucket",
-			"readable": "Bucket of ALLIGATORZONE",
+			"readable": "Bucket of Axolotl",
 			"texture": "2ba8a52ff0c780d2.png"
 		},
 		{
@@ -6594,7 +6594,7 @@
 		},
 		{
 			"id": "minecraft:axolotl_spawn_egg",
-			"readable": "ALLIGATORZONE Spawn Egg",
+			"readable": "Axolotl Spawn Egg",
 			"texture": "0822f20bd4b86ca1.png"
 		},
 		{

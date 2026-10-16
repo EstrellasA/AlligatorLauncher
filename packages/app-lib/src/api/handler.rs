@@ -11,6 +11,16 @@ use crate::{
 use url::form_urlencoded;
 use urlencoding::decode as url_decode;
 
+/// Scheme the OS is told to hand us, followed by the separator.
+///
+/// Deep links arrive here exactly as the OS forms them, so this has to name
+/// the scheme registered in `apps/app/tauri.conf.json` under
+/// `plugins.deep-link.desktop.schemes` and mirrored by
+/// `brand::DEEP_LINK_SCHEME`. `concat!` only accepts literals, so the scheme
+/// is repeated rather than built from the constant; the tests below compare
+/// the two and fail if they ever drift apart.
+const URL_SCHEME_PREFIX: &str = "alligatorzone://";
+
 fn query_map(query: &str) -> std::collections::HashMap<String, String> {
     let mut map = std::collections::HashMap::new();
     for (key, value) in form_urlencoded::parse(query.as_bytes()) {
@@ -558,7 +568,7 @@ async fn privileged_settings_payload(
     }
     Ok(CommandPayload::UpdateSettings {
         changes,
-        source: format!("axolotl://{sublink}"),
+        source: format!("{URL_SCHEME_PREFIX}{sublink}"),
     })
 }
 
@@ -569,7 +579,7 @@ fn stop_payload(
     match instance_id {
         Some(instance_id) => Ok(CommandPayload::StopInstance {
             instance_id,
-            source: format!("axolotl://{sublink}"),
+            source: format!("{URL_SCHEME_PREFIX}{sublink}"),
         }),
         None => Err(crate::ErrorKind::InputError(
             "Stop command requires an instance_id query parameter".to_string(),
@@ -596,7 +606,12 @@ pub async fn parse_command(
     command_string: &str,
 ) -> crate::Result<CommandPayload> {
     tracing::debug!("Parsing command: {}", &command_string);
-    if let Some(sublink) = command_string.strip_prefix("axolotl://") {
+    // Split at the first colon so the suffix can be taken relative to the
+    // constant, rather than repeating its length here.
+    if let Some((scheme, rest)) = command_string.split_once(':')
+        && let Some(sublink) = rest.strip_prefix("//")
+        && scheme == URL_SCHEME_PREFIX.trim_end_matches("://")
+    {
         if !external_scheme_allowed().await {
             emit_warning("External links are disabled in settings").await?;
             return Err(crate::ErrorKind::InputError(
@@ -640,7 +655,7 @@ mod tests {
     async fn parses_launch_query_command() {
         let command =
 			parse_command(
-				"axolotl://launch?instance_id=example%20instance&server=example.org%3A25565",
+				"alligatorzone://launch?instance_id=example%20instance&server=example.org%3A25565",
 			)
 			.await
 			.unwrap();
@@ -654,23 +669,23 @@ mod tests {
     #[tokio::test]
     async fn parses_legacy_aliases() {
         assert!(matches!(
-            parse_command("axolotl://discovery").await.unwrap(),
+            parse_command("alligatorzone://discovery").await.unwrap(),
             CommandPayload::OpenRoute { path, .. } if path == "/browse/mod"
         ));
         assert!(matches!(
-            parse_command("axolotl://favorites?x=1").await.unwrap(),
+            parse_command("alligatorzone://favorites?x=1").await.unwrap(),
             CommandPayload::OpenRoute { path, query } if path == "/browse/favorites" && query == Some("x=1".to_string())
         ));
         assert!(matches!(
-            parse_command("axolotl://seed-map?seed=1").await.unwrap(),
+            parse_command("alligatorzone://seed-map?seed=1").await.unwrap(),
             CommandPayload::OpenRoute { path, query } if path == "/lab/seed-map" && query == Some("seed=1".to_string())
         ));
         assert!(matches!(
-            parse_command("axolotl://mod/sodium").await.unwrap(),
+            parse_command("alligatorzone://mod/sodium").await.unwrap(),
             CommandPayload::InstallMod { id } if id == "sodium"
         ));
         assert!(matches!(
-            parse_command("axolotl://launch/instance/my-pack?server=example.org").await.unwrap(),
+            parse_command("alligatorzone://launch/instance/my-pack?server=example.org").await.unwrap(),
             CommandPayload::LaunchInstance { id, server: Some(server), .. }
                 if id == "my-pack" && server == "example.org"
         ));
@@ -679,28 +694,79 @@ mod tests {
     #[tokio::test]
     async fn parses_unified_commands() {
         assert!(matches!(
-            parse_command("axolotl://project/sodium?tab=versions").await.unwrap(),
+            parse_command("alligatorzone://project/sodium?tab=versions").await.unwrap(),
             CommandPayload::OpenRoute { path, .. } if path == "/project/sodium/versions"
         ));
         assert!(matches!(
-            parse_command("axolotl://browse/mod?q=carpet").await.unwrap(),
+            parse_command("alligatorzone://browse/mod?q=carpet").await.unwrap(),
             CommandPayload::OpenRoute { path, query } if path == "/browse/mod" && query == Some("q=carpet".to_string())
         ));
         assert!(matches!(
-            parse_command("axolotl://instance/my-pack?tab=logs").await.unwrap(),
+            parse_command("alligatorzone://instance/my-pack?tab=logs").await.unwrap(),
             CommandPayload::OpenRoute { path, .. } if path == "/instance/my-pack/logs"
         ));
         assert!(matches!(
-            parse_command("axolotl://settings?tab=privacy-data").await.unwrap(),
+            parse_command("alligatorzone://settings?tab=privacy-data").await.unwrap(),
             CommandPayload::OpenSettings { tab: Some(tab), .. } if tab == "privacy-data"
         ));
         assert!(matches!(
-            parse_command("axolotl://open?path=/library/servers").await.unwrap(),
+            parse_command("alligatorzone://open?path=/library/servers").await.unwrap(),
             CommandPayload::OpenRoute { path, .. } if path == "/library/servers"
         ));
         assert!(matches!(
-            parse_command("axolotl://install?version=abc123").await.unwrap(),
+            parse_command("alligatorzone://install?version=abc123").await.unwrap(),
             CommandPayload::InstallVersion { id } if id == "abc123"
+        ));
+    }
+
+    /// The scheme registered with the OS is the one deep links actually
+    /// arrive with, so it has to be parsed. The literals here are spelled
+    /// out on purpose: deriving them from `URL_SCHEME_PREFIX` would let the
+    /// tests follow a future change to `brand.rs` instead of catching it.
+    #[tokio::test]
+    async fn parses_the_scheme_registered_with_the_os() {
+        assert!(matches!(
+            parse_command("alligatorzone://favorites").await.unwrap(),
+            CommandPayload::OpenRoute { path, .. } if path == "/browse/favorites"
+        ));
+    }
+
+    /// `axolotl://` was never the registered scheme; the OS has never handed
+    /// it to us, and accepting it again would hide a fresh drift between
+    /// `brand.rs` and `tauri.conf.json`.
+    #[tokio::test]
+    async fn rejects_the_unregistered_axolotl_scheme() {
+        assert!(
+            parse_command("axolotl://favorites").await.is_err(),
+            "axolotl:// is not registered with the OS and must not parse"
+        );
+    }
+
+    /// `URL_SCHEME_PREFIX` repeats the scheme because `concat!` cannot read a
+    /// constant. This is what stops the two from drifting apart.
+    #[test]
+    fn scheme_prefix_matches_the_brand_constant() {
+        let scheme = URL_SCHEME_PREFIX
+            .strip_suffix("://")
+            .expect("the prefix must carry the separator");
+
+        assert_eq!(scheme, crate::brand::DEEP_LINK_SCHEME);
+    }
+
+    /// `parse_command` consults the launcher state to honour the external-links
+    /// setting, and `State::get()` waits for an initialization that never
+    /// happens in a unit test, so the tests above cannot drive the success path.
+    /// `handle_url` is what `parse_command` delegates to once the scheme has
+    /// matched, so covering it here keeps the routing exercised.
+    #[tokio::test]
+    async fn handle_url_routes_deep_link_sublinks() {
+        assert!(matches!(
+            handle_url("favorites").await.unwrap(),
+            CommandPayload::OpenRoute { path, .. } if path == "/browse/favorites"
+        ));
+        assert!(matches!(
+            handle_url("mod/sodium").await.unwrap(),
+            CommandPayload::InstallMod { id } if id == "sodium"
         ));
     }
 }

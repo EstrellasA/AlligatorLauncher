@@ -173,7 +173,7 @@ const messages = defineMessages({
     stateDatabaseNewerFixDowngrade: {
         id: 'app.error.state-database-newer-fix-downgrade',
         defaultMessage:
-            'If you are trying out a build rather than using the launcher normally, revert the database with scripts/Axolotl/downgrade-app-db.mjs instead.',
+            'If you are trying out a build rather than using the launcher normally, revert the database with scripts/axolotl/downgrade-app-db.mjs instead.',
     },
     loaderDescription: {
         id: 'app.error.loader-description',
