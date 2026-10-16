@@ -7,20 +7,81 @@ use theseus::instance::{
     bundled_mods_status, install_bundled_mods,
 };
 
-/// Directory inside the Tauri resource directory that holds the jars shipped
-/// with the launcher. Mirrors `bundle.resources` in `tauri.conf.json`, the same
-/// way `resources/blockbench-skin` is resolved in `main.rs`.
-const BUNDLED_MODS_RESOURCE_DIR: &str = "resources/bundled-mods";
-
-/// The mods a freshly created instance needs before the game can start.
+/// One set of jars shipped with the launcher, and the instance folder those
+/// jars belong in.
 ///
-/// Keep in sync with the files stored in `apps/app/resources/bundled-mods/`:
+/// The launcher ships **two** sets, and they are deliberately kept apart
+/// instead of being merged into one list: the server set belongs in `mods/`,
+/// the folder AutoModpack owns, while the client set belongs in `clientmods/`,
+/// a folder the loader only knows about because `alligatorzone-core` registers
+/// it. A client-only jar dropped into `mods/` would be fought over by
+/// AutoModpack, and a server jar dropped into `clientmods/` would never be
+/// synced — so the target folder is part of the set, not a parameter.
+///
+/// Adding a third set later is a data change: one more entry here, plus the
+/// folder name in `apps/app-frontend/src/server-config.ts`, which is where the
+/// frontend keeps the folders it asks for.
+struct BundledModSet {
+    /// Directory inside the Tauri resource directory that holds this set's
+    /// jars. Mirrors `bundle.resources` in `tauri.conf.json`.
+    resource_dir: &'static str,
+    /// Mods folder, relative to the instance's game directory, this set
+    /// belongs in. The frontend names this folder when it asks for the set, and
+    /// a request naming any other folder is rejected rather than answered with
+    /// an empty install.
+    mods_folder: &'static str,
+    /// The jars stored in `resource_dir`. Keep in sync with that directory: a
+    /// name that is listed but not shipped is a hard error, which is what turns
+    /// a packaging mistake into a visible failure instead of a silent skip.
+    files: &'static [&'static str],
+}
+
+/// Every bundled set, in install order.
+///
+/// The server set is what makes the game start and sync the pack:
 /// - `automodpack-*` is what syncs the server pack (`sync-automodpack-version`
 ///   is enabled server-side, so it also self-corrects its own version)
 /// - `alligatorzone-core-*` registers the `clientmods/` discovery directory
-const BUNDLED_MOD_FILES: [&str; 2] = [
-    "automodpack-5.0.0-rc.4.jar",
-    "alligatorzone-core-1.0.0.jar",
+///
+/// The client set is the rendering stack the server pack does not ship, and
+/// which AutoModpack therefore never distributes (Sodium, Colorwheel, Iris, …).
+/// Without it Flywheel comes up as `flywheel:off` and Create: Steam 'n' Rails
+/// dies during startup in `PhantomSpriteManager.renderTick` with an
+/// `ArrayIndexOutOfBoundsException` from `SpriteContents.upload`.
+const BUNDLED_MOD_SETS: &[BundledModSet] = &[
+    BundledModSet {
+        resource_dir: "resources/bundled-mods",
+        mods_folder: "mods",
+        files: &["automodpack-5.0.0-rc.4.jar", "alligatorzone-core-1.0.0.jar"],
+    },
+    BundledModSet {
+        resource_dir: "resources/bundled-client-mods",
+        mods_folder: "clientmods",
+        files: &[
+            "aeronauticshotairfix-1.1.1.jar",
+            "BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar",
+            "colorwheel-neoforge-1.3.0+mc1.21.1.jar",
+            "colorwheel_patcher-neoforge-1.0.5+mc1.21.1.jar",
+            "Controlling-neoforge-1.21.1-19.0.5.jar",
+            "createbetterfps-1.21.1-1.1.5.jar",
+            "create_ez_stock_ticker-1.0.4.jar",
+            "flerovium-neoforge-1.21.1-1.0.18-all.jar",
+            "fwa+1.21.1-neoforge-1.2.31.jar",
+            "ImmediatelyFast-NeoForge-1.6.10+1.21.1.jar",
+            "iris-neoforge-1.8.14-beta.1+mc1.21.1.jar",
+            "iris_shader_folder-1.4.2-neoforge.jar",
+            "jecharacters-1.21.1-neoforge-4.5.27.jar",
+            "lootlog-neoforge-1.0.0.jar",
+            "MouseTweaks-neoforge-mc1.21-2.26.1.jar",
+            "neo-voxy-0.5.0-alpha.4-mc1.21.1-neoforge.jar",
+            "particular-1.21.1-NeoForge-1.1.7.jar",
+            "sablemassview-1.0.0.jar",
+            "Searchables-neoforge-1.21.1-1.0.2.jar",
+            "smart_bounds-1.0.0.jar",
+            "[机械动力：赛博护目镜] CreateCyberGoggles-1.21.1-8.3.12-NeoForge.jar",
+            "[钠] sodium-neoforge-0.8.13+mc1.21.1.jar",
+        ],
+    },
 ];
 
 pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
@@ -37,44 +98,87 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
 pub struct InstallBundledModsRequest {
     pub instance_id: String,
     /// Mods folder relative to the instance's game directory, e.g. `mods`.
+    /// Identifies which bundled set to use, so it has to be one of the folders
+    /// in [`BUNDLED_MOD_SETS`].
     pub mods_folder: String,
 }
 
-/// Where the packaged jars live.
+/// The bundled set that belongs in `mods_folder`.
+///
+/// The frontend drives the folders (they live in `server-config.ts`) and the
+/// backend says what belongs in each one. A folder this launcher ships no set
+/// for is a hard error: answering it with "nothing to do" would turn a typo in
+/// the configuration into a first-run instance that silently never gets its
+/// mods.
+fn bundled_mod_set(mods_folder: &str) -> Result<&'static BundledModSet> {
+    let trimmed = mods_folder.trim();
+    match BUNDLED_MOD_SETS
+        .iter()
+        .find(|set| set.mods_folder == trimmed)
+    {
+        Some(set) => Ok(set),
+        None => {
+            let known = BUNDLED_MOD_SETS
+                .iter()
+                .map(|set| format!("{:?}", set.mods_folder))
+                .collect::<Vec<_>>()
+                .join(", ");
+            Err(theseus::ErrorKind::InputError(format!(
+                "This launcher ships no bundled mods for the folder {trimmed:?}; expected one of {known}"
+            ))
+            .as_error()
+            .into())
+        }
+    }
+}
+
+/// Where the packaged jars of one set live.
 ///
 /// Tauri copies `bundle.resources` into the resource directory, so a packaged
-/// install resolves to `<resource_dir>/resources/bundled-mods` — verified after
-/// a build, where `target/debug/resources/bundled-mods/` holds both jars next
-/// to `resources/blockbench-skin`. The fallback covers a build where that copy
-/// is absent (plain `cargo run` without the Tauri CLI), and is only reachable
-/// then.
-fn bundled_mods_dir<R: tauri::Runtime>(app: &tauri::AppHandle<R>) -> PathBuf {
+/// install resolves to `<resource_dir>/resources/bundled-mods` and
+/// `<resource_dir>/resources/bundled-client-mods` — verified after a build,
+/// where `target/release/resources/` holds both sets next to
+/// `resources/blockbench-skin`. The fallback covers a build where that copy is
+/// absent (plain `cargo run` without the Tauri CLI), and is only reachable
+/// then: in a packaged install without the copy it points at a directory that
+/// does not exist, so every jar is reported as a missing bundled source instead
+/// of being skipped.
+fn bundled_set_dir<R: tauri::Runtime>(
+    app: &tauri::AppHandle<R>,
+    set: &BundledModSet,
+) -> PathBuf {
     if let Ok(resource_dir) = app.path().resource_dir() {
-        let packaged = resource_dir.join(BUNDLED_MODS_RESOURCE_DIR);
+        let packaged = resource_dir.join(set.resource_dir);
         if packaged.is_dir() {
             return packaged;
         }
     }
 
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(BUNDLED_MODS_RESOURCE_DIR)
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(set.resource_dir)
 }
 
-/// The bundled jars, resolved against the launcher's own installation.
-fn bundled_mod_assets<R: tauri::Runtime>(
+/// The jars of one set, resolved against the launcher's own installation.
+fn bundled_set_assets<R: tauri::Runtime>(
     app: &tauri::AppHandle<R>,
+    set: &BundledModSet,
 ) -> (PathBuf, Vec<BundledModAsset>) {
-    let mods_dir = bundled_mods_dir(app);
-    let assets = BUNDLED_MOD_FILES
+    let set_dir = bundled_set_dir(app, set);
+    let assets = set
+        .files
         .iter()
         .map(|file_name| BundledModAsset {
             file_name: (*file_name).to_string(),
-            source_path: mods_dir.join(file_name),
+            source_path: set_dir.join(file_name),
         })
         .collect::<Vec<_>>();
-    (mods_dir, assets)
+    (set_dir, assets)
 }
 
-/// Copy the launcher's bundled mod jars into an instance's mods folder.
+/// Copy one bundled set into its folder inside an instance.
+///
+/// The frontend calls this once per folder — `mods` first, then `clientmods` —
+/// so each set keeps its own report and one failing set names the folder it
+/// belongs to.
 ///
 /// Idempotent: files that already match the bundled copy are left untouched,
 /// and a missing bundled source fails with an explicit error instead of
@@ -84,13 +188,15 @@ pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     request: InstallBundledModsRequest,
 ) -> Result<InstallBundledModsReport> {
-    let (mods_dir, assets) = bundled_mod_assets(&app);
+    let set = bundled_mod_set(&request.mods_folder)?;
+    let (set_dir, assets) = bundled_set_assets(&app, set);
 
     tracing::info!(
         instance_id = %request.instance_id,
         mods_folder = %request.mods_folder,
-        bundled_mods_dir = %mods_dir.display(),
-        "Installing bundled mods for the first-run bootstrap"
+        bundled_mods_dir = %set_dir.display(),
+        jars = assets.len(),
+        "Installing a bundled mod set for the first-run bootstrap"
     );
 
     Ok(install_bundled_mods(
@@ -101,23 +207,28 @@ pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
     .await?)
 }
 
-/// Report whether an existing instance is still missing any bundled jar,
-/// without changing anything on disk.
+/// Report whether an existing instance is still missing any jar of one bundled
+/// set, without changing anything on disk.
 ///
 /// This is what lets a launcher start notice an instance that was left
 /// half-built (created, but without the mods the game cannot start without) and
-/// repair it, while a complete instance is left completely alone.
+/// repair it, while a complete instance is left completely alone. The frontend
+/// asks this for every folder and repairs the instance when *either* answer
+/// says a jar is missing — the server set alone is not enough to start the
+/// game.
 #[tauri::command]
 pub async fn bootstrap_bundled_mods_status<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     request: InstallBundledModsRequest,
 ) -> Result<BundledModsStatusReport> {
-    let (mods_dir, assets) = bundled_mod_assets(&app);
+    let set = bundled_mod_set(&request.mods_folder)?;
+    let (set_dir, assets) = bundled_set_assets(&app, set);
 
     tracing::debug!(
         instance_id = %request.instance_id,
         mods_folder = %request.mods_folder,
-        bundled_mods_dir = %mods_dir.display(),
+        bundled_mods_dir = %set_dir.display(),
+        jars = assets.len(),
         "Checking an existing instance for missing bundled mods"
     );
 

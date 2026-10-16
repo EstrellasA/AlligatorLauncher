@@ -12,7 +12,7 @@
 		"copyright": "",
 		"targets": "all",
 		"externalBin": [],
-		"resources": ["resources/blockbench-skin", "resources/bundled-mods"],
+		"resources": ["resources/blockbench-skin", "resources/bundled-mods", "resources/bundled-client-mods"],
 		"icon": [
 			"icons/128x128.png",
 			"icons/128x128@2x.png",

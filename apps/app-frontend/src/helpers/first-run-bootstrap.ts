@@ -23,8 +23,16 @@ import { ServerConfig } from '@/server-config'
  *
  * A player who has never opened this launcher has no instance at all, so the
  * launcher has to build the whole playable environment by itself: create an
- * instance on the versions the server runs, drop the two mod jars that make the
- * game start and sync, and register the server so one-click join works.
+ * instance on the versions the server runs, drop the bundled mod jars that make
+ * the game start and sync, and register the server so one-click join works.
+ *
+ * The jars come as two sets with different destinations: the server set (the
+ * AutoModpack entry point and the `clientmods/` locator) goes into `mods/`, and
+ * the client-only set (Sodium, Colorwheel, Iris, …) goes into `clientmods/`,
+ * which the loader only reads because that locator mod registers it. The server
+ * pack cannot supply the second set — AutoModpack never distributes what the
+ * server does not have — so both sets are installed here, and an instance is
+ * considered incomplete unless *both* folders are complete.
  *
  * Everything here is strictly "only when nothing exists yet": if any instance
  * already links to this server, the flow does nothing at all.
@@ -53,11 +61,7 @@ async function findServerLinkedInstance(): Promise<GameInstance | null> {
 }
 
 export type FirstRunBootstrapStep =
-    | 'checking'
-    | 'creating-instance'
-    | 'installing-mods'
-    | 'registering-server'
-    | 'done'
+    'checking' | 'creating-instance' | 'installing-mods' | 'registering-server' | 'done'
 
 export interface FirstRunBootstrapProgress {
     step: FirstRunBootstrapStep
@@ -81,7 +85,11 @@ export interface FirstRunBootstrapResult {
     created: boolean
     /** True when this run completed a pre-existing, incomplete instance. */
     repaired: boolean
-    modsFolder: string
+    /**
+     * Absolute folders the bundled sets were installed into, in install order:
+     * the server pack's `mods` first, the client-only `clientmods` second.
+     */
+    modsDirs: string[]
     copied: number
     replaced: number
     unchanged: number
@@ -93,9 +101,7 @@ export interface FirstRunBootstrapResult {
 }
 
 export type FirstRunBootstrapFailureReason =
-    | 'instance-creation'
-    | 'instance-id-missing'
-    | 'bundled-mods'
+    'instance-creation' | 'instance-id-missing' | 'bundled-mods'
 
 export class FirstRunBootstrapError extends Error {
     readonly reason: FirstRunBootstrapFailureReason
@@ -148,7 +154,10 @@ interface BundledModsStatus {
     instanceId: string
     modsDir: string
     files: Array<{ fileName: string; state: BundledModState }>
-    /** True when the instance cannot sync the server pack. */
+    /**
+     * True when this set is incomplete — a jar is absent from the instance, or
+     * absent from the launcher build itself.
+     */
     needsRepair: boolean
     missing: string[]
     outdated: string[]
@@ -160,38 +169,89 @@ function errorMessage(error: unknown): string {
     return typeof error === 'string' ? error : String(error)
 }
 
-async function installBundledMods(
+/**
+ * The bundled sets the launcher ships, in install order, as the folders they
+ * belong in.
+ *
+ * These are the two folders `server-config.ts` owns; the backend resolves each
+ * one to the set of jars (and the resource directory) it ships for that folder,
+ * and rejects a folder it does not know. Keeping the folders here rather than in
+ * Rust is what lets a server be re-pointed by editing one file.
+ */
+const BUNDLED_MODS_FOLDERS: readonly string[] = [
+    ServerConfig.serverModsFolder,
+    ServerConfig.clientModsFolder,
+]
+
+async function installBundledModsInto(
     instanceId: string,
     modsFolder: string,
 ): Promise<BundledModsReport> {
-    return await invoke<BundledModsReport>(
-        'plugin:bootstrap|bootstrap_install_bundled_mods',
-        { request: { instanceId, modsFolder } },
-    )
+    return await invoke<BundledModsReport>('plugin:bootstrap|bootstrap_install_bundled_mods', {
+        request: { instanceId, modsFolder },
+    })
+}
+
+/**
+ * Install every bundled set into its own folder.
+ *
+ * Sequential on purpose: each set is a separate copy, and an error names the
+ * folder it failed on instead of hiding behind a concurrent write.
+ */
+async function installBundledMods(instanceId: string): Promise<BundledModsReport[]> {
+    const reports: BundledModsReport[] = []
+    for (const modsFolder of BUNDLED_MODS_FOLDERS) {
+        reports.push(await installBundledModsInto(instanceId, modsFolder))
+    }
+    return reports
 }
 
 /**
  * Ask the backend whether an existing instance is still missing any bundled
- * jar. Read-only: it creates, copies and removes nothing.
+ * jar, for every set. Read-only: it creates, copies and removes nothing.
  */
 async function bundledModsStatus(
     instanceId: string,
     modsFolder: string,
 ): Promise<BundledModsStatus> {
-    return await invoke<BundledModsStatus>(
-        'plugin:bootstrap|bootstrap_bundled_mods_status',
-        { request: { instanceId, modsFolder } },
-    )
+    return await invoke<BundledModsStatus>('plugin:bootstrap|bootstrap_bundled_mods_status', {
+        request: { instanceId, modsFolder },
+    })
+}
+
+async function bundledModsStatuses(instanceId: string): Promise<BundledModsStatus[]> {
+    const statuses: BundledModsStatus[] = []
+    for (const modsFolder of BUNDLED_MODS_FOLDERS) {
+        statuses.push(await bundledModsStatus(instanceId, modsFolder))
+    }
+    return statuses
+}
+
+/**
+ * The sets that are still incomplete.
+ *
+ * A verdict from *either* set counts. The server set alone cannot start the
+ * game — the client-only rendering stack lives in `clientmods/`, and Flywheel
+ * comes up without a backend without it — so checking only `mods/` would leave
+ * exactly the broken instance a repair exists to fix.
+ */
+function incompleteSets(statuses: BundledModsStatus[]): BundledModsStatus[] {
+    return statuses.filter((status) => status.needsRepair)
+}
+
+/** Sum one result bucket across every bundled set that was installed. */
+function countBundledMods(
+    reports: BundledModsReport[],
+    bucket: 'copied' | 'replaced' | 'unchanged',
+): number {
+    return reports.reduce((total, report) => total + report[bucket], 0)
 }
 
 async function hasManagedServerWorld(instanceId: string): Promise<boolean> {
     const worlds = await get_instance_worlds(instanceId)
     return (
-        resolveManagedServerWorld(
-            worlds,
-            ServerConfig.serverName,
-            ServerConfig.serverAddress,
-        ) != null
+        resolveManagedServerWorld(worlds, ServerConfig.serverName, ServerConfig.serverAddress) !=
+        null
     )
 }
 
@@ -218,10 +278,7 @@ function resolveInstanceIconPath(): Promise<string | null> {
             const bytes = Array.from(new Uint8Array(await response.arrayBuffer()))
             return await cache_icon('alligatorzone.png', bytes)
         } catch (error) {
-            console.error(
-                'First-run bootstrap: could not prepare the instance icon',
-                error,
-            )
+            console.error('First-run bootstrap: could not prepare the instance icon', error)
             return null
         }
     })()
@@ -279,14 +336,11 @@ export async function runFirstRunBootstrap(
         // An instance already exists, so this launch must not create a second
         // one and must not touch a working setup. The only thing it may do is
         // finish an instance that was left incomplete — one that is missing a
-        // jar the game cannot start without. That is keyed off the actual file
-        // state, never off "we ran before".
-        let status: BundledModsStatus
+        // jar the game cannot start without, in either set. That is keyed off
+        // the actual file state of both folders, never off "we ran before".
+        let statuses: BundledModsStatus[]
         try {
-            status = await bundledModsStatus(
-                existing.id,
-                ServerConfig.serverModsFolder,
-            )
+            statuses = await bundledModsStatuses(existing.id)
         } catch (error) {
             // The instance exists but its files cannot be inspected (moved or
             // unreadable instance directory). Doing nothing keeps the strict
@@ -298,16 +352,17 @@ export async function runFirstRunBootstrap(
             return null
         }
 
-        if (!status.needsRepair) return null
+        const incomplete = incompleteSets(statuses)
+        if (incomplete.length === 0) return null
 
-        console.warn(
-            'First-run bootstrap: instance is missing required mods, repairing it',
-            {
-                instanceId: existing.id,
+        console.warn('First-run bootstrap: instance is missing required mods, repairing it', {
+            instanceId: existing.id,
+            sets: incomplete.map((status) => ({
+                modsDir: status.modsDir,
                 missing: status.missing,
                 missingSources: status.missingSources,
-            },
-        )
+            })),
+        })
         // Instances built before the logo existed have no icon at all; this
         // only fills that gap and never replaces an icon a player chose.
         await ensureInstanceIcon(existing.id, existing.icon_path)
@@ -366,11 +421,7 @@ async function createServerInstance(
             },
         })
     } catch (error) {
-        throw new FirstRunBootstrapError(
-            'instance-creation',
-            errorMessage(error),
-            error,
-        )
+        throw new FirstRunBootstrapError('instance-creation', errorMessage(error), error)
     }
 
     const instanceId = installJobInstanceId(job)
@@ -446,19 +497,11 @@ async function finishBootstrap(
 
     onProgress({ step: 'installing-mods' })
 
-    let report: BundledModsReport
+    let reports: BundledModsReport[]
     try {
-        report = await installBundledMods(
-            instanceId,
-            ServerConfig.serverModsFolder,
-        )
+        reports = await installBundledMods(instanceId)
     } catch (error) {
-        throw new FirstRunBootstrapError(
-            'bundled-mods',
-            errorMessage(error),
-            error,
-            instanceId,
-        )
+        throw new FirstRunBootstrapError('bundled-mods', errorMessage(error), error, instanceId)
     }
 
     onProgress({ step: 'registering-server' })
@@ -481,10 +524,10 @@ async function finishBootstrap(
         instanceId,
         created,
         repaired,
-        modsFolder: report.modsDir,
-        copied: report.copied,
-        replaced: report.replaced,
-        unchanged: report.unchanged,
+        modsDirs: reports.map((report) => report.modsDir),
+        copied: countBundledMods(reports, 'copied'),
+        replaced: countBundledMods(reports, 'replaced'),
+        unchanged: countBundledMods(reports, 'unchanged'),
         serverRegistered,
     }
 }

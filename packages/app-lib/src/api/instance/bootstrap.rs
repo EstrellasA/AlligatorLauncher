@@ -1,9 +1,17 @@
 //! First-run bootstrap support.
 //!
-//! The launcher ships two mod jars inside its own bundle (see
-//! `apps/app/tauri.conf.json` → `bundle.resources`). A freshly created
-//! instance has an empty `mods/` folder, so the game cannot start (AutoModpack
-//! is what pulls the server pack) until those jars are on disk.
+//! The launcher ships mod jars inside its own bundle (see
+//! `apps/app/tauri.conf.json` → `bundle.resources`). A freshly created instance
+//! has an empty `mods/` folder, so the game cannot start (AutoModpack is what
+//! pulls the server pack) until those jars are on disk.
+//!
+//! A launcher bundle can hold more than one *set* of jars, each with its own
+//! destination folder, so nothing here is hardcoded to `mods/`: every function
+//! takes the target folder and the assets that belong in it. The fork this
+//! module belongs to ships two sets — the AutoModpack entry point in `mods/`
+//! and the client-only rendering stack in `clientmods/` — and treats an
+//! instance as incomplete when *either* folder is incomplete, because the
+//! server pack cannot distribute the client-only jars.
 //!
 //! This module copies the bundled jars into an instance's mods folder. It is
 //! intentionally dumb and idempotent: it never deletes anything, and it only
@@ -574,6 +582,155 @@ mod tests {
         assert!(
             !mods.exists(),
             "the status check must not mutate disk; the copy step creates the folder"
+        );
+    }
+
+    // ---------------------------------------------------------------------
+    // The second bundled set: the client-only jars that belong in `clientmods/`
+    // ---------------------------------------------------------------------
+
+    /// `clientmods/` is a plain relative folder like `mods/`, and every
+    /// rejection that protects `mods/` protects it too.
+    #[test]
+    fn the_client_mods_folder_cannot_escape_the_instance_directory() {
+        let game_dir = Path::new("C:/instances/demo");
+
+        assert_eq!(
+            resolve_mods_dir(game_dir, "clientmods").unwrap(),
+            game_dir.join("clientmods")
+        );
+        assert!(resolve_mods_dir(game_dir, "../clientmods").is_err());
+        assert!(resolve_mods_dir(game_dir, "clientmods/../../outside").is_err());
+        assert!(resolve_mods_dir(game_dir, "C:/somewhere/clientmods").is_err());
+        assert!(resolve_mods_dir(game_dir, "").is_err());
+    }
+
+    #[tokio::test]
+    async fn bundled_file_names_cannot_escape_the_client_mods_folder() {
+        let source = TempDir::new().unwrap();
+        let clientmods = TempDir::new().unwrap();
+        let assets = vec![BundledModAsset {
+            file_name: "../escape.jar".to_string(),
+            source_path: source.path().join("escape.jar"),
+        }];
+
+        assert!(sync_bundled_mods(clientmods.path(), &assets).await.is_err());
+    }
+
+    #[tokio::test]
+    async fn the_client_set_lands_in_clientmods_and_never_in_mods() {
+        let source = TempDir::new().unwrap();
+        let game_dir = TempDir::new().unwrap();
+        let mods = resolve_mods_dir(game_dir.path(), "mods").unwrap();
+        let clientmods = resolve_mods_dir(game_dir.path(), "clientmods").unwrap();
+
+        let server_assets = vec![write_asset(source.path(), "automodpack.jar", b"pack")];
+        let client_assets = vec![
+            write_asset(source.path(), "sodium.jar", b"sodium"),
+            write_asset(source.path(), "colorwheel.jar", b"colorwheel"),
+        ];
+
+        sync_bundled_mods(&mods, &server_assets).await.unwrap();
+        sync_bundled_mods(&clientmods, &client_assets).await.unwrap();
+
+        assert_eq!(read_dir_names(&mods), vec!["automodpack.jar".to_string()]);
+        assert_eq!(
+            read_dir_names(&clientmods),
+            vec!["colorwheel.jar".to_string(), "sodium.jar".to_string()],
+            "the client-only jars must be copied into clientmods/, not into mods/"
+        );
+    }
+
+    /// The regression that shipped a game which crashed during startup: the
+    /// instance had both core jars in `mods/` and nothing at all in
+    /// `clientmods/`, so a status check that only looked at `mods/` called it
+    /// healthy and Flywheel came up without a backend.
+    #[tokio::test]
+    async fn a_missing_client_set_needs_repair_even_though_mods_is_complete() {
+        let source = TempDir::new().unwrap();
+        let game_dir = TempDir::new().unwrap();
+        let mods = resolve_mods_dir(game_dir.path(), "mods").unwrap();
+        let clientmods = resolve_mods_dir(game_dir.path(), "clientmods").unwrap();
+
+        let server_assets = vec![
+            write_asset(source.path(), "automodpack.jar", b"pack"),
+            write_asset(source.path(), "core.jar", b"core"),
+        ];
+        let client_assets = vec![
+            write_asset(source.path(), "sodium.jar", b"sodium"),
+            write_asset(source.path(), "colorwheel.jar", b"colorwheel"),
+        ];
+
+        // The broken instance: `mods/` complete, `clientmods/` never created.
+        sync_bundled_mods(&mods, &server_assets).await.unwrap();
+
+        let server_state = classify_bundled_mods(&mods, &server_assets).await.unwrap();
+        let client_state = classify_bundled_mods(&clientmods, &client_assets)
+            .await
+            .unwrap();
+
+        assert!(
+            !bundled_mods_need_repair(&server_state),
+            "the server set is complete, so `mods/` on its own looks healthy"
+        );
+        assert!(
+            bundled_mods_need_repair(&client_state),
+            "the client set is missing, so the instance cannot start and has to be repaired"
+        );
+        // What a launcher start acts on: a verdict from *either* set. This is
+        // `incompleteSets` in `first-run-bootstrap.ts`.
+        let verdicts = [
+            bundled_mods_need_repair(&server_state),
+            bundled_mods_need_repair(&client_state),
+        ];
+        assert!(
+            verdicts.iter().any(|needs_repair| *needs_repair),
+            "a status check that only looked at `mods/` would leave this instance untouched"
+        );
+
+        // Repairing copies the client set and leaves `mods/` alone.
+        sync_bundled_mods(&clientmods, &client_assets).await.unwrap();
+        let repaired = classify_bundled_mods(&clientmods, &client_assets)
+            .await
+            .unwrap();
+        assert!(!bundled_mods_need_repair(&repaired));
+        assert_eq!(
+            read_dir_names(&mods),
+            vec!["automodpack.jar".to_string(), "core.jar".to_string()],
+            "repairing the client set must not touch the server pack's folder"
+        );
+    }
+
+    /// The real client set ships `[钠] sodium-neoforge-0.8.13+mc1.21.1.jar` and
+    /// `[机械动力：赛博护目镜] CreateCyberGoggles-…jar`. A full-width colon, a
+    /// `+` and the brackets must not be read as path syntax.
+    #[tokio::test]
+    async fn client_jar_names_with_cjk_and_plus_signs_are_plain_file_names() {
+        const SODIUM: &str = "[钠] sodium-neoforge-0.8.13+mc1.21.1.jar";
+        const GOGGLES: &str =
+            "[机械动力：赛博护目镜] CreateCyberGoggles-1.21.1-8.3.12-NeoForge.jar";
+
+        let source = TempDir::new().unwrap();
+        let clientmods = TempDir::new().unwrap();
+        let assets = vec![
+            write_asset(source.path(), SODIUM, b"sodium"),
+            write_asset(source.path(), GOGGLES, b"goggles"),
+        ];
+
+        let results = sync_bundled_mods(clientmods.path(), &assets).await.unwrap();
+
+        assert!(
+            results
+                .iter()
+                .all(|file| file.status == BundledModStatus::Copied)
+        );
+        assert_eq!(
+            std::fs::read(clientmods.path().join(SODIUM)).unwrap(),
+            b"sodium"
+        );
+        assert_eq!(
+            std::fs::read(clientmods.path().join(GOGGLES)).unwrap(),
+            b"goggles"
         );
     }
 }
