@@ -31,8 +31,18 @@ import { ServerConfig } from '@/server-config'
  * the client-only set (Sodium, Colorwheel, Iris, …) goes into `clientmods/`,
  * which the loader only reads because that locator mod registers it. The server
  * pack cannot supply the second set — AutoModpack never distributes what the
- * server does not have — so both sets are installed here, and an instance is
+ * server does not have — so the launcher installs both here, and an instance is
  * considered incomplete unless *both* folders are complete.
+ *
+ * The client set is only installed once the server pack is on disk, because
+ * several of its jars depend on mods that only the pack delivers
+ * (`sablemassview` needs `sable`, `create_cyber_goggles` and `smart_bounds` need
+ * `create`). On a brand-new instance AutoModpack has not downloaded anything yet,
+ * and seeding `clientmods/` would make NeoForge fail its dependency check before
+ * the download can happen — the first launch would crash instead of syncing. The
+ * backend decides that precondition and reports it as `deferred`; a deferred set
+ * is intentionally missing, never broken, and this launch installs it once the
+ * pack exists.
  *
  * Everything here is strictly "only when nothing exists yet": if any instance
  * already links to this server, the flow does nothing at all.
@@ -87,7 +97,9 @@ export interface FirstRunBootstrapResult {
     repaired: boolean
     /**
      * Absolute folders the bundled sets were installed into, in install order:
-     * the server pack's `mods` first, the client-only `clientmods` second.
+     * the server pack's `mods` first, the client-only `clientmods` second. A set
+     * that was deferred — it waits for AutoModpack to install the server pack —
+     * is not listed, because nothing was written to its folder.
      */
     modsDirs: string[]
     copied: number
@@ -146,6 +158,8 @@ interface BundledModsReport {
     copied: number
     replaced: number
     unchanged: number
+    /** True when the set was not installed: it waits for the server pack. */
+    deferred: boolean
 }
 
 type BundledModState = 'up_to_date' | 'missing' | 'outdated' | 'source_missing'
@@ -159,6 +173,12 @@ interface BundledModsStatus {
      * absent from the launcher build itself.
      */
     needsRepair: boolean
+    /**
+     * True when this set was not inspected because it waits for the server pack,
+     * which AutoModpack has not installed into this instance yet. Such a set is
+     * intentionally missing, so it never counts as incomplete.
+     */
+    deferred: boolean
     missing: string[]
     outdated: string[]
     missingSources: string[]
@@ -197,13 +217,30 @@ async function installBundledModsInto(
  *
  * Sequential on purpose: each set is a separate copy, and an error names the
  * folder it failed on instead of hiding behind a concurrent write.
+ *
+ * A set the backend defers comes back with `deferred: true` and no work done;
+ * that is a normal answer, not a failure, so it is only reported for diagnosis.
  */
 async function installBundledMods(instanceId: string): Promise<BundledModsReport[]> {
     const reports: BundledModsReport[] = []
     for (const modsFolder of BUNDLED_MODS_FOLDERS) {
         reports.push(await installBundledModsInto(instanceId, modsFolder))
     }
+
+    const deferred = reports.filter((report) => report.deferred)
+    if (deferred.length > 0) {
+        console.info(
+            'First-run bootstrap: bundled sets deferred until AutoModpack installs the server pack',
+            { instanceId, modsDirs: deferred.map((report) => report.modsDir) },
+        )
+    }
+
     return reports
+}
+
+/** The folders a bundled set was actually written to. */
+function installedModsDirs(reports: BundledModsReport[]): string[] {
+    return reports.filter((report) => !report.deferred).map((report) => report.modsDir)
 }
 
 /**
@@ -234,9 +271,14 @@ async function bundledModsStatuses(instanceId: string): Promise<BundledModsStatu
  * game — the client-only rendering stack lives in `clientmods/`, and Flywheel
  * comes up without a backend without it — so checking only `mods/` would leave
  * exactly the broken instance a repair exists to fix.
+ *
+ * A deferred set is excluded no matter what: it waits for the server pack, so
+ * its jars are meant to be absent on this launch, and repairing it would report
+ * something as broken that the launcher itself postpones on purpose. That is
+ * also why the first launch installs `mods/` only.
  */
 function incompleteSets(statuses: BundledModsStatus[]): BundledModsStatus[] {
-    return statuses.filter((status) => status.needsRepair)
+    return statuses.filter((status) => status.needsRepair && !status.deferred)
 }
 
 /** Sum one result bucket across every bundled set that was installed. */
@@ -524,7 +566,7 @@ async function finishBootstrap(
         instanceId,
         created,
         repaired,
-        modsDirs: reports.map((report) => report.modsDir),
+        modsDirs: installedModsDirs(reports),
         copied: countBundledMods(reports, 'copied'),
         replaced: countBundledMods(reports, 'replaced'),
         unchanged: countBundledMods(reports, 'unchanged'),

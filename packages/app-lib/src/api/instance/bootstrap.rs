@@ -13,6 +13,19 @@
 //! instance as incomplete when *either* folder is incomplete, because the
 //! server pack cannot distribute the client-only jars.
 //!
+//! A set also declares what it needs before it may be installed at all. The
+//! server set starts the game on its own, but several client-only jars depend on
+//! mods that only the server pack delivers: `sablemassview` requires `sable`,
+//! and `create_cyber_goggles` and `smart_bounds` require `create`. Installing
+//! those jars on a brand-new instance turns AutoModpack's designed first-run flow
+//! (*launch → download → restart*) into a NeoForge dependency failure that
+//! happens *before* AutoModpack can download anything — an inescapable crash
+//! loop. So a set that declares [`BundledSetDependency::ServerPack`] is deferred
+//! — neither installed nor reported as needing repair — until AutoModpack has
+//! installed the pack, and the ordinary every-launch status check installs it on
+//! the following start. That is the same code path that repairs an existing
+//! install, so nothing here weakens self-healing.
+//!
 //! This module copies the bundled jars into an instance's mods folder. It is
 //! intentionally dumb and idempotent: it never deletes anything, and it only
 //! writes a file when the target is missing or its contents differ from the
@@ -23,6 +36,7 @@
 //! half-built instance instead of stranding the player with a game that cannot
 //! sync. An instance that is complete is never rewritten.
 
+use super::automodpack::{AUTOMODPACK_CLIENT_DIR, AUTOMODPACK_DIR};
 use crate::util::io;
 use serde::{Deserialize, Serialize};
 use std::path::{Component, Path, PathBuf};
@@ -35,6 +49,18 @@ pub struct BundledModAsset {
     pub file_name: String,
     /// Absolute path of the bundled source file.
     pub source_path: PathBuf,
+}
+
+/// What one bundled set needs before a launcher start may install it.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum BundledSetDependency {
+    /// The set makes the instance startable on its own: it holds the AutoModpack
+    /// entry point, which is what makes the first launch download the server
+    /// pack. It is never deferred, because without it nothing works at all.
+    Standalone,
+    /// The set only works once the server pack is on disk, because its jars
+    /// depend on mods that AutoModpack delivers. It is deferred until then.
+    ServerPack,
 }
 
 /// What happened to one bundled jar.
@@ -63,12 +89,18 @@ pub struct BundledModResult {
 #[serde(rename_all = "camelCase")]
 pub struct InstallBundledModsReport {
     pub instance_id: String,
-    /// Absolute path of the mods folder that was written to.
+    /// Absolute path of the mods folder that was written to. When `deferred` is
+    /// true nothing was written, so this is the folder the set belongs in.
     pub mods_dir: String,
     pub files: Vec<BundledModResult>,
     pub copied: usize,
     pub replaced: usize,
     pub unchanged: usize,
+    /// True when this set was not installed because it needs the server pack,
+    /// which AutoModpack has not installed into this instance yet. Nothing on
+    /// disk was touched, and the set stays deferred until a later start sees the
+    /// pack.
+    pub deferred: bool,
 }
 
 /// What one bundled jar looks like inside an instance right now.
@@ -99,12 +131,17 @@ pub struct BundledModStateEntry {
 pub struct BundledModsStatusReport {
     pub instance_id: String,
     /// Absolute mods folder that was inspected. Nothing is created by a status
-    /// check, so this path may not exist yet.
+    /// check, so this path may not exist yet. When `deferred` is true nothing
+    /// was inspected either, and this is the folder the set belongs in.
     pub mods_dir: String,
     pub files: Vec<BundledModStateEntry>,
     /// True when the instance cannot sync the server pack: a jar is absent from
     /// the instance, or absent from the launcher bundle itself.
     pub needs_repair: bool,
+    /// True when this set was not inspected because it needs the server pack,
+    /// which AutoModpack has not installed into this instance yet. A deferred
+    /// set is intentionally incomplete, so it never counts as needing repair.
+    pub deferred: bool,
     /// Jars absent from the instance's mods folder.
     pub missing: Vec<String>,
     /// Jars that are present with different contents.
@@ -273,23 +310,163 @@ pub fn bundled_mods_need_repair(entries: &[BundledModStateEntry]) -> bool {
     })
 }
 
+/// `client/active-state.json`: AutoModpack's record of the pack it installed.
+///
+/// Deliberately not `client/selected.json` (the pack the client *follows*) and
+/// deliberately not the `client/history/` journal mirror. In AutoModpack
+/// 5.0.0-rc.4 — the version this launcher ships — the active state is written
+/// last, by `UpdateCommit.finalizeModpackState`, only after the pack's
+/// game-directory rows have been applied and verified and the projection has been
+/// swapped in. AutoModpack's own source states the difference: the journal mirror
+/// is "cache a head fetch writes, never a record of an install", and only the
+/// active pointer or a stored group selection marks an install. `selected.json`
+/// needs no content at all — importing a server's bootstrap file seeds it before
+/// anything is downloaded.
+const AUTOMODPACK_ACTIVE_STATE_FILE: &str = "active-state.json";
+
+/// The subset of `client/active-state.json` this module needs.
+#[derive(Deserialize)]
+struct AutomodpackActiveState {
+    #[serde(rename = "modpackId", alias = "modpack_id")]
+    modpack_id: String,
+}
+
+/// Whether AutoModpack has installed the server pack into this instance.
+///
+/// The signal is AutoModpack's own active-state pointer: the one artifact it
+/// writes *after* the pack's files are on disk. The journal mirror is written by a
+/// head fetch and the selected-pack file can be seeded by an imported bootstrap
+/// file, both before any content lands, so either can be present with an empty or
+/// half-written `mods/` — exactly the state that must not unlock a client set
+/// whose jars depend on the pack.
+///
+/// It fails safe by construction: a missing, unreadable, unparseable or
+/// anonymous pointer means "no pack here", which defers the dependent set instead
+/// of installing it into a game that cannot start. A deferred client set is a
+/// degraded session that the next launch repairs; installing client jars before
+/// their dependencies arrive is a crash loop the player cannot escape.
+pub fn server_pack_present(game_dir: &Path) -> bool {
+    let active_state = game_dir
+        .join(AUTOMODPACK_DIR)
+        .join(AUTOMODPACK_CLIENT_DIR)
+        .join(AUTOMODPACK_ACTIVE_STATE_FILE);
+
+    let Ok(raw) = std::fs::read_to_string(&active_state) else {
+        return false;
+    };
+    let Ok(state) = serde_json::from_str::<AutomodpackActiveState>(&raw) else {
+        return false;
+    };
+    !state.modpack_id.trim().is_empty()
+}
+
+/// Whether a bundled set has to wait for the server pack before it is installed.
+///
+/// Only [`BundledSetDependency::ServerPack`] can be deferred, and only while
+/// [`server_pack_present`] says no. The `mods/` set is what makes the pack arrive
+/// in the first place, so it is never gated: without it the instance can never
+/// sync at all.
+pub fn bundled_set_is_deferred(
+    game_dir: &Path,
+    dependency: BundledSetDependency,
+) -> bool {
+    match dependency {
+        BundledSetDependency::Standalone => false,
+        BundledSetDependency::ServerPack => !server_pack_present(game_dir),
+    }
+}
+
+/// The report of a set that is intentionally left alone: nothing was looked at,
+/// nothing needs repair, and the set is installed by a later launcher start once
+/// AutoModpack has put the server pack on disk.
+fn deferred_status_report(
+    instance_id: &str,
+    mods_dir: &Path,
+) -> BundledModsStatusReport {
+    BundledModsStatusReport {
+        instance_id: instance_id.to_string(),
+        mods_dir: mods_dir.to_string_lossy().into_owned(),
+        files: Vec::new(),
+        needs_repair: false,
+        deferred: true,
+        missing: Vec::new(),
+        outdated: Vec::new(),
+        missing_sources: Vec::new(),
+    }
+}
+
+/// The report of a set that was intentionally not installed. Nothing on disk was
+/// created, so the caller can tell "deferred" apart from "already complete".
+fn deferred_install_report(
+    instance_id: &str,
+    mods_dir: &Path,
+) -> InstallBundledModsReport {
+    InstallBundledModsReport {
+        instance_id: instance_id.to_string(),
+        mods_dir: mods_dir.to_string_lossy().into_owned(),
+        files: Vec::new(),
+        copied: 0,
+        replaced: 0,
+        unchanged: 0,
+        deferred: true,
+    }
+}
+
 /// How an instance stands against the bundled jars, without changing anything.
 ///
 /// This is the check a launcher start makes before touching an instance that
 /// already exists, so that a half-built instance (created, but left without its
 /// mods by a crash or an earlier failure) repairs itself instead of stranding
 /// the player.
+///
+/// A set that declares [`BundledSetDependency::ServerPack`] reports
+/// `needs_repair: false` and `deferred: true` while AutoModpack has not installed
+/// the server pack: its jars are *supposed* to be absent on a brand-new instance,
+/// so nothing here may claim the instance is broken. The next launcher start,
+/// after AutoModpack has downloaded the pack, reports the missing jars and
+/// repairs them.
 #[tracing::instrument(skip(assets))]
 pub async fn bundled_mods_status(
     instance_id: &str,
     mods_folder: &str,
     assets: Vec<BundledModAsset>,
+    dependency: BundledSetDependency,
 ) -> crate::Result<BundledModsStatusReport> {
     let game_dir = crate::api::instance::get_full_path(instance_id).await?;
-    let mods_dir = resolve_mods_dir(&game_dir, mods_folder)?;
+    bundled_mods_status_in(
+        instance_id,
+        &game_dir,
+        mods_folder,
+        &assets,
+        dependency,
+    )
+    .await
+}
+
+/// [`bundled_mods_status`] against an already resolved instance directory, so the
+/// deferral rule can be exercised without launcher state.
+async fn bundled_mods_status_in(
+    instance_id: &str,
+    game_dir: &Path,
+    mods_folder: &str,
+    assets: &[BundledModAsset],
+    dependency: BundledSetDependency,
+) -> crate::Result<BundledModsStatusReport> {
+    let mods_dir = resolve_mods_dir(game_dir, mods_folder)?;
+
+    if bundled_set_is_deferred(game_dir, dependency) {
+        tracing::info!(
+            event = "instance_bootstrap_set_deferred",
+            instance_id,
+            mods_folder,
+            mods_dir = %mods_dir.display(),
+            "Bundled set is deferred until AutoModpack has installed the server pack"
+        );
+        return Ok(deferred_status_report(instance_id, &mods_dir));
+    }
 
     // Deliberately no `create_dir_all`: a status check must not mutate disk.
-    let files = classify_bundled_mods(&mods_dir, &assets).await?;
+    let files = classify_bundled_mods(&mods_dir, assets).await?;
 
     let names_in_state = |state: BundledModState| {
         files
@@ -319,6 +496,7 @@ pub async fn bundled_mods_status(
         mods_dir: mods_dir.to_string_lossy().into_owned(),
         files,
         needs_repair,
+        deferred: false,
         missing,
         outdated,
         missing_sources,
@@ -328,16 +506,53 @@ pub async fn bundled_mods_status(
 /// Install the launcher's bundled jars into an instance's mods folder.
 ///
 /// Safe to call repeatedly: files that already match are left untouched.
+///
+/// A set that declares [`BundledSetDependency::ServerPack`] is not installed
+/// while AutoModpack has not installed the server pack, and reports
+/// `deferred: true` without touching disk. That precondition is enforced here
+/// rather than only in the caller, so no launcher start can install a jar whose
+/// dependencies are known to be missing.
 #[tracing::instrument(skip(assets))]
 pub async fn install_bundled_mods(
     instance_id: &str,
     mods_folder: &str,
     assets: Vec<BundledModAsset>,
+    dependency: BundledSetDependency,
 ) -> crate::Result<InstallBundledModsReport> {
     let game_dir = crate::api::instance::get_full_path(instance_id).await?;
-    let mods_dir = resolve_mods_dir(&game_dir, mods_folder)?;
+    install_bundled_mods_in(
+        instance_id,
+        &game_dir,
+        mods_folder,
+        &assets,
+        dependency,
+    )
+    .await
+}
 
-    let files = sync_bundled_mods(&mods_dir, &assets).await?;
+/// [`install_bundled_mods`] against an already resolved instance directory, so
+/// the deferral rule can be exercised without launcher state.
+async fn install_bundled_mods_in(
+    instance_id: &str,
+    game_dir: &Path,
+    mods_folder: &str,
+    assets: &[BundledModAsset],
+    dependency: BundledSetDependency,
+) -> crate::Result<InstallBundledModsReport> {
+    let mods_dir = resolve_mods_dir(game_dir, mods_folder)?;
+
+    if bundled_set_is_deferred(game_dir, dependency) {
+        tracing::info!(
+            event = "instance_bootstrap_set_deferred",
+            instance_id,
+            mods_folder,
+            mods_dir = %mods_dir.display(),
+            "Bundled set is deferred until AutoModpack has installed the server pack"
+        );
+        return Ok(deferred_install_report(instance_id, &mods_dir));
+    }
+
+    let files = sync_bundled_mods(&mods_dir, assets).await?;
 
     let report = InstallBundledModsReport {
         instance_id: instance_id.to_string(),
@@ -355,6 +570,7 @@ pub async fn install_bundled_mods(
             .filter(|file| file.status == BundledModStatus::Unchanged)
             .count(),
         files,
+        deferred: false,
     };
 
     tracing::info!(
@@ -645,6 +861,10 @@ mod tests {
     /// instance had both core jars in `mods/` and nothing at all in
     /// `clientmods/`, so a status check that only looked at `mods/` called it
     /// healthy and Flywheel came up without a backend.
+    ///
+    /// The pack is present here — this is a later launch than the one that first
+    /// installed the server set, which is the only launch on which the client set
+    /// may be installed at all.
     #[tokio::test]
     async fn a_missing_client_set_needs_repair_even_though_mods_is_complete() {
         let source = TempDir::new().unwrap();
@@ -661,14 +881,23 @@ mod tests {
             write_asset(source.path(), "colorwheel.jar", b"colorwheel"),
         ];
 
-        // The broken instance: `mods/` complete, `clientmods/` never created.
+        // The broken instance: `mods/` complete, `clientmods/` never created,
+        // and AutoModpack has already installed the server pack.
         sync_bundled_mods(&mods, &server_assets).await.unwrap();
+        mark_server_pack_installed(game_dir.path(), "bm859uj");
 
         let server_state = classify_bundled_mods(&mods, &server_assets).await.unwrap();
         let client_state = classify_bundled_mods(&clientmods, &client_assets)
             .await
             .unwrap();
 
+        assert!(
+            !bundled_set_is_deferred(
+                game_dir.path(),
+                BundledSetDependency::ServerPack
+            ),
+            "the pack is on disk, so the client set is not deferred any more"
+        );
         assert!(
             !bundled_mods_need_repair(&server_state),
             "the server set is complete, so `mods/` on its own looks healthy"
@@ -732,5 +961,287 @@ mod tests {
             std::fs::read(clientmods.path().join(GOGGLES)).unwrap(),
             b"goggles"
         );
+    }
+
+    // ---------------------------------------------------------------------
+    // The server-pack gate: the client set waits for the mods it depends on
+    // ---------------------------------------------------------------------
+
+    /// The AutoModpack state that says "this pack is installed here".
+    fn mark_server_pack_installed(game_dir: &Path, modpack_id: &str) {
+        let client_dir =
+            game_dir.join(AUTOMODPACK_DIR).join(AUTOMODPACK_CLIENT_DIR);
+        std::fs::create_dir_all(&client_dir).unwrap();
+        std::fs::write(
+            client_dir.join(AUTOMODPACK_ACTIVE_STATE_FILE),
+            format!(
+                r#"{{"modpackId":"{modpack_id}","status":"ACTIVE","contentToken":"{}"}}"#,
+                "a".repeat(40)
+            ),
+        )
+        .unwrap();
+    }
+
+    /// Launch 1 of a brand-new instance: the server set is installed, and the
+    /// client set is neither installed nor reported as broken. That is the whole
+    /// point of the gate — the client jars depend on `create` and `sable`, which
+    /// only the server pack can deliver, and on launch 1 nothing has been
+    /// downloaded yet.
+    #[tokio::test]
+    async fn a_first_launch_defers_the_client_set() {
+        let source = TempDir::new().unwrap();
+        let game_dir = TempDir::new().unwrap();
+        let server_assets =
+            vec![write_asset(source.path(), "automodpack.jar", b"pack")];
+        let client_assets = vec![
+            write_asset(source.path(), "sodium.jar", b"sodium"),
+            write_asset(source.path(), "sablemassview.jar", b"massview"),
+        ];
+
+        assert!(
+            !server_pack_present(game_dir.path()),
+            "a brand-new instance has no AutoModpack state at all"
+        );
+
+        // The `mods/` set is never gated: without it nothing can sync.
+        let server_report = install_bundled_mods_in(
+            "demo",
+            game_dir.path(),
+            "mods",
+            &server_assets,
+            BundledSetDependency::Standalone,
+        )
+        .await
+        .unwrap();
+        assert!(!server_report.deferred);
+        assert_eq!(server_report.copied, 1);
+        assert_eq!(
+            std::fs::read(game_dir.path().join("mods").join("automodpack.jar"))
+                .unwrap(),
+            b"pack"
+        );
+
+        // The client set is deferred, and deferring it does not touch disk.
+        let client_report = install_bundled_mods_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+        assert!(client_report.deferred);
+        assert_eq!(client_report.copied, 0);
+        assert!(client_report.files.is_empty());
+        assert!(
+            !game_dir.path().join("clientmods").exists(),
+            "a deferred set must not even create its folder"
+        );
+
+        let client_status = bundled_mods_status_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+        assert!(client_status.deferred);
+        assert!(
+            !client_status.needs_repair,
+            "an intentionally deferred set must never be reported as broken"
+        );
+        assert!(client_status.missing.is_empty());
+        assert!(client_status.missing_sources.is_empty());
+        assert!(client_status.files.is_empty());
+
+        // The gate is why it is not reported: the jars really are absent, and a
+        // classification that ignored the pack would ask for a repair.
+        let ungated = classify_bundled_mods(
+            &resolve_mods_dir(game_dir.path(), "clientmods").unwrap(),
+            &client_assets,
+        )
+        .await
+        .unwrap();
+        assert!(bundled_mods_need_repair(&ungated));
+
+        // The server set, installed and complete, still reports clean.
+        let server_status = bundled_mods_status_in(
+            "demo",
+            game_dir.path(),
+            "mods",
+            &server_assets,
+            BundledSetDependency::Standalone,
+        )
+        .await
+        .unwrap();
+        assert!(!server_status.deferred);
+        assert!(!server_status.needs_repair);
+        assert!(server_status.missing.is_empty());
+    }
+
+    /// Launch 2: AutoModpack has installed the pack, so the existing every-launch
+    /// status check finds the client set missing and the existing install path
+    /// repairs it.
+    #[tokio::test]
+    async fn the_client_set_is_repaired_once_the_server_pack_is_present() {
+        let source = TempDir::new().unwrap();
+        let game_dir = TempDir::new().unwrap();
+        let server_assets =
+            vec![write_asset(source.path(), "automodpack.jar", b"pack")];
+        let client_assets = vec![
+            write_asset(source.path(), "sodium.jar", b"sodium"),
+            write_asset(source.path(), "colorwheel.jar", b"colorwheel"),
+        ];
+
+        // Launch 1 left the instance in exactly this state.
+        install_bundled_mods_in(
+            "demo",
+            game_dir.path(),
+            "mods",
+            &server_assets,
+            BundledSetDependency::Standalone,
+        )
+        .await
+        .unwrap();
+        install_bundled_mods_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+
+        // AutoModpack downloaded and installed the pack during that session.
+        mark_server_pack_installed(game_dir.path(), "bm859uj");
+        assert!(server_pack_present(game_dir.path()));
+
+        let status = bundled_mods_status_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+        assert!(!status.deferred, "the pack is on disk now");
+        assert!(status.needs_repair);
+        assert_eq!(
+            status.missing,
+            vec!["sodium.jar".to_string(), "colorwheel.jar".to_string()]
+        );
+
+        let report = install_bundled_mods_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+        assert!(!report.deferred);
+        assert_eq!(report.copied, 2);
+        assert_eq!(
+            std::fs::read(
+                game_dir.path().join("clientmods").join("sodium.jar")
+            )
+            .unwrap(),
+            b"sodium"
+        );
+
+        let repaired = bundled_mods_status_in(
+            "demo",
+            game_dir.path(),
+            "clientmods",
+            &client_assets,
+            BundledSetDependency::ServerPack,
+        )
+        .await
+        .unwrap();
+        assert!(!repaired.needs_repair);
+        assert!(!repaired.deferred);
+        assert_eq!(
+            read_dir_names(&resolve_mods_dir(game_dir.path(), "mods").unwrap()),
+            vec!["automodpack.jar".to_string()],
+            "repairing the client set must never touch the server pack's folder"
+        );
+    }
+
+    /// The presence signal is the only thing standing between a first launch and
+    /// a crash loop, so every way of not being able to tell has to answer "no
+    /// pack here".
+    #[test]
+    fn the_pack_presence_signal_fails_safe() {
+        let game_dir = TempDir::new().unwrap();
+
+        assert!(!server_pack_present(game_dir.path()));
+        assert!(bundled_set_is_deferred(
+            game_dir.path(),
+            BundledSetDependency::ServerPack
+        ));
+        assert!(
+            !bundled_set_is_deferred(
+                game_dir.path(),
+                BundledSetDependency::Standalone
+            ),
+            "the set that installs the pack must never be gated"
+        );
+
+        // AutoModpack has run but installed nothing: `client/` exists, no state.
+        let client_dir = game_dir
+            .path()
+            .join(AUTOMODPACK_DIR)
+            .join(AUTOMODPACK_CLIENT_DIR);
+        std::fs::create_dir_all(&client_dir).unwrap();
+        assert!(!server_pack_present(game_dir.path()));
+
+        // A journal mirror and a selected pack are not an install.
+        std::fs::write(
+            client_dir.join("selected.json"),
+            r#"{"modpackId":"bm859uj"}"#,
+        )
+        .unwrap();
+        let history = client_dir.join("history").join("bm859uj");
+        std::fs::create_dir_all(&history).unwrap();
+        std::fs::write(history.join("journal.jsonl"), "{}\n").unwrap();
+        assert!(
+            !server_pack_present(game_dir.path()),
+            "a fetched mirror or a seeded selection is not an install"
+        );
+
+        let active_state = client_dir.join(AUTOMODPACK_ACTIVE_STATE_FILE);
+
+        std::fs::write(&active_state, b"{ not json").unwrap();
+        assert!(!server_pack_present(game_dir.path()));
+
+        std::fs::write(&active_state, br#"{"contentToken":"aaaa"}"#).unwrap();
+        assert!(
+            !server_pack_present(game_dir.path()),
+            "a pointer that names no pack is not an install"
+        );
+
+        std::fs::write(&active_state, br#"{"modpackId":"   "}"#).unwrap();
+        assert!(!server_pack_present(game_dir.path()));
+
+        std::fs::remove_file(&active_state).unwrap();
+        std::fs::create_dir_all(&active_state).unwrap();
+        assert!(
+            !server_pack_present(game_dir.path()),
+            "a directory where the pointer should be is not an install"
+        );
+
+        std::fs::remove_dir(&active_state).unwrap();
+        mark_server_pack_installed(game_dir.path(), "bm859uj");
+        assert!(server_pack_present(game_dir.path()));
+        assert!(!bundled_set_is_deferred(
+            game_dir.path(),
+            BundledSetDependency::ServerPack
+        ));
     }
 }

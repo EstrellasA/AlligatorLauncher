@@ -63,8 +63,9 @@ pub(crate) use self::backup::{
 };
 pub use self::bootstrap::{
     BundledModAsset, BundledModResult, BundledModState, BundledModStateEntry,
-    BundledModStatus, BundledModsStatusReport, InstallBundledModsReport,
-    bundled_mods_need_repair, bundled_mods_status, install_bundled_mods,
+    BundledModStatus, BundledModsStatusReport, BundledSetDependency,
+    InstallBundledModsReport, bundled_mods_need_repair, bundled_mods_status,
+    install_bundled_mods,
 };
 pub(crate) use self::content::resolve_content_change_actions;
 pub use self::content::{

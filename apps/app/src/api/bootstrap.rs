@@ -3,8 +3,8 @@ use serde::Deserialize;
 use std::path::PathBuf;
 use tauri::Manager;
 use theseus::instance::{
-    BundledModAsset, BundledModsStatusReport, InstallBundledModsReport,
-    bundled_mods_status, install_bundled_mods,
+    BundledModAsset, BundledModsStatusReport, BundledSetDependency,
+    InstallBundledModsReport, bundled_mods_status, install_bundled_mods,
 };
 
 /// One set of jars shipped with the launcher, and the instance folder those
@@ -21,6 +21,10 @@ use theseus::instance::{
 /// Adding a third set later is a data change: one more entry here, plus the
 /// folder name in `apps/app-frontend/src/server-config.ts`, which is where the
 /// frontend keeps the folders it asks for.
+///
+/// Whether a set may be installed yet is part of the set for the same reason the
+/// folder is: it is a property of those jars, not of the caller, and the backend
+/// is what enforces it.
 struct BundledModSet {
     /// Directory inside the Tauri resource directory that holds this set's
     /// jars. Mirrors `bundle.resources` in `tauri.conf.json`.
@@ -30,6 +34,8 @@ struct BundledModSet {
     /// a request naming any other folder is rejected rather than answered with
     /// an empty install.
     mods_folder: &'static str,
+    /// What this set needs before it may be installed at all.
+    dependency: BundledSetDependency,
     /// The jars stored in `resource_dir`. Keep in sync with that directory: a
     /// name that is listed but not shipped is a hard error, which is what turns
     /// a packaging mistake into a visible failure instead of a silent skip.
@@ -55,10 +61,19 @@ struct BundledModSet {
 /// locator it registers as a *library*, its version resolves to `[MISSING]`,
 /// and every dependent fails with "<mod> is not installed". Sodium is exactly
 /// that case, which is why it sits in `mods/` despite being client-only.
+///
+/// The client set also declares [`BundledSetDependency::ServerPack`], because
+/// `sablemassview` requires `sable` and both `create_cyber_goggles` and
+/// `smart_bounds` require `create`, and those live only in the server pack.
+/// Installing the client set on a brand-new instance would make NeoForge's
+/// dependency check fail before AutoModpack ever downloads anything, so the
+/// launcher leaves it deferred until the pack is on disk and installs it on the
+/// following start. `mods/` is never deferred: it carries AutoModpack itself.
 const BUNDLED_MOD_SETS: &[BundledModSet] = &[
     BundledModSet {
         resource_dir: "resources/bundled-mods",
         mods_folder: "mods",
+        dependency: BundledSetDependency::Standalone,
         files: &[
             "automodpack-5.0.0-rc.4.jar",
             "alligatorzone-core-1.0.0.jar",
@@ -68,6 +83,7 @@ const BUNDLED_MOD_SETS: &[BundledModSet] = &[
     BundledModSet {
         resource_dir: "resources/bundled-client-mods",
         mods_folder: "clientmods",
+        dependency: BundledSetDependency::ServerPack,
         files: &[
             "aeronauticshotairfix-1.1.1.jar",
             "BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar",
@@ -193,6 +209,12 @@ fn bundled_set_assets<R: tauri::Runtime>(
 /// Idempotent: files that already match the bundled copy are left untouched,
 /// and a missing bundled source fails with an explicit error instead of
 /// pretending to succeed.
+///
+/// A set whose `dependency` is [`BundledSetDependency::ServerPack`] is not
+/// installed while AutoModpack has not installed the server pack; the report then
+/// carries `deferred: true` and nothing on disk changes. This is the precondition
+/// that keeps the first launch from crashing on jars whose dependencies only
+/// arrive with the pack.
 #[tauri::command]
 pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
@@ -206,6 +228,10 @@ pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
         mods_folder = %request.mods_folder,
         bundled_mods_dir = %set_dir.display(),
         jars = assets.len(),
+        requires_server_pack = matches!(
+            set.dependency,
+            BundledSetDependency::ServerPack
+        ),
         "Installing a bundled mod set for the first-run bootstrap"
     );
 
@@ -213,6 +239,7 @@ pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
         &request.instance_id,
         &request.mods_folder,
         assets,
+        set.dependency,
     )
     .await?)
 }
@@ -226,6 +253,12 @@ pub async fn bootstrap_install_bundled_mods<R: tauri::Runtime>(
 /// asks this for every folder and repairs the instance when *either* answer
 /// says a jar is missing — the server set alone is not enough to start the
 /// game.
+///
+/// A set whose `dependency` is [`BundledSetDependency::ServerPack`] answers
+/// `needs_repair: false` with `deferred: true` while the server pack is not on
+/// disk: its jars are meant to be absent on a brand-new instance, and reporting
+/// them as broken would make the launcher claim something is wrong that is
+/// deliberately postponed.
 #[tauri::command]
 pub async fn bootstrap_bundled_mods_status<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
@@ -246,6 +279,7 @@ pub async fn bootstrap_bundled_mods_status<R: tauri::Runtime>(
         &request.instance_id,
         &request.mods_folder,
         assets,
+        set.dependency,
     )
     .await?)
 }
