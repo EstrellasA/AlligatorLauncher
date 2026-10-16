@@ -53,9 +53,27 @@ function blockbenchSkinDevAssets() {
     }
 }
 
-// Load .env from app-lib manually instead of using Vite's envDir, which would auto-load .env.local and override values
-const envFilePath = resolve(appLibEnvDir, '.env')
-if (existsSync(envFilePath)) {
+// Load env files from app-lib manually instead of using Vite's envDir, which
+// would auto-load .env.local and override values.
+//
+// Precedence, highest first:
+//   1. real environment variables (what CI and `tauri build` receive);
+//   2. `packages/app-lib/.env` (which is tracked);
+//   3. `packages/app-lib/.env.local` — **only** for `VITE_AXO_*` keys.
+//
+// The third file is the untracked home of this private server's address (see
+// `packages/app-lib/.env.local.example`); restricting it to `VITE_AXO_*` is
+// what keeps its committed `MODRINTH_URL=…localhost…` from ever being picked
+// up by a production build.
+const ENV_FILES = [
+    { name: '.env', allow: () => true },
+    { name: '.env.local', allow: (key: string) => key.startsWith('VITE_AXO_') },
+]
+
+for (const { name, allow } of ENV_FILES) {
+    const envFilePath = resolve(appLibEnvDir, name)
+    if (!existsSync(envFilePath)) continue
+
     for (const line of readFileSync(envFilePath, 'utf-8').split('\n')) {
         const trimmed = line.trim()
         if (!trimmed || trimmed.startsWith('#')) continue
@@ -63,6 +81,7 @@ if (existsSync(envFilePath)) {
         if (eqIndex === -1) continue
         const key = trimmed.slice(0, eqIndex)
         const value = trimmed.slice(eqIndex + 1)
+        if (!allow(key)) continue
         if (!(key in process.env)) {
             process.env[key] = value
         }

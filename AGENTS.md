@@ -46,6 +46,40 @@ The website and app `prepr` commands
 - **Website:** `pnpm website:dev`
 - **App:** `pnpm app:dev` (copy `.env` template in `packages/app-lib/` first)
 
+## Build-Time Server Configuration (Private Values)
+
+This repository is public. The address of the private server this launcher is
+built for must never appear in a tracked file, so it is supplied at **build
+time** instead of being written into source:
+
+| Variable | Meaning | Placeholder when unset |
+| --- | --- | --- |
+| `VITE_AXO_SERVER_ADDRESS` | Minecraft address for one-click join | `example.invalid` (RFC 2606 reserved, never resolves) |
+| `VITE_AXO_WEB_MAP_URL` | Built-in default web map address | empty, i.e. no built-in map |
+| `VITE_AXO_ANNOUNCEMENTS_URL` | Remote announcements endpoint | empty, i.e. announcements off |
+
+`apps/app-frontend/src/server-config.ts` reads these through
+`import.meta.env`, so the value is inlined into the frontend bundle at build
+time. The shipped binary therefore contains it — that is expected and cannot be
+avoided — but the public source tree does not.
+
+Supply the values in either way (environment wins):
+
+1. Untracked local file: copy `packages/app-lib/.env.local.example` to
+   `packages/app-lib/.env.local` and fill it in. `.env.local` is gitignored;
+   `apps/app-frontend/vite.config.ts` loads it, but only `VITE_AXO_*` keys are
+   taken from it, so its committed `MODRINTH_URL=…localhost…` can never leak
+   into a production build.
+2. Real environment variables, for example
+   `$env:VITE_AXO_SERVER_ADDRESS = '<address>'` before `pnpm build` or
+   `tauri build`. These names are declared in `turbo.jsonc` `globalEnv`, which
+   is what lets them reach the build task *and* invalidates the Turbo cache
+   when a value changes.
+
+Never commit the real values, and never re-add them to `server-config.ts`.
+Before pushing a release, confirm the private server address and map host appear
+nowhere in the tracked tree.
+
 ## Style Commands
 
 - `cargo fmt --all (--check)`: Format all Rust files (dry-run with `--check`)

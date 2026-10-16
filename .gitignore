@@ -56,6 +56,10 @@ target
 generated
 .vite
 .env
+# 私服地址 / 地图地址等本地构建配置：模板 `.env.local.example` 入库，真实值不入库
+.env.local
+.env.*.local
+!*.env.local.example
 .dev.vars
 .dev.vars.*
 !.dev.vars.example

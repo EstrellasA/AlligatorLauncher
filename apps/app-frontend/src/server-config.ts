@@ -17,8 +17,22 @@ export const ServerConfig = Object.freeze({
     /**
      * Minecraft 服务器地址（用于「一键进服」）。
      * 格式：`域名` 或 `域名:端口`。默认端口 25565 时可省略 `:25565`。
+     *
+     * ⚠️ 真实地址**不写在这里**：本仓库是公开的，地址写进源码就会被搜到。
+     *    真实值在**构建时**由环境变量 `VITE_AXO_SERVER_ADDRESS` 注入，
+     *    打包进二进制里（玩家照常一键进服），但源码树里不留任何痕迹。
+     *
+     *    构建前设置（二选一）：
+     *      1. 环境变量：`$env:VITE_AXO_SERVER_ADDRESS = '<真实地址>'`，
+     *         然后再跑 `pnpm build` / `tauri build`；
+     *      2. 未跟踪的 `packages/app-lib/.env.local`（已被 `.gitignore` 覆盖），
+     *         写 `VITE_AXO_SERVER_ADDRESS=<真实地址>`，`vite.config.ts` 会自动读它。
+     *         模板见 `packages/app-lib/.env.local.example`，细节见 `AGENTS.md`。
+     *
+     *    下面这个占位值是 RFC 2606 保留域名，永远解析不到，作用是让漏配
+     *    环境变量的构建「明显连不上」而不是悄悄连到别人的服务器。
      */
-    serverAddress: 'i.alligator.zone',
+    serverAddress: import.meta.env.VITE_AXO_SERVER_ADDRESS || 'example.invalid',
 
     /** 服务器展示名，会出现在首页和进服按钮上。 */
     serverName: 'ALLIGATORZONE',
@@ -86,8 +100,16 @@ export const ServerConfig = Object.freeze({
      *    白名单限制，被内嵌的页面可以来自任何 http(s) 站点。`self`、`asset:`、
      *    `ipc:` 和原有的具名来源都保持原样，`script-src` 也未额外放宽。
      *    ⚠️ tauri.conf.json 是严格 JSON，写不了注释，所以说明记在这里。
+     *    因为 `http:`/`https:` 已经涵盖一切来源，frame-src 里**不再**列出具体
+     *    主机：列了既没有额外作用，又会把内网地图地址写进公开仓库。
+     *
+     * ⚠️ 真实地址同样**不写在这里**，构建时由环境变量
+     *    `VITE_AXO_WEB_MAP_URL` 注入，理由和 `serverAddress` 完全一致
+     *    （见该字段上方注释与 `packages/app-lib/.env.local.example`）。
+     *    留空 = 不内置默认地址：地图页会隐藏，玩家仍可在
+     *    「实例设置 → 常规 → 网页地图」里自己填。
      */
-    mapUrl: 'http://k2-17.xyeidc.cn:20125/',
+    mapUrl: import.meta.env.VITE_AXO_WEB_MAP_URL || '',
 
     /**
      * 地图服务是否允许被 iframe 内嵌。
