@@ -7,8 +7,13 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import BrowseInstanceSelector from '@/components/browse/BrowseInstanceSelector.vue'
+import InstallBlockedNotice from '@/components/ui/InstallBlockedNotice.vue'
 import InstanceIcon from '@/components/ui/InstanceIcon.vue'
-import { CLIENT_MOD_TARGET_PROJECT_TYPE } from '@/helpers/client-mod-browse'
+import {
+    CLIENT_MOD_TARGET_PROJECT_TYPE,
+    clientModInstallBlockReason,
+    isLockedClientModBrowseVisit,
+} from '@/helpers/client-mod-browse'
 import {
     import_mcarchive_content,
     install_mcarchive_content,
@@ -100,6 +105,19 @@ const messages = defineMessages({
 
 const selectedInstance = computed(() => contentSelection.targetInstance.value)
 
+/**
+ * MCArchive publishes no client/server requirement, so this page is
+ * `unverified` for mods unless it was opened from the locked Browse list, which
+ * the player entered deliberately (see `clientModInstallBlockReason`).
+ */
+const installBlockReason = computed(() =>
+    clientModInstallBlockReason({
+        contentType: 'mod',
+        fromLockedBrowse: isLockedClientModBrowseVisit(route.query.b),
+        sides: null,
+    }),
+)
+
 function createRequest(version: McArchiveModVersion, file: McArchiveFile) {
     if (!project.value) throw new Error('MCArchive project is unavailable')
     return {
@@ -114,6 +132,7 @@ function createRequest(version: McArchiveModVersion, file: McArchiveFile) {
 }
 
 async function install(version: McArchiveModVersion, file: McArchiveFile) {
+    if (installBlockReason.value) return
     if (!selectedInstance.value) {
         await contentSelection.refreshInstances(
             typeof route.query.i === 'string' ? route.query.i : undefined,
@@ -146,6 +165,7 @@ async function install(version: McArchiveModVersion, file: McArchiveFile) {
 }
 
 async function importDownloadedFile() {
+    if (installBlockReason.value) return
     if (!manualDownload.value || !selectedInstance.value) return
     const path = await open({
         multiple: false,
@@ -264,7 +284,9 @@ void contentSelection
             </p>
         </section>
 
-        <Card v-if="manualDownload" class="flex flex-col gap-3">
+        <InstallBlockedNotice v-if="installBlockReason" :reason="installBlockReason" />
+
+        <Card v-if="manualDownload && !installBlockReason" class="flex flex-col gap-3">
             <div>
                 <h2 class="m-0 text-base font-semibold text-[var(--color-text-primary)]">
                     {{ formatMessage(messages.manualTitle) }}
@@ -332,6 +354,7 @@ void contentSelection
                             </div>
                         </div>
                         <Button
+                            v-if="!installBlockReason"
                             size="md"
                             :disabled="busyFileId !== null"
                             @click="install(version, file)"

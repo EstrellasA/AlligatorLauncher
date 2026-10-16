@@ -14,10 +14,10 @@ import { computed, onMounted, ref } from 'vue'
 
 import type {
     AutomodpackChangeKind,
-    AutomodpackChangelog,
     AutomodpackDirectoryGroup,
     AutomodpackGeneration,
-} from '@/helpers/instance'
+    AutomodpackUnavailable,
+} from '@/helpers/automodpack-payload'
 import { get_content_items_by_paths } from '@/helpers/instance'
 import { modDisplayName, modProjectUrl } from '@/helpers/mod-links'
 import { loadAutomodpackChangelog } from '@/helpers/server-changelog'
@@ -130,15 +130,20 @@ const VISIBLE_SAMPLE_PATHS = 8
 
 const loading = ref(true)
 const error = ref<string | null>(null)
-const changelog = ref<AutomodpackChangelog | null>(null)
+/**
+ * The rendered state. Always an array and always a number, so the template's
+ * `.length` and `> 0` reads cannot throw however the backend answered.
+ */
+const generations = ref<AutomodpackGeneration[]>([])
+const skippedLines = ref(0)
 const instanceId = ref<string | null>(null)
+/** Why there is nothing to show, when no instance has a history. */
+const unavailableReason = ref<AutomodpackUnavailable | null>(null)
 
 /** Mod cards per generation sequence number, fetched once per generation. */
 const modsByGeneration = ref<Record<number, ContentItem[]>>({})
 const requestedGenerations = new Set<number>()
 const expandedDirectories = ref<Record<string, boolean>>({})
-
-const generations = computed<AutomodpackGeneration[]>(() => changelog.value?.generations ?? [])
 
 function formatDate(value: string): string {
     const date = new Date(value)
@@ -155,8 +160,10 @@ async function load(force = false) {
     error.value = null
     try {
         const resolved = await loadAutomodpackChangelog()
-        changelog.value = resolved?.changelog ?? null
-        instanceId.value = resolved?.instanceId ?? null
+        generations.value = resolved.generations
+        instanceId.value = resolved.instanceId ?? null
+        skippedLines.value = resolved.skippedLines
+        unavailableReason.value = resolved.reason ?? null
         if (force) {
             modsByGeneration.value = {}
             requestedGenerations.clear()
@@ -182,18 +189,18 @@ async function load(force = false) {
  * back unmatched and are listed by name instead.
  */
 async function loadMods() {
-    const current = changelog.value
     const currentInstanceId = instanceId.value
-    if (!current?.available || !currentInstanceId) return
+    if (!currentInstanceId) return
 
-    for (const generation of current.generations) {
-        if (generation.mod_paths.length === 0) continue
+    for (const generation of generations.value) {
+        const modPaths = generation.modPaths ?? []
+        if (modPaths.length === 0) continue
         if (requestedGenerations.has(generation.seq)) continue
         requestedGenerations.add(generation.seq)
 
         let items: ContentItem[] = []
         try {
-            items = await get_content_items_by_paths(currentInstanceId, generation.mod_paths)
+            items = await get_content_items_by_paths(currentInstanceId, modPaths)
         } catch {
             items = []
         }
@@ -216,7 +223,7 @@ const unresolvedByGeneration = computed<Record<number, string[]>>(() => {
         const items = modsByGeneration.value[generation.seq]
         if (!items) continue
         const known = new Set(items.map((item) => item.file_path))
-        const missing = generation.mod_paths.filter((path) => !known.has(path))
+        const missing = (generation.modPaths ?? []).filter((path) => !known.has(path))
         if (missing.length > 0) unresolved[generation.seq] = missing
     }
     return unresolved
@@ -238,7 +245,7 @@ const changeKindIndex = computed<Record<number, Record<string, AutomodpackChange
     const index: Record<number, Record<string, AutomodpackChangeKind>> = {}
     for (const generation of generations.value) {
         const byPath: Record<string, AutomodpackChangeKind> = {}
-        for (const change of generation.changes) byPath[change.path] = change.kind
+        for (const change of generation.changes ?? []) byPath[change.path] = change.kind
         index[generation.seq] = byPath
     }
     return index
@@ -283,9 +290,10 @@ function toggleDirectory(seq: number, directory: string) {
 }
 
 function visibleSamplePaths(seq: number, group: AutomodpackDirectoryGroup): string[] {
+    const samples = group.samplePaths ?? []
     return isDirectoryExpanded(seq, group.directory)
-        ? group.sample_paths
-        : group.sample_paths.slice(0, VISIBLE_SAMPLE_PATHS)
+        ? samples
+        : samples.slice(0, VISIBLE_SAMPLE_PATHS)
 }
 
 function directoryLabel(directory: string): string {
@@ -391,16 +399,36 @@ onMounted(() => {
             </button>
         </div>
 
+        <!--
+            Nothing published to show. Three backend states are ordinary and one
+            is not; each gets its own sentence rather than a shared shrug, and
+            none of them is a thrown error.
+        -->
         <div
             v-else-if="generations.length === 0"
             class="rounded-2xl border border-solid border-divider bg-surface-2 p-6 text-secondary"
         >
-            {{ formatMessage(messages.noHistory) }}
+            <p
+                v-if="unavailableReason === 'unreachable'"
+                class="m-0 mb-3 text-secondary"
+            >
+                {{ formatMessage(messages.errorTitle) }}
+            </p>
+            <p v-else class="m-0 mb-3 text-secondary">
+                {{ formatMessage(messages.noHistory) }}
+            </p>
+            <button
+                type="button"
+                class="cursor-pointer rounded-full border-0 bg-brand px-4 py-2 font-semibold text-contrast"
+                @click="load(true)"
+            >
+                {{ formatMessage(messages.retry) }}
+            </button>
         </div>
 
         <div v-else class="min-h-0 flex-1 overflow-y-auto pb-6">
-            <p v-if="changelog && changelog.skipped_lines > 0" class="mb-3 text-sm text-orange">
-                {{ formatMessage(messages.skippedLines, { count: changelog.skipped_lines }) }}
+            <p v-if="skippedLines > 0" class="mb-3 text-sm text-orange">
+                {{ formatMessage(messages.skippedLines, { count: skippedLines }) }}
             </p>
 
             <article
@@ -415,20 +443,20 @@ onMounted(() => {
                     <span class="text-sm text-secondary">
                         {{
                             formatMessage(messages.publishedOn, {
-                                date: formatDate(generation.created_at),
+                                date: formatDate(generation.createdAt),
                             })
                         }}
                     </span>
                     <span
-                        v-if="generation.restore_of !== undefined"
+                        v-if="generation.restoreOf !== undefined"
                         class="rounded-full bg-surface-4 px-2 py-0.5 text-xs font-semibold text-contrast"
                     >
-                        {{ formatMessage(messages.restoreBadge, { seq: generation.restore_of }) }}
+                        {{ formatMessage(messages.restoreBadge, { seq: generation.restoreOf }) }}
                     </span>
                     <span class="text-sm text-secondary">
                         {{
                             formatMessage(messages.changedFiles, {
-                                count: generation.changed_files,
+                                count: generation.changedFiles,
                             })
                         }}
                     </span>
@@ -441,7 +469,7 @@ onMounted(() => {
                     {{ formatMessage(messages.noNotes) }}
                 </p>
 
-                <template v-if="generation.mod_paths.length > 0">
+                <template v-if="(generation.modPaths ?? []).length > 0">
                     <h2 class="mb-2 mt-4 text-sm font-semibold uppercase text-secondary">
                         {{ formatMessage(messages.modsHeading) }}
                     </h2>
@@ -482,7 +510,7 @@ onMounted(() => {
                     </template>
                 </template>
 
-                <template v-if="generation.directories.length > 0">
+                <template v-if="(generation.directories ?? []).length > 0">
                     <h2 class="mb-2 mt-4 text-sm font-semibold uppercase text-secondary">
                         {{ formatMessage(messages.otherFilesHeading) }}
                     </h2>
@@ -518,7 +546,7 @@ onMounted(() => {
 
                         <button
                             v-if="
-                                group.samples_truncated &&
+                                group.samplesTruncated &&
                                 !isDirectoryExpanded(generation.seq, group.directory)
                             "
                             type="button"

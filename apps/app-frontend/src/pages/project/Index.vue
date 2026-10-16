@@ -147,7 +147,11 @@
                             withheld entirely; description, versions, gallery and
                             the project links stay available.
                         -->
-                        <template v-if="!isInstanceContentContext">
+                        <InstallBlockedNotice
+                            v-if="installBlockReason"
+                            :reason="installBlockReason"
+                        />
+                        <template v-else-if="!isInstanceContentContext">
                             <Button
                                 v-if="showSwitchVersion && onVersionsPage"
                                 v-tooltip="installButtonTooltip"
@@ -304,7 +308,7 @@
                     :members="members"
                     :instance="instance"
                     :install="install"
-                    :show-install="!isInstanceContentContext"
+                    :show-install="!isInstanceContentContext && !installBlockReason"
                     :installed="installed"
                     :installing="installing"
                     :installed-version="installedVersion"
@@ -429,6 +433,7 @@ import { SwapIcon } from '@/assets/icons/index.js'
 import BrowseInstanceSelector from '@/components/browse/BrowseInstanceSelector.vue'
 import CreateModpackServerModal from '@/components/multiplayer/servers/modpack/CreateModpackServerModal.vue'
 import ContextMenu from '@/components/ui/ContextMenu.vue'
+import InstallBlockedNotice from '@/components/ui/InstallBlockedNotice.vue'
 import InstanceIndicator from '@/components/ui/InstanceIndicator.vue'
 import {
     fetchCachedServerStatus,
@@ -443,7 +448,11 @@ import {
     get_version,
     get_version_many,
 } from '@/helpers/cache.js'
-import { isInstalledForContentType } from '@/helpers/client-mod-browse'
+import {
+    clientModInstallBlockReason,
+    isInstalledForContentType,
+    isLockedClientModBrowseVisit,
+} from '@/helpers/client-mod-browse'
 import { isFavoriteContentType } from '@/helpers/content-favorites'
 import { resolveMcmodUrl } from '@/helpers/content-search'
 import { resolveDownloadUrl } from '@/helpers/download-url'
@@ -791,6 +800,23 @@ const projectBackLabel = computed(() =>
 )
 const fromBrowse = computed(
     () => typeof route.query.b === 'string' && route.query.b.startsWith('/browse/'),
+)
+/**
+ * 「只有客户端模组才能出现安装按钮」: a mod that has to run on the server cannot be
+ * installed into the player's own `clientmods/` folder, so this page withholds
+ * every install affordance for one and explains why instead. The locked Browse
+ * list is already filtered, and the server vertical installs server-side on
+ * purpose, so neither is affected — see `clientModInstallBlockReason`.
+ */
+const installBlockReason = computed(() =>
+    clientModInstallBlockReason({
+        contentType: data.value?.project_type,
+        fromLockedBrowse: isLockedClientModBrowseVisit(route.query.b),
+        serverVertical: serverProjectInstallContext.value,
+        sides: data.value
+            ? { client_side: data.value.client_side, server_side: data.value.server_side }
+            : null,
+    }),
 )
 const cartEligible = computed(
     () =>
@@ -1313,6 +1339,10 @@ async function install(version) {
     // already part of that instance, so no affordance may start an install.
     // Adding a client mod deliberately goes through the client-mod Browse flow.
     if (isInstanceContentContext.value) return
+    // 「只有客户端模组才能出现安装按钮」: a mod that also has to run on the server
+    // cannot be installed client-only, and this page may have been reached
+    // without passing the locked Browse filter.
+    if (installBlockReason.value) return
 
     if (serverProjectInstallContext.value && data.value) {
         if (serverProjectSelected.value) {
@@ -1426,8 +1456,9 @@ const options = ref(null)
 const handleRightClick = (event) => {
     options.value.showMenu(event, data.value, [
         // No install entry when the page was opened from an instance's content
-        // list; the item there is already part of that instance.
-        ...(isInstanceContentContext.value
+        // list (the item is already part of that instance), nor when the mod is
+        // not client-only (see `installBlockReason`).
+        ...(isInstanceContentContext.value || installBlockReason.value
             ? []
             : [
                   {

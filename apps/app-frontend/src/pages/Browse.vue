@@ -81,8 +81,9 @@ import {
 import {
     BROWSE_LOCKED_PROJECT_PATH,
     BROWSE_LOCKED_PROJECT_TYPE,
+    isClientModSafeEnvironment,
     isServerBrowseVisit,
-    withClientSideFacet,
+    withClientModSafeFacet,
 } from '@/helpers/client-mod-browse'
 import { type FavoriteContentType, isFavoriteContentType } from '@/helpers/content-favorites'
 import {
@@ -2237,26 +2238,14 @@ function applyChineseTranslation(
 }
 
 /**
- * Labrinth v3 environment values that mean "a player can run this on the
- * client". Mirrors the `client_side IN [required, optional]` search facet for
- * the Chinese-title candidates that are injected without a search request.
+ * The Chinese-title candidates are injected without a search request, so they
+ * do not pass through the facet and have to be checked against the same lock.
+ * Because they come from the v3 project endpoint — which reports only the
+ * derived `environment` field, never `client_side` / `server_side` — the shared
+ * `isClientModSafeEnvironment` helper carries the equivalent of the facet.
  */
-const CLIENT_USABLE_ENVIRONMENTS = new Set([
-    'client_only',
-    'client_only_server_optional',
-    'client_and_server',
-    'singleplayer_only',
-    'client_or_server',
-    'client_or_server_prefers_both',
-])
-
 function isClientUsableProject(project: { environment?: string[] }) {
-    const environments = project.environment ?? []
-    // An absent environment list must not hide a mod the facet search returned.
-    return (
-        environments.length === 0 ||
-        environments.some((value) => CLIENT_USABLE_ENVIRONMENTS.has(value))
-    )
+    return isClientModSafeEnvironment(project.environment)
 }
 
 function matchesDirectModrinthFilters(
@@ -2490,10 +2479,12 @@ async function search(requestParams: string, signal: AbortSignal) {
     }
     // "只搜索客户端模组": the launcher's content browser must only ever offer
     // mods a player can run on the client. The `project_types = mod` half of the
-    // lock comes from the locked `projectType` above; this adds the client-side
-    // half. Server verticals keep their own Modrinth filters.
+    // lock comes from the locked `projectType` above; this adds the safety half,
+    // which constrains `client_side` AND `server_side` — see
+    // `CLIENT_MOD_SAFE_FACET` for the measurements behind that. Server verticals
+    // keep their own Modrinth filters.
     if (isLockedToClientMods.value && includeModrinth) {
-        modrinthRequestParams = withClientSideFacet(modrinthRequestParams)
+        modrinthRequestParams = withClientModSafeFacet(modrinthRequestParams)
     }
     const providerRequestGroupId = crypto.randomUUID()
     const modrinthRequestId = `${providerRequestGroupId}:modrinth`

@@ -1,608 +1,620 @@
 {
-    "app.action-bar.downloading-java": {
+  "app.action-bar.downloading-java": {
     "message": "Laddar ner Java {version}"
   },
-    "app.action-bar.downloading-update": {
+  "app.action-bar.downloading-update": {
     "message": "Laddar ner uppdatering"
   },
-    "app.action-bar.downloads": {
+  "app.action-bar.downloads": {
     "message": "Nedladdningar"
   },
-    "app.action-bar.hide-more-running-instances": {
+  "app.action-bar.hide-more-running-instances": {
     "message": "Göm fler aktiva instanser"
   },
-    "app.action-bar.install.dismiss": {
+  "app.action-bar.install.dismiss": {
     "message": "Avvisa"
   },
-    "app.action-bar.install.open-instance": {
+  "app.action-bar.install.open-instance": {
     "message": "Öppna instans"
   },
-    "app.action-bar.install.retry": {
+  "app.action-bar.install.retry": {
     "message": "Försök igen"
   },
-    "app.action-bar.install.unknown-instance": {
+  "app.action-bar.install.unknown-instance": {
     "message": "Okänd instans"
   },
-    "app.action-bar.installs": {
+  "app.action-bar.installs": {
     "message": "Installationer"
   },
-    "app.action-bar.make-primary-instance": {
+  "app.action-bar.make-primary-instance": {
     "message": "Gör till primärinstans"
   },
-    "app.action-bar.no-instances-running": {
+  "app.action-bar.no-instances-running": {
     "message": "Ingen aktiva instans"
   },
-    "app.action-bar.offline": {
+  "app.action-bar.offline": {
     "message": "Offline"
   },
-    "app.action-bar.primary-instance": {
+  "app.action-bar.primary-instance": {
     "message": "Primärinstans"
   },
-    "app.action-bar.reload-to-update": {
+  "app.action-bar.reload-to-update": {
     "message": "Uppdatera (ladda om)"
   },
-    "app.action-bar.show-more-running-instances": {
+  "app.action-bar.show-more-running-instances": {
     "message": "Visa fler aktiva instanser"
   },
-    "app.action-bar.stop-instance": {
+  "app.action-bar.stop-instance": {
     "message": "Avsluta instans"
   },
-    "app.action-bar.update": {
+  "app.action-bar.update": {
     "message": "Uppdatera"
   },
-    "app.action-bar.view-active-downloads": {
+  "app.action-bar.view-active-downloads": {
     "message": "Visa aktiva nedladdningar"
   },
-    "app.action-bar.view-instance": {
+  "app.action-bar.view-instance": {
     "message": "Visa instans"
   },
-    "app.action-bar.view-logs": {
+  "app.action-bar.view-logs": {
     "message": "Visa loggar"
   },
-    "app.appearance-settings.advanced-rendering.description": {
+  "app.appearance-settings.advanced-rendering.description": {
     "message": "Aktiverar avancerad rendering som till exempel oskärpa vilket kan leda till prestandaproblem utan hårdvaruaccelererad rendering."
   },
-    "app.appearance-settings.advanced-rendering.title": {
+  "app.appearance-settings.advanced-rendering.title": {
     "message": "Avancerad rendering"
   },
-    "app.appearance-settings.color-theme.description": {
+  "app.appearance-settings.color-theme.description": {
     "message": "Välj färgtema för ALLIGATORZONEen."
   },
-    "app.appearance-settings.color-theme.title": {
+  "app.appearance-settings.color-theme.title": {
     "message": "Färgtema"
   },
-    "app.appearance-settings.default-landing-page.description": {
+  "app.appearance-settings.default-landing-page.description": {
     "message": "Ändrar sidan som launchern öppnas på."
   },
-    "app.appearance-settings.default-landing-page.home": {
+  "app.appearance-settings.default-landing-page.home": {
     "message": "Hem"
   },
-    "app.appearance-settings.default-landing-page.library": {
+  "app.appearance-settings.default-landing-page.library": {
     "message": "Bibliotek"
   },
-    "app.appearance-settings.default-landing-page.title": {
+  "app.appearance-settings.default-landing-page.title": {
     "message": "Standardlandingssida"
   },
-    "app.appearance-settings.hide-nametag.description": {
+  "app.appearance-settings.hide-nametag.description": {
     "message": "Inaktiverar namnskylten ovanför din spelare på utseende-sidan."
   },
-    "app.appearance-settings.hide-nametag.title": {
+  "app.appearance-settings.hide-nametag.title": {
     "message": "Dölj namnskylt"
   },
-    "app.appearance-settings.minimize-launcher.description": {
+  "app.appearance-settings.minimize-launcher.description": {
     "message": "Minimerar launchern när Minecraft startas."
   },
-    "app.appearance-settings.minimize-launcher.title": {
+  "app.appearance-settings.minimize-launcher.title": {
     "message": "Minimera programstartare"
   },
-    "app.appearance-settings.native-decorations.description": {
+  "app.appearance-settings.native-decorations.description": {
     "message": "Använd systemets fönsterram (omstart av app krävs)."
   },
-    "app.appearance-settings.native-decorations.title": {
+  "app.appearance-settings.native-decorations.title": {
     "message": "Inbyggda fönsterdekorationer"
   },
-    "app.appearance-settings.sections.advanced-interface": {
+  "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-    "app.appearance-settings.sections.content-behavior": {
+  "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-    "app.appearance-settings.sections.home-navigation": {
+  "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-    "app.appearance-settings.select-option": {
+  "app.appearance-settings.select-option": {
     "message": "Välj ett alternativ"
   },
-    "app.appearance-settings.show-play-time.description": {
+  "app.appearance-settings.show-play-time.description": {
     "message": "Visar hur mycket tid du spelat på en instans."
   },
-    "app.appearance-settings.show-play-time.title": {
+  "app.appearance-settings.show-play-time.title": {
     "message": "Visa speltid"
   },
-    "app.appearance-settings.skip-non-essential-warnings.description": {
+  "app.appearance-settings.skip-non-essential-warnings.description": {
     "message": "Hoppar över bekräftelser med låg risk, såsom installation av dubbla modpaket, radering av vanligt innehåll, massuppdateringar, avlänkning av modpaket och reparationsmeddelanden. Varningar om farliga händelser visas fortfarande."
   },
-    "app.appearance-settings.skip-non-essential-warnings.title": {
+  "app.appearance-settings.skip-non-essential-warnings.title": {
     "message": "Hoppa över icke nödvändiga varningar"
   },
-    "app.appearance-settings.toggle-sidebar.description": {
+  "app.appearance-settings.toggle-sidebar.description": {
     "message": "Låter dig växla sidofältet."
   },
-    "app.appearance-settings.toggle-sidebar.title": {
+  "app.appearance-settings.toggle-sidebar.title": {
     "message": "Växla sidofält"
   },
-    "app.appearance-settings.unknown-pack-warning.description": {
+  "app.appearance-settings.unknown-pack-warning.description": {
     "message": "Om du försöker installera en Modrinth Pack fil (.mrpack) som inte kommer från Modrinth ser vi till att du känner till riskerna innan du installerar den."
   },
-    "app.appearance-settings.unknown-pack-warning.title": {
+  "app.appearance-settings.unknown-pack-warning.title": {
     "message": "Varna mig innan jag installerar okända modpaket"
   },
-    "app.auth-servers.unreachable.body": {
+  "app.auth-servers.unreachable.body": {
     "message": "Minecrafts autentiseringsservrar kan vara nere just nu. Kontrollera din internetanslutning och försök igen senare."
   },
-    "app.auth-servers.unreachable.header": {
+  "app.auth-servers.unreachable.header": {
     "message": "Kan ej nå autentiseringsservrarna"
   },
-    "app.browse.add-servers-to-instance": {
+  "app.browse.add-servers-to-instance": {
     "message": "Lägger till server till instans"
   },
-    "app.browse.add-to-an-instance": {
+  "app.browse.add-to-an-instance": {
     "message": "Lägg till i en instans"
   },
-    "app.browse.add-to-instance": {
+  "app.browse.add-to-instance": {
     "message": "Lägg till i instans"
   },
-    "app.browse.add-to-instance-name": {
+  "app.browse.add-to-instance-name": {
     "message": "Lägg till i {instanceName}"
   },
-    "app.browse.added": {
+  "app.browse.added": {
     "message": "Tillagd"
   },
-    "app.browse.already-added": {
+  "app.browse.already-added": {
     "message": "Redan tillagd"
   },
-    "app.browse.back-to-instance": {
+  "app.browse.back-to-instance": {
     "message": "Tillbaka till instans"
   },
-    "app.browse.client-mods.install": {
+  "app.browse.client-mods.install": {
     "message": "Install to my mods"
   },
-    "app.browse.client-mods.install-compact": {
+  "app.browse.client-mods.install-compact": {
     "message": "Install to client"
   },
-    "app.browse.client-mods.install-tooltip": {
+  "app.browse.client-mods.install-tooltip": {
     "message": "Installs into this instance's clientmods folder"
   },
-    "app.browse.client-mods.notice": {
+  "app.browse.client-mods.notice": {
     "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
   },
-    "app.browse.client-mods.title": {
+  "app.browse.client-mods.title": {
     "message": "Discover content · Client mods"
   },
-    "app.browse.discover-content": {
+  "app.browse.discover-content": {
     "message": "Upptäck innehåll"
   },
-    "app.browse.discover-servers": {
+  "app.browse.discover-servers": {
     "message": "Upptäck servrar"
   },
-    "app.browse.hide-added-servers": {
+  "app.browse.hide-added-servers": {
     "message": "Dölj servrar som redan är tillagda"
   },
-    "app.browse.project-type.modpacks": {
+  "app.browse.project-type.modpacks": {
     "message": "Modpaket"
   },
-    "app.browse.server-instance-content-warning": {
+  "app.browse.server-instance-content-warning": {
     "message": "Att lägga till innehåll kan bryta kompatibiliteten när du ansluter dig till servern. Allt tillagt innehåll kommer att förloras när du uppdaterar serverinstansen."
   },
-    "app.browse.server.installing": {
+  "app.browse.server.installing": {
     "message": "Installerar"
   },
-    "app.content-install.no-compatible-versions": {
+  "app.content-install.no-compatible-versions": {
     "message": "Ingen tillgänglig version matchar {compatibilityLabel}. Välj en version att installera ändå. Beroenden kommer inte installeras automatiskt."
   },
-    "app.content-install.preview.pack-duplicate-confirm": {
+  "app.content-install.preview.pack-duplicate-confirm": {
     "message": "Install my copy anyway"
   },
-    "app.content-install.preview.pack-duplicate-consequence": {
+  "app.content-install.preview.pack-duplicate-consequence": {
     "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
   },
-    "app.content-install.preview.pack-duplicate-description": {
+  "app.content-install.preview.pack-duplicate-description": {
     "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
   },
-    "app.content-install.preview.pack-duplicate-header": {
+  "app.content-install.preview.pack-duplicate-header": {
     "message": "Already provided by the server pack"
   },
-    "app.export-modal.description-placeholder": {
+  "app.export-modal.description-placeholder": {
     "message": "Ange modpaketets beskrivning..."
   },
-    "app.export-modal.export-button": {
+  "app.export-modal.export-button": {
     "message": "Exportera"
   },
-    "app.export-modal.header": {
+  "app.export-modal.header": {
     "message": "Exportera modpaket"
   },
-    "app.export-modal.modpack-name-label": {
+  "app.export-modal.modpack-name-label": {
     "message": "Modpaketets namn"
   },
-    "app.export-modal.modpack-name-placeholder": {
+  "app.export-modal.modpack-name-placeholder": {
     "message": "Modpaketets namn"
   },
-    "app.export-modal.version-number-label": {
+  "app.export-modal.version-number-label": {
     "message": "Versionsnummer"
   },
-    "app.export-modal.version-number-placeholder": {
+  "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-    "app.first-run-bootstrap.dismiss": {
+  "app.first-run-bootstrap.dismiss": {
     "message": "Continue anyway"
   },
-    "app.first-run-bootstrap.failed.bundled-mods": {
+  "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
-    "app.first-run-bootstrap.failed.details": {
+  "app.first-run-bootstrap.failed.details": {
     "message": "Technical details"
   },
-    "app.first-run-bootstrap.failed.instance-creation": {
+  "app.first-run-bootstrap.failed.instance-creation": {
     "message": "The game instance could not be created. Check your network connection and try again."
   },
-    "app.first-run-bootstrap.failed.instance-id-missing": {
+  "app.first-run-bootstrap.failed.instance-id-missing": {
     "message": "The launcher could not tell which instance was created. Please report this to the server team."
   },
-    "app.first-run-bootstrap.failed.title": {
+  "app.first-run-bootstrap.failed.title": {
     "message": "Setup could not be finished"
   },
-    "app.first-run-bootstrap.failed.unknown": {
+  "app.first-run-bootstrap.failed.unknown": {
     "message": "Something went wrong while setting up your game."
   },
-    "app.first-run-bootstrap.file-progress": {
+  "app.first-run-bootstrap.file-progress": {
     "message": "File {current} of {total}"
   },
-    "app.first-run-bootstrap.phase.downloading-minecraft": {
+  "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "Downloading the game files…"
   },
-    "app.first-run-bootstrap.phase.finishing": {
+  "app.first-run-bootstrap.phase.finishing": {
     "message": "Finishing up…"
   },
-    "app.first-run-bootstrap.phase.installing-loader": {
+  "app.first-run-bootstrap.phase.installing-loader": {
     "message": "Installing the mod loader…"
   },
-    "app.first-run-bootstrap.phase.preparing": {
+  "app.first-run-bootstrap.phase.preparing": {
     "message": "Preparing your game…"
   },
-    "app.first-run-bootstrap.repair.subtitle": {
+  "app.first-run-bootstrap.repair.subtitle": {
     "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
   },
-    "app.first-run-bootstrap.repair.success-text": {
+  "app.first-run-bootstrap.repair.success-text": {
     "message": "The missing files were added back. You can start playing now."
   },
-    "app.first-run-bootstrap.repair.title": {
+  "app.first-run-bootstrap.repair.title": {
     "message": "Finishing your game setup"
   },
-    "app.first-run-bootstrap.retry": {
+  "app.first-run-bootstrap.retry": {
     "message": "Try again"
   },
-    "app.first-run-bootstrap.server-missing.text": {
+  "app.first-run-bootstrap.server-missing.text": {
     "message": "Add {address} to your instance manually, or use the join button on the home page."
   },
-    "app.first-run-bootstrap.server-missing.title": {
+  "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
   },
-    "app.first-run-bootstrap.step.creating-instance": {
+  "app.first-run-bootstrap.step.creating-instance": {
     "message": "Creating your game instance"
   },
-    "app.first-run-bootstrap.step.installing-mods": {
+  "app.first-run-bootstrap.step.installing-mods": {
     "message": "Installing the required mods"
   },
-    "app.first-run-bootstrap.step.registering-server": {
+  "app.first-run-bootstrap.step.registering-server": {
     "message": "Adding the server to your instance"
   },
-    "app.first-run-bootstrap.subtitle": {
+  "app.first-run-bootstrap.subtitle": {
     "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
   },
-    "app.first-run-bootstrap.success.text": {
+  "app.first-run-bootstrap.success.text": {
     "message": "The instance was created with the mods this server needs. You can start playing now."
   },
-    "app.first-run-bootstrap.success.title": {
+  "app.first-run-bootstrap.success.title": {
     "message": "Your game is ready"
   },
-    "app.first-run-bootstrap.title": {
+  "app.first-run-bootstrap.title": {
     "message": "Setting up your game"
   },
-    "app.home.server-status.checking": {
+  "app.home.server-status.checking": {
     "message": "Checking..."
   },
-    "app.home.server-status.join": {
+  "app.home.server-status.join": {
     "message": "Join server"
   },
-    "app.home.server-status.join.no-instance": {
+  "app.home.server-status.join.no-instance": {
     "message": "Choose a home instance before joining the server."
   },
-    "app.home.server-status.join.not-installed": {
+  "app.home.server-status.join.not-installed": {
     "message": "This instance is still installing. Join once it is ready."
   },
-    "app.home.server-status.join.offline": {
+  "app.home.server-status.join.offline": {
     "message": "The server is offline right now."
   },
-    "app.home.server-status.joining": {
+  "app.home.server-status.joining": {
     "message": "Joining..."
   },
-    "app.home.server-status.latency": {
+  "app.home.server-status.latency": {
     "message": "{latency} ms"
   },
-    "app.home.server-status.loading": {
+  "app.home.server-status.loading": {
     "message": "Fetching the latest server status..."
   },
-    "app.home.server-status.offline": {
+  "app.home.server-status.offline": {
     "message": "Offline"
   },
-    "app.home.server-status.offline.body": {
+  "app.home.server-status.offline.body": {
     "message": "It may be under maintenance — ask in the group chat? The web map often still works."
   },
-    "app.home.server-status.offline.body.no-map": {
+  "app.home.server-status.offline.body.no-map": {
     "message": "It may be under maintenance — ask in the group chat?"
   },
-    "app.home.server-status.offline.title": {
+  "app.home.server-status.offline.title": {
     "message": "The server is offline right now"
   },
-    "app.home.server-status.online": {
+  "app.home.server-status.online": {
     "message": "Online"
   },
-    "app.home.server-status.players.empty": {
+  "app.home.server-status.players.empty": {
     "message": "Nobody is online right now — the world is all yours."
   },
-    "app.home.server-status.players.more": {
+  "app.home.server-status.players.more": {
     "message": "+{count}"
   },
-    "app.home.server-status.players.stale": {
+  "app.home.server-status.players.stale": {
     "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
   },
-    "app.home.server-status.players.title": {
+  "app.home.server-status.players.title": {
     "message": "Players online"
   },
-    "app.home.server-status.players.unavailable": {
+  "app.home.server-status.players.unavailable": {
     "message": "The server does not publish its player list, so only the count is shown."
   },
-    "app.home.server-status.refresh": {
+  "app.home.server-status.refresh": {
     "message": "Refresh status"
   },
-    "app.home.server-status.version": {
+  "app.home.server-status.version": {
     "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
   },
-    "app.install.phase.downloading_content": {
+  "app.install.phase.downloading_content": {
     "message": "Laddar ner innehåll"
   },
-    "app.install.phase.downloading_minecraft": {
+  "app.install.phase.downloading_minecraft": {
     "message": "Laddar ner Minecraft"
   },
-    "app.install.phase.downloading_pack_file": {
+  "app.install.phase.downloading_pack_file": {
     "message": "Laddar ner pack fil"
   },
-    "app.install.phase.extracting_overrides": {
+  "app.install.phase.extracting_overrides": {
     "message": "Extraherar överskrivningar"
   },
-    "app.install.phase.finalizing": {
+  "app.install.phase.finalizing": {
     "message": "Avslutar"
   },
-    "app.install.phase.preparing_instance": {
+  "app.install.phase.preparing_instance": {
     "message": "Förbereder instans"
   },
-    "app.install.phase.preparing_java": {
+  "app.install.phase.preparing_java": {
     "message": "Förbereder Java"
   },
-    "app.install.phase.preparing_java.downloading": {
+  "app.install.phase.preparing_java.downloading": {
     "message": "Laddar ner Java {version}"
   },
-    "app.install.phase.preparing_java.extracting": {
+  "app.install.phase.preparing_java.extracting": {
     "message": "Extraherar Java {version}"
   },
-    "app.install.phase.preparing_java.fetching-metadata": {
+  "app.install.phase.preparing_java.fetching-metadata": {
     "message": "Hämtar Java {version}"
   },
-    "app.install.phase.preparing_java.resolving": {
+  "app.install.phase.preparing_java.resolving": {
     "message": "Förbereder Java {version}"
   },
-    "app.install.phase.preparing_java.validating": {
+  "app.install.phase.preparing_java.validating": {
     "message": "Bekräftar Java {version}"
   },
-    "app.install.phase.reading_pack_manifest": {
+  "app.install.phase.reading_pack_manifest": {
     "message": "Läser pack information"
   },
-    "app.install.phase.resolving_loader": {
+  "app.install.phase.resolving_loader": {
     "message": "Laddar ner loadern"
   },
-    "app.install.phase.resolving_minecraft": {
+  "app.install.phase.resolving_minecraft": {
     "message": "Laddar ner Minecraft"
   },
-    "app.install.phase.resolving_pack": {
+  "app.install.phase.resolving_pack": {
     "message": "Laddar ner innehåll"
   },
-    "app.instance.confirm-delete.admonition-body": {
+  "app.instance.confirm-delete.admonition-body": {
     "message": "All data från din instans kommer permanent raderas, däribland dina världar, konfigurationer samt allt installerat innehåll."
   },
-    "app.instance.confirm-delete.admonition-header": {
+  "app.instance.confirm-delete.admonition-header": {
     "message": "Detta kan inte ogöras"
   },
-    "app.instance.confirm-delete.delete-button": {
+  "app.instance.confirm-delete.delete-button": {
     "message": "Radera instans"
   },
-    "app.instance.confirm-delete.header": {
+  "app.instance.confirm-delete.header": {
     "message": "Radera instans"
   },
-    "app.instance.modpack-already-installed.body": {
+  "app.instance.modpack-already-installed.body": {
     "message": "Detta modpaket är redan installerat i instansen <bold>{instanceName}</bold>. Är du säker på att du vill duplicera det?"
   },
-    "app.instance.modpack-already-installed.create": {
+  "app.instance.modpack-already-installed.create": {
     "message": "Skapa"
   },
-    "app.instance.modpack-already-installed.header": {
+  "app.instance.modpack-already-installed.header": {
     "message": "Modpaket redan installerat"
   },
-    "app.instance.modpack-already-installed.instance": {
+  "app.instance.modpack-already-installed.instance": {
     "message": "Instans"
   },
-    "app.instance.mods.bulk-update.downloading-projects": {
+  "app.instance.mods.bulk-update.downloading-projects": {
     "message": "Laddar ner {current, number}/{total, number} projekt..."
   },
-    "app.instance.mods.bulk-update.finishing": {
+  "app.instance.mods.bulk-update.finishing": {
     "message": "Slutför uppdatering..."
   },
-    "app.instance.mods.bulk-update.resolving-versions": {
+  "app.instance.mods.bulk-update.resolving-versions": {
     "message": "Laddar versioner..."
   },
-    "app.instance.mods.content-type-project": {
+  "app.instance.mods.content-type-project": {
     "message": "projekt"
   },
-    "app.instance.mods.folder-note": {
+  "app.instance.mods.folder-note": {
     "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
   },
-    "app.instance.mods.player-added.badge": {
+  "app.instance.mods.player-added.badge": {
     "message": "Player-added"
   },
-    "app.instance.mods.player-added.hint": {
+  "app.instance.mods.player-added.hint": {
     "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
   },
-    "app.instance.mods.project-was-added": {
+  "app.instance.mods.project-was-added": {
     "message": "\"{name}\" lades till"
   },
-    "app.instance.mods.projects-were-added": {
+  "app.instance.mods.projects-were-added": {
     "message": "{count} projekt lades till"
   },
-    "app.instance.mods.share-text": {
+  "app.instance.mods.share-text": {
     "message": "Kolla in projekten jag använder i mitt modpaket!"
   },
-    "app.instance.mods.share-title": {
+  "app.instance.mods.share-title": {
     "message": "Delar innehåll från modpaket"
   },
-    "app.instance.mods.successfully-uploaded": {
+  "app.instance.mods.successfully-uploaded": {
     "message": "Uppladdning lyckades"
   },
-    "app.instance.worlds.add-server": {
+  "app.instance.worlds.add-server": {
     "message": "Lägg till server"
   },
-    "app.instance.worlds.browse-servers": {
+  "app.instance.worlds.browse-servers": {
     "message": "Utforska servrar"
   },
-    "app.instance.worlds.delete-world-modal.delete-button": {
+  "app.instance.worlds.delete-world-modal.delete-button": {
     "message": "Ta bort värld"
   },
-    "app.instance.worlds.delete-world-modal.title": {
+  "app.instance.worlds.delete-world-modal.title": {
     "message": "Ta bort värld"
   },
-    "app.instance.worlds.delete-world-modal.warning-header": {
+  "app.instance.worlds.delete-world-modal.warning-header": {
     "message": "Raderar {name}"
   },
-    "app.instance.worlds.filter-modded": {
+  "app.instance.worlds.filter-modded": {
     "message": "Moddad"
   },
-    "app.instance.worlds.filter-offline": {
+  "app.instance.worlds.filter-offline": {
     "message": "Offline"
   },
-    "app.instance.worlds.filter-online": {
+  "app.instance.worlds.filter-online": {
     "message": "Online"
   },
-    "app.instance.worlds.filter-vanilla": {
+  "app.instance.worlds.filter-vanilla": {
     "message": "Vanilla"
   },
-    "app.instance.worlds.no-worlds-description": {
+  "app.instance.worlds.no-worlds-description": {
     "message": "Lägg till en server eller utforska för att komma igång"
   },
-    "app.instance.worlds.no-worlds-heading": {
+  "app.instance.worlds.no-worlds-heading": {
     "message": "Inga servrar eller världar tillagda"
   },
-    "app.instance.worlds.remove-server-modal.remove-button": {
+  "app.instance.worlds.remove-server-modal.remove-button": {
     "message": "Ta bort server"
   },
-    "app.instance.worlds.remove-server-modal.title": {
+  "app.instance.worlds.remove-server-modal.title": {
     "message": "Ta bort server"
   },
-    "app.instance.worlds.remove-server-modal.warning-header": {
+  "app.instance.worlds.remove-server-modal.warning-header": {
     "message": "Raderar {name}"
   },
-    "app.instance.worlds.search-worlds-placeholder": {
+  "app.instance.worlds.search-worlds-placeholder": {
     "message": "Sök {count} världar..."
   },
-    "app.mods.change-instance": {
+  "app.mods.change-instance": {
     "message": "Change instance"
   },
-    "app.mods.conflict.badge": {
+  "app.mods.conflict.badge": {
     "message": "Server copy takes over"
   },
-    "app.mods.conflict.summary": {
+  "app.mods.conflict.summary": {
     "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
   },
-    "app.mods.conflict.tooltip": {
+  "app.mods.conflict.tooltip": {
     "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
   },
-    "app.mods.count": {
+  "app.mods.count": {
     "message": "{count, plural, one {# file} other {# files}}"
   },
-    "app.mods.disabled": {
+  "app.mods.disabled": {
     "message": "Disabled"
   },
-    "app.mods.folder-missing": {
+  "app.mods.folder-missing": {
     "message": "This folder does not exist in the instance yet."
   },
-    "app.mods.link.mcmod": {
+  "app.mods.link.mcmod": {
     "message": "Search {name} on the MC Mod wiki"
   },
-    "app.mods.link.project": {
+  "app.mods.link.project": {
     "message": "Open the project page for {name}"
   },
-    "app.mods.load-failed": {
+  "app.mods.load-failed": {
     "message": "Could not read this folder."
   },
-    "app.mods.loading": {
+  "app.mods.loading": {
     "message": "Loading files…"
   },
-    "app.mods.no-instance": {
+  "app.mods.no-instance": {
     "message": "No installed instance is available."
   },
-    "app.mods.ownership.local-discovered": {
+  "app.mods.ownership.local-discovered": {
     "message": "Found in the folder"
   },
-    "app.mods.ownership.pack-managed": {
+  "app.mods.ownership.pack-managed": {
     "message": "Managed by the server pack"
   },
-    "app.mods.ownership.user-added": {
+  "app.mods.ownership.user-added": {
     "message": "Added by you"
   },
-    "app.mods.picker.no-instances": {
+  "app.mods.picker.no-instances": {
     "message": "No installed instances are available."
   },
-    "app.mods.picker.no-results": {
+  "app.mods.picker.no-results": {
     "message": "No matching instances"
   },
-    "app.mods.picker.search": {
+  "app.mods.picker.search": {
     "message": "Search instances"
   },
-    "app.mods.picker.select": {
+  "app.mods.picker.select": {
     "message": "Choose {name}"
   },
-    "app.mods.picker.title": {
+  "app.mods.picker.title": {
     "message": "Choose an instance"
   },
-    "app.mods.refresh": {
+  "app.mods.refresh": {
     "message": "Refresh"
   },
-    "app.mods.retry": {
+  "app.mods.retry": {
     "message": "Try again"
   },
-    "app.navigation.changelog": {
+  "app.navigation.changelog": {
     "message": "Update notes"
   },
-    "app.navigation.server-map": {
+  "app.navigation.server-map": {
     "message": "Server map"
   },
-    "app.project.install-button.already-installed": {
+  "app.project.install-blocked.server-required.description": {
+    "message": "It only works when the server runs it as well, and the server's content belongs to the pack you joined — you cannot add anything to it from here. Putting it in your own client mods folder would break the game, so the launcher does not offer an install."
+  },
+  "app.project.install-blocked.server-required.title": {
+    "message": "This mod has to be installed on the server too"
+  },
+  "app.project.install-blocked.unverified.description": {
+    "message": "This source does not publish whether a mod has to be installed on the server, so the launcher cannot tell whether a client-only install is safe. Rather than risk a game that no longer works, it does not offer an install here."
+  },
+  "app.project.install-blocked.unverified.title": {
+    "message": "Cannot confirm this mod works on the client alone"
+  },
+  "app.project.install-button.already-installed": {
     "message": "Detta projekt är redan installerat"
   },
-    "app.project.install-context.back-to-browse": {
+  "app.project.install-context.back-to-browse": {
     "message": "Tillbaka till upptäck"
   },
-    "app.project.install-context.install-content-to-instance": {
+  "app.project.install-context.install-content-to-instance": {
     "message": "Installera innehåll till instans"
   },
-    "app.server.avatar.open-skin-selector": {
+  "app.server.avatar.open-skin-selector": {
     "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
@@ -631,706 +643,706 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-    "app.server.map.loading": {
+  "app.server.map.loading": {
     "message": "Loading the map..."
   },
-    "app.server.map.not-embeddable.body": {
+  "app.server.map.not-embeddable.body": {
     "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
   },
-    "app.server.map.not-embeddable.title": {
+  "app.server.map.not-embeddable.title": {
     "message": "This map cannot be embedded"
   },
-    "app.server.map.open-in-browser": {
+  "app.server.map.open-in-browser": {
     "message": "Open in browser"
   },
-    "app.server.map.reload": {
+  "app.server.map.reload": {
     "message": "Reload map"
   },
-    "app.settings.defaults.sections.after-launch": {
+  "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-    "app.settings.defaults.sections.environment": {
+  "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-    "app.settings.defaults.sections.launch-hooks": {
+  "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-    "app.settings.defaults.sections.window-behavior": {
+  "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-    "app.settings.developer-mode-enabled": {
+  "app.settings.developer-mode-enabled": {
     "message": "Utvecklarläge aktiverat."
   },
-    "app.settings.developer.feature-flags-section-title": {
+  "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-    "app.settings.downloading": {
+  "app.settings.downloading": {
     "message": "Ladda ner v{version}"
   },
-    "app.settings.feature-flags.advanced-filters-collapsed": {
+  "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-    "app.settings.feature-flags.always-show-app-controls": {
+  "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-    "app.settings.feature-flags.auto-install-dependencies": {
+  "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-    "app.settings.feature-flags.i18n-debug": {
+  "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-    "app.settings.feature-flags.page-path": {
+  "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-    "app.settings.feature-flags.page-transitions": {
+  "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-    "app.settings.feature-flags.project-background": {
+  "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-    "app.settings.feature-flags.server-project-qa": {
+  "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-    "app.settings.feature-flags.show-instance-play-time": {
+  "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-    "app.settings.feature-flags.show-version-environment-column": {
+  "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-    "app.settings.feature-flags.skip-non-essential-warnings": {
+  "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-    "app.settings.feature-flags.skip-unknown-pack-warning": {
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-    "app.settings.feature-flags.worlds-in-home": {
+  "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-    "app.settings.feature-flags.worlds-tab": {
+  "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-    "app.settings.privacy.section-title": {
+  "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-    "app.settings.resources.ALLIGATORZONE-data-directory": {
+  "app.settings.resources.ALLIGATORZONE-data-directory": {
     "message": "ALLIGATORZONE data directory"
   },
-    "app.settings.resources.sections.data-storage": {
+  "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-    "app.settings.resources.sections.download-behavior": {
+  "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-    "app.settings.resources.sections.missing-content": {
+  "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-    "app.settings.resources.sections.network-authentication": {
+  "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-    "app.settings.updates.channel.state-description": {
+  "app.settings.updates.channel.state-description": {
     "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
   },
-    "app.settings.updates.manual.description": {
+  "app.settings.updates.manual.description": {
     "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
   },
-    "app.settings.updates.manual.distribution": {
+  "app.settings.updates.manual.distribution": {
     "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
   },
-    "app.settings.updates.manual.title": {
+  "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-    "app.skins.add-button": {
+  "app.skins.add-button": {
     "message": "Lägg till utseende"
   },
-    "app.skins.add-button.drag-and-drop": {
+  "app.skins.add-button.drag-and-drop": {
     "message": "Dra och släpp"
   },
-    "app.skins.apply-button": {
+  "app.skins.apply-button": {
     "message": "Tillämpa"
   },
-    "app.skins.delete-button": {
+  "app.skins.delete-button": {
     "message": "Ta bort utseende"
   },
-    "app.skins.delete-modal.description": {
+  "app.skins.delete-modal.description": {
     "message": "Du kommer permanent radera det valda utseendet. Detta kan inte ångras."
   },
-    "app.skins.delete-modal.title": {
+  "app.skins.delete-modal.title": {
     "message": "Är du säker på att du vill radera utseendet?"
   },
-    "app.skins.dropped-file-error.text": {
+  "app.skins.dropped-file-error.text": {
     "message": "Misslyckades att läsa den släppta filen."
   },
-    "app.skins.dropped-file-error.title": {
+  "app.skins.dropped-file-error.title": {
     "message": "Fel med behandlingen av filen"
   },
-    "app.skins.edit-button": {
+  "app.skins.edit-button": {
     "message": "Redigera utseende"
   },
-    "app.skins.modal.add-skin-button": {
+  "app.skins.modal.add-skin-button": {
     "message": "Lägg till utseende"
   },
-    "app.skins.modal.add-title": {
+  "app.skins.modal.add-title": {
     "message": "Lägga till ett utseende"
   },
-    "app.skins.modal.arm-style-section": {
+  "app.skins.modal.arm-style-section": {
     "message": "Arm stil"
   },
-    "app.skins.modal.arm-style-slim": {
+  "app.skins.modal.arm-style-slim": {
     "message": "Smal"
   },
-    "app.skins.modal.arm-style-wide": {
+  "app.skins.modal.arm-style-wide": {
     "message": "Bred"
   },
-    "app.skins.modal.cape-fallback-name": {
+  "app.skins.modal.cape-fallback-name": {
     "message": "Mantel"
   },
-    "app.skins.modal.cape-section": {
+  "app.skins.modal.cape-section": {
     "message": "Mantel"
   },
-    "app.skins.modal.edit-title": {
+  "app.skins.modal.edit-title": {
     "message": "Redigerar utseende"
   },
-    "app.skins.modal.make-edit-first-tooltip": {
+  "app.skins.modal.make-edit-first-tooltip": {
     "message": "Gör en ändring på utseendet först!"
   },
-    "app.skins.modal.no-cape-tooltip": {
+  "app.skins.modal.no-cape-tooltip": {
     "message": "Ingen mantel"
   },
-    "app.skins.modal.none-cape-option": {
+  "app.skins.modal.none-cape-option": {
     "message": "Ingen"
   },
-    "app.skins.modal.replace-texture-button": {
+  "app.skins.modal.replace-texture-button": {
     "message": "Byt ut textur"
   },
-    "app.skins.modal.save-skin-button": {
+  "app.skins.modal.save-skin-button": {
     "message": "Spara utseende"
   },
-    "app.skins.modal.saving-tooltip": {
+  "app.skins.modal.saving-tooltip": {
     "message": "Sparar..."
   },
-    "app.skins.modal.texture-section": {
+  "app.skins.modal.texture-section": {
     "message": "Textur"
   },
-    "app.skins.modal.upload-skin-first-tooltip": {
+  "app.skins.modal.upload-skin-first-tooltip": {
     "message": "Ladda upp utseende först!"
   },
-    "app.skins.preview.edit-button": {
+  "app.skins.preview.edit-button": {
     "message": "Redigera utseende"
   },
-    "app.skins.previewing-badge": {
+  "app.skins.previewing-badge": {
     "message": "Förhandsvisa"
   },
-    "app.skins.rate-limit.text": {
+  "app.skins.rate-limit.text": {
     "message": "Du ändrar ditt utseende för ofta. Mojangs servrar har temporärt blockerat ytterligare förfrågningar. Vänligen vänta en stund innan du försöker igen."
   },
-    "app.skins.rate-limit.title": {
+  "app.skins.rate-limit.title": {
     "message": "Sakta ner!"
   },
-    "app.skins.reorder-error.text": {
+  "app.skins.reorder-error.text": {
     "message": "Ditt utseende kunde inte sparas."
   },
-    "app.skins.section.builders-and-biomes": {
+  "app.skins.section.builders-and-biomes": {
     "message": "Builders & Biomes"
   },
-    "app.skins.section.chase-the-skies": {
+  "app.skins.section.chase-the-skies": {
     "message": "Chase the Skies"
   },
-    "app.skins.section.default-skins": {
+  "app.skins.section.default-skins": {
     "message": "Standard utseenden"
   },
-    "app.skins.section.minecon-earth-2017": {
+  "app.skins.section.minecon-earth-2017": {
     "message": "MINECON Earth 2017"
   },
-    "app.skins.section.modrinth": {
+  "app.skins.section.modrinth": {
     "message": "Modrinth"
   },
-    "app.skins.section.mounts-of-mayhem": {
+  "app.skins.section.mounts-of-mayhem": {
     "message": "Mounts of Mayhem"
   },
-    "app.skins.section.saved-skins": {
+  "app.skins.section.saved-skins": {
     "message": "Sparade utseenden"
   },
-    "app.skins.section.striding-hero": {
+  "app.skins.section.striding-hero": {
     "message": "Striding Hero"
   },
-    "app.skins.section.the-copper-age": {
+  "app.skins.section.the-copper-age": {
     "message": "The Copper Age"
   },
-    "app.skins.section.the-garden-awakens": {
+  "app.skins.section.the-garden-awakens": {
     "message": "The Garden Awakens"
   },
-    "app.skins.section.tiny-takeover": {
+  "app.skins.section.tiny-takeover": {
     "message": "Tiny Takeover"
   },
-    "app.skins.sign-in.axolotl-alt": {
+  "app.skins.sign-in.axolotl-alt": {
     "message": "ALLIGATORZONE"
   },
-    "app.skins.sign-in.button": {
+  "app.skins.sign-in.button": {
     "message": "Logga in"
   },
-    "app.skins.sign-in.description": {
+  "app.skins.sign-in.description": {
     "message": "Logga in på ditt Minecraft-konto för att använda hudhanteringsfunktionerna i ALLIGATORZONE."
   },
-    "app.skins.sign-in.title": {
+  "app.skins.sign-in.title": {
     "message": "Vänligen logga in"
   },
-    "app.skins.title": {
+  "app.skins.title": {
     "message": "Utseende väljare"
   },
-    "app.translation-settings.display-section-title": {
+  "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-    "app.update-popup.body.download-complete": {
+  "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} har laddats ner. Ladda om för att uppdatera nu, eller automatiskt när du stänger ALLIGATORZONE."
   },
-    "app.update-popup.body.metered": {
+  "app.update-popup.body.metered": {
     "message": "ALLIGATORZONE v{version} är nu tillgänglig! Eftersom du använder ett nätverk med datatrafikbegränsningar har vi inte laddat ner det automatiskt."
   },
-    "app.update-popup.changelog": {
+  "app.update-popup.changelog": {
     "message": "Ändringslogg"
   },
-    "app.update-popup.download": {
+  "app.update-popup.download": {
     "message": "Ladda ner ({size})"
   },
-    "app.update-popup.download-complete": {
+  "app.update-popup.download-complete": {
     "message": "Nedladdning slutförd"
   },
-    "app.update-popup.reload": {
+  "app.update-popup.reload": {
     "message": "Ladda om för att uppdatera"
   },
-    "app.update-popup.title": {
+  "app.update-popup.title": {
     "message": "Uppdatering tillgänglig"
   },
-    "app.update.complete-toast.text": {
+  "app.update.complete-toast.text": {
     "message": "Tryck här för att visa ändringsloggen."
   },
-    "app.update.complete-toast.title": {
+  "app.update.complete-toast.title": {
     "message": "Version {version} har installerats!"
   },
-    "app.world.server-modal.placeholder-address": {
+  "app.world.server-modal.placeholder-address": {
     "message": "example.modrinth.gg"
   },
-    "app.world.server-modal.select-an-option": {
+  "app.world.server-modal.select-an-option": {
     "message": "Välj ett alternativ"
   },
-    "app.world.world-item.incompatible-version": {
+  "app.world.world-item.incompatible-version": {
     "message": "Inkompatibel version {version}"
   },
-    "app.world.world-item.not-played-yet": {
+  "app.world.world-item.not-played-yet": {
     "message": "Inte spelad än"
   },
-    "app.world.world-item.offline": {
+  "app.world.world-item.offline": {
     "message": "Offline"
   },
-    "app.world.world-item.players-online": {
+  "app.world.world-item.players-online": {
     "message": "{count} online"
   },
-    "friends.action.add-friend": {
+  "friends.action.add-friend": {
     "message": "Lägg till en vän"
   },
-    "friends.action.view-friend-requests": {
+  "friends.action.view-friend-requests": {
     "message": "{count} vän{count, plural, one {förfrågan} other {förfrågningar}}"
   },
-    "friends.add-friend.submit": {
+  "friends.add-friend.submit": {
     "message": "Skicka vänförfrågan"
   },
-    "friends.add-friend.title": {
+  "friends.add-friend.title": {
     "message": "Lägga till en vän"
   },
-    "friends.add-friend.username.description": {
+  "friends.add-friend.username.description": {
     "message": "Det kan vara annorlunda från deras Minecraft-användarnamn!"
   },
-    "friends.add-friend.username.placeholder": {
+  "friends.add-friend.username.placeholder": {
     "message": "Ange Modrinth-användarnamn..."
   },
-    "friends.add-friend.username.title": {
+  "friends.add-friend.username.title": {
     "message": "Vad är din väns Modrinth-användarnamn?"
   },
-    "friends.add-friends-to-share": {
+  "friends.add-friends-to-share": {
     "message": "<link>Lägg till vänner</link> för att se vad de spelar!"
   },
-    "friends.friend.cancel-request": {
+  "friends.friend.cancel-request": {
     "message": "Avbryt förfrågan"
   },
-    "friends.friend.remove-friend": {
+  "friends.friend.remove-friend": {
     "message": "Ta bort vän"
   },
-    "friends.friend.request-sent": {
+  "friends.friend.request-sent": {
     "message": "Vänförfrågan skickad"
   },
-    "friends.friend.view-profile": {
+  "friends.friend.view-profile": {
     "message": "Visa profil"
   },
-    "friends.heading": {
+  "friends.heading": {
     "message": "Vänner"
   },
-    "friends.heading.active": {
+  "friends.heading.active": {
     "message": "Aktiva"
   },
-    "friends.heading.offline": {
+  "friends.heading.offline": {
     "message": "Offline"
   },
-    "friends.heading.online": {
+  "friends.heading.online": {
     "message": "Online"
   },
-    "friends.heading.pending": {
+  "friends.heading.pending": {
     "message": "Väntar"
   },
-    "friends.no-friends-match": {
+  "friends.no-friends-match": {
     "message": "Inga vänner matchar ''{query}''"
   },
-    "friends.search-friends-placeholder": {
+  "friends.search-friends-placeholder": {
     "message": "Sök efter vänner..."
   },
-    "friends.section.heading": {
+  "friends.section.heading": {
     "message": "{title}: {count}"
   },
-    "friends.sign-in-to-add-friends": {
+  "friends.sign-in-to-add-friends": {
     "message": "<link>Logga in på ett Modrinth-konto</link> för att lägga till vänner och se vad de spelar!"
   },
-    "instance.add-server.add-and-play": {
+  "instance.add-server.add-and-play": {
     "message": "Lägg till och spela"
   },
-    "instance.add-server.add-server": {
+  "instance.add-server.add-server": {
     "message": "Lägg till server"
   },
-    "instance.add-server.resource-pack.disabled": {
+  "instance.add-server.resource-pack.disabled": {
     "message": "Avaktiverat"
   },
-    "instance.add-server.resource-pack.enabled": {
+  "instance.add-server.resource-pack.enabled": {
     "message": "Aktiverat"
   },
-    "instance.add-server.resource-pack.prompt": {
+  "instance.add-server.resource-pack.prompt": {
     "message": "Fråga"
   },
-    "instance.add-server.title": {
+  "instance.add-server.title": {
     "message": "Lägg till en server"
   },
-    "instance.edit-server.title": {
+  "instance.edit-server.title": {
     "message": "Redigera server"
   },
-    "instance.files.adding-files": {
+  "instance.files.adding-files": {
     "message": "Lägger till filer ({completed}/{total})"
   },
-    "instance.files.save-as": {
+  "instance.files.save-as": {
     "message": "Spara som..."
   },
-    "instance.server-modal.address": {
+  "instance.server-modal.address": {
     "message": "Adress"
   },
-    "instance.server-modal.name": {
+  "instance.server-modal.name": {
     "message": "Namn"
   },
-    "instance.server-modal.placeholder-name": {
+  "instance.server-modal.placeholder-name": {
     "message": "Minecraft-server"
   },
-    "instance.server-modal.resource-pack": {
+  "instance.server-modal.resource-pack": {
     "message": "Resurs pack"
   },
-    "instance.settings.tabs.general": {
+  "instance.settings.tabs.general": {
     "message": "Allmänt"
   },
-    "instance.settings.tabs.general.delete": {
+  "instance.settings.tabs.general.delete": {
     "message": "Radera instans"
   },
-    "instance.settings.tabs.general.delete.button": {
+  "instance.settings.tabs.general.delete.button": {
     "message": "Radera instans"
   },
-    "instance.settings.tabs.general.delete.description": {
+  "instance.settings.tabs.general.delete.description": {
     "message": "Raderar permanent en instans från din enhet, inklusive dina världar, konfigurationer och allt installerat innehåll. Var försiktig, eftersom när du har raderat en instans går det inte att återställa den."
   },
-    "instance.settings.tabs.general.deleting.button": {
+  "instance.settings.tabs.general.deleting.button": {
     "message": "Raderar..."
   },
-    "instance.settings.tabs.general.duplicate-button": {
+  "instance.settings.tabs.general.duplicate-button": {
     "message": "Duplicera"
   },
-    "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
+  "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
     "message": "Kan inte duplicera under installationen."
   },
-    "instance.settings.tabs.general.duplicate-instance": {
+  "instance.settings.tabs.general.duplicate-instance": {
     "message": "Duplicera instans"
   },
-    "instance.settings.tabs.general.duplicate-instance.description": {
+  "instance.settings.tabs.general.duplicate-instance.description": {
     "message": "Skapa en kopia av denna instans, inklusive världar, konfigurationer, moddar och mera."
   },
-    "instance.settings.tabs.general.edit-icon": {
+  "instance.settings.tabs.general.edit-icon": {
     "message": "Redigera ikon"
   },
-    "instance.settings.tabs.general.edit-icon.remove": {
+  "instance.settings.tabs.general.edit-icon.remove": {
     "message": "Ta bort ikon"
   },
-    "instance.settings.tabs.general.edit-icon.replace": {
+  "instance.settings.tabs.general.edit-icon.replace": {
     "message": "Ändra ikon"
   },
-    "instance.settings.tabs.general.edit-icon.select": {
+  "instance.settings.tabs.general.edit-icon.select": {
     "message": "Välj ikon"
   },
-    "instance.settings.tabs.general.name": {
+  "instance.settings.tabs.general.name": {
     "message": "Namn"
   },
-    "instance.settings.tabs.general.update-channel": {
+  "instance.settings.tabs.general.update-channel": {
     "message": "Uppdateringskanal"
   },
-    "instance.settings.tabs.general.update-channel.alpha": {
+  "instance.settings.tabs.general.update-channel.alpha": {
     "message": "Alfa"
   },
-    "instance.settings.tabs.general.update-channel.alpha.description": {
+  "instance.settings.tabs.general.update-channel.alpha.description": {
     "message": "Utgåvor, beta och alfa versioner visas som tillgängliga uppdateringar."
   },
-    "instance.settings.tabs.general.update-channel.beta": {
+  "instance.settings.tabs.general.update-channel.beta": {
     "message": "Beta"
   },
-    "instance.settings.tabs.general.update-channel.beta.description": {
+  "instance.settings.tabs.general.update-channel.beta.description": {
     "message": "Utgåvor och beta versioner visas som tillgängliga uppdateringar."
   },
-    "instance.settings.tabs.general.update-channel.release": {
+  "instance.settings.tabs.general.update-channel.release": {
     "message": "Utgåva"
   },
-    "instance.settings.tabs.general.update-channel.release.description": {
+  "instance.settings.tabs.general.update-channel.release.description": {
     "message": "Endast utgivna versioner visas som tillgängliga uppdateringar."
   },
-    "instance.settings.tabs.general.update-channel.select": {
+  "instance.settings.tabs.general.update-channel.select": {
     "message": "Välj uppdateringskanal"
   },
-    "instance.settings.tabs.general.web-map": {
+  "instance.settings.tabs.general.web-map": {
     "message": "Web map"
   },
-    "instance.settings.tabs.general.web-map.default-note": {
+  "instance.settings.tabs.general.web-map.default-note": {
     "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
   },
-    "instance.settings.tabs.general.web-map.description": {
+  "instance.settings.tabs.general.web-map.description": {
     "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
   },
-    "instance.settings.tabs.general.web-map.hidden-note": {
+  "instance.settings.tabs.general.web-map.hidden-note": {
     "message": "The map is hidden for this instance, and its page is disabled."
   },
-    "instance.settings.tabs.general.web-map.hide": {
+  "instance.settings.tabs.general.web-map.hide": {
     "message": "Hide map"
   },
-    "instance.settings.tabs.general.web-map.input-label": {
+  "instance.settings.tabs.general.web-map.input-label": {
     "message": "Map address"
   },
-    "instance.settings.tabs.general.web-map.invalid": {
+  "instance.settings.tabs.general.web-map.invalid": {
     "message": "Enter a full address starting with http:// or https://."
   },
-    "instance.settings.tabs.general.web-map.placeholder": {
+  "instance.settings.tabs.general.web-map.placeholder": {
     "message": "https://map.example.com/"
   },
-    "instance.settings.tabs.general.web-map.save": {
+  "instance.settings.tabs.general.web-map.save": {
     "message": "Save"
   },
-    "instance.settings.tabs.hooks": {
+  "instance.settings.tabs.hooks": {
     "message": "Startkrokar"
   },
-    "instance.settings.tabs.hooks.custom-hooks": {
+  "instance.settings.tabs.hooks.custom-hooks": {
     "message": "Egendefinierade startkrokar"
   },
-    "instance.settings.tabs.hooks.description": {
+  "instance.settings.tabs.hooks.description": {
     "message": "Krokar gör det möjligt för avancerade användare att köra vissa systemkommandon före och efter att spelet startas."
   },
-    "instance.settings.tabs.hooks.post-exit": {
+  "instance.settings.tabs.hooks.post-exit": {
     "message": "Efter avslut"
   },
-    "instance.settings.tabs.hooks.post-exit.description": {
+  "instance.settings.tabs.hooks.post-exit.description": {
     "message": "Kördes efter spelet stängdes."
   },
-    "instance.settings.tabs.hooks.post-exit.enter": {
+  "instance.settings.tabs.hooks.post-exit.enter": {
     "message": "Ange kommando efter avslut..."
   },
-    "instance.settings.tabs.hooks.pre-launch": {
+  "instance.settings.tabs.hooks.pre-launch": {
     "message": "Före start"
   },
-    "instance.settings.tabs.hooks.pre-launch.description": {
+  "instance.settings.tabs.hooks.pre-launch.description": {
     "message": "Kördes innan instansen är startad."
   },
-    "instance.settings.tabs.hooks.pre-launch.enter": {
+  "instance.settings.tabs.hooks.pre-launch.enter": {
     "message": "Ange kommando före start..."
   },
-    "instance.settings.tabs.hooks.title": {
+  "instance.settings.tabs.hooks.title": {
     "message": "Hooks för spelstart"
   },
-    "instance.settings.tabs.hooks.wrapper": {
+  "instance.settings.tabs.hooks.wrapper": {
     "message": "Omslag"
   },
-    "instance.settings.tabs.hooks.wrapper.description": {
+  "instance.settings.tabs.hooks.wrapper.description": {
     "message": "Omslagskommando för att starta Minecraft."
   },
-    "instance.settings.tabs.hooks.wrapper.enter": {
+  "instance.settings.tabs.hooks.wrapper.enter": {
     "message": "Ange omslagskommando..."
   },
-    "instance.settings.tabs.installation": {
+  "instance.settings.tabs.installation": {
     "message": "Installation"
   },
-    "instance.settings.tabs.installation.loader-version": {
+  "instance.settings.tabs.installation.loader-version": {
     "message": "{loader} version"
   },
-    "instance.settings.tabs.java": {
+  "instance.settings.tabs.java": {
     "message": "Java och minne"
   },
-    "instance.settings.tabs.java.custom-environment-variables": {
+  "instance.settings.tabs.java.custom-environment-variables": {
     "message": "Anpassade miljövariabler"
   },
-    "instance.settings.tabs.java.custom-java-arguments": {
+  "instance.settings.tabs.java.custom-java-arguments": {
     "message": "Anpassade Java-argument"
   },
-    "instance.settings.tabs.java.custom-memory-allocation": {
+  "instance.settings.tabs.java.custom-memory-allocation": {
     "message": "Anpassad minnestilldelning"
   },
-    "instance.settings.tabs.java.enter-environment-variables": {
+  "instance.settings.tabs.java.enter-environment-variables": {
     "message": "Skriv in miljövariabler..."
   },
-    "instance.settings.tabs.java.enter-java-arguments": {
+  "instance.settings.tabs.java.enter-java-arguments": {
     "message": "Skriv in Java-argument..."
   },
-    "instance.settings.tabs.java.environment-variables": {
+  "instance.settings.tabs.java.environment-variables": {
     "message": "Miljövariabler"
   },
-    "instance.settings.tabs.java.java-arguments": {
+  "instance.settings.tabs.java.java-arguments": {
     "message": "Java-argument"
   },
-    "instance.settings.tabs.java.java-installation": {
+  "instance.settings.tabs.java.java-installation": {
     "message": "Java-installation"
   },
-    "instance.settings.tabs.java.java-memory": {
+  "instance.settings.tabs.java.java-memory": {
     "message": "Tilldelat minne"
   },
-    "instance.settings.tabs.java.java-path-placeholder": {
+  "instance.settings.tabs.java.java-path-placeholder": {
     "message": "/sökväg/till/java"
   },
-    "instance.settings.tabs.window": {
+  "instance.settings.tabs.window": {
     "message": "Fönster"
   },
-    "instance.settings.tabs.window.custom-window-settings": {
+  "instance.settings.tabs.window.custom-window-settings": {
     "message": "Anpassade fönsterinställningar"
   },
-    "instance.settings.tabs.window.fullscreen": {
+  "instance.settings.tabs.window.fullscreen": {
     "message": "Helskärm"
   },
-    "instance.settings.tabs.window.fullscreen.description": {
+  "instance.settings.tabs.window.fullscreen.description": {
     "message": "Få spelet att starta i helskärm vid uppstart (använder options.txt)."
   },
-    "instance.settings.tabs.window.height": {
+  "instance.settings.tabs.window.height": {
     "message": "Höjd"
   },
-    "instance.settings.tabs.window.height.description": {
+  "instance.settings.tabs.window.height.description": {
     "message": "Höjden på spelfönstret vid uppstart."
   },
-    "instance.settings.tabs.window.height.enter": {
+  "instance.settings.tabs.window.height.enter": {
     "message": "Ange höjd..."
   },
-    "instance.settings.tabs.window.width": {
+  "instance.settings.tabs.window.width": {
     "message": "Bredd"
   },
-    "instance.settings.tabs.window.width.description": {
+  "instance.settings.tabs.window.width.description": {
     "message": "Bredden på spelfönstret vid uppstart."
   },
-    "instance.settings.tabs.window.width.enter": {
+  "instance.settings.tabs.window.width.enter": {
     "message": "Ange bredd..."
   },
-    "instance.worlds.a_minecraft_server": {
+  "instance.worlds.a_minecraft_server": {
     "message": "En Minecraft Server"
   },
-    "instance.worlds.cant_connect": {
+  "instance.worlds.cant_connect": {
     "message": "Kan inte ansluta till server"
   },
-    "instance.worlds.copy_address": {
+  "instance.worlds.copy_address": {
     "message": "Kopiera adress"
   },
-    "instance.worlds.create_shortcut": {
+  "instance.worlds.create_shortcut": {
     "message": "Skapa genväg"
   },
-    "instance.worlds.game_already_open": {
+  "instance.worlds.game_already_open": {
     "message": "Instans är redan öppen"
   },
-    "instance.worlds.hardcore": {
+  "instance.worlds.hardcore": {
     "message": "Hardcore läge"
   },
-    "instance.worlds.incompatible_server": {
+  "instance.worlds.incompatible_server": {
     "message": "Servern är inkompatibel"
   },
-    "instance.worlds.linked_server": {
+  "instance.worlds.linked_server": {
     "message": "Hanteras av serverprojekt"
   },
-    "instance.worlds.no_contact": {
+  "instance.worlds.no_contact": {
     "message": "Servern kunde inte kontaktas"
   },
-    "instance.worlds.no_server_quick_play": {
+  "instance.worlds.no_server_quick_play": {
     "message": "Du kan bara hoppa rakt in till servers på Minecraft Alfa 1.0.5+"
   },
-    "instance.worlds.no_singleplayer_quick_play": {
+  "instance.worlds.no_singleplayer_quick_play": {
     "message": "Du kan bara hoppa rakt in till enspelarläge världar på Minecraft 1,20+"
   },
-    "instance.worlds.play_instance": {
+  "instance.worlds.play_instance": {
     "message": "Spela instans"
   },
-    "instance.worlds.view_instance": {
+  "instance.worlds.view_instance": {
     "message": "Visa instans"
   },
-    "instance.worlds.world_in_use": {
+  "instance.worlds.world_in_use": {
     "message": "Värld används"
   },
-    "minecraft-account.label": {
+  "minecraft-account.label": {
     "message": "Minecraft konto"
   },
-    "minecraft-account.not-signed-in": {
+  "minecraft-account.not-signed-in": {
     "message": "Inte inloggad"
   },
-    "minecraft-account.remove-account": {
+  "minecraft-account.remove-account": {
     "message": "Ta bort konto"
   },
-    "minecraft-account.select-account": {
+  "minecraft-account.select-account": {
     "message": "Välj konto"
   },
-    "minecraft-account.sign-in": {
+  "minecraft-account.sign-in": {
     "message": "Logga in till Minecraft"
   },
-    "search.filter.locked.instance": {
+  "search.filter.locked.instance": {
     "message": "Tillhandahållet av instansen"
   },
-    "search.filter.locked.instance-game-version.title": {
+  "search.filter.locked.instance-game-version.title": {
     "message": "Spel version är tillhandahållet av instansen"
   },
-    "search.filter.locked.instance-loader.title": {
+  "search.filter.locked.instance-loader.title": {
     "message": "Laddaren tillhandahålls av instansen"
   },
-    "search.filter.locked.instance.sync": {
+  "search.filter.locked.instance.sync": {
     "message": "Synkronisera med instansen"
   },
-    "search.filter.locked.server": {
+  "search.filter.locked.server": {
     "message": "Tillhandahållet av servern"
   },
-    "search.filter.locked.server-environment.title": {
+  "search.filter.locked.server-environment.title": {
     "message": "Endast klient-sido moddar kan läggas till i serverinstansen"
   },
-    "search.filter.locked.server-game-version.title": {
+  "search.filter.locked.server-game-version.title": {
     "message": "Spelversion tillhandahålls av servern"
   },
-    "search.filter.locked.server-loader.title": {
+  "search.filter.locked.server-loader.title": {
     "message": "Loader tillhandahålls av servern"
   },
-    "unknown-pack-warning-modal.body": {
+  "unknown-pack-warning-modal.body": {
     "message": "En fil granskas bara om den laddas upp till Modrinth, oavsett dess filformat (däribland .mrpack)."
   },
-    "unknown-pack-warning-modal.dont-show-again": {
+  "unknown-pack-warning-modal.dont-show-again": {
     "message": "Visa inte denna varning igen"
   },
-    "unknown-pack-warning-modal.header": {
+  "unknown-pack-warning-modal.header": {
     "message": "Bekräfta installation"
   },
-    "unknown-pack-warning-modal.install-anyway": {
+  "unknown-pack-warning-modal.install-anyway": {
     "message": "Installera ändå"
   },
-    "unknown-pack-warning-modal.malware-statement": {
+  "unknown-pack-warning-modal.malware-statement": {
     "message": "Skadeprogram distribueras ofta via modpaketfiler genom att dela dem på plattformar som Discord."
   },
-    "unknown-pack-warning-modal.warning.body": {
+  "unknown-pack-warning-modal.warning.body": {
     "message": "Vi kunde inte hitta filen på Modrinth. Vi rekommenderar starkt att endast installera filer från källor du litar på."
   },
-    "unknown-pack-warning-modal.warning.title": {
+  "unknown-pack-warning-modal.warning.title": {
     "message": "Okänd filvarning"
   }
 }

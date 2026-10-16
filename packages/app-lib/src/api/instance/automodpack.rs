@@ -71,16 +71,19 @@ pub enum AutomodpackUnavailableReason {
 }
 
 /// What one journal change did to one path.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum AutomodpackChangeKind {
+    /// The default exists only so the structs deriving `Default` for tests can
+    /// be built; a real change always carries a kind parsed from the journal.
+    #[default]
     Added,
     Changed,
     Removed,
 }
 
 /// One file a generation touched, identified by path.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AutomodpackChange {
     /// Logical path relative to the game directory, `/`-separated
@@ -100,7 +103,7 @@ pub struct AutomodpackChange {
 }
 
 /// One top-level directory of non-mod changes, folded so a large tree stays readable.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AutomodpackDirectoryGroup {
     /// Top-level directory name; `""` collects files that sit at the root.
@@ -117,7 +120,7 @@ pub struct AutomodpackDirectoryGroup {
 }
 
 /// One published generation: the unit AutoModpack itself calls a generation.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AutomodpackGeneration {
     /// Journal sequence number, 1-based and monotonic.
@@ -469,6 +472,209 @@ pub(crate) fn read_changelog_from_game_dir(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Collects every key path in a JSON document, e.g. `generations[].modPaths`.
+    ///
+    /// Comparing the whole set catches a renamed field *and* a removed one;
+    /// comparing only the top level would miss `mod_paths` vs `modPaths`, which
+    /// is exactly the mismatch that shipped once.
+    fn wire_keys(value: &serde_json::Value, prefix: &str, into: &mut BTreeMap<String, ()>) {
+        match value {
+            serde_json::Value::Object(map) => {
+                for (key, child) in map {
+                    let path = if prefix.is_empty() {
+                        key.clone()
+                    } else {
+                        format!("{prefix}.{key}")
+                    };
+                    into.insert(path.clone(), ());
+                    wire_keys(child, &path, into);
+                }
+            }
+            serde_json::Value::Array(items) => {
+                for item in items {
+                    wire_keys(item, &format!("{prefix}[]"), into);
+                }
+            }
+            _ => {}
+        }
+    }
+
+    fn keys_of(value: &serde_json::Value) -> Vec<String> {
+        let mut map = BTreeMap::new();
+        wire_keys(value, "", &mut map);
+        map.into_keys().collect()
+    }
+
+    /// The serialised key set is the page's contract.
+    ///
+    /// This asserts the exact spelling the update-notes page consumes. The
+    /// counterpart list lives in `apps/app-frontend/src/helpers/instance.ts` as
+    /// `AUTOMODPACK_WIRE_SHAPE`, checked against the TypeScript interfaces there;
+    /// between the two, a rename on either side fails a build rather than a page.
+    ///
+    /// Every optional field is populated, because `skip_serializing_if` would
+    /// otherwise hide it and let this test pass while the page read a key that
+    /// never arrives.
+    #[test]
+    fn the_serialised_keys_match_the_frontend_type() {
+        let changelog = AutomodpackChangelog {
+            available: true,
+            modpack_id: Some("bm859uj".into()),
+            unavailable_reason: Some(AutomodpackUnavailableReason::HistoryMissing),
+            skipped_lines: 1,
+            generations: vec![AutomodpackGeneration {
+                seq: 1,
+                created_at: "2026-10-01T07:58:53.977887468Z".into(),
+                notes: "notes".into(),
+                content_token: "a".repeat(40),
+                restore_of: Some(2),
+                changed_files: 2,
+                mod_paths: vec!["mods/A.jar".into()],
+                changes: vec![
+                    AutomodpackChange {
+                        path: "mods/A.jar".into(),
+                        kind: AutomodpackChangeKind::Changed,
+                        from_sha1: Some("b".repeat(40)),
+                        to_sha1: Some("c".repeat(40)),
+                        from_size: 1,
+                        to_size: 2,
+                    },
+                    AutomodpackChange {
+                        path: "kubejs/a.js".into(),
+                        kind: AutomodpackChangeKind::Added,
+                        from_sha1: None,
+                        to_sha1: Some("d".repeat(40)),
+                        from_size: 0,
+                        to_size: 3,
+                    },
+                ],
+                directories: vec![AutomodpackDirectoryGroup {
+                    directory: "kubejs".into(),
+                    count: 1,
+                    added: 1,
+                    changed: 0,
+                    removed: 0,
+                    sample_paths: vec!["kubejs/a.js".into()],
+                    samples_truncated: false,
+                }],
+            }],
+        };
+
+        let json = serde_json::to_value(&changelog).unwrap();
+        let keys = keys_of(&json);
+
+        let expected = [
+            "available",
+            "generations",
+            "generations[].changedFiles",
+            "generations[].changes",
+            "generations[].changes[].fromSha1",
+            "generations[].changes[].fromSize",
+            "generations[].changes[].kind",
+            "generations[].changes[].path",
+            "generations[].changes[].toSha1",
+            "generations[].changes[].toSize",
+            "generations[].contentToken",
+            "generations[].createdAt",
+            "generations[].directories",
+            "generations[].directories[].added",
+            "generations[].directories[].changed",
+            "generations[].directories[].count",
+            "generations[].directories[].directory",
+            "generations[].directories[].removed",
+            "generations[].directories[].samplePaths",
+            "generations[].directories[].samplesTruncated",
+            "generations[].modPaths",
+            "generations[].notes",
+            "generations[].restoreOf",
+            "generations[].seq",
+            "modpackId",
+            "skippedLines",
+            "unavailableReason",
+        ];
+
+        assert_eq!(
+            keys,
+            expected,
+            "\nthe wire keys changed; update AUTOMODPACK_WIRE_SHAPE and the \
+             Automodpack* interfaces in apps/app-frontend/src/helpers/instance.ts \
+             to match\nemitted: {keys:#?}\nexpected: {expected:#?}"
+        );
+    }
+
+    /// The enum spellings the page switches on.
+    #[test]
+    fn change_kinds_serialise_as_the_frontend_union() {
+        let spellings = [
+            (AutomodpackChangeKind::Added, "added"),
+            (AutomodpackChangeKind::Changed, "changed"),
+            (AutomodpackChangeKind::Removed, "removed"),
+        ];
+        for (kind, expected) in spellings {
+            assert_eq!(
+                serde_json::to_value(kind).unwrap(),
+                serde_json::Value::String(expected.to_string()),
+                "AutomodpackChangeKind::{kind:?} must serialise as {expected:?}"
+            );
+        }
+
+        let reasons = [
+            (AutomodpackUnavailableReason::NotInstalled, "not_installed"),
+            (AutomodpackUnavailableReason::NoSelectedPack, "no_selected_pack"),
+            (AutomodpackUnavailableReason::HistoryMissing, "history_missing"),
+        ];
+        for (reason, expected) in reasons {
+            assert_eq!(
+                serde_json::to_value(reason).unwrap(),
+                serde_json::Value::String(expected.to_string()),
+                "AutomodpackUnavailableReason::{reason:?} must serialise as {expected:?}"
+            );
+        }
+    }
+
+    /// The real journal, serialised, still produces exactly the contract above.
+    #[test]
+    fn a_parsed_journal_serialises_to_the_contract() {
+        let journal = format!(
+            "{}\n{}\n{{\"seq\":3,\"contentToke",
+            entry_line(
+                1,
+                r#""shipped""#,
+                r#"{"path":"mods/A.jar","toSha1":"cccccccccccccccccccccccccccccccccccccccc","toSize":10},
+                   {"path":"kubejs/a.js","fromSha1":"dddddddddddddddddddddddddddddddddddddddd","fromSize":5,"toSha1":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","toSize":6}"#
+            ),
+            entry_line(2, r#""""#, "")
+        );
+
+        let changelog = parse_journal(Some("bm859uj".into()), &journal);
+        let json = serde_json::to_value(&changelog).unwrap();
+
+        // The torn tail is reported, not emitted as a broken generation.
+        assert_eq!(json["skippedLines"], serde_json::json!(1));
+        assert_eq!(json["generations"].as_array().unwrap().len(), 2);
+
+        let keys = keys_of(&json);
+        for required in [
+            "generations[].modPaths",
+            "generations[].createdAt",
+            "generations[].changes[].kind",
+            "generations[].directories[].samplePaths",
+            "generations[].directories[].samplesTruncated",
+            "skippedLines",
+            "modpackId",
+        ] {
+            assert!(
+                keys.contains(&required.to_string()),
+                "{required} missing from the serialised payload: {keys:#?}"
+            );
+        }
+
+        // An added file omits `fromSha1`; the page must tolerate its absence.
+        let changes = json["generations"][1]["changes"].as_array().unwrap();
+        assert!(changes[0].get("fromSha1").is_none());
+        assert_eq!(changes[0]["kind"], serde_json::json!("added"));
+    }
 
     /// Builds one journal line. `changes` is compacted because a journal is
     /// JSON-lines: one record per physical line, so this helper must never let

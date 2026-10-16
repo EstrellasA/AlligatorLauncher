@@ -1,512 +1,524 @@
 {
-    "app.action-bar.downloading-java": {
+  "app.action-bar.downloading-java": {
     "message": "กำลังดาวน์โหลด Java {version}"
   },
-    "app.action-bar.downloading-update": {
+  "app.action-bar.downloading-update": {
     "message": "กำลังดาวน์โหลดอัปเดต"
   },
-    "app.action-bar.downloads": {
+  "app.action-bar.downloads": {
     "message": "ดาวน์โหลด"
   },
-    "app.action-bar.hide-more-running-instances": {
+  "app.action-bar.hide-more-running-instances": {
     "message": "ซ่อนอินสแตนซ์ที่ทำงานอยู่เพิ่มเติม"
   },
-    "app.action-bar.make-primary-instance": {
+  "app.action-bar.make-primary-instance": {
     "message": "กำหนดอินสแตนซ์หลัก"
   },
-    "app.action-bar.no-instances-running": {
+  "app.action-bar.no-instances-running": {
     "message": "ไม่มีอินสแตนซ์ที่กำลังทำงาน"
   },
-    "app.action-bar.offline": {
+  "app.action-bar.offline": {
     "message": "ออฟไลน์"
   },
-    "app.action-bar.primary-instance": {
+  "app.action-bar.primary-instance": {
     "message": "อินสแตนซ์หลัก"
   },
-    "app.action-bar.reload-to-update": {
+  "app.action-bar.reload-to-update": {
     "message": "รีโหลดเพื่ออัปเดต"
   },
-    "app.action-bar.show-more-running-instances": {
+  "app.action-bar.show-more-running-instances": {
     "message": "แสดงอินสแตนซ์ที่ทำงานอยู่เพิ่มเติม"
   },
-    "app.action-bar.stop-instance": {
+  "app.action-bar.stop-instance": {
     "message": "หยุดอินสแตนซ์"
   },
-    "app.action-bar.update": {
+  "app.action-bar.update": {
     "message": "อัปเดต"
   },
-    "app.action-bar.view-active-downloads": {
+  "app.action-bar.view-active-downloads": {
     "message": "ดูการดาวน์โหลดที่กำลังดำเนินการอยู่"
   },
-    "app.action-bar.view-instance": {
+  "app.action-bar.view-instance": {
     "message": "ดูอินสแตนซ์"
   },
-    "app.action-bar.view-logs": {
+  "app.action-bar.view-logs": {
     "message": "ดู Log"
   },
-    "app.appearance-settings.advanced-rendering.description": {
+  "app.appearance-settings.advanced-rendering.description": {
     "message": "เปิดการใช้งานการเรนเดอร์ขั้นสูง เช่น เอฟเฟคการเบลอ อาจทำให้เกมเกิดปัญหาด้านประสิทธิภาพได้หากไม่มีอุปกรณ์ฮาร์ดแวร์ที่สามารถรองรับการเรนเดอร์ได้"
   },
-    "app.appearance-settings.advanced-rendering.title": {
+  "app.appearance-settings.advanced-rendering.title": {
     "message": "การเรนเดอร์ขั้นสูง"
   },
-    "app.appearance-settings.color-theme.description": {
+  "app.appearance-settings.color-theme.description": {
     "message": "เลือกธีมสีที่คุณต้องการสำหรับ ALLIGATORZONE"
   },
-    "app.appearance-settings.color-theme.title": {
+  "app.appearance-settings.color-theme.title": {
     "message": "ธีมสี"
   },
-    "app.appearance-settings.default-landing-page.description": {
+  "app.appearance-settings.default-landing-page.description": {
     "message": "เปลี่ยนหน้าไปหน้าต่างที่ลันเชอร์เปิดขึ้นมา"
   },
-    "app.appearance-settings.default-landing-page.home": {
+  "app.appearance-settings.default-landing-page.home": {
     "message": "หน้าหลัก"
   },
-    "app.appearance-settings.default-landing-page.library": {
+  "app.appearance-settings.default-landing-page.library": {
     "message": "ไลบรารี"
   },
-    "app.appearance-settings.default-landing-page.title": {
+  "app.appearance-settings.default-landing-page.title": {
     "message": "หน้าเริ่มต้น"
   },
-    "app.appearance-settings.hide-nametag.description": {
+  "app.appearance-settings.hide-nametag.description": {
     "message": "ซ่อนป้ายชื่อบนศีรษะของผู้เล่นในหน้าแสดงสกิน"
   },
-    "app.appearance-settings.hide-nametag.title": {
+  "app.appearance-settings.hide-nametag.title": {
     "message": "ซ่อนป้ายชื่อ"
   },
-    "app.appearance-settings.minimize-launcher.description": {
+  "app.appearance-settings.minimize-launcher.description": {
     "message": "ย่อลันเชอร์เมื่อกระบวนการการรัน Minecraft เริ่มต้นแล้ว"
   },
-    "app.appearance-settings.minimize-launcher.title": {
+  "app.appearance-settings.minimize-launcher.title": {
     "message": "ย่อลันเชอร์"
   },
-    "app.appearance-settings.native-decorations.description": {
+  "app.appearance-settings.native-decorations.description": {
     "message": "ใช้กรอบหน้าต่างระบบ (ต้องรีสตาร์ทแอป)"
   },
-    "app.appearance-settings.native-decorations.title": {
+  "app.appearance-settings.native-decorations.title": {
     "message": "ของตกแต่งดั้งเดิม"
   },
-    "app.appearance-settings.sections.advanced-interface": {
+  "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-    "app.appearance-settings.sections.content-behavior": {
+  "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-    "app.appearance-settings.sections.home-navigation": {
+  "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-    "app.appearance-settings.select-option": {
+  "app.appearance-settings.select-option": {
     "message": "เลือกตัวเลือก"
   },
-    "app.appearance-settings.show-play-time.description": {
+  "app.appearance-settings.show-play-time.description": {
     "message": "แสดงเวลาที่คุณใช้เล่นในแต่ละอินสแตนซ์"
   },
-    "app.appearance-settings.show-play-time.title": {
+  "app.appearance-settings.show-play-time.title": {
     "message": "แสดงระยะเวลาที่เล่น"
   },
-    "app.appearance-settings.toggle-sidebar.description": {
+  "app.appearance-settings.toggle-sidebar.description": {
     "message": "เปิดใช้งานตัวเลือกในการเลือกย่อหรือขยายแถบด้านข้าง"
   },
-    "app.appearance-settings.toggle-sidebar.title": {
+  "app.appearance-settings.toggle-sidebar.title": {
     "message": "ย่อแถบด้านข้าง"
   },
-    "app.appearance-settings.unknown-pack-warning.description": {
+  "app.appearance-settings.unknown-pack-warning.description": {
     "message": "หากคุณกำลังติดตั้งไฟล์แพ็กของ Modrinth (.mrpack) ที่ไม่ได้โฮสต์โดยตรงบน Modrinth เราจะแจ้งให้คุณตรวจสอบให้มั่นใจก่อนที่จะติดตั้งไฟล์แพ็กดังกล่าว"
   },
-    "app.appearance-settings.unknown-pack-warning.title": {
+  "app.appearance-settings.unknown-pack-warning.title": {
     "message": "เตือนฉันก่อนติดตั้งแพ็กม็อดที่ไม่รู้จัก"
   },
-    "app.auth-servers.unreachable.body": {
+  "app.auth-servers.unreachable.body": {
     "message": "เซิร์ฟเวอร์ตรวจสอบสิทธิ์ของ Minecraft อาจใช้งานไม่ได้ในขณะนี้ โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณและลองใหม่อีกครั้งในภายหลัง"
   },
-    "app.auth-servers.unreachable.header": {
+  "app.auth-servers.unreachable.header": {
     "message": "ไม่สามารถเชื่อมต่อถึงเซิร์ฟเวอร์ได้"
   },
-    "app.browse.add-servers-to-instance": {
+  "app.browse.add-servers-to-instance": {
     "message": "เพิ่มเซิร์ฟเวอร์ลงในอินสแตนซ์"
   },
-    "app.browse.add-to-an-instance": {
+  "app.browse.add-to-an-instance": {
     "message": "เพิ่มลงในอินสแตนซ์"
   },
-    "app.browse.add-to-instance": {
+  "app.browse.add-to-instance": {
     "message": "เพิ่มลงในโปรแกรม"
   },
-    "app.browse.add-to-instance-name": {
+  "app.browse.add-to-instance-name": {
     "message": "เพิ่มลงใน {instanceName}"
   },
-    "app.browse.added": {
+  "app.browse.added": {
     "message": "เพิ่ม"
   },
-    "app.browse.already-added": {
+  "app.browse.already-added": {
     "message": "เพิ่มแล้ว"
   },
-    "app.browse.back-to-instance": {
+  "app.browse.back-to-instance": {
     "message": "กลับสู่อินสแตนซ์"
   },
-    "app.browse.client-mods.install": {
+  "app.browse.client-mods.install": {
     "message": "Install to my mods"
   },
-    "app.browse.client-mods.install-compact": {
+  "app.browse.client-mods.install-compact": {
     "message": "Install to client"
   },
-    "app.browse.client-mods.install-tooltip": {
+  "app.browse.client-mods.install-tooltip": {
     "message": "Installs into this instance's clientmods folder"
   },
-    "app.browse.client-mods.notice": {
+  "app.browse.client-mods.notice": {
     "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
   },
-    "app.browse.client-mods.title": {
+  "app.browse.client-mods.title": {
     "message": "Discover content · Client mods"
   },
-    "app.browse.discover-content": {
+  "app.browse.discover-content": {
     "message": "สำรวจเนื้อหา"
   },
-    "app.browse.discover-servers": {
+  "app.browse.discover-servers": {
     "message": "สำรวจเซิร์ฟเวอร์"
   },
-    "app.browse.hide-added-servers": {
+  "app.browse.hide-added-servers": {
     "message": "ซ่อนเซิร์ฟเวอร์ที่ดำเนินการเพิ่มแล้ว"
   },
-    "app.browse.project-type.modpacks": {
+  "app.browse.project-type.modpacks": {
     "message": "แพ็กม็อด"
   },
-    "app.browse.server-instance-content-warning": {
+  "app.browse.server-instance-content-warning": {
     "message": "การเพิ่มเนื้อหาอาจทำให้ใช้งานร่วมกันไม่ได้เมื่อเข้าร่วมเซิร์ฟเวอร์ เนื้อหาที่เพิ่มเข้ามาจะหายไปเมื่อคุณอัปเดตอินสแตนซ์ของเซิร์ฟเวอร์"
   },
-    "app.browse.server.installing": {
+  "app.browse.server.installing": {
     "message": "กำลังติดตั้ง"
   },
-    "app.content-install.no-compatible-versions": {
+  "app.content-install.no-compatible-versions": {
     "message": "ไม่มีเวอร์ชันที่เข้ากันได้ {compatibilityLabel} โปรดเลือกเวอร์ชันที่จะติดตั้ง ไฟล์ที่จำเป็นจะไม่ถูกติดตั้งโดยอัตโนมัติ"
   },
-    "app.content-install.preview.pack-duplicate-confirm": {
+  "app.content-install.preview.pack-duplicate-confirm": {
     "message": "Install my copy anyway"
   },
-    "app.content-install.preview.pack-duplicate-consequence": {
+  "app.content-install.preview.pack-duplicate-consequence": {
     "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
   },
-    "app.content-install.preview.pack-duplicate-description": {
+  "app.content-install.preview.pack-duplicate-description": {
     "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
   },
-    "app.content-install.preview.pack-duplicate-header": {
+  "app.content-install.preview.pack-duplicate-header": {
     "message": "Already provided by the server pack"
   },
-    "app.export-modal.description-placeholder": {
+  "app.export-modal.description-placeholder": {
     "message": "กรอกคำอธิบายมอดแพ็ก.."
   },
-    "app.export-modal.export-button": {
+  "app.export-modal.export-button": {
     "message": "ส่งออก"
   },
-    "app.export-modal.header": {
+  "app.export-modal.header": {
     "message": "ส่งออกแพ็กม็อด"
   },
-    "app.export-modal.modpack-name-label": {
+  "app.export-modal.modpack-name-label": {
     "message": "ชื่อแพ็กม็อด"
   },
-    "app.export-modal.modpack-name-placeholder": {
+  "app.export-modal.modpack-name-placeholder": {
     "message": "ชื่อแพ็กม็อด"
   },
-    "app.export-modal.version-number-label": {
+  "app.export-modal.version-number-label": {
     "message": "หมายเลขเวอร์ชัน"
   },
-    "app.export-modal.version-number-placeholder": {
+  "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-    "app.first-run-bootstrap.dismiss": {
+  "app.first-run-bootstrap.dismiss": {
     "message": "Continue anyway"
   },
-    "app.first-run-bootstrap.failed.bundled-mods": {
+  "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
-    "app.first-run-bootstrap.failed.details": {
+  "app.first-run-bootstrap.failed.details": {
     "message": "Technical details"
   },
-    "app.first-run-bootstrap.failed.instance-creation": {
+  "app.first-run-bootstrap.failed.instance-creation": {
     "message": "The game instance could not be created. Check your network connection and try again."
   },
-    "app.first-run-bootstrap.failed.instance-id-missing": {
+  "app.first-run-bootstrap.failed.instance-id-missing": {
     "message": "The launcher could not tell which instance was created. Please report this to the server team."
   },
-    "app.first-run-bootstrap.failed.title": {
+  "app.first-run-bootstrap.failed.title": {
     "message": "Setup could not be finished"
   },
-    "app.first-run-bootstrap.failed.unknown": {
+  "app.first-run-bootstrap.failed.unknown": {
     "message": "Something went wrong while setting up your game."
   },
-    "app.first-run-bootstrap.file-progress": {
+  "app.first-run-bootstrap.file-progress": {
     "message": "File {current} of {total}"
   },
-    "app.first-run-bootstrap.phase.downloading-minecraft": {
+  "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "Downloading the game files…"
   },
-    "app.first-run-bootstrap.phase.finishing": {
+  "app.first-run-bootstrap.phase.finishing": {
     "message": "Finishing up…"
   },
-    "app.first-run-bootstrap.phase.installing-loader": {
+  "app.first-run-bootstrap.phase.installing-loader": {
     "message": "Installing the mod loader…"
   },
-    "app.first-run-bootstrap.phase.preparing": {
+  "app.first-run-bootstrap.phase.preparing": {
     "message": "Preparing your game…"
   },
-    "app.first-run-bootstrap.repair.subtitle": {
+  "app.first-run-bootstrap.repair.subtitle": {
     "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
   },
-    "app.first-run-bootstrap.repair.success-text": {
+  "app.first-run-bootstrap.repair.success-text": {
     "message": "The missing files were added back. You can start playing now."
   },
-    "app.first-run-bootstrap.repair.title": {
+  "app.first-run-bootstrap.repair.title": {
     "message": "Finishing your game setup"
   },
-    "app.first-run-bootstrap.retry": {
+  "app.first-run-bootstrap.retry": {
     "message": "Try again"
   },
-    "app.first-run-bootstrap.server-missing.text": {
+  "app.first-run-bootstrap.server-missing.text": {
     "message": "Add {address} to your instance manually, or use the join button on the home page."
   },
-    "app.first-run-bootstrap.server-missing.title": {
+  "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
   },
-    "app.first-run-bootstrap.step.creating-instance": {
+  "app.first-run-bootstrap.step.creating-instance": {
     "message": "Creating your game instance"
   },
-    "app.first-run-bootstrap.step.installing-mods": {
+  "app.first-run-bootstrap.step.installing-mods": {
     "message": "Installing the required mods"
   },
-    "app.first-run-bootstrap.step.registering-server": {
+  "app.first-run-bootstrap.step.registering-server": {
     "message": "Adding the server to your instance"
   },
-    "app.first-run-bootstrap.subtitle": {
+  "app.first-run-bootstrap.subtitle": {
     "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
   },
-    "app.first-run-bootstrap.success.text": {
+  "app.first-run-bootstrap.success.text": {
     "message": "The instance was created with the mods this server needs. You can start playing now."
   },
-    "app.first-run-bootstrap.success.title": {
+  "app.first-run-bootstrap.success.title": {
     "message": "Your game is ready"
   },
-    "app.first-run-bootstrap.title": {
+  "app.first-run-bootstrap.title": {
     "message": "Setting up your game"
   },
-    "app.home.server-status.checking": {
+  "app.home.server-status.checking": {
     "message": "Checking..."
   },
-    "app.home.server-status.join": {
+  "app.home.server-status.join": {
     "message": "Join server"
   },
-    "app.home.server-status.join.no-instance": {
+  "app.home.server-status.join.no-instance": {
     "message": "Choose a home instance before joining the server."
   },
-    "app.home.server-status.join.not-installed": {
+  "app.home.server-status.join.not-installed": {
     "message": "This instance is still installing. Join once it is ready."
   },
-    "app.home.server-status.join.offline": {
+  "app.home.server-status.join.offline": {
     "message": "The server is offline right now."
   },
-    "app.home.server-status.joining": {
+  "app.home.server-status.joining": {
     "message": "Joining..."
   },
-    "app.home.server-status.latency": {
+  "app.home.server-status.latency": {
     "message": "{latency} ms"
   },
-    "app.home.server-status.loading": {
+  "app.home.server-status.loading": {
     "message": "Fetching the latest server status..."
   },
-    "app.home.server-status.offline": {
+  "app.home.server-status.offline": {
     "message": "Offline"
   },
-    "app.home.server-status.offline.body": {
+  "app.home.server-status.offline.body": {
     "message": "It may be under maintenance — ask in the group chat? The web map often still works."
   },
-    "app.home.server-status.offline.body.no-map": {
+  "app.home.server-status.offline.body.no-map": {
     "message": "It may be under maintenance — ask in the group chat?"
   },
-    "app.home.server-status.offline.title": {
+  "app.home.server-status.offline.title": {
     "message": "The server is offline right now"
   },
-    "app.home.server-status.online": {
+  "app.home.server-status.online": {
     "message": "Online"
   },
-    "app.home.server-status.players.empty": {
+  "app.home.server-status.players.empty": {
     "message": "Nobody is online right now — the world is all yours."
   },
-    "app.home.server-status.players.more": {
+  "app.home.server-status.players.more": {
     "message": "+{count}"
   },
-    "app.home.server-status.players.stale": {
+  "app.home.server-status.players.stale": {
     "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
   },
-    "app.home.server-status.players.title": {
+  "app.home.server-status.players.title": {
     "message": "Players online"
   },
-    "app.home.server-status.players.unavailable": {
+  "app.home.server-status.players.unavailable": {
     "message": "The server does not publish its player list, so only the count is shown."
   },
-    "app.home.server-status.refresh": {
+  "app.home.server-status.refresh": {
     "message": "Refresh status"
   },
-    "app.home.server-status.version": {
+  "app.home.server-status.version": {
     "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
   },
-    "app.instance.confirm-delete.admonition-body": {
+  "app.instance.confirm-delete.admonition-body": {
     "message": "ข้อมูลทั้งหมดที่ถูกเก็บไว้ในโปรแกรมจะถูกลบออกอย่างถาวร รวมถึงโลก การตั้งค่า และเนื้อหาอื่นที่ติดตั้งไว้ทั้งหมด"
   },
-    "app.instance.confirm-delete.admonition-header": {
+  "app.instance.confirm-delete.admonition-header": {
     "message": "การดำเนินการนี้ไม่สามารถย้อนคืนได้"
   },
-    "app.instance.confirm-delete.delete-button": {
+  "app.instance.confirm-delete.delete-button": {
     "message": "ลบโปรแกรม"
   },
-    "app.instance.confirm-delete.header": {
+  "app.instance.confirm-delete.header": {
     "message": "ลบโปรแกรม"
   },
-    "app.instance.modpack-already-installed.body": {
+  "app.instance.modpack-already-installed.body": {
     "message": "แพ็กม็อดดังกล่าวติดตั้งไว้ใน <bold>{instanceName}</bold> อยู่แล้ว คุณแน่ใจหรือไม่ว่าต้องการจะทำซ้ำ?"
   },
-    "app.instance.modpack-already-installed.create": {
+  "app.instance.modpack-already-installed.create": {
     "message": "สร้าง"
   },
-    "app.instance.modpack-already-installed.header": {
+  "app.instance.modpack-already-installed.header": {
     "message": "แพ็กม็อดดังกล่าวถูกติดตั้งไปแล้ว"
   },
-    "app.instance.modpack-already-installed.instance": {
+  "app.instance.modpack-already-installed.instance": {
     "message": "โปรแกรม"
   },
-    "app.instance.mods.content-type-project": {
+  "app.instance.mods.content-type-project": {
     "message": "โปรเจกต์"
   },
-    "app.instance.mods.folder-note": {
+  "app.instance.mods.folder-note": {
     "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
   },
-    "app.instance.mods.player-added.badge": {
+  "app.instance.mods.player-added.badge": {
     "message": "Player-added"
   },
-    "app.instance.mods.player-added.hint": {
+  "app.instance.mods.player-added.hint": {
     "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
   },
-    "app.instance.mods.project-was-added": {
+  "app.instance.mods.project-was-added": {
     "message": "เพิ่ม \"{name}\" เรียบร้อยแล้ว"
   },
-    "app.instance.mods.projects-were-added": {
+  "app.instance.mods.projects-were-added": {
     "message": "เพิ่ม {count} โปรเจกต์เรียบร้อยแล้ว"
   },
-    "app.instance.mods.share-text": {
+  "app.instance.mods.share-text": {
     "message": "มาตรวจดูโปรเจกต์ต่าง ๆ ที่ฉันใช้ในแพ็กม็อดนี้กัน!"
   },
-    "app.instance.mods.share-title": {
+  "app.instance.mods.share-title": {
     "message": "แบ่งปันเนื้อหาแพ็กม็อด"
   },
-    "app.instance.mods.successfully-uploaded": {
+  "app.instance.mods.successfully-uploaded": {
     "message": "อัปโหลดสำเร็จ"
   },
-    "app.instance.worlds.add-server": {
+  "app.instance.worlds.add-server": {
     "message": "เพิ่มเซิร์ฟเวอร์"
   },
-    "app.instance.worlds.browse-servers": {
+  "app.instance.worlds.browse-servers": {
     "message": "ค้นหาเซิร์ฟเวอร์"
   },
-    "app.instance.worlds.filter-modded": {
+  "app.instance.worlds.filter-modded": {
     "message": "ม็อด"
   },
-    "app.instance.worlds.filter-offline": {
+  "app.instance.worlds.filter-offline": {
     "message": "ออฟไลน์"
   },
-    "app.instance.worlds.filter-online": {
+  "app.instance.worlds.filter-online": {
     "message": "ออนไลน์"
   },
-    "app.instance.worlds.filter-vanilla": {
+  "app.instance.worlds.filter-vanilla": {
     "message": "วานิลลา"
   },
-    "app.instance.worlds.no-worlds-description": {
+  "app.instance.worlds.no-worlds-description": {
     "message": "เพิ่มเซิร์ฟเวอร์หรือค้นหาเพื่อเริ่มต้น"
   },
-    "app.instance.worlds.no-worlds-heading": {
+  "app.instance.worlds.no-worlds-heading": {
     "message": "ไม่มีเซิร์ฟเวอร์หรือโลกที่เพิ่มไว้"
   },
-    "app.instance.worlds.search-worlds-placeholder": {
+  "app.instance.worlds.search-worlds-placeholder": {
     "message": "ค้าหาโลกทั้งหมด {count} โลก"
   },
-    "app.mods.change-instance": {
+  "app.mods.change-instance": {
     "message": "Change instance"
   },
-    "app.mods.conflict.badge": {
+  "app.mods.conflict.badge": {
     "message": "Server copy takes over"
   },
-    "app.mods.conflict.summary": {
+  "app.mods.conflict.summary": {
     "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
   },
-    "app.mods.conflict.tooltip": {
+  "app.mods.conflict.tooltip": {
     "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
   },
-    "app.mods.count": {
+  "app.mods.count": {
     "message": "{count, plural, one {# file} other {# files}}"
   },
-    "app.mods.disabled": {
+  "app.mods.disabled": {
     "message": "Disabled"
   },
-    "app.mods.folder-missing": {
+  "app.mods.folder-missing": {
     "message": "This folder does not exist in the instance yet."
   },
-    "app.mods.link.mcmod": {
+  "app.mods.link.mcmod": {
     "message": "Search {name} on the MC Mod wiki"
   },
-    "app.mods.link.project": {
+  "app.mods.link.project": {
     "message": "Open the project page for {name}"
   },
-    "app.mods.load-failed": {
+  "app.mods.load-failed": {
     "message": "Could not read this folder."
   },
-    "app.mods.loading": {
+  "app.mods.loading": {
     "message": "Loading files…"
   },
-    "app.mods.no-instance": {
+  "app.mods.no-instance": {
     "message": "No installed instance is available."
   },
-    "app.mods.ownership.local-discovered": {
+  "app.mods.ownership.local-discovered": {
     "message": "Found in the folder"
   },
-    "app.mods.ownership.pack-managed": {
+  "app.mods.ownership.pack-managed": {
     "message": "Managed by the server pack"
   },
-    "app.mods.ownership.user-added": {
+  "app.mods.ownership.user-added": {
     "message": "Added by you"
   },
-    "app.mods.picker.no-instances": {
+  "app.mods.picker.no-instances": {
     "message": "No installed instances are available."
   },
-    "app.mods.picker.no-results": {
+  "app.mods.picker.no-results": {
     "message": "No matching instances"
   },
-    "app.mods.picker.search": {
+  "app.mods.picker.search": {
     "message": "Search instances"
   },
-    "app.mods.picker.select": {
+  "app.mods.picker.select": {
     "message": "Choose {name}"
   },
-    "app.mods.picker.title": {
+  "app.mods.picker.title": {
     "message": "Choose an instance"
   },
-    "app.mods.refresh": {
+  "app.mods.refresh": {
     "message": "Refresh"
   },
-    "app.mods.retry": {
+  "app.mods.retry": {
     "message": "Try again"
   },
-    "app.navigation.changelog": {
+  "app.navigation.changelog": {
     "message": "Update notes"
   },
-    "app.navigation.server-map": {
+  "app.navigation.server-map": {
     "message": "Server map"
   },
-    "app.project.install-button.already-installed": {
+  "app.project.install-blocked.server-required.description": {
+    "message": "It only works when the server runs it as well, and the server's content belongs to the pack you joined — you cannot add anything to it from here. Putting it in your own client mods folder would break the game, so the launcher does not offer an install."
+  },
+  "app.project.install-blocked.server-required.title": {
+    "message": "This mod has to be installed on the server too"
+  },
+  "app.project.install-blocked.unverified.description": {
+    "message": "This source does not publish whether a mod has to be installed on the server, so the launcher cannot tell whether a client-only install is safe. Rather than risk a game that no longer works, it does not offer an install here."
+  },
+  "app.project.install-blocked.unverified.title": {
+    "message": "Cannot confirm this mod works on the client alone"
+  },
+  "app.project.install-button.already-installed": {
     "message": "โปรเจคนี้ถูกติดตั้งแล้ว"
   },
-    "app.project.install-context.back-to-browse": {
+  "app.project.install-context.back-to-browse": {
     "message": "กลับไปที่หน้าค้นหา"
   },
-    "app.project.install-context.install-content-to-instance": {
+  "app.project.install-context.install-content-to-instance": {
     "message": "ติดตั้งเนื้อหาลงสู่อินสแตนซ์"
   },
-    "app.server.avatar.open-skin-selector": {
+  "app.server.avatar.open-skin-selector": {
     "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
@@ -535,658 +547,658 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-    "app.server.map.loading": {
+  "app.server.map.loading": {
     "message": "Loading the map..."
   },
-    "app.server.map.not-embeddable.body": {
+  "app.server.map.not-embeddable.body": {
     "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
   },
-    "app.server.map.not-embeddable.title": {
+  "app.server.map.not-embeddable.title": {
     "message": "This map cannot be embedded"
   },
-    "app.server.map.open-in-browser": {
+  "app.server.map.open-in-browser": {
     "message": "Open in browser"
   },
-    "app.server.map.reload": {
+  "app.server.map.reload": {
     "message": "Reload map"
   },
-    "app.settings.defaults.sections.after-launch": {
+  "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-    "app.settings.defaults.sections.environment": {
+  "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-    "app.settings.defaults.sections.launch-hooks": {
+  "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-    "app.settings.defaults.sections.window-behavior": {
+  "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-    "app.settings.developer-mode-enabled": {
+  "app.settings.developer-mode-enabled": {
     "message": "โหมดนักพัฒนาเปิดอยู่"
   },
-    "app.settings.developer.feature-flags-section-title": {
+  "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-    "app.settings.downloading": {
+  "app.settings.downloading": {
     "message": "ดาวน์โหลดเวอร์ชัน {version}"
   },
-    "app.settings.feature-flags.advanced-filters-collapsed": {
+  "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-    "app.settings.feature-flags.always-show-app-controls": {
+  "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-    "app.settings.feature-flags.auto-install-dependencies": {
+  "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-    "app.settings.feature-flags.i18n-debug": {
+  "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-    "app.settings.feature-flags.page-path": {
+  "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-    "app.settings.feature-flags.page-transitions": {
+  "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-    "app.settings.feature-flags.project-background": {
+  "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-    "app.settings.feature-flags.server-project-qa": {
+  "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-    "app.settings.feature-flags.show-instance-play-time": {
+  "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-    "app.settings.feature-flags.show-version-environment-column": {
+  "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-    "app.settings.feature-flags.skip-non-essential-warnings": {
+  "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-    "app.settings.feature-flags.skip-unknown-pack-warning": {
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-    "app.settings.feature-flags.worlds-in-home": {
+  "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-    "app.settings.feature-flags.worlds-tab": {
+  "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-    "app.settings.privacy.section-title": {
+  "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-    "app.settings.resources.ALLIGATORZONE-data-directory": {
+  "app.settings.resources.ALLIGATORZONE-data-directory": {
     "message": "ALLIGATORZONE data directory"
   },
-    "app.settings.resources.sections.data-storage": {
+  "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-    "app.settings.resources.sections.download-behavior": {
+  "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-    "app.settings.resources.sections.missing-content": {
+  "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-    "app.settings.resources.sections.network-authentication": {
+  "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-    "app.settings.updates.channel.state-description": {
+  "app.settings.updates.channel.state-description": {
     "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
   },
-    "app.settings.updates.manual.description": {
+  "app.settings.updates.manual.description": {
     "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
   },
-    "app.settings.updates.manual.distribution": {
+  "app.settings.updates.manual.distribution": {
     "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
   },
-    "app.settings.updates.manual.title": {
+  "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-    "app.skins.add-button": {
+  "app.skins.add-button": {
     "message": "เพิ่มสกิน"
   },
-    "app.skins.add-button.drag-and-drop": {
+  "app.skins.add-button.drag-and-drop": {
     "message": "ลากและวาง"
   },
-    "app.skins.apply-button": {
+  "app.skins.apply-button": {
     "message": "นำไปใช้"
   },
-    "app.skins.delete-button": {
+  "app.skins.delete-button": {
     "message": "ลบสกิน"
   },
-    "app.skins.delete-modal.description": {
+  "app.skins.delete-modal.description": {
     "message": "การดำเนินการนี้จะลบสกินที่เลือกอย่างถาวร การกระทำนี้ไม่สามารถย้อนกลับได้"
   },
-    "app.skins.delete-modal.title": {
+  "app.skins.delete-modal.title": {
     "message": "คุณแน่ใจหรือว่าต้องการที่จะลบสกินนี้?"
   },
-    "app.skins.dropped-file-error.text": {
+  "app.skins.dropped-file-error.text": {
     "message": "ไม่สามารถอ่านไฟล์ที่ถูกลากและวางได้"
   },
-    "app.skins.dropped-file-error.title": {
+  "app.skins.dropped-file-error.title": {
     "message": "ข้อผิดพลาดในการประมวลผลไฟล์"
   },
-    "app.skins.edit-button": {
+  "app.skins.edit-button": {
     "message": "แก้ไขสกิน"
   },
-    "app.skins.modal.add-skin-button": {
+  "app.skins.modal.add-skin-button": {
     "message": "เพิ่มสกิน"
   },
-    "app.skins.modal.add-title": {
+  "app.skins.modal.add-title": {
     "message": "การเพิ่มสกิน"
   },
-    "app.skins.modal.arm-style-section": {
+  "app.skins.modal.arm-style-section": {
     "message": "สไตล์แขน"
   },
-    "app.skins.modal.arm-style-slim": {
+  "app.skins.modal.arm-style-slim": {
     "message": "เพรียว"
   },
-    "app.skins.modal.arm-style-wide": {
+  "app.skins.modal.arm-style-wide": {
     "message": "กว้าง"
   },
-    "app.skins.modal.cape-fallback-name": {
+  "app.skins.modal.cape-fallback-name": {
     "message": "ผ้าคลุม"
   },
-    "app.skins.modal.cape-section": {
+  "app.skins.modal.cape-section": {
     "message": "ผ้าคลุม"
   },
-    "app.skins.modal.edit-title": {
+  "app.skins.modal.edit-title": {
     "message": "แก้ไขสกิน"
   },
-    "app.skins.modal.make-edit-first-tooltip": {
+  "app.skins.modal.make-edit-first-tooltip": {
     "message": "แก้ไขสกินก่อน!"
   },
-    "app.skins.modal.no-cape-tooltip": {
+  "app.skins.modal.no-cape-tooltip": {
     "message": "ไม่มีผ้าคลุม"
   },
-    "app.skins.modal.none-cape-option": {
+  "app.skins.modal.none-cape-option": {
     "message": "ไม่มี"
   },
-    "app.skins.modal.replace-texture-button": {
+  "app.skins.modal.replace-texture-button": {
     "message": "เปลี่ยนเท็กซ์เจอร์"
   },
-    "app.skins.modal.save-skin-button": {
+  "app.skins.modal.save-skin-button": {
     "message": "บันทึกสกิน"
   },
-    "app.skins.modal.saving-tooltip": {
+  "app.skins.modal.saving-tooltip": {
     "message": "กำลังบันทึก"
   },
-    "app.skins.modal.texture-section": {
+  "app.skins.modal.texture-section": {
     "message": "เท็กซ์เจอร์"
   },
-    "app.skins.modal.upload-skin-first-tooltip": {
+  "app.skins.modal.upload-skin-first-tooltip": {
     "message": "อัพโหลดสกินก่อน!"
   },
-    "app.skins.preview.edit-button": {
+  "app.skins.preview.edit-button": {
     "message": "แก้ไขสกิน"
   },
-    "app.skins.previewing-badge": {
+  "app.skins.previewing-badge": {
     "message": "การแสดงตัวอย่าง"
   },
-    "app.skins.rate-limit.text": {
+  "app.skins.rate-limit.text": {
     "message": "คุณได้เปลี่ยนสกินบ่อยเกินไป เซิร์ฟเวอร์ของ Mojang ได้บล็อกคำขอเพิ่มเติมชั่วคราว โปรดรอสักครู่ก่อนลองอีกครั้ง"
   },
-    "app.skins.rate-limit.title": {
+  "app.skins.rate-limit.title": {
     "message": "ลดความถี่ลง!"
   },
-    "app.skins.reorder-error.text": {
+  "app.skins.reorder-error.text": {
     "message": "ไม่สามารถบันทึกลำดับสกินของคุณได้"
   },
-    "app.skins.reorder-error.title": {
+  "app.skins.reorder-error.title": {
     "message": "ไม่สามารถจัดเรียงสกินได้"
   },
-    "app.skins.section.builders-and-biomes": {
+  "app.skins.section.builders-and-biomes": {
     "message": "Builders & Biomes"
   },
-    "app.skins.section.chase-the-skies": {
+  "app.skins.section.chase-the-skies": {
     "message": "Chase the Skies"
   },
-    "app.skins.section.default-skins": {
+  "app.skins.section.default-skins": {
     "message": "สกินเริ่มต้น"
   },
-    "app.skins.section.minecon-earth-2017": {
+  "app.skins.section.minecon-earth-2017": {
     "message": "MINECON Earth 2017"
   },
-    "app.skins.section.modrinth": {
+  "app.skins.section.modrinth": {
     "message": "Modrinth"
   },
-    "app.skins.section.mounts-of-mayhem": {
+  "app.skins.section.mounts-of-mayhem": {
     "message": "Mounts of Mayhem"
   },
-    "app.skins.section.saved-skins": {
+  "app.skins.section.saved-skins": {
     "message": "สกินที่บันทึกไว้"
   },
-    "app.skins.section.striding-hero": {
+  "app.skins.section.striding-hero": {
     "message": "Striding Hero"
   },
-    "app.skins.section.the-copper-age": {
+  "app.skins.section.the-copper-age": {
     "message": "The Copper Age"
   },
-    "app.skins.section.the-garden-awakens": {
+  "app.skins.section.the-garden-awakens": {
     "message": "The Garden Awakens"
   },
-    "app.skins.section.tiny-takeover": {
+  "app.skins.section.tiny-takeover": {
     "message": "Tiny Takeover"
   },
-    "app.skins.sign-in.axolotl-alt": {
+  "app.skins.sign-in.axolotl-alt": {
     "message": "ALLIGATORZONE"
   },
-    "app.skins.sign-in.button": {
+  "app.skins.sign-in.button": {
     "message": "ลงชื่อเข้าใช้"
   },
-    "app.skins.sign-in.description": {
+  "app.skins.sign-in.description": {
     "message": "โปรดลงชื่อเข้าใช้บัญชี Minecraft ของคุณเพื่อใช้งานฟีเจอร์จัดการสกินของ ALLIGATORZONE"
   },
-    "app.skins.sign-in.title": {
+  "app.skins.sign-in.title": {
     "message": "โปรดลงชื่อเข้าใช้"
   },
-    "app.translation-settings.display-section-title": {
+  "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-    "app.update-popup.body.download-complete": {
+  "app.update-popup.body.download-complete": {
     "message": "ดาวน์โหลด ALLIGATORZONEv{version} สำเร็จแล้ว เปิดโปรแกรมใหม่อีกครั้งเพื่ออัปเดตตอนนี้ หรือจะรออัปเดตอัตโนมัติ ซึ่งจะเกิดขึ้นเมื่อคุณกดปิดโปรแกรม ALLIGATORZONE"
   },
-    "app.update-popup.body.metered": {
+  "app.update-popup.body.metered": {
     "message": "ALLIGATORZONEv{version} พร้อมให้บริการแล้ว! แต่เนื่องจากคุณเปิดโหมดจำกัดปริมาณการใช้ข้อมูลเครือข่าย เราจึงไม่ได้อัปเดตเนื้อหาโดยอัตโนมัติ"
   },
-    "app.update-popup.changelog": {
+  "app.update-popup.changelog": {
     "message": "บันทึกการเปลี่ยนแปลง"
   },
-    "app.update-popup.download": {
+  "app.update-popup.download": {
     "message": "ดาวโหลด ({size})"
   },
-    "app.update-popup.download-complete": {
+  "app.update-popup.download-complete": {
     "message": "การดาวน์โหลดเสร็จสมบูรณ์"
   },
-    "app.update-popup.title": {
+  "app.update-popup.title": {
     "message": "มีการอัปเดตใหม่"
   },
-    "app.update.complete-toast.text": {
+  "app.update.complete-toast.text": {
     "message": "คลิกที่นี่เพื่อดูบันทึกการเปลี่ยนแปลง"
   },
-    "app.update.complete-toast.title": {
+  "app.update.complete-toast.title": {
     "message": "เวอร์ชั่น {version} ถูกติดตั้งแล้ว"
   },
-    "app.world.server-modal.placeholder-address": {
+  "app.world.server-modal.placeholder-address": {
     "message": "example.modrinth.gg"
   },
-    "app.world.server-modal.select-an-option": {
+  "app.world.server-modal.select-an-option": {
     "message": "เลือกตัวเลือก"
   },
-    "app.world.world-item.incompatible-version": {
+  "app.world.world-item.incompatible-version": {
     "message": "ไม่สามารถเข้ากับเวอร์ชัน {version} ได้"
   },
-    "app.world.world-item.not-played-yet": {
+  "app.world.world-item.not-played-yet": {
     "message": "ยังไม่เคยเล่น"
   },
-    "app.world.world-item.offline": {
+  "app.world.world-item.offline": {
     "message": "ออฟไลน์"
   },
-    "app.world.world-item.players-online": {
+  "app.world.world-item.players-online": {
     "message": "{count} ออนไลน์"
   },
-    "friends.action.add-friend": {
+  "friends.action.add-friend": {
     "message": "เพิ่มเพื่อน"
   },
-    "friends.action.view-friend-requests": {
+  "friends.action.view-friend-requests": {
     "message": "คำขอเป็นเพื่อน {count} {count, plural, other {คน}}"
   },
-    "friends.add-friend.submit": {
+  "friends.add-friend.submit": {
     "message": "ส่งคำขอเป็นเพื่อน"
   },
-    "friends.add-friend.title": {
+  "friends.add-friend.title": {
     "message": "กำลังเพิ่มเพื่อน"
   },
-    "friends.add-friend.username.description": {
+  "friends.add-friend.username.description": {
     "message": "มันอาจแตกต่างจากชื่อในเกม Minecraft ของพวกเขา!"
   },
-    "friends.add-friend.username.placeholder": {
+  "friends.add-friend.username.placeholder": {
     "message": "กรอกชื่อผู้ใช้ Modrinth..."
   },
-    "friends.add-friend.username.title": {
+  "friends.add-friend.username.title": {
     "message": "เพื่อนของคุณมีชื่อผู้ใช้ Modrinth ว่าอะไร?"
   },
-    "friends.add-friends-to-share": {
+  "friends.add-friends-to-share": {
     "message": "<link>เพิ่มเพื่อน</link> เพื่อเห็นว่าพวกเขากำลังเล่นอะไรอยู่!"
   },
-    "friends.friend.cancel-request": {
+  "friends.friend.cancel-request": {
     "message": "ยกเลิกคำขอ"
   },
-    "friends.friend.remove-friend": {
+  "friends.friend.remove-friend": {
     "message": "ลบเพื่อน"
   },
-    "friends.friend.request-sent": {
+  "friends.friend.request-sent": {
     "message": "ส่งคำขอเป็นเพื่อนแล้ว"
   },
-    "friends.friend.view-profile": {
+  "friends.friend.view-profile": {
     "message": "ดูโปรไฟล์"
   },
-    "friends.heading": {
+  "friends.heading": {
     "message": "เพื่อน"
   },
-    "friends.heading.active": {
+  "friends.heading.active": {
     "message": "ออนไลน์"
   },
-    "friends.heading.offline": {
+  "friends.heading.offline": {
     "message": "ออฟไลน์"
   },
-    "friends.heading.online": {
+  "friends.heading.online": {
     "message": "ออนไลน์"
   },
-    "friends.heading.pending": {
+  "friends.heading.pending": {
     "message": "กําลังดำเนินการ"
   },
-    "friends.no-friends-match": {
+  "friends.no-friends-match": {
     "message": "ไม่มีรายชื่อเพื่อนที่ตรงกับ \"{query}\""
   },
-    "friends.search-friends-placeholder": {
+  "friends.search-friends-placeholder": {
     "message": "ค้นหาเพื่อน"
   },
-    "friends.section.heading": {
+  "friends.section.heading": {
     "message": "{title} - {count}"
   },
-    "friends.sign-in-to-add-friends": {
+  "friends.sign-in-to-add-friends": {
     "message": "<link>ล็อกอินเข้าบัญชี Modrinth</link> เพื่อเพิ่มเพื่อนและเห็นว่าพวกเขากำลังเล่นอะไรอยู่!"
   },
-    "instance.add-server.add-and-play": {
+  "instance.add-server.add-and-play": {
     "message": "เพิ่มและเล่นทันที"
   },
-    "instance.add-server.add-server": {
+  "instance.add-server.add-server": {
     "message": "เพิ่มเซิร์ฟเวอร์"
   },
-    "instance.add-server.resource-pack.disabled": {
+  "instance.add-server.resource-pack.disabled": {
     "message": "ปิดการใช้งาน"
   },
-    "instance.add-server.resource-pack.enabled": {
+  "instance.add-server.resource-pack.enabled": {
     "message": "เปิดการใช้งาน"
   },
-    "instance.add-server.resource-pack.prompt": {
+  "instance.add-server.resource-pack.prompt": {
     "message": "แสดงตัวเลือก"
   },
-    "instance.add-server.title": {
+  "instance.add-server.title": {
     "message": "เพิ่มเซิร์ฟเวอร์"
   },
-    "instance.edit-server.title": {
+  "instance.edit-server.title": {
     "message": "แก้ไขเซิร์ฟเวอร์"
   },
-    "instance.files.adding-files": {
+  "instance.files.adding-files": {
     "message": "กำลังเพิ่มไฟล์ ({completed}/{total})"
   },
-    "instance.files.save-as": {
+  "instance.files.save-as": {
     "message": "บันทึกเป็น..."
   },
-    "instance.server-modal.address": {
+  "instance.server-modal.address": {
     "message": "ที่อยู่เซิร์ฟเวอร์"
   },
-    "instance.server-modal.name": {
+  "instance.server-modal.name": {
     "message": "ชื่อ"
   },
-    "instance.server-modal.placeholder-name": {
+  "instance.server-modal.placeholder-name": {
     "message": "ชื่อเซิร์ฟเวอร์"
   },
-    "instance.server-modal.resource-pack": {
+  "instance.server-modal.resource-pack": {
     "message": "รีซอร์ซแพ็ก"
   },
-    "instance.settings.tabs.general": {
+  "instance.settings.tabs.general": {
     "message": "ทั่วไป"
   },
-    "instance.settings.tabs.general.delete": {
+  "instance.settings.tabs.general.delete": {
     "message": "ลบโปรแกรม"
   },
-    "instance.settings.tabs.general.delete.button": {
+  "instance.settings.tabs.general.delete.button": {
     "message": "ลบโปรแกรม"
   },
-    "instance.settings.tabs.general.delete.description": {
+  "instance.settings.tabs.general.delete.description": {
     "message": "การกระทำดังกล่าวจะลบโปรแกรมออกจากอุปกรณ์ของคุณอย่างถาวร รวมถึงโลก การตั้งค่า และเนื้อหาทั้งหมดที่ติดตั้งไว้ โปรดระมัดระวัง เนื่องจากเมื่อถูกลบแล้วจะไม่สามารถกู้คืนได้อีก"
   },
-    "instance.settings.tabs.general.deleting.button": {
+  "instance.settings.tabs.general.deleting.button": {
     "message": "กำลังลบ..."
   },
-    "instance.settings.tabs.general.duplicate-button": {
+  "instance.settings.tabs.general.duplicate-button": {
     "message": "ทำซ้ำ"
   },
-    "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
+  "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
     "message": "ไม่สามารถทำซ้ำได้ขณะติดตั้ง"
   },
-    "instance.settings.tabs.general.duplicate-instance": {
+  "instance.settings.tabs.general.duplicate-instance": {
     "message": "สร้างสำเนาโปรแกรม"
   },
-    "instance.settings.tabs.general.duplicate-instance.description": {
+  "instance.settings.tabs.general.duplicate-instance.description": {
     "message": "สร้างสำเนาของโปรแกรมนี้ รวมถึงโลก การตั้งค่า ม็อด และอื่น ๆ"
   },
-    "instance.settings.tabs.general.edit-icon": {
+  "instance.settings.tabs.general.edit-icon": {
     "message": "แก้ไขสัญลักษณ์"
   },
-    "instance.settings.tabs.general.edit-icon.remove": {
+  "instance.settings.tabs.general.edit-icon.remove": {
     "message": "ลบสัญลักษณ์"
   },
-    "instance.settings.tabs.general.edit-icon.replace": {
+  "instance.settings.tabs.general.edit-icon.replace": {
     "message": "แทนที่สัญลักษณ์"
   },
-    "instance.settings.tabs.general.edit-icon.select": {
+  "instance.settings.tabs.general.edit-icon.select": {
     "message": "เลือกรูปสัญลักษณ์"
   },
-    "instance.settings.tabs.general.name": {
+  "instance.settings.tabs.general.name": {
     "message": "ชื่อ"
   },
-    "instance.settings.tabs.general.web-map": {
+  "instance.settings.tabs.general.web-map": {
     "message": "Web map"
   },
-    "instance.settings.tabs.general.web-map.default-note": {
+  "instance.settings.tabs.general.web-map.default-note": {
     "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
   },
-    "instance.settings.tabs.general.web-map.description": {
+  "instance.settings.tabs.general.web-map.description": {
     "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
   },
-    "instance.settings.tabs.general.web-map.hidden-note": {
+  "instance.settings.tabs.general.web-map.hidden-note": {
     "message": "The map is hidden for this instance, and its page is disabled."
   },
-    "instance.settings.tabs.general.web-map.hide": {
+  "instance.settings.tabs.general.web-map.hide": {
     "message": "Hide map"
   },
-    "instance.settings.tabs.general.web-map.input-label": {
+  "instance.settings.tabs.general.web-map.input-label": {
     "message": "Map address"
   },
-    "instance.settings.tabs.general.web-map.invalid": {
+  "instance.settings.tabs.general.web-map.invalid": {
     "message": "Enter a full address starting with http:// or https://."
   },
-    "instance.settings.tabs.general.web-map.placeholder": {
+  "instance.settings.tabs.general.web-map.placeholder": {
     "message": "https://map.example.com/"
   },
-    "instance.settings.tabs.general.web-map.save": {
+  "instance.settings.tabs.general.web-map.save": {
     "message": "Save"
   },
-    "instance.settings.tabs.hooks": {
+  "instance.settings.tabs.hooks": {
     "message": "Launch Hook"
   },
-    "instance.settings.tabs.hooks.custom-hooks": {
+  "instance.settings.tabs.hooks.custom-hooks": {
     "message": "กำหนด Launch Hook เอง"
   },
-    "instance.settings.tabs.hooks.description": {
+  "instance.settings.tabs.hooks.description": {
     "message": "Launch Hook จะช่วยให้ผู้เล่นที่ชำนาญสามารถใช้คำสั่งต่อระบบบางอย่างได้ ทั้งก่อนและหลังเกมถูกเปิด"
   },
-    "instance.settings.tabs.hooks.post-exit": {
+  "instance.settings.tabs.hooks.post-exit": {
     "message": "Post-exit"
   },
-    "instance.settings.tabs.hooks.post-exit.description": {
+  "instance.settings.tabs.hooks.post-exit.description": {
     "message": "จะรันหลังจากที่ตัวเกมถูกปิด"
   },
-    "instance.settings.tabs.hooks.post-exit.enter": {
+  "instance.settings.tabs.hooks.post-exit.enter": {
     "message": "ป้อนคำสั่ง..."
   },
-    "instance.settings.tabs.hooks.pre-launch": {
+  "instance.settings.tabs.hooks.pre-launch": {
     "message": "Pre-launch"
   },
-    "instance.settings.tabs.hooks.pre-launch.description": {
+  "instance.settings.tabs.hooks.pre-launch.description": {
     "message": "จะรันก่อนที่โปรแกรมจะทำงาน"
   },
-    "instance.settings.tabs.hooks.pre-launch.enter": {
+  "instance.settings.tabs.hooks.pre-launch.enter": {
     "message": "ป้อนคำสั่ง..."
   },
-    "instance.settings.tabs.hooks.title": {
+  "instance.settings.tabs.hooks.title": {
     "message": "Game Launch Hook"
   },
-    "instance.settings.tabs.hooks.wrapper": {
+  "instance.settings.tabs.hooks.wrapper": {
     "message": "Wrapper"
   },
-    "instance.settings.tabs.hooks.wrapper.description": {
+  "instance.settings.tabs.hooks.wrapper.description": {
     "message": "คำสั่ง Wrapper สำหรับใช้ในการรันเปิด Minecraft"
   },
-    "instance.settings.tabs.hooks.wrapper.enter": {
+  "instance.settings.tabs.hooks.wrapper.enter": {
     "message": "ป้อนคำสั่ง Wrapper..."
   },
-    "instance.settings.tabs.installation": {
+  "instance.settings.tabs.installation": {
     "message": "การติดตั้ง"
   },
-    "instance.settings.tabs.installation.loader-version": {
+  "instance.settings.tabs.installation.loader-version": {
     "message": "เวอร์ชัน {loader}"
   },
-    "instance.settings.tabs.java": {
+  "instance.settings.tabs.java": {
     "message": "Java และ หน่วยความจำ"
   },
-    "instance.settings.tabs.java.environment-variables": {
+  "instance.settings.tabs.java.environment-variables": {
     "message": "Environment Variables"
   },
-    "instance.settings.tabs.java.java-arguments": {
+  "instance.settings.tabs.java.java-arguments": {
     "message": "อาร์กิวเมนต์ Java"
   },
-    "instance.settings.tabs.java.java-installation": {
+  "instance.settings.tabs.java.java-installation": {
     "message": "การติดตั้ง Java"
   },
-    "instance.settings.tabs.java.java-memory": {
+  "instance.settings.tabs.java.java-memory": {
     "message": "หน่วยความจำที่จัดสรร"
   },
-    "instance.settings.tabs.window": {
+  "instance.settings.tabs.window": {
     "message": "หน้าต่าง"
   },
-    "instance.settings.tabs.window.custom-window-settings": {
+  "instance.settings.tabs.window.custom-window-settings": {
     "message": "การตั้งค่าการปรับแต่งหน้าต่าง"
   },
-    "instance.settings.tabs.window.fullscreen": {
+  "instance.settings.tabs.window.fullscreen": {
     "message": "เต็มหน้าจอ"
   },
-    "instance.settings.tabs.window.fullscreen.description": {
+  "instance.settings.tabs.window.fullscreen.description": {
     "message": "ทำให้เกมเปิดในโหมดเต็มหน้าจอเมื่อเริ่มเกม (โดยใช้ไฟล์ options.txt)"
   },
-    "instance.settings.tabs.window.height": {
+  "instance.settings.tabs.window.height": {
     "message": "ความสูง"
   },
-    "instance.settings.tabs.window.height.description": {
+  "instance.settings.tabs.window.height.description": {
     "message": "ความสูงของหน้าต่างเมื่อรันเกม"
   },
-    "instance.settings.tabs.window.height.enter": {
+  "instance.settings.tabs.window.height.enter": {
     "message": "ป้อนความสูง..."
   },
-    "instance.settings.tabs.window.width": {
+  "instance.settings.tabs.window.width": {
     "message": "ความกว้าง"
   },
-    "instance.settings.tabs.window.width.description": {
+  "instance.settings.tabs.window.width.description": {
     "message": "ความกว้างของหน้าต่างเมื่อรันเกม"
   },
-    "instance.settings.tabs.window.width.enter": {
+  "instance.settings.tabs.window.width.enter": {
     "message": "ป้อนความกว้าง..."
   },
-    "instance.worlds.a_minecraft_server": {
+  "instance.worlds.a_minecraft_server": {
     "message": "เซิร์ฟเวอร์ Minecraft"
   },
-    "instance.worlds.cant_connect": {
+  "instance.worlds.cant_connect": {
     "message": "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้"
   },
-    "instance.worlds.copy_address": {
+  "instance.worlds.copy_address": {
     "message": "คัดลอกที่อยู่"
   },
-    "instance.worlds.game_already_open": {
+  "instance.worlds.game_already_open": {
     "message": "โปรแกรมถูกเปิดอยู่แล้ว"
   },
-    "instance.worlds.hardcore": {
+  "instance.worlds.hardcore": {
     "message": "โหมดฮาร์ดคอร์"
   },
-    "instance.worlds.incompatible_server": {
+  "instance.worlds.incompatible_server": {
     "message": "เซิร์ฟเวอร์ไม่รองรับ"
   },
-    "instance.worlds.linked_server": {
+  "instance.worlds.linked_server": {
     "message": "จัดการโดยโปรเจกต์เซิร์ฟเวอร์"
   },
-    "instance.worlds.no_contact": {
+  "instance.worlds.no_contact": {
     "message": "ไม่สามารถติดต่อเซิร์ฟเวอร์ได้"
   },
-    "instance.worlds.no_server_quick_play": {
+  "instance.worlds.no_server_quick_play": {
     "message": "คุณสามารถเข้าสู่เซิร์ฟเวอร์ได้โดยตรงบน Minecraft Alpha 1.0.5 ขึ้นไปเท่านั้น"
   },
-    "instance.worlds.no_singleplayer_quick_play": {
+  "instance.worlds.no_singleplayer_quick_play": {
     "message": "คุณสามารถเข้าสู่โลกผู้เล่นคนเดียวได้โดยตรงบน Minecraft 1.20 ขึ้นไปเท่านั้น"
   },
-    "instance.worlds.play_instance": {
+  "instance.worlds.play_instance": {
     "message": "เริ่มรันโปรแกรม"
   },
-    "instance.worlds.view_instance": {
+  "instance.worlds.view_instance": {
     "message": "ดูโปรแกรม"
   },
-    "instance.worlds.world_in_use": {
+  "instance.worlds.world_in_use": {
     "message": "โลกนี้กำลังถูกใช้งานอยู่"
   },
-    "minecraft-account.label": {
+  "minecraft-account.label": {
     "message": "บัญชี Minecraft"
   },
-    "minecraft-account.not-signed-in": {
+  "minecraft-account.not-signed-in": {
     "message": "ยังไม่ได้ลงชื่อเข้าใช้"
   },
-    "minecraft-account.remove-account": {
+  "minecraft-account.remove-account": {
     "message": "ลบบัญชี"
   },
-    "minecraft-account.select-account": {
+  "minecraft-account.select-account": {
     "message": "เลือกบัญชี"
   },
-    "minecraft-account.sign-in": {
+  "minecraft-account.sign-in": {
     "message": "ลงชื่อเข้าใช้ Minecraft"
   },
-    "search.filter.locked.instance": {
+  "search.filter.locked.instance": {
     "message": "โปรแกรมเป็นผู้กำหนด"
   },
-    "search.filter.locked.instance-game-version.title": {
+  "search.filter.locked.instance-game-version.title": {
     "message": "เวอร์ชันเกมถูกกำหนดไว้โดยโปรแกรมแล้ว"
   },
-    "search.filter.locked.instance-loader.title": {
+  "search.filter.locked.instance-loader.title": {
     "message": "ตัวรันถูกกำหนดไว้โดยโปรแกรมแล้ว"
   },
-    "search.filter.locked.instance.sync": {
+  "search.filter.locked.instance.sync": {
     "message": "เชื่อมต่อกับโปรแกรม"
   },
-    "search.filter.locked.server": {
+  "search.filter.locked.server": {
     "message": "เซิร์ฟเวอร์เป็นผู้กำหนด"
   },
-    "search.filter.locked.server-environment.title": {
+  "search.filter.locked.server-environment.title": {
     "message": "มีเพียงม็อดสำหรับฝั่งเครื่องของผู้เล่นเท่านั้นที่สามารถเพิ่มลงในโปรแกรมเซิร์ฟเวอร์ดังกล่าวได้"
   },
-    "search.filter.locked.server-game-version.title": {
+  "search.filter.locked.server-game-version.title": {
     "message": "เวอร์ชันเกมถูกกำหนดโดยเซิร์ฟเวอร์แล้ว"
   },
-    "search.filter.locked.server-loader.title": {
+  "search.filter.locked.server-loader.title": {
     "message": "ตัวรันถูกกำหนดโดยเซิร์ฟเวอร์แล้ว"
   },
-    "unknown-pack-warning-modal.body": {
+  "unknown-pack-warning-modal.body": {
     "message": "ไฟล์จะได้รับการตรวจสอบโดยไม่คำนึงถึงประเภทของไฟล์ (รวมทั้ง .mrpack) เมื่อไฟล์ถูกอัปโหลดขึ้น Modrinth"
   },
-    "unknown-pack-warning-modal.dont-show-again": {
+  "unknown-pack-warning-modal.dont-show-again": {
     "message": "อย่าแสดงคำเตือนนี้อีก"
   },
-    "unknown-pack-warning-modal.header": {
+  "unknown-pack-warning-modal.header": {
     "message": "ยืนยันการติดตั้ง"
   },
-    "unknown-pack-warning-modal.install-anyway": {
+  "unknown-pack-warning-modal.install-anyway": {
     "message": "ดำเนินการติดตั้งต่อไป"
   },
-    "unknown-pack-warning-modal.malware-statement": {
+  "unknown-pack-warning-modal.malware-statement": {
     "message": "มัลแวร์มักแฝงตัวมากับไฟล์แพ็กม็อดผ่านการแชร์ผ่านแพลตฟอร์มที่ไม่ใช่แพลตฟอร์มเฉพาะ เช่น ดิสคอร์ด"
   },
-    "unknown-pack-warning-modal.warning.body": {
+  "unknown-pack-warning-modal.warning.body": {
     "message": "เราไม่สามารถค้นหาไฟล์ดังกล่าวได้บน Modrinth พวกเราขอแนะนำอย่างมากกว่าควรติดตั้งไฟล์จากแหล่งที่น่าเชื่อถือเท่านั้น"
   },
-    "unknown-pack-warning-modal.warning.title": {
+  "unknown-pack-warning-modal.warning.title": {
     "message": "แจ้งเตือนไฟล์ไม่รู้จัก"
   }
 }

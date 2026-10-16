@@ -37,18 +37,166 @@ export const SERVER_VERTICAL_PROJECT_TYPES: readonly string[] = ['modpack', 'ser
 const SERVER_BROWSE_QUERY_KEYS = ['sid', 'wid', 'from'] as const
 
 /**
- * Modrinth v3 `/search` `new_filters` clause that keeps only projects whose
- * `client_side` is `required` or `optional`, i.e. every mod a player can
- * actually run on the client.
+ * Modrinth v3 `/search` `new_filters` clause that keeps only projects the
+ * launcher may drop into `clientmods/` **on their own**.
  *
- * Verified against the live v3 endpoint: `client_side` is a real facet field
- * with the `required` / `optional` / `unsupported` / `unknown` values, and
- * `client_side IN [required, optional]` returns exactly the same total as the
- * equivalent v2 `client_side:required OR client_side:optional` facet pair.
- * (The v3 `environment` field used by the launcher's own server filters is
- * narrower — it drops `client_and_server` — so it is not used here.)
+ * `client_side` alone does not answer that question. It only says the client
+ * needs the mod; it says nothing about whether the *server* does. A mod with
+ * `server_side = required` (blocks, machines, world generation: Create,
+ * Terralith, …) passes a client-side-only filter, and installing it into
+ * `clientmods/` while the server pack lacks it is exactly the breakage this
+ * lock exists to prevent. Measured against the live v3 endpoint with
+ * `project_types = `mod``:
+ *
+ *   - `client_side IN [required, optional]`                    = 63,139 mods
+ *   - of those, `server_side = required`                       = 57,198  ← the leak
+ *   - `server_side = unsupported`                              = 16,125
+ *   - `client_side = required AND server_side = unsupported`   = 16,125
+ *     (identical, so the client-side half is currently implied — it is kept
+ *     because it states the intent and guards against a future `optional`
+ *     client side with no server side)
+ *
+ * `server_side = unsupported` is Modrinth's guarantee that a project has no
+ * server component at all, so a client-only install cannot be missing anything
+ * the server was supposed to provide. `server_side = optional` (Fabric API,
+ * Lithium, FerriteCore, Cloth Config, Xaero's Minimap …) is deliberately **not**
+ * accepted: those projects are supported on a server, and this list promises
+ * "safe to drop into `clientmods/`", so the strict reading wins. That is not
+ * unusably narrow — the 16,125 mods are 21% of all mods and include Sodium,
+ * Iris, Mod Menu, Entity Culling, ImmediatelyFast and Sodium Extra, and a query
+ * for a server-required family ("create") still returns 353 client-only
+ * companions. A false negative merely hides a mod; a false positive breaks the
+ * player's game.
+ *
+ * Do not "simplify" this back to a client-side-only test; the numbers above are
+ * why both sides are constrained.
  */
-export const CLIENT_SIDE_FACET = 'client_side IN [`required`, `optional`]'
+export const CLIENT_MOD_SAFE_FACET = 'client_side = `required` AND server_side = `unsupported`'
+
+/**
+ * The derived `environment` value that means the same thing as
+ * [`CLIENT_MOD_SAFE_FACET`], for the one endpoint that does not expose the
+ * `client_side` / `server_side` primitives: Labrinth v3 `/projects`, which is
+ * where Browse's injected Chinese-title candidates come from (checked live —
+ * v3 returns `environment` only, the v2 batch returns all three).
+ *
+ * Measured on `project_types = `mod``: `server_side = unsupported` = 16,125 and
+ * `environment = client_only` = 16,126, so every `server_side = unsupported`
+ * mod is `environment = client_only` (0 exceptions) and the extra one is a
+ * project whose own metadata contradicts itself ("Emberveil Additions",
+ * `client_side = optional`, `server_side = required`,
+ * `environment = client_only`). `client_only` never co-occurs with an unsafe
+ * composite (0 hits for each of `client_and_server`,
+ * `client_only_server_optional`, `client_or_server`,
+ * `client_or_server_prefers_both` and `singleplayer_only`).
+ *
+ * `singleplayer_only` must NOT be allowed: 14 of its 15 sampled mods report
+ * `server_side = required`, and the old "client-usable" set wrongly accepted it
+ * along with `client_and_server` (42,252 mods) and the two `client_or_server`
+ * values.
+ */
+export const CLIENT_MOD_SAFE_ENVIRONMENT = 'client_only'
+
+/** Sides of a project as Labrinth reports them. */
+export interface ClientModSides {
+    client_side?: string | string[] | null
+    server_side?: string | string[] | null
+}
+
+function matchesSide(value: string | string[] | null | undefined, expected: string): boolean {
+    if (Array.isArray(value)) return value.includes(expected)
+    return value === expected
+}
+
+/**
+ * The lock as a predicate, for every surface that has the primitives: the v2
+ * project endpoints, the instance's installed content, and the search hits.
+ *
+ * Missing or unrecognised metadata is **not** safe. The promise of this list is
+ * that a client-only install cannot need the server, so anything unproven stays
+ * out — a hidden mod is recoverable, a broken game is not.
+ */
+export function isClientModSafeSides(sides: ClientModSides): boolean {
+    return (
+        matchesSide(sides.client_side, 'required') && matchesSide(sides.server_side, 'unsupported')
+    )
+}
+
+/**
+ * The lock as a predicate for the derived `environment` field (v3 `/projects`).
+ *
+ * Only a project whose whole `environment` is `client_only` passes. A list that
+ * carries anything else — `unknown`, `client_and_server`, the
+ * `client_or_server*` values, `singleplayer_only` — is rejected, which keeps
+ * this conservative in the same direction as the facet even though it cannot
+ * see `server_side` at all.
+ */
+export function isClientModSafeEnvironment(
+    environment: string | string[] | null | undefined,
+): boolean {
+    const values = Array.isArray(environment) ? environment : environment ? [environment] : []
+    return values.length === 1 && values[0] === CLIENT_MOD_SAFE_ENVIRONMENT
+}
+
+/**
+ * Why a project page must withhold its install affordances, or `null` when an
+ * install may be offered.
+ *
+ * - `server-required` — the project says it has to run on the server, so a
+ *   client-only install cannot work.
+ * - `unverified` — the project is not provably client-only: its side data is
+ *   `optional` / `unknown` / absent, or the source publishes none at all.
+ */
+export type ClientModInstallBlockReason = 'server-required' | 'unverified'
+
+/**
+ * Whether a Browse visit is the **locked** content browser's own list.
+ *
+ * A project page opened from it needs no second check: that list is already
+ * filtered by [`CLIENT_MOD_SAFE_FACET`], and re-checking it would strip the
+ * install button from a CurseForge hit — a source that publishes no side data
+ * at all — that the player deliberately picked inside the locked flow.
+ */
+export function isLockedClientModBrowseVisit(browseReturnPath: unknown): boolean {
+    return (
+        typeof browseReturnPath === 'string' &&
+        browseReturnPath.startsWith(BROWSE_LOCKED_PROJECT_PATH)
+    )
+}
+
+/**
+ * The lock applied to a project page, from the same rules as the search facet.
+ *
+ * The promise is 「只有客户端模组才能出现安装按钮」 — only client mods may show an
+ * install button — and it has to hold on a page reached from outside the locked
+ * Browse (a direct URL, a deep link, Favorites, a search engine), where nothing
+ * has filtered the project yet.
+ *
+ * Non-mod content is untouched: resource packs, shaders and data packs resolve
+ * their own folders and have no server-side counterpart to be missing. The
+ * server vertical is untouched too — it is the opposite direction, where a
+ * server-side install is exactly what is wanted.
+ *
+ * When a source publishes no side data (CurseForge, MCArchive, Planet
+ * Minecraft) the answer is `unverified`, never "safe": unknown is not proof,
+ * and guessing wrong costs a game that no longer starts.
+ */
+export function clientModInstallBlockReason(input: {
+    /** Content type token; only mods are constrained. */
+    contentType: string | null | undefined
+    /** Result of [`isLockedClientModBrowseVisit`] for this page. */
+    fromLockedBrowse: boolean
+    /** Side metadata, when the source publishes it. */
+    sides?: ClientModSides | null
+    /** True inside the server-content vertical. */
+    serverVertical?: boolean
+}): ClientModInstallBlockReason | null {
+    if (input.contentType !== BROWSE_LOCKED_PROJECT_TYPE) return null
+    if (input.serverVertical) return null
+    if (input.fromLockedBrowse) return null
+    if (isClientModSafeSides(input.sides ?? {})) return null
+    return matchesSide(input.sides?.server_side, 'required') ? 'server-required' : 'unverified'
+}
 
 export interface BrowseRouteContext {
     sid?: unknown
@@ -86,19 +234,19 @@ export function resolveBrowseProjectType(
 }
 
 /**
- * Appends the client-side facet to a Modrinth search request string.
+ * Appends the client-mod safety facet to a Modrinth search request string.
  *
  * The existing filters are parenthesised before the `AND` so an expression
  * that already contains an `OR` group keeps its meaning.
  */
-export function withClientSideFacet(requestParams: string): string {
+export function withClientModSafeFacet(requestParams: string): string {
     const params = new URLSearchParams(
         requestParams.startsWith('?') ? requestParams.slice(1) : requestParams,
     )
     const existing = params.get('new_filters')?.trim() ?? ''
     params.set(
         'new_filters',
-        existing ? `(${existing}) AND ${CLIENT_SIDE_FACET}` : CLIENT_SIDE_FACET,
+        existing ? `(${existing}) AND ${CLIENT_MOD_SAFE_FACET}` : CLIENT_MOD_SAFE_FACET,
     )
     const query = params.toString()
     return query ? `?${query}` : ''

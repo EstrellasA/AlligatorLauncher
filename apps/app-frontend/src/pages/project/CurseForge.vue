@@ -25,6 +25,7 @@
                 :translation-style="translationStyle"
             >
                 <template #actions>
+                    <InstallBlockedNotice v-if="installBlockReason" :reason="installBlockReason" />
                     <Button
                         type="quiet"
                         size="xl"
@@ -256,8 +257,13 @@ import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import BrowseInstanceSelector from '@/components/browse/BrowseInstanceSelector.vue'
+import InstallBlockedNotice from '@/components/ui/InstallBlockedNotice.vue'
 import TranslatedProjectDescription from '@/components/ui/TranslatedProjectDescription.vue'
 import { useContentFavorites } from '@/composables/useContentFavorites'
+import {
+    clientModInstallBlockReason,
+    isLockedClientModBrowseVisit,
+} from '@/helpers/client-mod-browse'
 import { isFavoriteContentType } from '@/helpers/content-favorites'
 import { resolveMcmodUrl } from '@/helpers/content-search'
 import {
@@ -488,8 +494,21 @@ const cartEligible = computed(
  * the project is already part of that instance, so the page is a read-only
  * information view there. Adding a client mod deliberately goes through the
  * client-mod Browse flow instead.
+ *
+ * Also `false` for a mod that is not client-only when the page was reached from
+ * outside the locked Browse (see `clientModInstallBlockReason`). CurseForge
+ * publishes no client/server requirement at all, so its mods are `unverified`
+ * rather than safe — except inside the locked Browse, which the player entered
+ * deliberately and which no source can filter any further.
  */
-const canInstall = computed(() => !fromInstanceContent.value)
+const installBlockReason = computed(() =>
+    clientModInstallBlockReason({
+        contentType: projectType.value,
+        fromLockedBrowse: isLockedClientModBrowseVisit(route.query.b),
+        sides: null,
+    }),
+)
+const canInstall = computed(() => !fromInstanceContent.value && !installBlockReason.value)
 const cartProjectKey = computed(() =>
     project.value ? makeContentSelectionKey('curseforge', project.value.id.toString()) : '',
 )

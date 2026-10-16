@@ -3,16 +3,21 @@ import test from 'node:test'
 
 import {
     BROWSE_LOCKED_PROJECT_PATH,
+    CLIENT_MOD_SAFE_ENVIRONMENT,
+    CLIENT_MOD_SAFE_FACET,
     CLIENT_MOD_TARGET_PROJECT_TYPE,
-    CLIENT_SIDE_FACET,
+    clientModInstallBlockReason,
     clientModInstallTarget,
     installedProjectKey,
     installedSnapshotItems,
+    isClientModSafeEnvironment,
+    isClientModSafeSides,
     isInstalledForContentType,
+    isLockedClientModBrowseVisit,
     isServerBrowseVisit,
     projectsProvidedByServerPack,
     resolveBrowseProjectType,
-    withClientSideFacet,
+    withClientModSafeFacet,
 } from './client-mod-browse.ts'
 
 function newFiltersOf(requestParams: string) {
@@ -38,34 +43,91 @@ test('server and multiplayer verticals keep their own project type', () => {
     assert.equal(isServerBrowseVisit('mod', { wid: 'world-id' }), true)
 })
 
-test('the client-side facet is added to the Modrinth request', () => {
-    assert.equal(newFiltersOf(withClientSideFacet('?limit=20')), CLIENT_SIDE_FACET)
+test('the lock constrains both sides, not just the client', () => {
+    // The facet must not be reducible to a client-side test: a mod the server
+    // requires passes `client_side IN [required, optional]` and would break the
+    // game once it lands in `clientmods/`.
+    assert.match(CLIENT_MOD_SAFE_FACET, /server_side = `unsupported`/)
+    assert.match(CLIENT_MOD_SAFE_FACET, /client_side = `required`/)
+    assert.doesNotMatch(CLIENT_MOD_SAFE_FACET, /optional/)
+})
+
+test('the safety facet is added to the Modrinth request', () => {
+    assert.equal(newFiltersOf(withClientModSafeFacet('?limit=20')), CLIENT_MOD_SAFE_FACET)
     assert.equal(
         newFiltersOf(
-            withClientSideFacet('?limit=20&index=relevance&new_filters=project_types = `mod`'),
+            withClientModSafeFacet('?limit=20&index=relevance&new_filters=project_types = `mod`'),
         ),
-        '(project_types = `mod`) AND client_side IN [`required`, `optional`]',
+        '(project_types = `mod`) AND ' + CLIENT_MOD_SAFE_FACET,
     )
 })
 
-test('an existing OR group stays grouped when the client-side facet is appended', () => {
+test('an existing OR group stays grouped when the safety facet is appended', () => {
     assert.equal(
         newFiltersOf(
-            withClientSideFacet(
+            withClientModSafeFacet(
                 '?new_filters=project_types = `mod` AND (categories = `a` OR categories = `b`)',
             ),
         ),
-        '(project_types = `mod` AND (categories = `a` OR categories = `b`)) AND client_side IN [`required`, `optional`]',
+        '(project_types = `mod` AND (categories = `a` OR categories = `b`)) AND ' +
+            CLIENT_MOD_SAFE_FACET,
     )
 })
 
 test('the request keeps its other parameters', () => {
     const params = new URLSearchParams(
-        withClientSideFacet('?limit=50&index=downloads&query=sodium').replace(/^\?/, ''),
+        withClientModSafeFacet('?limit=50&index=downloads&query=sodium').replace(/^\?/, ''),
     )
     assert.equal(params.get('limit'), '50')
     assert.equal(params.get('index'), 'downloads')
     assert.equal(params.get('query'), 'sodium')
+})
+
+test('server-required mods are not safe to install client-only', () => {
+    // Create: blocks and machines the server has to have.
+    assert.equal(isClientModSafeSides({ client_side: 'required', server_side: 'required' }), false)
+    // `optional` is supported on a server, so it is not the guaranteed-safe case.
+    assert.equal(isClientModSafeSides({ client_side: 'required', server_side: 'optional' }), false)
+    // Sodium / Iris / Mod Menu.
+    assert.equal(
+        isClientModSafeSides({ client_side: 'required', server_side: 'unsupported' }),
+        true,
+    )
+    // A client side that is only `optional` is not something to install either.
+    assert.equal(
+        isClientModSafeSides({ client_side: 'optional', server_side: 'unsupported' }),
+        false,
+    )
+    // Missing or unknown metadata is not proof of safety.
+    assert.equal(isClientModSafeSides({}), false)
+    assert.equal(isClientModSafeSides({ client_side: 'required' }), false)
+    assert.equal(
+        isClientModSafeSides({ client_side: 'unknown', server_side: 'unsupported' }),
+        false,
+    )
+    // The list shape the search index returns.
+    assert.equal(
+        isClientModSafeSides({ client_side: ['required'], server_side: ['unsupported'] }),
+        true,
+    )
+})
+
+test('the v3 environment fallback only accepts a plain client_only', () => {
+    assert.equal(CLIENT_MOD_SAFE_ENVIRONMENT, 'client_only')
+    assert.equal(isClientModSafeEnvironment(['client_only']), true)
+    assert.equal(isClientModSafeEnvironment('client_only'), true)
+    // The values the old client-usable set wrongly accepted.
+    assert.equal(isClientModSafeEnvironment(['client_and_server']), false)
+    assert.equal(isClientModSafeEnvironment(['client_only_server_optional']), false)
+    assert.equal(isClientModSafeEnvironment(['client_or_server']), false)
+    assert.equal(isClientModSafeEnvironment(['client_or_server_prefers_both']), false)
+    // Measured: 14 of 15 `singleplayer_only` mods report server_side = required.
+    assert.equal(isClientModSafeEnvironment(['singleplayer_only']), false)
+    // Extra values make the project unverifiable, so it stays out.
+    assert.equal(isClientModSafeEnvironment(['client_only', 'unknown']), false)
+    assert.equal(isClientModSafeEnvironment(['client_only', 'client_and_server']), false)
+    assert.equal(isClientModSafeEnvironment([]), false)
+    assert.equal(isClientModSafeEnvironment(undefined), false)
 })
 
 test('only mod content is redirected into clientmods', () => {
@@ -134,4 +196,110 @@ test('only mods the pack ships in its own folder are reported', () => {
     assert.deepEqual(projectsProvidedByServerPack([], projects), [])
     // A copy in clientmods only is a genuine duplicate, not a pack clash.
     assert.deepEqual(projectsProvidedByServerPack(['pack-api'], []), [])
+})
+
+test('only the locked client-mod list counts as the locked Browse', () => {
+    assert.equal(isLockedClientModBrowseVisit('/browse/mod'), true)
+    assert.equal(isLockedClientModBrowseVisit('/browse/mod?i=instance-id'), true)
+    // Favorites is a Browse tab too, but it is not the filtered list.
+    assert.equal(isLockedClientModBrowseVisit('/browse/favorites?i=instance-id'), false)
+    assert.equal(isLockedClientModBrowseVisit('/browse/resourcepack'), false)
+    assert.equal(isLockedClientModBrowseVisit('/project/create'), false)
+    assert.equal(isLockedClientModBrowseVisit(undefined), false)
+    assert.equal(isLockedClientModBrowseVisit(null), false)
+    assert.equal(isLockedClientModBrowseVisit(['/browse/mod']), false)
+})
+
+test('a server-required mod exposes no install button on a project page', () => {
+    // Create, Terralith: the server has to run them.
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            sides: { client_side: 'required', server_side: 'required' },
+        }),
+        'server-required',
+    )
+    // Opened as a deep link or from Favorites, `optional` is still unproven.
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            sides: { client_side: 'required', server_side: 'optional' },
+        }),
+        'unverified',
+    )
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            sides: { client_side: 'unknown', server_side: 'unknown' },
+        }),
+        'unverified',
+    )
+    // A source that publishes nothing (CurseForge, MCArchive, Planet Minecraft).
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            sides: null,
+        }),
+        'unverified',
+    )
+    assert.equal(
+        clientModInstallBlockReason({ contentType: 'mod', fromLockedBrowse: false }),
+        'unverified',
+    )
+})
+
+test('the gate never blocks a client-safe mod, non-mods, the locked list or the server', () => {
+    const safeSides = { client_side: 'required', server_side: 'unsupported' }
+    // Sodium, Iris, Mod Menu: installable from anywhere.
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            sides: safeSides,
+        }),
+        null,
+    )
+    // Resource packs, shaders, data packs and modpacks have their own folders.
+    for (const contentType of ['resourcepack', 'shader', 'datapack', 'modpack']) {
+        assert.equal(
+            clientModInstallBlockReason({
+                contentType,
+                fromLockedBrowse: false,
+                sides: { client_side: 'required', server_side: 'required' },
+            }),
+            null,
+        )
+    }
+    // Inside the locked Browse the list is already filtered, so even a source
+    // with no side data keeps the install button the player just asked for.
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: true,
+            sides: { client_side: 'required', server_side: 'required' },
+        }),
+        null,
+    )
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: true,
+            sides: null,
+        }),
+        null,
+    )
+    // The server vertical installs server-side on purpose.
+    assert.equal(
+        clientModInstallBlockReason({
+            contentType: 'mod',
+            fromLockedBrowse: false,
+            serverVertical: true,
+            sides: { client_side: 'required', server_side: 'required' },
+        }),
+        null,
+    )
 })

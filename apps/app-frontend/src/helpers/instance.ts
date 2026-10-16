@@ -482,71 +482,20 @@ export async function get_content_items_by_paths(
     })
 }
 
-/** What a published generation did to one file. */
-export type AutomodpackChangeKind = 'added' | 'changed' | 'removed'
+// The AutoModpack payload contract (types, wire-shape pin, runtime guard) lives
+// in its own module with no imports, so `automodpack-payload.test.ts` can check
+// it under plain `node --test`. This file's module graph reaches `@/` aliases and
+// Tauri, which is why the contract never got exercised where it sat before.
+//
+// Imported for this module's own use, then re-exported so callers keep
+// importing the whole contract from `@/helpers/instance`.
+import {
+    type AutomodpackChangelog,
+    emptyAutomodpackChangelog,
+    isAutomodpackChangelog,
+} from './automodpack-payload'
 
-/** One file a generation touched. `path` is `/`-separated and instance-relative. */
-export interface AutomodpackChange {
-    path: string
-    kind: AutomodpackChangeKind
-    from_sha1?: string
-    to_sha1?: string
-    from_size: number
-    to_size: number
-}
-
-/**
- * Non-mod changes folded by top-level directory. A first publish can touch
- * hundreds of script or config files, so the page shows `count` with a bounded
- * sample rather than a flat list.
- */
-export interface AutomodpackDirectoryGroup {
-    directory: string
-    count: number
-    added: number
-    changed: number
-    removed: number
-    sample_paths: string[]
-    samples_truncated: boolean
-}
-
-/**
- * One published AutoModpack generation.
- *
- * `mod_paths` is the whole reason the update-notes page can render project
- * cards: each entry is a real instance-relative path such as
- * `mods/Jade-1.21.1-NeoForge-15.10.5.jar`, which is handed to
- * `get_content_items_by_paths` to recover the project, icon and author.
- */
-export interface AutomodpackGeneration {
-    seq: number
-    created_at: string
-    /** Operator-authored patch notes; empty means this generation has none. */
-    notes: string
-    content_token: string
-    restore_of?: number
-    changed_files: number
-    mod_paths: string[]
-    /** Every file the generation touched, with its kind. */
-    changes: AutomodpackChange[]
-    directories: AutomodpackDirectoryGroup[]
-}
-
-export type AutomodpackUnavailableReason =
-    | 'not_installed'
-    | 'no_selected_pack'
-    | 'history_missing'
-
-/** The server's published generation history, read from disk with no network. */
-export interface AutomodpackChangelog {
-    available: boolean
-    modpack_id?: string
-    unavailable_reason?: AutomodpackUnavailableReason
-    /** Newest first. */
-    generations: AutomodpackGeneration[]
-    /** Journal lines ignored because they could not be parsed (a torn tail). */
-    skipped_lines: number
-}
+export * from './automodpack-payload'
 
 /**
  * The server's published pack changes for an instance, read from the
@@ -555,13 +504,19 @@ export interface AutomodpackChangelog {
  * Never touches the network, so it works offline and without a running game.
  * `available: false` is an ordinary state, not an error: the pack may not have
  * synced here yet or the mirror may be gone.
+ *
+ * The response is shape-checked rather than trusted. A command whose payload
+ * changed underneath the page must degrade to "no history", never hand the page
+ * an object missing `generations`.
  */
 export async function get_automodpack_changelog(
     instanceId: string,
 ): Promise<AutomodpackChangelog> {
-    return await invoke<AutomodpackChangelog>('plugin:instance|instance_get_automodpack_changelog', {
+    const payload = await invoke<unknown>('plugin:instance|instance_get_automodpack_changelog', {
         instanceId,
     })
+    if (!isAutomodpackChangelog(payload)) return emptyAutomodpackChangelog()
+    return payload
 }
 
 export type ContentOwnershipKind = 'pack_managed' | 'user_added' | 'local_discovered'

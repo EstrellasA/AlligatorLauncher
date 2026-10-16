@@ -548,15 +548,16 @@ async function joinServer() {
 }
 
 /*
- * The middle of the card. The floor is one head (1.5rem) plus a little air, so an
- * empty server still reads as a laid-out row and the region cannot collapse. It
- * is also the region that gives way first: the card scrolls itself rather than
+ * The middle of the card. The floor is one head (2rem) plus a little air, so an
+ * empty server still reads as a laid-out row and the region cannot collapse; the
+ * extra height comes out of the empty space this area had below the status line.
+ * It is also the region that gives way first: the card scrolls itself rather than
  * growing the row.
  */
 .server-card__players {
     display: flex;
     flex: 1 1 auto;
-    min-height: 2rem;
+    min-height: 2.5rem;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -627,27 +628,33 @@ async function joinServer() {
 .player-row {
     display: flex;
     align-items: center;
-    /* Isometric heads have transparent corners, so they are spaced apart rather
-       than overlapped: a negative margin makes two cubes collide. */
-    gap: 0.25rem;
 }
 
 .player-chip {
     position: relative;
     display: block;
-    /* Deliberately small: five heads plus the `+N` chip have to read as one row. */
-    width: 1.5rem;
-    height: 1.5rem;
+    /* A front-face head reads at a glance; anything smaller turns into a smudge. */
+    width: 2rem;
+    height: 2rem;
+}
+
+/* A touch of overlap groups the row without hiding a face behind its neighbour. */
+.player-chip + .player-chip {
+    margin-left: -0.125rem;
 }
 
 .player-chip__head {
     display: block;
     width: 100%;
     height: 100%;
-    /* A rendered isometric head on a transparent background: no frame and no
-       backing plate, and `contain` so the fallback's taller canvas is not
-       cropped. The source is smooth, so it is never scaled as pixel art. */
-    object-fit: contain;
+    /* The source is the 8x8 face (hat layer composited) scaled up, so it is kept
+       as pixel art rather than smoothed, and framed like the Minecraft head icon
+       it is. `cover` fills that frame exactly. */
+    border-radius: 3px;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
+    background: var(--surface-4);
+    image-rendering: pixelated;
+    object-fit: cover;
 }
 
 .player-chip--more {
@@ -658,7 +665,7 @@ async function joinServer() {
     border: 1px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
     background: color-mix(in srgb, var(--color-brand) 16%, transparent);
     color: var(--color-text-primary);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
 }

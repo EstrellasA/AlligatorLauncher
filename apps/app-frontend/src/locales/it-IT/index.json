@@ -1,617 +1,629 @@
 {
-    "app.action-bar.downloading-java": {
+  "app.action-bar.downloading-java": {
     "message": "Java {version}"
   },
-    "app.action-bar.downloading-update": {
+  "app.action-bar.downloading-update": {
     "message": "Scaricando l'aggiornamento"
   },
-    "app.action-bar.downloads": {
+  "app.action-bar.downloads": {
     "message": "Download"
   },
-    "app.action-bar.hide-more-running-instances": {
+  "app.action-bar.hide-more-running-instances": {
     "message": "Mostra meno istanze in esecuzione"
   },
-    "app.action-bar.install.dismiss": {
+  "app.action-bar.install.dismiss": {
     "message": "Ignora"
   },
-    "app.action-bar.install.open-instance": {
+  "app.action-bar.install.open-instance": {
     "message": "Apri istanza"
   },
-    "app.action-bar.install.retry": {
+  "app.action-bar.install.retry": {
     "message": "Riprova"
   },
-    "app.action-bar.install.unknown-instance": {
+  "app.action-bar.install.unknown-instance": {
     "message": "Istanza sconosciuta"
   },
-    "app.action-bar.installs": {
+  "app.action-bar.installs": {
     "message": "Installazioni"
   },
-    "app.action-bar.make-primary-instance": {
+  "app.action-bar.make-primary-instance": {
     "message": "Rendi primaria"
   },
-    "app.action-bar.no-instances-running": {
+  "app.action-bar.no-instances-running": {
     "message": "Nessuna istanza in esecuzione"
   },
-    "app.action-bar.offline": {
+  "app.action-bar.offline": {
     "message": "Offline"
   },
-    "app.action-bar.primary-instance": {
+  "app.action-bar.primary-instance": {
     "message": "Primaria"
   },
-    "app.action-bar.reload-to-update": {
+  "app.action-bar.reload-to-update": {
     "message": "Ricarica per aggiornare"
   },
-    "app.action-bar.show-more-running-instances": {
+  "app.action-bar.show-more-running-instances": {
     "message": "Mostra più istanze in esecuzione"
   },
-    "app.action-bar.stop-instance": {
+  "app.action-bar.stop-instance": {
     "message": "Ferma l'istanza"
   },
-    "app.action-bar.update": {
+  "app.action-bar.update": {
     "message": "Aggiorna"
   },
-    "app.action-bar.view-active-downloads": {
+  "app.action-bar.view-active-downloads": {
     "message": "Mostra i download attivi"
   },
-    "app.action-bar.view-instance": {
+  "app.action-bar.view-instance": {
     "message": "Mostra l'istanza"
   },
-    "app.action-bar.view-logs": {
+  "app.action-bar.view-logs": {
     "message": "Mostra i log"
   },
-    "app.appearance-settings.advanced-rendering.description": {
+  "app.appearance-settings.advanced-rendering.description": {
     "message": "Abilita alcuni effetti come la sfocatura, ma può causare problemi di prestazioni senza accelerazione hardware."
   },
-    "app.appearance-settings.advanced-rendering.title": {
+  "app.appearance-settings.advanced-rendering.title": {
     "message": "Rendering avanzato"
   },
-    "app.appearance-settings.color-theme.description": {
+  "app.appearance-settings.color-theme.description": {
     "message": "Scegli il tema che ALLIGATORZONE userà su questo dispositivo."
   },
-    "app.appearance-settings.color-theme.title": {
+  "app.appearance-settings.color-theme.title": {
     "message": "Tema"
   },
-    "app.appearance-settings.default-landing-page.description": {
+  "app.appearance-settings.default-landing-page.description": {
     "message": "Imposta la pagina che si aprirà all'avvio del launcher."
   },
-    "app.appearance-settings.default-landing-page.home": {
+  "app.appearance-settings.default-landing-page.home": {
     "message": "Home"
   },
-    "app.appearance-settings.default-landing-page.library": {
+  "app.appearance-settings.default-landing-page.library": {
     "message": "Libreria"
   },
-    "app.appearance-settings.default-landing-page.title": {
+  "app.appearance-settings.default-landing-page.title": {
     "message": "Pagina di avvio"
   },
-    "app.appearance-settings.hide-nametag.description": {
+  "app.appearance-settings.hide-nametag.description": {
     "message": "Rimuove il nametag sopra la testa del giocatore nella pagina delle skin."
   },
-    "app.appearance-settings.hide-nametag.title": {
+  "app.appearance-settings.hide-nametag.title": {
     "message": "Nascondi il nome"
   },
-    "app.appearance-settings.minimize-launcher.description": {
+  "app.appearance-settings.minimize-launcher.description": {
     "message": "Riduci il launcher a icona quando si avvia Minecraft."
   },
-    "app.appearance-settings.minimize-launcher.title": {
+  "app.appearance-settings.minimize-launcher.title": {
     "message": "Riduci a icona"
   },
-    "app.appearance-settings.native-decorations.description": {
+  "app.appearance-settings.native-decorations.description": {
     "message": "Usa la cornice di sistema (riavvio necessario)."
   },
-    "app.appearance-settings.native-decorations.title": {
+  "app.appearance-settings.native-decorations.title": {
     "message": "Decorazioni native"
   },
-    "app.appearance-settings.sections.advanced-interface": {
+  "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-    "app.appearance-settings.sections.content-behavior": {
+  "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-    "app.appearance-settings.sections.home-navigation": {
+  "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-    "app.appearance-settings.select-option": {
+  "app.appearance-settings.select-option": {
     "message": "Seleziona"
   },
-    "app.appearance-settings.show-play-time.description": {
+  "app.appearance-settings.show-play-time.description": {
     "message": "Mostra quanto tempo hai speso giocando a un'istanza."
   },
-    "app.appearance-settings.show-play-time.title": {
+  "app.appearance-settings.show-play-time.title": {
     "message": "Mostra le ore di gioco"
   },
-    "app.appearance-settings.skip-non-essential-warnings.description": {
+  "app.appearance-settings.skip-non-essential-warnings.description": {
     "message": "Salta automaticamente le conferme a basso rischio, come l'installazione di pacchetti di mod duplicati, la normale eliminazione di contenuti, gli aggiornamenti simultanei, lo scollegare i pacchetti di mod e le richieste di riparazione. Le avvertenze verranno comunque mostrate."
   },
-    "app.appearance-settings.skip-non-essential-warnings.title": {
+  "app.appearance-settings.skip-non-essential-warnings.title": {
     "message": "Salta le conferme poco importanti"
   },
-    "app.appearance-settings.toggle-sidebar.description": {
+  "app.appearance-settings.toggle-sidebar.description": {
     "message": "Mostra o nascondi la barra laterale."
   },
-    "app.appearance-settings.toggle-sidebar.title": {
+  "app.appearance-settings.toggle-sidebar.title": {
     "message": "Abilita la barra laterale"
   },
-    "app.appearance-settings.unknown-pack-warning.description": {
+  "app.appearance-settings.unknown-pack-warning.description": {
     "message": "Mostrerà un avviso prima di installare un file Modrinth Pack (.mrpack) non proveniente da Modrinth, a causa dei possibili rischi."
   },
-    "app.appearance-settings.unknown-pack-warning.title": {
+  "app.appearance-settings.unknown-pack-warning.title": {
     "message": "Avvisami se installo pacchetti sconosciuti"
   },
-    "app.auth-servers.unreachable.body": {
+  "app.auth-servers.unreachable.body": {
     "message": "I server di autenticazione di Minecraft stanno riscontrando problemi. Controlla la tua connessione a Internet e riprova più tardi."
   },
-    "app.auth-servers.unreachable.header": {
+  "app.auth-servers.unreachable.header": {
     "message": "Impossibile raggiungere i server di autenticazione"
   },
-    "app.browse.add-servers-to-instance": {
+  "app.browse.add-servers-to-instance": {
     "message": "Aggiungendo il server all'istanza"
   },
-    "app.browse.add-to-an-instance": {
+  "app.browse.add-to-an-instance": {
     "message": "Aggiungi a un'istanza"
   },
-    "app.browse.add-to-instance": {
+  "app.browse.add-to-instance": {
     "message": "Aggiungi all'istanza"
   },
-    "app.browse.add-to-instance-name": {
+  "app.browse.add-to-instance-name": {
     "message": "Aggiungi a {instanceName}"
   },
-    "app.browse.added": {
+  "app.browse.added": {
     "message": "Aggiunto"
   },
-    "app.browse.already-added": {
+  "app.browse.already-added": {
     "message": "Già aggiunto"
   },
-    "app.browse.back-to-instance": {
+  "app.browse.back-to-instance": {
     "message": "Torna all'istanza"
   },
-    "app.browse.client-mods.install": {
+  "app.browse.client-mods.install": {
     "message": "Install to my mods"
   },
-    "app.browse.client-mods.install-compact": {
+  "app.browse.client-mods.install-compact": {
     "message": "Install to client"
   },
-    "app.browse.client-mods.install-tooltip": {
+  "app.browse.client-mods.install-tooltip": {
     "message": "Installs into this instance's clientmods folder"
   },
-    "app.browse.client-mods.notice": {
+  "app.browse.client-mods.notice": {
     "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
   },
-    "app.browse.client-mods.title": {
+  "app.browse.client-mods.title": {
     "message": "Discover content · Client mods"
   },
-    "app.browse.discover-content": {
+  "app.browse.discover-content": {
     "message": "Esplora i contenuti"
   },
-    "app.browse.discover-servers": {
+  "app.browse.discover-servers": {
     "message": "Esplora i server"
   },
-    "app.browse.hide-added-servers": {
+  "app.browse.hide-added-servers": {
     "message": "Nascondi server già aggiunti"
   },
-    "app.browse.project-type.modpacks": {
+  "app.browse.project-type.modpacks": {
     "message": "Pacchetti di mod"
   },
-    "app.browse.server-instance-content-warning": {
+  "app.browse.server-instance-content-warning": {
     "message": "Aggiungere dei contenuti potrebbe causare problemi entrando nel server. Inoltre, qualsiasi contenuto aggiunto sarà perso quando aggiorni i contenuti dell'istanza."
   },
-    "app.browse.server.installing": {
+  "app.browse.server.installing": {
     "message": "Installazione"
   },
-    "app.content-install.no-compatible-versions": {
+  "app.content-install.no-compatible-versions": {
     "message": "Nessuna versione disponibile soddisfa {compatibilityLabel}. Puoi selezionare una versione da installare comunque. Le dipendenze non verranno scaricate automaticamente."
   },
-    "app.content-install.preview.pack-duplicate-confirm": {
+  "app.content-install.preview.pack-duplicate-confirm": {
     "message": "Install my copy anyway"
   },
-    "app.content-install.preview.pack-duplicate-consequence": {
+  "app.content-install.preview.pack-duplicate-consequence": {
     "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
   },
-    "app.content-install.preview.pack-duplicate-description": {
+  "app.content-install.preview.pack-duplicate-description": {
     "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
   },
-    "app.content-install.preview.pack-duplicate-header": {
+  "app.content-install.preview.pack-duplicate-header": {
     "message": "Already provided by the server pack"
   },
-    "app.export-modal.description-placeholder": {
+  "app.export-modal.description-placeholder": {
     "message": "Inserisci descrizione del pacchetto..."
   },
-    "app.export-modal.export-button": {
+  "app.export-modal.export-button": {
     "message": "Esporta"
   },
-    "app.export-modal.header": {
+  "app.export-modal.header": {
     "message": "Esporta pacchetto"
   },
-    "app.export-modal.modpack-name-label": {
+  "app.export-modal.modpack-name-label": {
     "message": "Nome del pacchetto"
   },
-    "app.export-modal.modpack-name-placeholder": {
+  "app.export-modal.modpack-name-placeholder": {
     "message": "Nome del pacchetto"
   },
-    "app.export-modal.version-number-label": {
+  "app.export-modal.version-number-label": {
     "message": "Numero di versione"
   },
-    "app.export-modal.version-number-placeholder": {
+  "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-    "app.first-run-bootstrap.dismiss": {
+  "app.first-run-bootstrap.dismiss": {
     "message": "Continue anyway"
   },
-    "app.first-run-bootstrap.failed.bundled-mods": {
+  "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
-    "app.first-run-bootstrap.failed.details": {
+  "app.first-run-bootstrap.failed.details": {
     "message": "Technical details"
   },
-    "app.first-run-bootstrap.failed.instance-creation": {
+  "app.first-run-bootstrap.failed.instance-creation": {
     "message": "The game instance could not be created. Check your network connection and try again."
   },
-    "app.first-run-bootstrap.failed.instance-id-missing": {
+  "app.first-run-bootstrap.failed.instance-id-missing": {
     "message": "The launcher could not tell which instance was created. Please report this to the server team."
   },
-    "app.first-run-bootstrap.failed.title": {
+  "app.first-run-bootstrap.failed.title": {
     "message": "Setup could not be finished"
   },
-    "app.first-run-bootstrap.failed.unknown": {
+  "app.first-run-bootstrap.failed.unknown": {
     "message": "Something went wrong while setting up your game."
   },
-    "app.first-run-bootstrap.file-progress": {
+  "app.first-run-bootstrap.file-progress": {
     "message": "File {current} of {total}"
   },
-    "app.first-run-bootstrap.phase.downloading-minecraft": {
+  "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "Downloading the game files…"
   },
-    "app.first-run-bootstrap.phase.finishing": {
+  "app.first-run-bootstrap.phase.finishing": {
     "message": "Finishing up…"
   },
-    "app.first-run-bootstrap.phase.installing-loader": {
+  "app.first-run-bootstrap.phase.installing-loader": {
     "message": "Installing the mod loader…"
   },
-    "app.first-run-bootstrap.phase.preparing": {
+  "app.first-run-bootstrap.phase.preparing": {
     "message": "Preparing your game…"
   },
-    "app.first-run-bootstrap.repair.subtitle": {
+  "app.first-run-bootstrap.repair.subtitle": {
     "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
   },
-    "app.first-run-bootstrap.repair.success-text": {
+  "app.first-run-bootstrap.repair.success-text": {
     "message": "The missing files were added back. You can start playing now."
   },
-    "app.first-run-bootstrap.repair.title": {
+  "app.first-run-bootstrap.repair.title": {
     "message": "Finishing your game setup"
   },
-    "app.first-run-bootstrap.retry": {
+  "app.first-run-bootstrap.retry": {
     "message": "Try again"
   },
-    "app.first-run-bootstrap.server-missing.text": {
+  "app.first-run-bootstrap.server-missing.text": {
     "message": "Add {address} to your instance manually, or use the join button on the home page."
   },
-    "app.first-run-bootstrap.server-missing.title": {
+  "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
   },
-    "app.first-run-bootstrap.step.creating-instance": {
+  "app.first-run-bootstrap.step.creating-instance": {
     "message": "Creating your game instance"
   },
-    "app.first-run-bootstrap.step.installing-mods": {
+  "app.first-run-bootstrap.step.installing-mods": {
     "message": "Installing the required mods"
   },
-    "app.first-run-bootstrap.step.registering-server": {
+  "app.first-run-bootstrap.step.registering-server": {
     "message": "Adding the server to your instance"
   },
-    "app.first-run-bootstrap.subtitle": {
+  "app.first-run-bootstrap.subtitle": {
     "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
   },
-    "app.first-run-bootstrap.success.text": {
+  "app.first-run-bootstrap.success.text": {
     "message": "The instance was created with the mods this server needs. You can start playing now."
   },
-    "app.first-run-bootstrap.success.title": {
+  "app.first-run-bootstrap.success.title": {
     "message": "Your game is ready"
   },
-    "app.first-run-bootstrap.title": {
+  "app.first-run-bootstrap.title": {
     "message": "Setting up your game"
   },
-    "app.home.server-status.checking": {
+  "app.home.server-status.checking": {
     "message": "Checking..."
   },
-    "app.home.server-status.join": {
+  "app.home.server-status.join": {
     "message": "Join server"
   },
-    "app.home.server-status.join.no-instance": {
+  "app.home.server-status.join.no-instance": {
     "message": "Choose a home instance before joining the server."
   },
-    "app.home.server-status.join.not-installed": {
+  "app.home.server-status.join.not-installed": {
     "message": "This instance is still installing. Join once it is ready."
   },
-    "app.home.server-status.join.offline": {
+  "app.home.server-status.join.offline": {
     "message": "The server is offline right now."
   },
-    "app.home.server-status.joining": {
+  "app.home.server-status.joining": {
     "message": "Joining..."
   },
-    "app.home.server-status.latency": {
+  "app.home.server-status.latency": {
     "message": "{latency} ms"
   },
-    "app.home.server-status.loading": {
+  "app.home.server-status.loading": {
     "message": "Fetching the latest server status..."
   },
-    "app.home.server-status.offline": {
+  "app.home.server-status.offline": {
     "message": "Offline"
   },
-    "app.home.server-status.offline.body": {
+  "app.home.server-status.offline.body": {
     "message": "It may be under maintenance — ask in the group chat? The web map often still works."
   },
-    "app.home.server-status.offline.body.no-map": {
+  "app.home.server-status.offline.body.no-map": {
     "message": "It may be under maintenance — ask in the group chat?"
   },
-    "app.home.server-status.offline.title": {
+  "app.home.server-status.offline.title": {
     "message": "The server is offline right now"
   },
-    "app.home.server-status.online": {
+  "app.home.server-status.online": {
     "message": "Online"
   },
-    "app.home.server-status.players.empty": {
+  "app.home.server-status.players.empty": {
     "message": "Nobody is online right now — the world is all yours."
   },
-    "app.home.server-status.players.more": {
+  "app.home.server-status.players.more": {
     "message": "+{count}"
   },
-    "app.home.server-status.players.stale": {
+  "app.home.server-status.players.stale": {
     "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
   },
-    "app.home.server-status.players.title": {
+  "app.home.server-status.players.title": {
     "message": "Players online"
   },
-    "app.home.server-status.players.unavailable": {
+  "app.home.server-status.players.unavailable": {
     "message": "The server does not publish its player list, so only the count is shown."
   },
-    "app.home.server-status.refresh": {
+  "app.home.server-status.refresh": {
     "message": "Refresh status"
   },
-    "app.home.server-status.version": {
+  "app.home.server-status.version": {
     "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
   },
-    "app.install.phase.downloading_content": {
+  "app.install.phase.downloading_content": {
     "message": "Download dei contenuti"
   },
-    "app.install.phase.downloading_minecraft": {
+  "app.install.phase.downloading_minecraft": {
     "message": "Download di Minecraft"
   },
-    "app.install.phase.downloading_pack_file": {
+  "app.install.phase.downloading_pack_file": {
     "message": "Download del pacchetto"
   },
-    "app.install.phase.extracting_overrides": {
+  "app.install.phase.extracting_overrides": {
     "message": "Estrazione degli override"
   },
-    "app.install.phase.finalizing": {
+  "app.install.phase.finalizing": {
     "message": "Finalizzazione"
   },
-    "app.install.phase.preparing_instance": {
+  "app.install.phase.preparing_instance": {
     "message": "Preparazione dell'istanza"
   },
-    "app.install.phase.preparing_java": {
+  "app.install.phase.preparing_java": {
     "message": "Preparazione di Java"
   },
-    "app.install.phase.preparing_java.downloading": {
+  "app.install.phase.preparing_java.downloading": {
     "message": "Download di Java {version}"
   },
-    "app.install.phase.preparing_java.extracting": {
+  "app.install.phase.preparing_java.extracting": {
     "message": "Estrazione di Java {version}"
   },
-    "app.install.phase.preparing_java.fetching-metadata": {
+  "app.install.phase.preparing_java.fetching-metadata": {
     "message": "Recupero di Java {version}"
   },
-    "app.install.phase.preparing_java.resolving": {
+  "app.install.phase.preparing_java.resolving": {
     "message": "Preparazione di Java {version}"
   },
-    "app.install.phase.preparing_java.validating": {
+  "app.install.phase.preparing_java.validating": {
     "message": "Validazione di Java {version}"
   },
-    "app.install.phase.reading_pack_manifest": {
+  "app.install.phase.reading_pack_manifest": {
     "message": "Lettura del manifesto"
   },
-    "app.install.phase.resolving_loader": {
+  "app.install.phase.resolving_loader": {
     "message": "Risoluzione del loader"
   },
-    "app.install.phase.resolving_minecraft": {
+  "app.install.phase.resolving_minecraft": {
     "message": "Risoluzione di Minecraft"
   },
-    "app.install.phase.resolving_pack": {
+  "app.install.phase.resolving_pack": {
     "message": "Risoluzione dei contenuti"
   },
-    "app.install.phase.rolling_back": {
+  "app.install.phase.rolling_back": {
     "message": "Tornando indietro"
   },
-    "app.install.phase.running_loader_processors": {
+  "app.install.phase.running_loader_processors": {
     "message": "Esecuzione dei processori del loader"
   },
-    "app.instance.confirm-delete.admonition-body": {
+  "app.instance.confirm-delete.admonition-body": {
     "message": "Tutti i dati della tua istanza verranno eliminati permanentemente, inclusi i tuoi mondi, configurazioni e tutti i contenuti installati."
   },
-    "app.instance.confirm-delete.admonition-header": {
+  "app.instance.confirm-delete.admonition-header": {
     "message": "Questa azione non può essere annullata"
   },
-    "app.instance.confirm-delete.delete-button": {
+  "app.instance.confirm-delete.delete-button": {
     "message": "Elimina istanza"
   },
-    "app.instance.confirm-delete.header": {
+  "app.instance.confirm-delete.header": {
     "message": "Elimina istanza"
   },
-    "app.instance.modpack-already-installed.body": {
+  "app.instance.modpack-already-installed.body": {
     "message": "Questo pacchetto di mod è già installato nell'istanza <bold>{instanceName}</bold>. Vuoi davvero duplicarlo?"
   },
-    "app.instance.modpack-already-installed.create": {
+  "app.instance.modpack-already-installed.create": {
     "message": "Crea"
   },
-    "app.instance.modpack-already-installed.header": {
+  "app.instance.modpack-already-installed.header": {
     "message": "Pacchetto già installato"
   },
-    "app.instance.modpack-already-installed.instance": {
+  "app.instance.modpack-already-installed.instance": {
     "message": "Istanza"
   },
-    "app.instance.mods.bulk-update.downloading-projects": {
+  "app.instance.mods.bulk-update.downloading-projects": {
     "message": "{current, number}/{total, number} progetti scaricati..."
   },
-    "app.instance.mods.bulk-update.finishing": {
+  "app.instance.mods.bulk-update.finishing": {
     "message": "Finalizzando l'aggiornamento..."
   },
-    "app.instance.mods.bulk-update.resolving-versions": {
+  "app.instance.mods.bulk-update.resolving-versions": {
     "message": "Risolvendo le versioni..."
   },
-    "app.instance.mods.content-type-project": {
+  "app.instance.mods.content-type-project": {
     "message": "progetto"
   },
-    "app.instance.mods.folder-note": {
+  "app.instance.mods.folder-note": {
     "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
   },
-    "app.instance.mods.player-added.badge": {
+  "app.instance.mods.player-added.badge": {
     "message": "Player-added"
   },
-    "app.instance.mods.player-added.hint": {
+  "app.instance.mods.player-added.hint": {
     "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
   },
-    "app.instance.mods.project-was-added": {
+  "app.instance.mods.project-was-added": {
     "message": "\"{name}\" è stato aggiunto"
   },
-    "app.instance.mods.share-text": {
+  "app.instance.mods.share-text": {
     "message": "Guarda le mod che uso nel mio pacchetto!"
   },
-    "app.instance.mods.share-title": {
+  "app.instance.mods.share-title": {
     "message": "Condivisione del pacchetto"
   },
-    "app.instance.mods.successfully-uploaded": {
+  "app.instance.mods.successfully-uploaded": {
     "message": "Caricato con successo"
   },
-    "app.instance.worlds.add-server": {
+  "app.instance.worlds.add-server": {
     "message": "Aggiungi server"
   },
-    "app.instance.worlds.browse-servers": {
+  "app.instance.worlds.browse-servers": {
     "message": "Esplora i server"
   },
-    "app.instance.worlds.delete-world-modal.delete-button": {
+  "app.instance.worlds.delete-world-modal.delete-button": {
     "message": "Elimina mondo"
   },
-    "app.instance.worlds.delete-world-modal.title": {
+  "app.instance.worlds.delete-world-modal.title": {
     "message": "Eliminare il mondo"
   },
-    "app.instance.worlds.delete-world-modal.warning-body": {
+  "app.instance.worlds.delete-world-modal.warning-body": {
     "message": "Questo mondo verrà eliminato permanentemente da questa istanza. Questa azione non può essere annullata."
   },
-    "app.instance.worlds.delete-world-modal.warning-header": {
+  "app.instance.worlds.delete-world-modal.warning-header": {
     "message": "Eliminare {name}"
   },
-    "app.instance.worlds.filter-modded": {
+  "app.instance.worlds.filter-modded": {
     "message": "Moddato"
   },
-    "app.instance.worlds.filter-offline": {
+  "app.instance.worlds.filter-offline": {
     "message": "Offline"
   },
-    "app.instance.worlds.filter-online": {
+  "app.instance.worlds.filter-online": {
     "message": "Online"
   },
-    "app.instance.worlds.filter-vanilla": {
+  "app.instance.worlds.filter-vanilla": {
     "message": "Vanilla"
   },
-    "app.instance.worlds.no-worlds-description": {
+  "app.instance.worlds.no-worlds-description": {
     "message": "Inizia esplorando o aggiungendo un server"
   },
-    "app.instance.worlds.no-worlds-heading": {
+  "app.instance.worlds.no-worlds-heading": {
     "message": "Nessun server o mondo aggiunto"
   },
-    "app.instance.worlds.remove-server-modal.remove-button": {
+  "app.instance.worlds.remove-server-modal.remove-button": {
     "message": "Rimuovi server"
   },
-    "app.instance.worlds.remove-server-modal.title": {
+  "app.instance.worlds.remove-server-modal.title": {
     "message": "Rimuovere il server"
   },
-    "app.instance.worlds.remove-server-modal.warning-body": {
+  "app.instance.worlds.remove-server-modal.warning-body": {
     "message": "Questo server verrà rimosso dalla tua lista di server nell'app e nel gioco. Potrai aggiungerlo nuovamente se conosci l'indirizzo."
   },
-    "app.instance.worlds.remove-server-modal.warning-header": {
+  "app.instance.worlds.remove-server-modal.warning-header": {
     "message": "Rimuovere {name}"
   },
-    "app.instance.worlds.search-worlds-placeholder": {
+  "app.instance.worlds.search-worlds-placeholder": {
     "message": "Cerca tra {count} mondi..."
   },
-    "app.mods.change-instance": {
+  "app.mods.change-instance": {
     "message": "Change instance"
   },
-    "app.mods.conflict.badge": {
+  "app.mods.conflict.badge": {
     "message": "Server copy takes over"
   },
-    "app.mods.conflict.summary": {
+  "app.mods.conflict.summary": {
     "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
   },
-    "app.mods.conflict.tooltip": {
+  "app.mods.conflict.tooltip": {
     "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
   },
-    "app.mods.count": {
+  "app.mods.count": {
     "message": "{count, plural, one {# file} other {# files}}"
   },
-    "app.mods.disabled": {
+  "app.mods.disabled": {
     "message": "Disabled"
   },
-    "app.mods.folder-missing": {
+  "app.mods.folder-missing": {
     "message": "This folder does not exist in the instance yet."
   },
-    "app.mods.link.mcmod": {
+  "app.mods.link.mcmod": {
     "message": "Search {name} on the MC Mod wiki"
   },
-    "app.mods.link.project": {
+  "app.mods.link.project": {
     "message": "Open the project page for {name}"
   },
-    "app.mods.load-failed": {
+  "app.mods.load-failed": {
     "message": "Could not read this folder."
   },
-    "app.mods.loading": {
+  "app.mods.loading": {
     "message": "Loading files…"
   },
-    "app.mods.no-instance": {
+  "app.mods.no-instance": {
     "message": "No installed instance is available."
   },
-    "app.mods.ownership.local-discovered": {
+  "app.mods.ownership.local-discovered": {
     "message": "Found in the folder"
   },
-    "app.mods.ownership.pack-managed": {
+  "app.mods.ownership.pack-managed": {
     "message": "Managed by the server pack"
   },
-    "app.mods.ownership.user-added": {
+  "app.mods.ownership.user-added": {
     "message": "Added by you"
   },
-    "app.mods.picker.no-instances": {
+  "app.mods.picker.no-instances": {
     "message": "No installed instances are available."
   },
-    "app.mods.picker.no-results": {
+  "app.mods.picker.no-results": {
     "message": "No matching instances"
   },
-    "app.mods.picker.search": {
+  "app.mods.picker.search": {
     "message": "Search instances"
   },
-    "app.mods.picker.select": {
+  "app.mods.picker.select": {
     "message": "Choose {name}"
   },
-    "app.mods.picker.title": {
+  "app.mods.picker.title": {
     "message": "Choose an instance"
   },
-    "app.mods.refresh": {
+  "app.mods.refresh": {
     "message": "Refresh"
   },
-    "app.mods.retry": {
+  "app.mods.retry": {
     "message": "Try again"
   },
-    "app.navigation.changelog": {
+  "app.navigation.changelog": {
     "message": "Update notes"
   },
-    "app.navigation.server-map": {
+  "app.navigation.server-map": {
     "message": "Server map"
   },
-    "app.project.install-button.already-installed": {
+  "app.project.install-blocked.server-required.description": {
+    "message": "It only works when the server runs it as well, and the server's content belongs to the pack you joined — you cannot add anything to it from here. Putting it in your own client mods folder would break the game, so the launcher does not offer an install."
+  },
+  "app.project.install-blocked.server-required.title": {
+    "message": "This mod has to be installed on the server too"
+  },
+  "app.project.install-blocked.unverified.description": {
+    "message": "This source does not publish whether a mod has to be installed on the server, so the launcher cannot tell whether a client-only install is safe. Rather than risk a game that no longer works, it does not offer an install here."
+  },
+  "app.project.install-blocked.unverified.title": {
+    "message": "Cannot confirm this mod works on the client alone"
+  },
+  "app.project.install-button.already-installed": {
     "message": "Questo progetto è già stato installato"
   },
-    "app.project.install-context.back-to-browse": {
+  "app.project.install-context.back-to-browse": {
     "message": "Torna a Esplora"
   },
-    "app.project.install-context.install-content-to-instance": {
+  "app.project.install-context.install-content-to-instance": {
     "message": "Installa il contenuto nell'istanza"
   },
-    "app.server.avatar.open-skin-selector": {
+  "app.server.avatar.open-skin-selector": {
     "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
@@ -640,709 +652,709 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-    "app.server.map.loading": {
+  "app.server.map.loading": {
     "message": "Loading the map..."
   },
-    "app.server.map.not-embeddable.body": {
+  "app.server.map.not-embeddable.body": {
     "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
   },
-    "app.server.map.not-embeddable.title": {
+  "app.server.map.not-embeddable.title": {
     "message": "This map cannot be embedded"
   },
-    "app.server.map.open-in-browser": {
+  "app.server.map.open-in-browser": {
     "message": "Open in browser"
   },
-    "app.server.map.reload": {
+  "app.server.map.reload": {
     "message": "Reload map"
   },
-    "app.settings.defaults.sections.after-launch": {
+  "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-    "app.settings.defaults.sections.environment": {
+  "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-    "app.settings.defaults.sections.launch-hooks": {
+  "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-    "app.settings.defaults.sections.window-behavior": {
+  "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-    "app.settings.developer-mode-enabled": {
+  "app.settings.developer-mode-enabled": {
     "message": "Modalità sviluppatore attiva."
   },
-    "app.settings.developer.feature-flags-section-title": {
+  "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-    "app.settings.downloading": {
+  "app.settings.downloading": {
     "message": "Scaricando v{version}"
   },
-    "app.settings.feature-flags.advanced-filters-collapsed": {
+  "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-    "app.settings.feature-flags.always-show-app-controls": {
+  "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-    "app.settings.feature-flags.auto-install-dependencies": {
+  "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-    "app.settings.feature-flags.i18n-debug": {
+  "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-    "app.settings.feature-flags.page-path": {
+  "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-    "app.settings.feature-flags.page-transitions": {
+  "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-    "app.settings.feature-flags.project-background": {
+  "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-    "app.settings.feature-flags.server-project-qa": {
+  "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-    "app.settings.feature-flags.show-instance-play-time": {
+  "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-    "app.settings.feature-flags.show-version-environment-column": {
+  "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-    "app.settings.feature-flags.skip-non-essential-warnings": {
+  "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-    "app.settings.feature-flags.skip-unknown-pack-warning": {
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-    "app.settings.feature-flags.worlds-in-home": {
+  "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-    "app.settings.feature-flags.worlds-tab": {
+  "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-    "app.settings.privacy.section-title": {
+  "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-    "app.settings.resources.ALLIGATORZONE-data-directory": {
+  "app.settings.resources.ALLIGATORZONE-data-directory": {
     "message": "ALLIGATORZONE data directory"
   },
-    "app.settings.resources.sections.data-storage": {
+  "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-    "app.settings.resources.sections.download-behavior": {
+  "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-    "app.settings.resources.sections.missing-content": {
+  "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-    "app.settings.resources.sections.network-authentication": {
+  "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-    "app.settings.updates.channel.state-description": {
+  "app.settings.updates.channel.state-description": {
     "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
   },
-    "app.settings.updates.manual.description": {
+  "app.settings.updates.manual.description": {
     "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
   },
-    "app.settings.updates.manual.distribution": {
+  "app.settings.updates.manual.distribution": {
     "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
   },
-    "app.settings.updates.manual.title": {
+  "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-    "app.skins.add-button": {
+  "app.skins.add-button": {
     "message": "Nuova skin"
   },
-    "app.skins.add-button.drag-and-drop": {
+  "app.skins.add-button.drag-and-drop": {
     "message": "Trascina qui"
   },
-    "app.skins.apply-button": {
+  "app.skins.apply-button": {
     "message": "Applica"
   },
-    "app.skins.delete-button": {
+  "app.skins.delete-button": {
     "message": "Elimina"
   },
-    "app.skins.delete-modal.description": {
+  "app.skins.delete-modal.description": {
     "message": "Questa skin sarà rimossa per sempre. Quest'azione non può essere annullata."
   },
-    "app.skins.delete-modal.title": {
+  "app.skins.delete-modal.title": {
     "message": "Vuoi davvero eliminare questa skin?"
   },
-    "app.skins.dropped-file-error.text": {
+  "app.skins.dropped-file-error.text": {
     "message": "Non è stato possibile leggere il file trascinato."
   },
-    "app.skins.dropped-file-error.title": {
+  "app.skins.dropped-file-error.title": {
     "message": "Impossibile processare il file"
   },
-    "app.skins.edit-button": {
+  "app.skins.edit-button": {
     "message": "Modifica"
   },
-    "app.skins.modal.add-skin-button": {
+  "app.skins.modal.add-skin-button": {
     "message": "Aggiungi"
   },
-    "app.skins.modal.add-title": {
+  "app.skins.modal.add-title": {
     "message": "Aggiungi una skin"
   },
-    "app.skins.modal.arm-style-section": {
+  "app.skins.modal.arm-style-section": {
     "message": "Modello"
   },
-    "app.skins.modal.arm-style-slim": {
+  "app.skins.modal.arm-style-slim": {
     "message": "Snello"
   },
-    "app.skins.modal.arm-style-wide": {
+  "app.skins.modal.arm-style-wide": {
     "message": "Largo"
   },
-    "app.skins.modal.cape-fallback-name": {
+  "app.skins.modal.cape-fallback-name": {
     "message": "Mantello"
   },
-    "app.skins.modal.cape-section": {
+  "app.skins.modal.cape-section": {
     "message": "Mantello"
   },
-    "app.skins.modal.edit-title": {
+  "app.skins.modal.edit-title": {
     "message": "Modifica la skin"
   },
-    "app.skins.modal.make-edit-first-tooltip": {
+  "app.skins.modal.make-edit-first-tooltip": {
     "message": "Modifica prima la skin!"
   },
-    "app.skins.modal.no-cape-tooltip": {
+  "app.skins.modal.no-cape-tooltip": {
     "message": "Nessun mantello"
   },
-    "app.skins.modal.none-cape-option": {
+  "app.skins.modal.none-cape-option": {
     "message": "Nessuno"
   },
-    "app.skins.modal.replace-texture-button": {
+  "app.skins.modal.replace-texture-button": {
     "message": "Cambia"
   },
-    "app.skins.modal.save-skin-button": {
+  "app.skins.modal.save-skin-button": {
     "message": "Salva"
   },
-    "app.skins.modal.saving-tooltip": {
+  "app.skins.modal.saving-tooltip": {
     "message": "Salvando..."
   },
-    "app.skins.modal.texture-section": {
+  "app.skins.modal.texture-section": {
     "message": "Aspetto"
   },
-    "app.skins.modal.upload-skin-first-tooltip": {
+  "app.skins.modal.upload-skin-first-tooltip": {
     "message": "Carica prima una skin!"
   },
-    "app.skins.preview.edit-button": {
+  "app.skins.preview.edit-button": {
     "message": "Modifica"
   },
-    "app.skins.previewing-badge": {
+  "app.skins.previewing-badge": {
     "message": "Anteprima"
   },
-    "app.skins.rate-limit.text": {
+  "app.skins.rate-limit.text": {
     "message": "Stai cambiando skin troppo spesso. I server di Mojang hanno limitato le nostre richieste. Aspetta un momento prima di riprovare."
   },
-    "app.skins.rate-limit.title": {
+  "app.skins.rate-limit.title": {
     "message": "Rallenta!"
   },
-    "app.skins.reorder-error.text": {
+  "app.skins.reorder-error.text": {
     "message": "L'ordine delle skin non è stato salvato."
   },
-    "app.skins.reorder-error.title": {
+  "app.skins.reorder-error.title": {
     "message": "Errore nel riordine delle skin"
   },
-    "app.skins.section.builders-and-biomes": {
+  "app.skins.section.builders-and-biomes": {
     "message": "Builders & Biomes"
   },
-    "app.skins.section.chase-the-skies": {
+  "app.skins.section.chase-the-skies": {
     "message": "Chase the Skies"
   },
-    "app.skins.section.default-skins": {
+  "app.skins.section.default-skins": {
     "message": "Skin predefinite"
   },
-    "app.skins.section.minecon-earth-2017": {
+  "app.skins.section.minecon-earth-2017": {
     "message": "MINECON Earth 2017"
   },
-    "app.skins.section.modrinth": {
+  "app.skins.section.modrinth": {
     "message": "Modrinth"
   },
-    "app.skins.section.mounts-of-mayhem": {
+  "app.skins.section.mounts-of-mayhem": {
     "message": "Mounts of Mayhem"
   },
-    "app.skins.section.saved-skins": {
+  "app.skins.section.saved-skins": {
     "message": "Skin salvate"
   },
-    "app.skins.section.striding-hero": {
+  "app.skins.section.striding-hero": {
     "message": "Striding Hero"
   },
-    "app.skins.section.the-copper-age": {
+  "app.skins.section.the-copper-age": {
     "message": "The Copper Age"
   },
-    "app.skins.section.the-garden-awakens": {
+  "app.skins.section.the-garden-awakens": {
     "message": "The Garden Awakens"
   },
-    "app.skins.section.tiny-takeover": {
+  "app.skins.section.tiny-takeover": {
     "message": "Tiny Takeover"
   },
-    "app.skins.sign-in.axolotl-alt": {
+  "app.skins.sign-in.axolotl-alt": {
     "message": "ALLIGATORZONE"
   },
-    "app.skins.sign-in.button": {
+  "app.skins.sign-in.button": {
     "message": "Accedi"
   },
-    "app.skins.sign-in.description": {
+  "app.skins.sign-in.description": {
     "message": "Accedi col tuo account Minecraft per poter gestire le skin qui."
   },
-    "app.skins.sign-in.title": {
+  "app.skins.sign-in.title": {
     "message": "Effettua l'accesso"
   },
-    "app.skins.title": {
+  "app.skins.title": {
     "message": "Seleziona una skin"
   },
-    "app.translation-settings.display-section-title": {
+  "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-    "app.update-popup.body.download-complete": {
+  "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} è stata scaricata. Ricarica per aggiornare ora, o avverrà in automatico alla chiusura dell'app."
   },
-    "app.update-popup.body.metered": {
+  "app.update-popup.body.metered": {
     "message": "ALLIGATORZONE v{version} è ora disponibile! Poiché sei su una rete a consumo, non l'abbiamo scaricata automaticamente."
   },
-    "app.update-popup.changelog": {
+  "app.update-popup.changelog": {
     "message": "Novità"
   },
-    "app.update-popup.download": {
+  "app.update-popup.download": {
     "message": "Scarica ({size})"
   },
-    "app.update-popup.download-complete": {
+  "app.update-popup.download-complete": {
     "message": "Download completato"
   },
-    "app.update-popup.reload": {
+  "app.update-popup.reload": {
     "message": "Ricarica"
   },
-    "app.update-popup.title": {
+  "app.update-popup.title": {
     "message": "Aggiornamento disponibile"
   },
-    "app.update.complete-toast.text": {
+  "app.update.complete-toast.text": {
     "message": "Consulta qui le ultime novità in inglese."
   },
-    "app.update.complete-toast.title": {
+  "app.update.complete-toast.title": {
     "message": "La versione {version} è stata installata con successo!"
   },
-    "app.world.server-modal.placeholder-address": {
+  "app.world.server-modal.placeholder-address": {
     "message": "example.modrinth.gg"
   },
-    "app.world.server-modal.select-an-option": {
+  "app.world.server-modal.select-an-option": {
     "message": "Seleziona un'opzione"
   },
-    "app.world.world-item.incompatible-version": {
+  "app.world.world-item.incompatible-version": {
     "message": "Versione {version} incompatibile"
   },
-    "app.world.world-item.not-played-yet": {
+  "app.world.world-item.not-played-yet": {
     "message": "Mai avviato"
   },
-    "app.world.world-item.offline": {
+  "app.world.world-item.offline": {
     "message": "Offline"
   },
-    "app.world.world-item.players-online": {
+  "app.world.world-item.players-online": {
     "message": "{count} online"
   },
-    "friends.action.add-friend": {
+  "friends.action.add-friend": {
     "message": "Stringi un'amicizia"
   },
-    "friends.action.view-friend-requests": {
+  "friends.action.view-friend-requests": {
     "message": "{count, plural, one {# richiesta} other {# richieste}} d''amicizia"
   },
-    "friends.add-friend.submit": {
+  "friends.add-friend.submit": {
     "message": "Invia richiesta d'amicizia"
   },
-    "friends.add-friend.title": {
+  "friends.add-friend.title": {
     "message": "Stringere un'amicizia"
   },
-    "friends.add-friend.username.description": {
+  "friends.add-friend.username.description": {
     "message": "Potrebbe essere diverso dal nome utente di Minecraft!"
   },
-    "friends.add-friend.username.placeholder": {
+  "friends.add-friend.username.placeholder": {
     "message": "Inserisci il nome utente Modrinth..."
   },
-    "friends.add-friend.username.title": {
+  "friends.add-friend.username.title": {
     "message": "Con quale utente Modrinth vuoi stringere l'amicizia?"
   },
-    "friends.add-friends-to-share": {
+  "friends.add-friends-to-share": {
     "message": "<link>Stringi un''amicizia</link> per sapere a cosa stanno giocando!"
   },
-    "friends.friend.cancel-request": {
+  "friends.friend.cancel-request": {
     "message": "Annulla richiesta"
   },
-    "friends.friend.remove-friend": {
+  "friends.friend.remove-friend": {
     "message": "Annulla amicizia"
   },
-    "friends.friend.request-sent": {
+  "friends.friend.request-sent": {
     "message": "Richiesta d'amicizia inviata"
   },
-    "friends.friend.view-profile": {
+  "friends.friend.view-profile": {
     "message": "Visita profilo"
   },
-    "friends.heading": {
+  "friends.heading": {
     "message": "Amicizie"
   },
-    "friends.heading.active": {
+  "friends.heading.active": {
     "message": "Presenti"
   },
-    "friends.heading.offline": {
+  "friends.heading.offline": {
     "message": "Offline"
   },
-    "friends.heading.online": {
+  "friends.heading.online": {
     "message": "Online"
   },
-    "friends.heading.pending": {
+  "friends.heading.pending": {
     "message": "In attesa"
   },
-    "friends.no-friends-match": {
+  "friends.no-friends-match": {
     "message": "Nessuna amicizia corrisponde a ''{query}''"
   },
-    "friends.search-friends-placeholder": {
+  "friends.search-friends-placeholder": {
     "message": "Cerca tra le amicizie..."
   },
-    "friends.section.heading": {
+  "friends.section.heading": {
     "message": "{title} - {count}"
   },
-    "friends.sign-in-to-add-friends": {
+  "friends.sign-in-to-add-friends": {
     "message": "<link>Accedi a un account Modrinth</link> per stringere amicizie e sapere a cosa stanno giocando!"
   },
-    "instance.add-server.add-and-play": {
+  "instance.add-server.add-and-play": {
     "message": "Aggiungi e avvia"
   },
-    "instance.add-server.add-server": {
+  "instance.add-server.add-server": {
     "message": "Aggiungi server"
   },
-    "instance.add-server.resource-pack.disabled": {
+  "instance.add-server.resource-pack.disabled": {
     "message": "No"
   },
-    "instance.add-server.resource-pack.enabled": {
+  "instance.add-server.resource-pack.enabled": {
     "message": "Sì"
   },
-    "instance.add-server.resource-pack.prompt": {
+  "instance.add-server.resource-pack.prompt": {
     "message": "Chiedi"
   },
-    "instance.add-server.title": {
+  "instance.add-server.title": {
     "message": "Aggiungi server"
   },
-    "instance.edit-server.title": {
+  "instance.edit-server.title": {
     "message": "Modifica server"
   },
-    "instance.files.adding-files": {
+  "instance.files.adding-files": {
     "message": "Aggiungendo i file ({completed}/{total})..."
   },
-    "instance.files.save-as": {
+  "instance.files.save-as": {
     "message": "Salva come..."
   },
-    "instance.server-modal.address": {
+  "instance.server-modal.address": {
     "message": "Indirizzo"
   },
-    "instance.server-modal.name": {
+  "instance.server-modal.name": {
     "message": "Nome"
   },
-    "instance.server-modal.placeholder-name": {
+  "instance.server-modal.placeholder-name": {
     "message": "Server di Minecraft"
   },
-    "instance.server-modal.resource-pack": {
+  "instance.server-modal.resource-pack": {
     "message": "Pacchetto di risorse"
   },
-    "instance.settings.tabs.general": {
+  "instance.settings.tabs.general": {
     "message": "Generale"
   },
-    "instance.settings.tabs.general.delete": {
+  "instance.settings.tabs.general.delete": {
     "message": "Elimina istanza"
   },
-    "instance.settings.tabs.general.delete.button": {
+  "instance.settings.tabs.general.delete.button": {
     "message": "Elimina istanza"
   },
-    "instance.settings.tabs.general.delete.description": {
+  "instance.settings.tabs.general.delete.description": {
     "message": "Elimina permanentemente un'istanza dal tuo dispositivo, compresi i tuoi mondi, file di configurazione e tutto il contenuto installato. Fai attenzione: eliminata un'istanza non c'è modo di recuperarla."
   },
-    "instance.settings.tabs.general.deleting.button": {
+  "instance.settings.tabs.general.deleting.button": {
     "message": "Eliminando..."
   },
-    "instance.settings.tabs.general.duplicate-button": {
+  "instance.settings.tabs.general.duplicate-button": {
     "message": "Duplica"
   },
-    "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
+  "instance.settings.tabs.general.duplicate-button.tooltip.installing": {
     "message": "Impossibile duplicare durante l'installazione."
   },
-    "instance.settings.tabs.general.duplicate-instance": {
+  "instance.settings.tabs.general.duplicate-instance": {
     "message": "Duplica istanza"
   },
-    "instance.settings.tabs.general.duplicate-instance.description": {
+  "instance.settings.tabs.general.duplicate-instance.description": {
     "message": "Crea una copia di questa istanza, compresi mondi, file di configurazione, mod, ecc."
   },
-    "instance.settings.tabs.general.edit-icon": {
+  "instance.settings.tabs.general.edit-icon": {
     "message": "Modifica icona"
   },
-    "instance.settings.tabs.general.edit-icon.remove": {
+  "instance.settings.tabs.general.edit-icon.remove": {
     "message": "Rimuovi icona"
   },
-    "instance.settings.tabs.general.edit-icon.replace": {
+  "instance.settings.tabs.general.edit-icon.replace": {
     "message": "Cambia icona"
   },
-    "instance.settings.tabs.general.edit-icon.select": {
+  "instance.settings.tabs.general.edit-icon.select": {
     "message": "Scegli un'icona"
   },
-    "instance.settings.tabs.general.name": {
+  "instance.settings.tabs.general.name": {
     "message": "Nome"
   },
-    "instance.settings.tabs.general.update-channel": {
+  "instance.settings.tabs.general.update-channel": {
     "message": "Canale di aggiornamento"
   },
-    "instance.settings.tabs.general.update-channel.alpha": {
+  "instance.settings.tabs.general.update-channel.alpha": {
     "message": "Alpha"
   },
-    "instance.settings.tabs.general.update-channel.alpha.description": {
+  "instance.settings.tabs.general.update-channel.alpha.description": {
     "message": "Le versioni stabili, beta e alpha saranno mostrate come aggiornamenti disponibili."
   },
-    "instance.settings.tabs.general.update-channel.beta": {
+  "instance.settings.tabs.general.update-channel.beta": {
     "message": "Beta"
   },
-    "instance.settings.tabs.general.update-channel.beta.description": {
+  "instance.settings.tabs.general.update-channel.beta.description": {
     "message": "Le versioni stabili e beta saranno mostrate come aggiornamenti disponibili."
   },
-    "instance.settings.tabs.general.update-channel.release": {
+  "instance.settings.tabs.general.update-channel.release": {
     "message": "Stabile"
   },
-    "instance.settings.tabs.general.update-channel.release.description": {
+  "instance.settings.tabs.general.update-channel.release.description": {
     "message": "Solo le versioni stabili saranno mostrate come aggiornamenti disponibili."
   },
-    "instance.settings.tabs.general.update-channel.select": {
+  "instance.settings.tabs.general.update-channel.select": {
     "message": "Seleziona il canale di aggiornamento"
   },
-    "instance.settings.tabs.general.web-map": {
+  "instance.settings.tabs.general.web-map": {
     "message": "Web map"
   },
-    "instance.settings.tabs.general.web-map.default-note": {
+  "instance.settings.tabs.general.web-map.default-note": {
     "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
   },
-    "instance.settings.tabs.general.web-map.description": {
+  "instance.settings.tabs.general.web-map.description": {
     "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
   },
-    "instance.settings.tabs.general.web-map.hidden-note": {
+  "instance.settings.tabs.general.web-map.hidden-note": {
     "message": "The map is hidden for this instance, and its page is disabled."
   },
-    "instance.settings.tabs.general.web-map.hide": {
+  "instance.settings.tabs.general.web-map.hide": {
     "message": "Hide map"
   },
-    "instance.settings.tabs.general.web-map.input-label": {
+  "instance.settings.tabs.general.web-map.input-label": {
     "message": "Map address"
   },
-    "instance.settings.tabs.general.web-map.invalid": {
+  "instance.settings.tabs.general.web-map.invalid": {
     "message": "Enter a full address starting with http:// or https://."
   },
-    "instance.settings.tabs.general.web-map.placeholder": {
+  "instance.settings.tabs.general.web-map.placeholder": {
     "message": "https://map.example.com/"
   },
-    "instance.settings.tabs.general.web-map.save": {
+  "instance.settings.tabs.general.web-map.save": {
     "message": "Save"
   },
-    "instance.settings.tabs.hooks": {
+  "instance.settings.tabs.hooks": {
     "message": "Hook di avvio"
   },
-    "instance.settings.tabs.hooks.custom-hooks": {
+  "instance.settings.tabs.hooks.custom-hooks": {
     "message": "Hook di avvio personalizzati"
   },
-    "instance.settings.tabs.hooks.description": {
+  "instance.settings.tabs.hooks.description": {
     "message": "I hook permettono a utenti avanzati di eseguire comandi di sistema prima e dopo l'avvio del gioco."
   },
-    "instance.settings.tabs.hooks.post-exit": {
+  "instance.settings.tabs.hooks.post-exit": {
     "message": "Post-uscita"
   },
-    "instance.settings.tabs.hooks.post-exit.description": {
+  "instance.settings.tabs.hooks.post-exit.description": {
     "message": "Eseguito dopo la chiusura del gioco."
   },
-    "instance.settings.tabs.hooks.post-exit.enter": {
+  "instance.settings.tabs.hooks.post-exit.enter": {
     "message": "Inserisci comando post-uscita..."
   },
-    "instance.settings.tabs.hooks.pre-launch": {
+  "instance.settings.tabs.hooks.pre-launch": {
     "message": "Pre-avvio"
   },
-    "instance.settings.tabs.hooks.pre-launch.description": {
+  "instance.settings.tabs.hooks.pre-launch.description": {
     "message": "Eseguito prima dell'avvio dell'istanza."
   },
-    "instance.settings.tabs.hooks.pre-launch.enter": {
+  "instance.settings.tabs.hooks.pre-launch.enter": {
     "message": "Inserisci comando pre-avvio..."
   },
-    "instance.settings.tabs.hooks.title": {
+  "instance.settings.tabs.hooks.title": {
     "message": "Hook all'avvio del gioco"
   },
-    "instance.settings.tabs.hooks.wrapper": {
+  "instance.settings.tabs.hooks.wrapper": {
     "message": "Wrapper"
   },
-    "instance.settings.tabs.hooks.wrapper.description": {
+  "instance.settings.tabs.hooks.wrapper.description": {
     "message": "Comando wrapper per avviare Minecraft."
   },
-    "instance.settings.tabs.hooks.wrapper.enter": {
+  "instance.settings.tabs.hooks.wrapper.enter": {
     "message": "Inserisci comando wrapper..."
   },
-    "instance.settings.tabs.installation": {
+  "instance.settings.tabs.installation": {
     "message": "Installazione"
   },
-    "instance.settings.tabs.installation.loader-version": {
+  "instance.settings.tabs.installation.loader-version": {
     "message": "Versione di {loader}"
   },
-    "instance.settings.tabs.java": {
+  "instance.settings.tabs.java": {
     "message": "Java e memoria"
   },
-    "instance.settings.tabs.java.custom-environment-variables": {
+  "instance.settings.tabs.java.custom-environment-variables": {
     "message": "Personalizzate"
   },
-    "instance.settings.tabs.java.custom-java-arguments": {
+  "instance.settings.tabs.java.custom-java-arguments": {
     "message": "Personalizzati"
   },
-    "instance.settings.tabs.java.custom-memory-allocation": {
+  "instance.settings.tabs.java.custom-memory-allocation": {
     "message": "Personalizzata"
   },
-    "instance.settings.tabs.java.enter-environment-variables": {
+  "instance.settings.tabs.java.enter-environment-variables": {
     "message": "Inserisci le variabili d'ambiente..."
   },
-    "instance.settings.tabs.java.enter-java-arguments": {
+  "instance.settings.tabs.java.enter-java-arguments": {
     "message": "Inserisci gli argomenti JVM..."
   },
-    "instance.settings.tabs.java.environment-variables": {
+  "instance.settings.tabs.java.environment-variables": {
     "message": "Variabili d'ambiente"
   },
-    "instance.settings.tabs.java.java-arguments": {
+  "instance.settings.tabs.java.java-arguments": {
     "message": "Argomenti Java"
   },
-    "instance.settings.tabs.java.java-installation": {
+  "instance.settings.tabs.java.java-installation": {
     "message": "Installazione Java"
   },
-    "instance.settings.tabs.java.java-memory": {
+  "instance.settings.tabs.java.java-memory": {
     "message": "Memoria allocata"
   },
-    "instance.settings.tabs.java.java-path-placeholder": {
+  "instance.settings.tabs.java.java-path-placeholder": {
     "message": "/percorso/di/java"
   },
-    "instance.settings.tabs.window": {
+  "instance.settings.tabs.window": {
     "message": "Finestra"
   },
-    "instance.settings.tabs.window.custom-window-settings": {
+  "instance.settings.tabs.window.custom-window-settings": {
     "message": "Personalizza le opzioni della finestra"
   },
-    "instance.settings.tabs.window.fullscreen": {
+  "instance.settings.tabs.window.fullscreen": {
     "message": "Schermo intero"
   },
-    "instance.settings.tabs.window.fullscreen.description": {
+  "instance.settings.tabs.window.fullscreen.description": {
     "message": "Fa in modo che il gioco si avvii a schermo intero (tramite options.txt)."
   },
-    "instance.settings.tabs.window.height": {
+  "instance.settings.tabs.window.height": {
     "message": "Altezza"
   },
-    "instance.settings.tabs.window.height.description": {
+  "instance.settings.tabs.window.height.description": {
     "message": "L'altezza della finestra del gioco all'avvio."
   },
-    "instance.settings.tabs.window.height.enter": {
+  "instance.settings.tabs.window.height.enter": {
     "message": "Inserisci altezza..."
   },
-    "instance.settings.tabs.window.width": {
+  "instance.settings.tabs.window.width": {
     "message": "Larghezza"
   },
-    "instance.settings.tabs.window.width.description": {
+  "instance.settings.tabs.window.width.description": {
     "message": "La larghezza della finestra del gioco all'avvio."
   },
-    "instance.settings.tabs.window.width.enter": {
+  "instance.settings.tabs.window.width.enter": {
     "message": "Inserisci larghezza..."
   },
-    "instance.worlds.a_minecraft_server": {
+  "instance.worlds.a_minecraft_server": {
     "message": "Un server Minecraft"
   },
-    "instance.worlds.cant_connect": {
+  "instance.worlds.cant_connect": {
     "message": "Impossibile connettersi al server"
   },
-    "instance.worlds.copy_address": {
+  "instance.worlds.copy_address": {
     "message": "Copia indirizzo"
   },
-    "instance.worlds.create_shortcut": {
+  "instance.worlds.create_shortcut": {
     "message": "Crea collegamento"
   },
-    "instance.worlds.game_already_open": {
+  "instance.worlds.game_already_open": {
     "message": "Istanza già aperta"
   },
-    "instance.worlds.hardcore": {
+  "instance.worlds.hardcore": {
     "message": "Modalità estrema"
   },
-    "instance.worlds.incompatible_server": {
+  "instance.worlds.incompatible_server": {
     "message": "Server non è compatibile"
   },
-    "instance.worlds.linked_server": {
+  "instance.worlds.linked_server": {
     "message": "Gestito dal server"
   },
-    "instance.worlds.no_contact": {
+  "instance.worlds.no_contact": {
     "message": "Impossibile contattare il server"
   },
-    "instance.worlds.no_server_quick_play": {
+  "instance.worlds.no_server_quick_play": {
     "message": "È possibile avviare un server direttamente solo su Minecraft Alpha 1.0.5+"
   },
-    "instance.worlds.no_singleplayer_quick_play": {
+  "instance.worlds.no_singleplayer_quick_play": {
     "message": "È possibile avviare direttamente un mondo in giocatore singolo solo su Minecraft 1.20+"
   },
-    "instance.worlds.play_instance": {
+  "instance.worlds.play_instance": {
     "message": "Avvia istanza"
   },
-    "instance.worlds.view_instance": {
+  "instance.worlds.view_instance": {
     "message": "Mostra istanza"
   },
-    "instance.worlds.world_in_use": {
+  "instance.worlds.world_in_use": {
     "message": "Mondo già in uso"
   },
-    "minecraft-account.label": {
+  "minecraft-account.label": {
     "message": "Account di Minecraft"
   },
-    "minecraft-account.not-signed-in": {
+  "minecraft-account.not-signed-in": {
     "message": "Accesso non effettuato"
   },
-    "minecraft-account.remove-account": {
+  "minecraft-account.remove-account": {
     "message": "Rimuovi account"
   },
-    "minecraft-account.select-account": {
+  "minecraft-account.select-account": {
     "message": "Seleziona un account"
   },
-    "minecraft-account.sign-in": {
+  "minecraft-account.sign-in": {
     "message": "Accedi a Minecraft"
   },
-    "search.filter.locked.instance": {
+  "search.filter.locked.instance": {
     "message": "Determinato dall'istanza"
   },
-    "search.filter.locked.instance-game-version.title": {
+  "search.filter.locked.instance-game-version.title": {
     "message": "La versione del gioco è determinata dall'istanza"
   },
-    "search.filter.locked.instance-loader.title": {
+  "search.filter.locked.instance-loader.title": {
     "message": "Il loader è determinato dall'istanza"
   },
-    "search.filter.locked.instance.sync": {
+  "search.filter.locked.instance.sync": {
     "message": "Sincronizza con l'istanza"
   },
-    "search.filter.locked.server": {
+  "search.filter.locked.server": {
     "message": "Determinato dal server"
   },
-    "search.filter.locked.server-environment.title": {
+  "search.filter.locked.server-environment.title": {
     "message": "Solo mod lato client possono essere aggiunte all'istanza del server"
   },
-    "search.filter.locked.server-game-version.title": {
+  "search.filter.locked.server-game-version.title": {
     "message": "La versione del gioco è determinata dal server"
   },
-    "search.filter.locked.server-loader.title": {
+  "search.filter.locked.server-loader.title": {
     "message": "Il loader è determinato dal server"
   },
-    "unknown-pack-warning-modal.body": {
+  "unknown-pack-warning-modal.body": {
     "message": "Solo i file caricati su Modrinth vengono esaminati, qualunque sia il loro formato (.mrpack inclusi)."
   },
-    "unknown-pack-warning-modal.dont-show-again": {
+  "unknown-pack-warning-modal.dont-show-again": {
     "message": "Non mostrare più questo avviso"
   },
-    "unknown-pack-warning-modal.header": {
+  "unknown-pack-warning-modal.header": {
     "message": "Conferma l'installazione"
   },
-    "unknown-pack-warning-modal.install-anyway": {
+  "unknown-pack-warning-modal.install-anyway": {
     "message": "Installa comunque"
   },
-    "unknown-pack-warning-modal.malware-statement": {
+  "unknown-pack-warning-modal.malware-statement": {
     "message": "Spesso i malware vengono nascosti nei pacchetti di mod, poi distribuiti su piattaforme come Discord."
   },
-    "unknown-pack-warning-modal.warning.body": {
+  "unknown-pack-warning-modal.warning.body": {
     "message": "Non è stato possibile trovare questo file su Modrinth. Consigliamo di installare file solo da fonti attendibili."
   },
-    "unknown-pack-warning-modal.warning.title": {
+  "unknown-pack-warning-modal.warning.title": {
     "message": "Tipo di file sconosciuto"
   }
 }

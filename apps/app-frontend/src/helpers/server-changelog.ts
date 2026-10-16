@@ -1,8 +1,7 @@
-import {
-    get_automodpack_changelog,
-    type AutomodpackChangelog,
-    list,
-} from '@/helpers/instance'
+import type { AutomodpackCandidate, AutomodpackChangelog } from '@/helpers/automodpack-payload'
+import type { AutomodpackChangelogView } from '@/helpers/automodpack-payload'
+import { resolveAutomodpackView } from '@/helpers/automodpack-payload'
+import { get_automodpack_changelog, list } from '@/helpers/instance'
 import { isServerLinkedInstance } from '@/helpers/first-run-bootstrap'
 import { get as getSettings } from '@/helpers/settings'
 import type { GameInstance } from '@/helpers/types'
@@ -37,23 +36,21 @@ export function orderChangelogInstances(
     ]
 }
 
-/** The resolved history plus the instance it belongs to. */
-export interface ResolvedAutomodpackChangelog {
-    instanceId: string
-    changelog: AutomodpackChangelog
-}
-
 /**
  * The history of the first candidate instance that has one.
  *
  * The instance id comes back with the history because the page must resolve the
  * journal's mod paths against that same instance.
  *
- * Returns `null` when no instance can supply a history at all — including when
- * the backend cannot be reached, so the page renders its "nothing yet" state
- * instead of a failure.
+ * When no instance has a history, the most specific reason among the candidates
+ * comes back, so the page can distinguish "AutoModpack has never run here" from
+ * "the selected pack's mirror is gone". A backend that cannot be reached at all
+ * reports `unreachable`. This never throws, so the page cannot crash on it.
+ *
+ * The fold itself lives in `resolveAutomodpackView`, which is pure and unit
+ * tested; this function only gathers the candidates.
  */
-export async function loadAutomodpackChangelog(): Promise<ResolvedAutomodpackChangelog | null> {
+export async function loadAutomodpackChangelog(): Promise<AutomodpackChangelogView> {
     let instances: GameInstance[]
     let homeInstanceId: string | null | undefined
 
@@ -62,17 +59,19 @@ export async function loadAutomodpackChangelog(): Promise<ResolvedAutomodpackCha
         instances = listed
         homeInstanceId = settings.minimal_home_instance_id
     } catch {
-        return null
+        return resolveAutomodpackView([], 'unreachable')
     }
 
+    const candidates: AutomodpackCandidate[] = []
     for (const instance of orderChangelogInstances(instances, homeInstanceId)) {
+        let changelog: AutomodpackChangelog | null = null
         try {
-            const changelog = await get_automodpack_changelog(instance.id)
-            if (changelog.available) return { instanceId: instance.id, changelog }
+            changelog = await get_automodpack_changelog(instance.id)
         } catch {
             // One unreadable instance must not hide another instance's history.
         }
+        candidates.push({ instanceId: instance.id, changelog })
     }
 
-    return null
+    return resolveAutomodpackView(candidates)
 }

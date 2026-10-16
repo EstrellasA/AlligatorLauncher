@@ -1,371 +1,383 @@
 {
-    "app.appearance-settings.sections.advanced-interface": {
+  "app.appearance-settings.sections.advanced-interface": {
     "message": "Advanced interface"
   },
-    "app.appearance-settings.sections.content-behavior": {
+  "app.appearance-settings.sections.content-behavior": {
     "message": "Content behavior"
   },
-    "app.appearance-settings.sections.home-navigation": {
+  "app.appearance-settings.sections.home-navigation": {
     "message": "Home & navigation"
   },
-    "app.auth-servers.unreachable.body": {
+  "app.auth-servers.unreachable.body": {
     "message": "Minecraft serveri za autentifikaciju su možda trenutno nedostupni. Molimo vas da proverite vašu internet vezu i pokušajte ponovo kasnije."
   },
-    "app.auth-servers.unreachable.header": {
+  "app.auth-servers.unreachable.header": {
     "message": "Serveri za autentifikaciju su nedostupni"
   },
-    "app.browse.add-to-instance": {
+  "app.browse.add-to-instance": {
     "message": "Dodaj na instancu"
   },
-    "app.browse.add-to-instance-name": {
+  "app.browse.add-to-instance-name": {
     "message": "Dodaj na {instanceName}"
   },
-    "app.browse.added": {
+  "app.browse.added": {
     "message": "Dodato"
   },
-    "app.browse.already-added": {
+  "app.browse.already-added": {
     "message": "Već je dodato"
   },
-    "app.browse.client-mods.install": {
+  "app.browse.client-mods.install": {
     "message": "Install to my mods"
   },
-    "app.browse.client-mods.install-compact": {
+  "app.browse.client-mods.install-compact": {
     "message": "Install to client"
   },
-    "app.browse.client-mods.install-tooltip": {
+  "app.browse.client-mods.install-tooltip": {
     "message": "Installs into this instance's clientmods folder"
   },
-    "app.browse.client-mods.notice": {
+  "app.browse.client-mods.notice": {
     "message": "Content here is installed into your own clientmods folder. The server pack's mods folder is never changed."
   },
-    "app.browse.client-mods.title": {
+  "app.browse.client-mods.title": {
     "message": "Discover content · Client mods"
   },
-    "app.browse.discover-content": {
+  "app.browse.discover-content": {
     "message": "Otkrij sadržaj"
   },
-    "app.browse.discover-servers": {
+  "app.browse.discover-servers": {
     "message": "Otkrij servere"
   },
-    "app.content-install.preview.pack-duplicate-confirm": {
+  "app.content-install.preview.pack-duplicate-confirm": {
     "message": "Install my copy anyway"
   },
-    "app.content-install.preview.pack-duplicate-consequence": {
+  "app.content-install.preview.pack-duplicate-consequence": {
     "message": "The server pack's copy is the one that loads, so a copy you install is ignored at load time unless you mean to override it."
   },
-    "app.content-install.preview.pack-duplicate-description": {
+  "app.content-install.preview.pack-duplicate-description": {
     "message": "{count, plural, one {The server pack already ships this mod.} other {The server pack already ships # of the mods you are installing.}}"
   },
-    "app.content-install.preview.pack-duplicate-header": {
+  "app.content-install.preview.pack-duplicate-header": {
     "message": "Already provided by the server pack"
   },
-    "app.export-modal.description-placeholder": {
+  "app.export-modal.description-placeholder": {
     "message": "Ukucaj opis modpacka..."
   },
-    "app.export-modal.export-button": {
+  "app.export-modal.export-button": {
     "message": "Izvoz"
   },
-    "app.export-modal.header": {
+  "app.export-modal.header": {
     "message": "Izvezi modpack"
   },
-    "app.export-modal.modpack-name-label": {
+  "app.export-modal.modpack-name-label": {
     "message": "Ime Modpacka"
   },
-    "app.export-modal.modpack-name-placeholder": {
+  "app.export-modal.modpack-name-placeholder": {
     "message": "Ime modpacka"
   },
-    "app.export-modal.version-number-label": {
+  "app.export-modal.version-number-label": {
     "message": "Broj verzije"
   },
-    "app.export-modal.version-number-placeholder": {
+  "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
-    "app.first-run-bootstrap.dismiss": {
+  "app.first-run-bootstrap.dismiss": {
     "message": "Continue anyway"
   },
-    "app.first-run-bootstrap.failed.bundled-mods": {
+  "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
-    "app.first-run-bootstrap.failed.details": {
+  "app.first-run-bootstrap.failed.details": {
     "message": "Technical details"
   },
-    "app.first-run-bootstrap.failed.instance-creation": {
+  "app.first-run-bootstrap.failed.instance-creation": {
     "message": "The game instance could not be created. Check your network connection and try again."
   },
-    "app.first-run-bootstrap.failed.instance-id-missing": {
+  "app.first-run-bootstrap.failed.instance-id-missing": {
     "message": "The launcher could not tell which instance was created. Please report this to the server team."
   },
-    "app.first-run-bootstrap.failed.title": {
+  "app.first-run-bootstrap.failed.title": {
     "message": "Setup could not be finished"
   },
-    "app.first-run-bootstrap.failed.unknown": {
+  "app.first-run-bootstrap.failed.unknown": {
     "message": "Something went wrong while setting up your game."
   },
-    "app.first-run-bootstrap.file-progress": {
+  "app.first-run-bootstrap.file-progress": {
     "message": "File {current} of {total}"
   },
-    "app.first-run-bootstrap.phase.downloading-minecraft": {
+  "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "Downloading the game files…"
   },
-    "app.first-run-bootstrap.phase.finishing": {
+  "app.first-run-bootstrap.phase.finishing": {
     "message": "Finishing up…"
   },
-    "app.first-run-bootstrap.phase.installing-loader": {
+  "app.first-run-bootstrap.phase.installing-loader": {
     "message": "Installing the mod loader…"
   },
-    "app.first-run-bootstrap.phase.preparing": {
+  "app.first-run-bootstrap.phase.preparing": {
     "message": "Preparing your game…"
   },
-    "app.first-run-bootstrap.repair.subtitle": {
+  "app.first-run-bootstrap.repair.subtitle": {
     "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
   },
-    "app.first-run-bootstrap.repair.success-text": {
+  "app.first-run-bootstrap.repair.success-text": {
     "message": "The missing files were added back. You can start playing now."
   },
-    "app.first-run-bootstrap.repair.title": {
+  "app.first-run-bootstrap.repair.title": {
     "message": "Finishing your game setup"
   },
-    "app.first-run-bootstrap.retry": {
+  "app.first-run-bootstrap.retry": {
     "message": "Try again"
   },
-    "app.first-run-bootstrap.server-missing.text": {
+  "app.first-run-bootstrap.server-missing.text": {
     "message": "Add {address} to your instance manually, or use the join button on the home page."
   },
-    "app.first-run-bootstrap.server-missing.title": {
+  "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
   },
-    "app.first-run-bootstrap.step.creating-instance": {
+  "app.first-run-bootstrap.step.creating-instance": {
     "message": "Creating your game instance"
   },
-    "app.first-run-bootstrap.step.installing-mods": {
+  "app.first-run-bootstrap.step.installing-mods": {
     "message": "Installing the required mods"
   },
-    "app.first-run-bootstrap.step.registering-server": {
+  "app.first-run-bootstrap.step.registering-server": {
     "message": "Adding the server to your instance"
   },
-    "app.first-run-bootstrap.subtitle": {
+  "app.first-run-bootstrap.subtitle": {
     "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
   },
-    "app.first-run-bootstrap.success.text": {
+  "app.first-run-bootstrap.success.text": {
     "message": "The instance was created with the mods this server needs. You can start playing now."
   },
-    "app.first-run-bootstrap.success.title": {
+  "app.first-run-bootstrap.success.title": {
     "message": "Your game is ready"
   },
-    "app.first-run-bootstrap.title": {
+  "app.first-run-bootstrap.title": {
     "message": "Setting up your game"
   },
-    "app.home.server-status.checking": {
+  "app.home.server-status.checking": {
     "message": "Checking..."
   },
-    "app.home.server-status.join": {
+  "app.home.server-status.join": {
     "message": "Join server"
   },
-    "app.home.server-status.join.no-instance": {
+  "app.home.server-status.join.no-instance": {
     "message": "Choose a home instance before joining the server."
   },
-    "app.home.server-status.join.not-installed": {
+  "app.home.server-status.join.not-installed": {
     "message": "This instance is still installing. Join once it is ready."
   },
-    "app.home.server-status.join.offline": {
+  "app.home.server-status.join.offline": {
     "message": "The server is offline right now."
   },
-    "app.home.server-status.joining": {
+  "app.home.server-status.joining": {
     "message": "Joining..."
   },
-    "app.home.server-status.latency": {
+  "app.home.server-status.latency": {
     "message": "{latency} ms"
   },
-    "app.home.server-status.loading": {
+  "app.home.server-status.loading": {
     "message": "Fetching the latest server status..."
   },
-    "app.home.server-status.offline": {
+  "app.home.server-status.offline": {
     "message": "Offline"
   },
-    "app.home.server-status.offline.body": {
+  "app.home.server-status.offline.body": {
     "message": "It may be under maintenance — ask in the group chat? The web map often still works."
   },
-    "app.home.server-status.offline.body.no-map": {
+  "app.home.server-status.offline.body.no-map": {
     "message": "It may be under maintenance — ask in the group chat?"
   },
-    "app.home.server-status.offline.title": {
+  "app.home.server-status.offline.title": {
     "message": "The server is offline right now"
   },
-    "app.home.server-status.online": {
+  "app.home.server-status.online": {
     "message": "Online"
   },
-    "app.home.server-status.players.empty": {
+  "app.home.server-status.players.empty": {
     "message": "Nobody is online right now — the world is all yours."
   },
-    "app.home.server-status.players.more": {
+  "app.home.server-status.players.more": {
     "message": "+{count}"
   },
-    "app.home.server-status.players.stale": {
+  "app.home.server-status.players.stale": {
     "message": "The server advertises at most 12 names, and the web map can lag, so the list may not match the count."
   },
-    "app.home.server-status.players.title": {
+  "app.home.server-status.players.title": {
     "message": "Players online"
   },
-    "app.home.server-status.players.unavailable": {
+  "app.home.server-status.players.unavailable": {
     "message": "The server does not publish its player list, so only the count is shown."
   },
-    "app.home.server-status.refresh": {
+  "app.home.server-status.refresh": {
     "message": "Refresh status"
   },
-    "app.home.server-status.version": {
+  "app.home.server-status.version": {
     "message": "Minecraft {gameVersion} · {loader} {loaderVersion}"
   },
-    "app.instance.confirm-delete.admonition-body": {
+  "app.instance.confirm-delete.admonition-body": {
     "message": "Svi podaci za tvoju instancu će biti trajno izbrisani, uključujući tvoje svetove, konfiguracije, i sav instaliran sadržaj."
   },
-    "app.instance.confirm-delete.admonition-header": {
+  "app.instance.confirm-delete.admonition-header": {
     "message": "Ova akcija ne može biti poništena"
   },
-    "app.instance.confirm-delete.delete-button": {
+  "app.instance.confirm-delete.delete-button": {
     "message": "Izbriši instancu"
   },
-    "app.instance.confirm-delete.header": {
+  "app.instance.confirm-delete.header": {
     "message": "Izbriši instancu"
   },
-    "app.instance.modpack-already-installed.body": {
+  "app.instance.modpack-already-installed.body": {
     "message": "Ovaj modpack je već instaliran u <bold>{instanceName}</bold> instancu. Da li ste sigurni da želite da je duplirate?"
   },
-    "app.instance.modpack-already-installed.create": {
+  "app.instance.modpack-already-installed.create": {
     "message": "Napravi"
   },
-    "app.instance.modpack-already-installed.header": {
+  "app.instance.modpack-already-installed.header": {
     "message": "Modpack je već instaliran"
   },
-    "app.instance.modpack-already-installed.instance": {
+  "app.instance.modpack-already-installed.instance": {
     "message": "Instanca"
   },
-    "app.instance.mods.content-type-project": {
+  "app.instance.mods.content-type-project": {
     "message": "projekat"
   },
-    "app.instance.mods.folder-note": {
+  "app.instance.mods.folder-note": {
     "message": "The mods folder is managed by the server pack. Mods you pick yourself belong in the clientmods folder."
   },
-    "app.instance.mods.player-added.badge": {
+  "app.instance.mods.player-added.badge": {
     "message": "Player-added"
   },
-    "app.instance.mods.player-added.hint": {
+  "app.instance.mods.player-added.hint": {
     "message": "This file is not part of the server pack. Mods you pick yourself belong in the clientmods folder — the server pack manages the mods folder, so the launcher does not change anything in it."
   },
-    "app.instance.mods.project-was-added": {
+  "app.instance.mods.project-was-added": {
     "message": "\"{name}\" je dodato"
   },
-    "app.instance.mods.projects-were-added": {
+  "app.instance.mods.projects-were-added": {
     "message": "{count} projekata je dodato"
   },
-    "app.instance.mods.share-text": {
+  "app.instance.mods.share-text": {
     "message": "Pogledaj ove projekte koje ja koristim u svom modpacku!"
   },
-    "app.instance.mods.share-title": {
+  "app.instance.mods.share-title": {
     "message": "Deljenje sadržaja modpacka"
   },
-    "app.instance.mods.successfully-uploaded": {
+  "app.instance.mods.successfully-uploaded": {
     "message": "Uspešno otpremljeno"
   },
-    "app.instance.worlds.add-server": {
+  "app.instance.worlds.add-server": {
     "message": "Dodaj server"
   },
-    "app.instance.worlds.browse-servers": {
+  "app.instance.worlds.browse-servers": {
     "message": "Pretraži servere"
   },
-    "app.instance.worlds.filter-modded": {
+  "app.instance.worlds.filter-modded": {
     "message": "Modifikovano"
   },
-    "app.instance.worlds.filter-offline": {
+  "app.instance.worlds.filter-offline": {
     "message": "Oflajn"
   },
-    "app.instance.worlds.filter-online": {
+  "app.instance.worlds.filter-online": {
     "message": "Onlajn"
   },
-    "app.instance.worlds.filter-vanilla": {
+  "app.instance.worlds.filter-vanilla": {
     "message": "Vanila"
   },
-    "app.instance.worlds.no-worlds-description": {
+  "app.instance.worlds.no-worlds-description": {
     "message": "Dodaj server ili pretraži da bi započeo"
   },
-    "app.instance.worlds.no-worlds-heading": {
+  "app.instance.worlds.no-worlds-heading": {
     "message": "Nema dodatih servera niti svetova"
   },
-    "app.instance.worlds.search-worlds-placeholder": {
+  "app.instance.worlds.search-worlds-placeholder": {
     "message": "Pretraži {count} svetova..."
   },
-    "app.mods.change-instance": {
+  "app.mods.change-instance": {
     "message": "Change instance"
   },
-    "app.mods.conflict.badge": {
+  "app.mods.conflict.badge": {
     "message": "Server copy takes over"
   },
-    "app.mods.conflict.summary": {
+  "app.mods.conflict.summary": {
     "message": "{count, plural, one {# mod also ships with the server, so the server copy is the one that loads} other {# mods also ship with the server, so the server copies are the ones that load}}"
   },
-    "app.mods.conflict.tooltip": {
+  "app.mods.conflict.tooltip": {
     "message": "The server already ships this mod. The server copy is the one that loads, so this file is ignored."
   },
-    "app.mods.count": {
+  "app.mods.count": {
     "message": "{count, plural, one {# file} other {# files}}"
   },
-    "app.mods.disabled": {
+  "app.mods.disabled": {
     "message": "Disabled"
   },
-    "app.mods.folder-missing": {
+  "app.mods.folder-missing": {
     "message": "This folder does not exist in the instance yet."
   },
-    "app.mods.link.mcmod": {
+  "app.mods.link.mcmod": {
     "message": "Search {name} on the MC Mod wiki"
   },
-    "app.mods.link.project": {
+  "app.mods.link.project": {
     "message": "Open the project page for {name}"
   },
-    "app.mods.load-failed": {
+  "app.mods.load-failed": {
     "message": "Could not read this folder."
   },
-    "app.mods.loading": {
+  "app.mods.loading": {
     "message": "Loading files…"
   },
-    "app.mods.no-instance": {
+  "app.mods.no-instance": {
     "message": "No installed instance is available."
   },
-    "app.mods.ownership.local-discovered": {
+  "app.mods.ownership.local-discovered": {
     "message": "Found in the folder"
   },
-    "app.mods.ownership.pack-managed": {
+  "app.mods.ownership.pack-managed": {
     "message": "Managed by the server pack"
   },
-    "app.mods.ownership.user-added": {
+  "app.mods.ownership.user-added": {
     "message": "Added by you"
   },
-    "app.mods.picker.no-instances": {
+  "app.mods.picker.no-instances": {
     "message": "No installed instances are available."
   },
-    "app.mods.picker.no-results": {
+  "app.mods.picker.no-results": {
     "message": "No matching instances"
   },
-    "app.mods.picker.search": {
+  "app.mods.picker.search": {
     "message": "Search instances"
   },
-    "app.mods.picker.select": {
+  "app.mods.picker.select": {
     "message": "Choose {name}"
   },
-    "app.mods.picker.title": {
+  "app.mods.picker.title": {
     "message": "Choose an instance"
   },
-    "app.mods.refresh": {
+  "app.mods.refresh": {
     "message": "Refresh"
   },
-    "app.mods.retry": {
+  "app.mods.retry": {
     "message": "Try again"
   },
-    "app.navigation.changelog": {
+  "app.navigation.changelog": {
     "message": "Update notes"
   },
-    "app.navigation.server-map": {
+  "app.navigation.server-map": {
     "message": "Server map"
   },
-    "app.server.avatar.open-skin-selector": {
+  "app.project.install-blocked.server-required.description": {
+    "message": "It only works when the server runs it as well, and the server's content belongs to the pack you joined — you cannot add anything to it from here. Putting it in your own client mods folder would break the game, so the launcher does not offer an install."
+  },
+  "app.project.install-blocked.server-required.title": {
+    "message": "This mod has to be installed on the server too"
+  },
+  "app.project.install-blocked.unverified.description": {
+    "message": "This source does not publish whether a mod has to be installed on the server, so the launcher cannot tell whether a client-only install is safe. Rather than risk a game that no longer works, it does not offer an install here."
+  },
+  "app.project.install-blocked.unverified.title": {
+    "message": "Cannot confirm this mod works on the client alone"
+  },
+  "app.server.avatar.open-skin-selector": {
     "message": "Change your skin"
   },
   "app.server.changelog.changed-files": "{count, plural, =0 {No files changed} one {# file changed} other {# files changed}}",
@@ -394,172 +406,172 @@
   "app.server.changelog.retry": "Try again",
   "app.server.changelog.skipped-lines": "{count, plural, one {# journal line could not be read and was skipped.} other {# journal lines could not be read and were skipped.}}",
   "app.server.changelog.title": "Pack update notes",
-    "app.server.map.loading": {
+  "app.server.map.loading": {
     "message": "Loading the map..."
   },
-    "app.server.map.not-embeddable.body": {
+  "app.server.map.not-embeddable.body": {
     "message": "The map server refuses to be displayed inside another application. Open it in your browser instead."
   },
-    "app.server.map.not-embeddable.title": {
+  "app.server.map.not-embeddable.title": {
     "message": "This map cannot be embedded"
   },
-    "app.server.map.open-in-browser": {
+  "app.server.map.open-in-browser": {
     "message": "Open in browser"
   },
-    "app.server.map.reload": {
+  "app.server.map.reload": {
     "message": "Reload map"
   },
-    "app.settings.defaults.sections.after-launch": {
+  "app.settings.defaults.sections.after-launch": {
     "message": "After launch behavior"
   },
-    "app.settings.defaults.sections.environment": {
+  "app.settings.defaults.sections.environment": {
     "message": "Environment variables"
   },
-    "app.settings.defaults.sections.launch-hooks": {
+  "app.settings.defaults.sections.launch-hooks": {
     "message": "Launch hooks"
   },
-    "app.settings.defaults.sections.window-behavior": {
+  "app.settings.defaults.sections.window-behavior": {
     "message": "Window behavior"
   },
-    "app.settings.developer.feature-flags-section-title": {
+  "app.settings.developer.feature-flags-section-title": {
     "message": "Feature flags"
   },
-    "app.settings.feature-flags.advanced-filters-collapsed": {
+  "app.settings.feature-flags.advanced-filters-collapsed": {
     "message": "Collapse advanced filters by default"
   },
-    "app.settings.feature-flags.always-show-app-controls": {
+  "app.settings.feature-flags.always-show-app-controls": {
     "message": "Always show app controls"
   },
-    "app.settings.feature-flags.auto-install-dependencies": {
+  "app.settings.feature-flags.auto-install-dependencies": {
     "message": "Automatically install dependencies"
   },
-    "app.settings.feature-flags.i18n-debug": {
+  "app.settings.feature-flags.i18n-debug": {
     "message": "Translation debugging"
   },
-    "app.settings.feature-flags.page-path": {
+  "app.settings.feature-flags.page-path": {
     "message": "Page path"
   },
-    "app.settings.feature-flags.page-transitions": {
+  "app.settings.feature-flags.page-transitions": {
     "message": "Page transitions"
   },
-    "app.settings.feature-flags.project-background": {
+  "app.settings.feature-flags.project-background": {
     "message": "Project backgrounds"
   },
-    "app.settings.feature-flags.server-project-qa": {
+  "app.settings.feature-flags.server-project-qa": {
     "message": "Server project QA"
   },
-    "app.settings.feature-flags.server-ram-as-bytes-always-on": {
+  "app.settings.feature-flags.server-ram-as-bytes-always-on": {
     "message": "Always show server RAM as bytes"
   },
-    "app.settings.feature-flags.show-instance-play-time": {
+  "app.settings.feature-flags.show-instance-play-time": {
     "message": "Show instance play time"
   },
-    "app.settings.feature-flags.show-version-environment-column": {
+  "app.settings.feature-flags.show-version-environment-column": {
     "message": "Show version environment column"
   },
-    "app.settings.feature-flags.skip-non-essential-warnings": {
+  "app.settings.feature-flags.skip-non-essential-warnings": {
     "message": "Skip non-essential warnings"
   },
-    "app.settings.feature-flags.skip-unknown-pack-warning": {
+  "app.settings.feature-flags.skip-unknown-pack-warning": {
     "message": "Skip unknown pack warnings"
   },
-    "app.settings.feature-flags.worlds-in-home": {
+  "app.settings.feature-flags.worlds-in-home": {
     "message": "Worlds on home page"
   },
-    "app.settings.feature-flags.worlds-tab": {
+  "app.settings.feature-flags.worlds-tab": {
     "message": "Worlds tab"
   },
-    "app.settings.privacy.section-title": {
+  "app.settings.privacy.section-title": {
     "message": "Privacy & data sharing"
   },
-    "app.settings.resources.ALLIGATORZONE-data-directory": {
+  "app.settings.resources.ALLIGATORZONE-data-directory": {
     "message": "ALLIGATORZONE data directory"
   },
-    "app.settings.resources.sections.data-storage": {
+  "app.settings.resources.sections.data-storage": {
     "message": "Data directories & cache"
   },
-    "app.settings.resources.sections.download-behavior": {
+  "app.settings.resources.sections.download-behavior": {
     "message": "Download behavior"
   },
-    "app.settings.resources.sections.missing-content": {
+  "app.settings.resources.sections.missing-content": {
     "message": "Missing content"
   },
-    "app.settings.resources.sections.network-authentication": {
+  "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
   },
-    "app.settings.updates.channel.state-description": {
+  "app.settings.updates.channel.state-description": {
     "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."
   },
-    "app.settings.updates.manual.description": {
+  "app.settings.updates.manual.description": {
     "message": "This build of ALLIGATORZONE never checks for, downloads, or installs launcher updates on its own."
   },
-    "app.settings.updates.manual.distribution": {
+  "app.settings.updates.manual.distribution": {
     "message": "New versions are handed out manually: download the latest build from the player QQ group, whose number is listed on the About page."
   },
-    "app.settings.updates.manual.title": {
+  "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-    "app.translation-settings.display-section-title": {
+  "app.translation-settings.display-section-title": {
     "message": "Translation display"
   },
-    "friends.friend.cancel-request": {
+  "friends.friend.cancel-request": {
     "message": "Otkaži zahtev"
   },
-    "friends.friend.remove-friend": {
+  "friends.friend.remove-friend": {
     "message": "Ukloni prijatelja"
   },
-    "friends.friend.request-sent": {
+  "friends.friend.request-sent": {
     "message": "Zahtev za prijateljstvo poslat"
   },
-    "friends.friend.view-profile": {
+  "friends.friend.view-profile": {
     "message": "Pogledaj profil"
   },
-    "friends.heading": {
+  "friends.heading": {
     "message": "Prijatelji"
   },
-    "instance.add-server.title": {
+  "instance.add-server.title": {
     "message": "Dodaj server"
   },
-    "instance.edit-server.title": {
+  "instance.edit-server.title": {
     "message": "Izmeni server"
   },
-    "instance.server-modal.placeholder-name": {
+  "instance.server-modal.placeholder-name": {
     "message": "Minecraft Server"
   },
-    "instance.settings.tabs.general": {
+  "instance.settings.tabs.general": {
     "message": "Generalno"
   },
-    "instance.settings.tabs.general.deleting.button": {
+  "instance.settings.tabs.general.deleting.button": {
     "message": "Brisanje..."
   },
-    "instance.settings.tabs.general.name": {
+  "instance.settings.tabs.general.name": {
     "message": "Ime"
   },
-    "instance.settings.tabs.general.web-map": {
+  "instance.settings.tabs.general.web-map": {
     "message": "Web map"
   },
-    "instance.settings.tabs.general.web-map.default-note": {
+  "instance.settings.tabs.general.web-map.default-note": {
     "message": "No address is saved for this instance yet, so the launcher's built-in default is used: {url}"
   },
-    "instance.settings.tabs.general.web-map.description": {
+  "instance.settings.tabs.general.web-map.description": {
     "message": "Address of the web map. The map page and its sidebar button only appear while this is filled in; leave it empty to hide and disable the map."
   },
-    "instance.settings.tabs.general.web-map.hidden-note": {
+  "instance.settings.tabs.general.web-map.hidden-note": {
     "message": "The map is hidden for this instance, and its page is disabled."
   },
-    "instance.settings.tabs.general.web-map.hide": {
+  "instance.settings.tabs.general.web-map.hide": {
     "message": "Hide map"
   },
-    "instance.settings.tabs.general.web-map.input-label": {
+  "instance.settings.tabs.general.web-map.input-label": {
     "message": "Map address"
   },
-    "instance.settings.tabs.general.web-map.invalid": {
+  "instance.settings.tabs.general.web-map.invalid": {
     "message": "Enter a full address starting with http:// or https://."
   },
-    "instance.settings.tabs.general.web-map.placeholder": {
+  "instance.settings.tabs.general.web-map.placeholder": {
     "message": "https://map.example.com/"
   },
-    "instance.settings.tabs.general.web-map.save": {
+  "instance.settings.tabs.general.web-map.save": {
     "message": "Save"
   }
 }

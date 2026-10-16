@@ -41,6 +41,7 @@ import InstanceIcon from '@/components/ui/InstanceIcon.vue'
 import { useContentFavorites } from '@/composables/useContentFavorites'
 import { createBrowseProjectTabs, getBrowseProjectTabOptions } from '@/helpers/browse-project-tabs'
 import { get_project, get_project_many, get_version_many } from '@/helpers/cache.js'
+import { isClientModSafeSides } from '@/helpers/client-mod-browse'
 import {
     type ContentFavorite,
     contentFavoriteKey,
@@ -509,9 +510,30 @@ const availableProjects = computed(() =>
         .sort((left, right) => right.favorite.saved_at - left.favorite.saved_at),
 )
 
+/**
+ * Whether this favourite may be offered by the content browser.
+ *
+ * Favorites is a tab of the locked Browse surface and installs mods into
+ * `clientmods/`, so it has to honour the same lock as the search: a mod that
+ * needs the server would break the game when it lands in the player's own mod
+ * folder. Only mods are constrained — every other content type resolves its own
+ * folder and has no server-side counterpart to be missing — and only Modrinth
+ * favourites can be checked, because CurseForge publishes no client/server
+ * requirement at all (see `CLIENT_MOD_SAFE_FACET` for the numbers).
+ */
+function isOfferedByContentBrowser(project: FavoriteProject) {
+    if (project.favorite.content_type !== 'mod') return true
+    if (!project.environment) return true
+    return isClientModSafeSides({
+        client_side: project.environment.clientSide,
+        server_side: project.environment.serverSide,
+    })
+}
+
 const filteredProjects = computed(() => {
     const normalizedSearch = search.value.trim().toLocaleLowerCase()
     return availableProjects.value.filter((project) => {
+        if (!isOfferedByContentBrowser(project)) return false
         if (filter.value !== 'all' && project.favorite.content_type !== filter.value) return false
         if (!normalizedSearch) return true
         return [project.title, project.description, project.provider, project.projectId]

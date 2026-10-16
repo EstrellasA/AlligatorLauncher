@@ -22,31 +22,33 @@ const POLL_INTERVAL_MS = 45_000
 const MIN_POLL_INTERVAL_MS = 15_000
 
 /**
- * Player head render, by UUID: an isometric **3D** head that includes the
- * hat/second skin layer.
+ * Player head render, by UUID: the **front face** with the hat/second skin layer
+ * composited over it — a Minecraft head icon, viewed straight on.
  *
- * Visage's `/head` path was checked against two players — the server's own
- * player and a strongly-hatted skin (Grumm) — and returns an isometric render
- * whose front face carries the white/orange pixels that exist only in the hat
- * layer. It accepts a UUID or a name and returns the identical image either way.
+ * Minotar's `helm` path was checked against the Mojang skin for two players. For
+ * a strongly-hatted skin (Grumm, front-face contrast 42.94 between the layers)
+ * the render is pixel-identical to the base face with the hat drawn over it —
+ * MAE 0.00 against base+hat, 42.94 against base alone — and for the server's own
+ * player (contrast 1.90) it also matches base+hat exactly. The render is the 8x8
+ * face scaled up, so the caller draws it with `image-rendering: pixelated`.
  *
- * Checked and rejected while choosing this: minotar `helm` and `avatar` are
- * flat front faces (no depth), minotar `cube` is isometric but drops the
- * overlay, mc-heads `/avatar` is flat and its UUID lookup once resolved to the
- * wrong skin, and Crafatar answers HTTP 500 for whole players.
+ * Checked and rejected: visage `/head`, minotar `cube` and mc-heads `/head` are
+ * isometric (top and side faces visible — the wrong viewing angle for an icon),
+ * minotar `cube` also drops the overlay, and Crafatar answers HTTP 500 for whole
+ * players.
  */
 export function playerHeadUrl(uuid: string) {
-    return `https://visage.surgeplay.com/head/64/${encodeURIComponent(uuid)}`
+    return `https://minotar.net/helm/${encodeURIComponent(uuid)}/64.png`
 }
 
 /**
- * Last resort for a player whose UUID the ping did not report, or whose head
- * failed to load: mc-heads' isometric head, which also draws the overlay. Note
- * the argument order — mc-heads takes the player *before* the size, the other
- * way round from Visage above.
+ * Name-based last resort, for a player the ping gave no UUID for or whose own
+ * head failed to load. Deliberately a different service, so an outage at the
+ * primary still leaves heads on screen; its avatar is a front face with the
+ * overlay too.
  */
 export function playerHeadFallbackUrl(name: string) {
-    return `https://mc-heads.net/head/${encodeURIComponent(name)}/64`
+    return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`
 }
 
 /** Stable key for a listed player, tolerant of a missing UUID. */
