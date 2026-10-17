@@ -20,7 +20,11 @@ import {
     get_instance_worlds,
     resolveManagedServerWorld,
 } from '@/helpers/worlds'
-import { ServerConfig } from '@/server-config'
+import {
+    ensureServerConnectionSettingsLoaded,
+    hasConfiguredServerAddress,
+    ServerConfig,
+} from '@/server-config'
 
 /**
  * First-run bootstrap.
@@ -154,7 +158,11 @@ export interface FirstRunBootstrapResult {
 }
 
 export type FirstRunBootstrapFailureReason =
-    'instance-creation' | 'instance-id-missing' | 'bundled-mods' | 'import'
+    | 'instance-creation'
+    | 'instance-id-missing'
+    | 'bundled-mods'
+    | 'import'
+    | 'server-address-missing'
 
 export class FirstRunBootstrapError extends Error {
     readonly reason: FirstRunBootstrapFailureReason
@@ -412,6 +420,10 @@ export async function runFirstRunBootstrap(
     onProgress: (progress: FirstRunBootstrapProgress) => void,
     mode: FirstRunBootstrapMode = 'first-run',
 ): Promise<FirstRunBootstrapResult | null> {
+    // The overlay can mount before `App.vue` finished hydrating the settings
+    // store, so make sure the address registered below is the saved one.
+    await ensureServerConnectionSettingsLoaded()
+
     const newInstanceProgress = (progress: BootstrapProgressUpdate) =>
         onProgress({ ...progress, repairing: false })
     const repairProgress = (progress: BootstrapProgressUpdate) =>
@@ -420,6 +432,17 @@ export async function runFirstRunBootstrap(
     newInstanceProgress({ step: 'checking' })
 
     const existing = await findServerLinkedInstance()
+
+    // A brand-new install must never create an instance pointed at the
+    // placeholder address: the first-run overlay collects the address before
+    // this runs, and this guard keeps any other path (a failed settings read,
+    // a programmatic retry) from silently doing the wrong thing.
+    if (!existing && !hasConfiguredServerAddress()) {
+        throw new FirstRunBootstrapError(
+            'server-address-missing',
+            'No server address is configured, so there is nothing to sync the game from',
+        )
+    }
 
     if (existing && mode === 'first-run') {
         // An instance already exists, so this launch must not create a second
@@ -551,25 +574,16 @@ async function createServerInstance(
 }
 
 /**
- * Seeds the per-instance web map address on the instance this launcher exists
- * for, so a fresh install shows the map out of the box.
+ * The web map is deliberately **not** copied into a new instance any more.
  *
- * Only a freshly created instance is seeded. An install that already exists
- * keeps whatever is stored, and when nothing is stored at all the resolver in
- * `helpers/server-web-map.ts` applies the same built-in default — so this is
- * about recording the value, not about making the map appear.
+ * It used to seed `web_map_url` from the build-time default so a fresh install
+ * had a recorded value. Now the global value is editable (设置 → 服务器), and an
+ * instance without a stored value follows it through
+ * `helpers/server-web-map.ts`, so copying it here would pin the old address and
+ * make later changes to the global setting appear to do nothing. A player can
+ * still set a per-instance address in 实例设置 → 常规, which keeps overriding the
+ * global value exactly as before.
  */
-async function prefillServerWebMapUrl(instanceId: string): Promise<void> {
-    const mapUrl = ServerConfig.mapUrl.trim()
-    if (!mapUrl) return
-
-    try {
-        await edit(instanceId, { web_map_url: mapUrl })
-    } catch (error) {
-        // Non-fatal: while the value stays unset the built-in default applies.
-        console.error('First-run bootstrap: saving the web map address failed', error)
-    }
-}
 
 /** Copy the bundled mods and register the server for an existing instance. */
 async function finishBootstrap(
@@ -578,14 +592,10 @@ async function finishBootstrap(
         created: boolean
         repaired: boolean
         imported?: boolean
-        /** Seed the instance's web-map address even when it was not created here. */
-        prefillWebMap?: boolean
         onProgress: (progress: BootstrapProgressUpdate) => void
     },
 ): Promise<FirstRunBootstrapResult> {
-    const { created, repaired, imported = false, prefillWebMap, onProgress } = options
-
-    if (created || prefillWebMap) await prefillServerWebMapUrl(instanceId)
+    const { created, repaired, imported = false, onProgress } = options
 
     onProgress({ step: 'installing-mods' })
 
@@ -865,7 +875,6 @@ async function finishImportedInstance(
         created: false,
         repaired: incomplete.length > 0,
         imported: true,
-        prefillWebMap: true,
         onProgress: report,
     })
 }
@@ -884,6 +893,15 @@ export async function runFirstRunImport(
     onProgress: (progress: FirstRunBootstrapProgress) => void,
     signal?: AbortSignal,
 ): Promise<FirstRunBootstrapResult> {
+    await ensureServerConnectionSettingsLoaded()
+
+    if (!hasConfiguredServerAddress()) {
+        throw new FirstRunBootstrapError(
+            'server-address-missing',
+            'No server address is configured, so there is nothing to sync the game from',
+        )
+    }
+
     const report = (progress: BootstrapProgressUpdate) =>
         onProgress({ ...progress, repairing: false })
 

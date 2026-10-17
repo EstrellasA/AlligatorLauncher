@@ -31,6 +31,7 @@ const settingsComponentFiles = {
         './SharedLogsSettings.vue',
     ],
     'content-downloads': ['./AppearanceSettings.vue', './ResourceManagementSettings.vue'],
+    server: ['./ServerSettings.vue'],
     'network-multiplayer': ['./ResourceManagementSettings.vue', './MultiplayerSettings.vue'],
     'storage-backups': ['./ResourceManagementSettings.vue', './StorageSettings.vue'],
     'privacy-data': ['./PrivacySettings.vue'],
@@ -179,6 +180,7 @@ test('settings navigation groups preserve the intended ALLIGATORZONE information
         'instance-sync',
         'java-performance',
         'content-downloads',
+        'server',
         'network-multiplayer',
     ])
     assert.deepEqual(categoriesForGroup('data-privacy'), ['storage-backups', 'privacy-data'])

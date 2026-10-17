@@ -191,6 +191,9 @@
   "app.first-run-bootstrap.elapsed": {
     "message": "Elapsed {time}"
   },
+  "app.first-run-bootstrap.failed.address-missing": {
+    "message": "No server address is configured yet, so there is nothing to sync the game from. Enter it in Settings → Server and try again."
+  },
   "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
@@ -259,6 +262,21 @@
   },
   "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
+  },
+  "app.first-run-bootstrap.server-setup.continue": {
+    "message": "Continue"
+  },
+  "app.first-run-bootstrap.server-setup.edit": {
+    "message": "Enter server address"
+  },
+  "app.first-run-bootstrap.server-setup.required": {
+    "message": "Enter the server address first — importing or downloading needs a server to sync from."
+  },
+  "app.first-run-bootstrap.server-setup.subtitle": {
+    "message": "Enter the server this launcher should prepare. Importing or downloading needs its address; you can change it later in Settings → Server."
+  },
+  "app.first-run-bootstrap.server-setup.title": {
+    "message": "Connect to your server"
   },
   "app.first-run-bootstrap.slow-hint": {
     "message": "This is taking longer than usual. Your network may be slow or blocking the download; the launcher is still trying."
@@ -654,6 +672,45 @@
   },
   "app.settings.resources.sections.network-authentication": {
     "message": "Network authentication"
+  },
+  "app.settings.server.address": {
+    "message": "Server address"
+  },
+  "app.settings.server.address-description": {
+    "message": "The Minecraft server address, for example host or host:port. Do not include a protocol or a path."
+  },
+  "app.settings.server.address-invalid": {
+    "message": "Enter a host or host:port without a protocol, a path, or spaces, or leave it empty."
+  },
+  "app.settings.server.address-placeholder": {
+    "message": "play.example.com:25565"
+  },
+  "app.settings.server.fallback-note": {
+    "message": "Leave a field empty to use the value built into this launcher. The server address is used by the home status card and the join button; an empty web map address hides the map page and its navigation button."
+  },
+  "app.settings.server.map": {
+    "message": "Server web map"
+  },
+  "app.settings.server.map-description": {
+    "message": "Optional web map URL. When neither this nor the per-instance address is set, the map page and its navigation button are hidden."
+  },
+  "app.settings.server.map-invalid": {
+    "message": "Enter a complete http:// or https:// address, or leave it empty."
+  },
+  "app.settings.server.map-placeholder": {
+    "message": "https://map.example.com/"
+  },
+  "app.settings.server.save": {
+    "message": "Save server settings"
+  },
+  "app.settings.server.saved": {
+    "message": "Server settings saved"
+  },
+  "app.settings.server.section-title": {
+    "message": "Server connection"
+  },
+  "app.settings.tabs.server": {
+    "message": "Server"
   },
   "app.settings.updates.channel.state-description": {
     "message": "Release and Beta keep separate launcher data on this computer. The selected channel is the data this installation uses."

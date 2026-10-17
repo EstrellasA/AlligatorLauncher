@@ -20,6 +20,7 @@ const SETTINGS_TABS = new Set([
     'instance-sync',
     'java-performance',
     'content-downloads',
+    'server',
     'network-multiplayer',
     'storage-backups',
     'privacy-data',

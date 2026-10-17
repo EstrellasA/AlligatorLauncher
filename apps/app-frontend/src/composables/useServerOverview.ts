@@ -1,4 +1,4 @@
-import { onUnmounted, ref, type Ref } from 'vue'
+import { onUnmounted, type Ref, ref, watch } from 'vue'
 
 import { get_server_status, type ServerStatus } from '@/helpers/worlds'
 import { ServerConfig } from '@/server-config'
@@ -142,6 +142,16 @@ export function useServerOverview(): ServerOverview {
     function onVisibilityChange() {
         if (document.visibilityState === 'visible') void refresh()
     }
+
+    /**
+     * Follow the address saved in 设置 → 服务器 without a restart: the getter
+     * reads the reactive store, so changing it re-polls the new server instead
+     * of showing the previous server's status until the next interval.
+     */
+    watch(
+        () => ServerConfig.serverAddress,
+        () => void refresh({ force: true }),
+    )
 
     void refresh()
     pollTimer = window.setInterval(() => void refresh(), POLL_INTERVAL_MS)

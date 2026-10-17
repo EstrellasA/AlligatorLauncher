@@ -28,7 +28,7 @@ import ConfirmDeleteInstanceModal from '@/components/ui/modal/ConfirmDeleteInsta
 import { trackEvent } from '@/helpers/analytics'
 import { install_duplicate_instance } from '@/helpers/install'
 import { edit, edit_icon, get_full_path, remove } from '@/helpers/instance'
-import { isValidWebMapUrl } from '@/helpers/server-web-map'
+import { isValidWebMapUrl } from '@/helpers/server-connection'
 import { createInstanceShortcutOnDesktop } from '@/helpers/utils'
 import { injectInstanceSettings } from '@/providers/instance-settings'
 import { ServerConfig } from '@/server-config'
@@ -298,7 +298,7 @@ watch(
     },
 )
 
-const webMapDefaultUrl = ServerConfig.mapUrl.trim()
+const webMapDefaultUrl = computed(() => ServerConfig.mapUrl.trim())
 
 async function saveWebMapUrl() {
     const value = webMapInput.value.trim()

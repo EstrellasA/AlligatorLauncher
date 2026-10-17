@@ -2165,6 +2165,9 @@
   "app.first-run-bootstrap.elapsed": {
     "message": "已用时 {time}"
   },
+  "app.first-run-bootstrap.failed.address-missing": {
+    "message": "还没有配置服务器地址，因此没有可同步的游戏内容。请在「设置 → 服务器」里填写后重试。"
+  },
   "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "实例已经创建，但必需模组安装失败。在修复之前游戏无法启动。"
   },
@@ -2233,6 +2236,21 @@
   },
   "app.first-run-bootstrap.server-missing.title": {
     "message": "服务器未能自动添加"
+  },
+  "app.first-run-bootstrap.server-setup.continue": {
+    "message": "继续"
+  },
+  "app.first-run-bootstrap.server-setup.edit": {
+    "message": "填写服务器地址"
+  },
+  "app.first-run-bootstrap.server-setup.required": {
+    "message": "请先填写服务器地址——导入或下载需要从服务器同步。"
+  },
+  "app.first-run-bootstrap.server-setup.subtitle": {
+    "message": "填写这个启动器要准备的服务器。导入或下载需要服务器地址；之后可以在「设置 → 服务器」里修改。"
+  },
+  "app.first-run-bootstrap.server-setup.title": {
+    "message": "连接你的服务器"
   },
   "app.first-run-bootstrap.slow-hint": {
     "message": "这次比平时更久。你的网络可能较慢，或正在阻断下载；启动器仍在尝试。"
@@ -10174,6 +10192,42 @@
   "app.settings.search.results": {
     "message": "搜索结果"
   },
+  "app.settings.server.address": {
+    "message": "服务器地址"
+  },
+  "app.settings.server.address-description": {
+    "message": "Minecraft 服务器地址，例如主机名或「主机名:端口」。不要包含协议前缀或路径。"
+  },
+  "app.settings.server.address-invalid": {
+    "message": "请输入主机名或「主机名:端口」，不要包含协议前缀、路径或空格；也可以留空。"
+  },
+  "app.settings.server.address-placeholder": {
+    "message": "example.com:25565"
+  },
+  "app.settings.server.fallback-note": {
+    "message": "留空则使用启动器内置的值。服务器地址用于首页状态卡片和「加入服务器」按钮；网页地图地址为空时，地图页面和侧边栏按钮都会隐藏。"
+  },
+  "app.settings.server.map": {
+    "message": "服务器网页地图"
+  },
+  "app.settings.server.map-description": {
+    "message": "可选的网页地图地址。当这里和实例设置都没有填写时，地图页面和侧边栏按钮都会隐藏。"
+  },
+  "app.settings.server.map-invalid": {
+    "message": "请输入完整的 http:// 或 https:// 地址，或留空。"
+  },
+  "app.settings.server.map-placeholder": {
+    "message": "https://map.example.com/"
+  },
+  "app.settings.server.save": {
+    "message": "保存服务器设置"
+  },
+  "app.settings.server.saved": {
+    "message": "服务器设置已保存"
+  },
+  "app.settings.server.section-title": {
+    "message": "服务器连接"
+  },
   "app.settings.storage.actual-size-tooltip": {
     "message": "实际大小：{size}"
   },
@@ -10560,6 +10614,9 @@
   },
   "app.settings.tabs.resource-management": {
     "message": "资源管理"
+  },
+  "app.settings.tabs.server": {
+    "message": "服务器"
   },
   "app.settings.tabs.shortcut-settings": {
     "message": "键盘快捷键"

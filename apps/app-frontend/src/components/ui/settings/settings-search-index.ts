@@ -682,7 +682,10 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         id: 'storage-app-directory',
         categoryId: 'storage-backups',
         targetId: 'settings-target-storage-app-directory',
-        label: message('app.settings.resources.ALLIGATORZONE-data-directory', 'ALLIGATORZONE data directory'),
+        label: message(
+            'app.settings.resources.ALLIGATORZONE-data-directory',
+            'ALLIGATORZONE data directory',
+        ),
     },
     {
         id: 'storage-minecraft-directories',
@@ -695,6 +698,26 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         categoryId: 'storage-backups',
         targetId: 'settings-target-storage-cache',
         label: message('app.settings.resources.app-cache', 'App cache'),
+    },
+    {
+        id: 'server-address',
+        categoryId: 'server',
+        targetId: 'settings-target-server-address',
+        label: message('app.settings.server.address', 'Server address'),
+        description: message(
+            'app.settings.server.address-description',
+            'The Minecraft server address, for example host or host:port. Do not include a protocol or a path.',
+        ),
+    },
+    {
+        id: 'server-web-map',
+        categoryId: 'server',
+        targetId: 'settings-target-server-map',
+        label: message('app.settings.server.map', 'Server web map'),
+        description: message(
+            'app.settings.server.map-description',
+            'Optional web map URL. When neither this nor the per-instance address is set, the map page and its navigation button are hidden.',
+        ),
     },
     {
         id: 'multiplayer-public-nodes',

@@ -220,6 +220,23 @@ pub struct Settings {
     #[serde(default)]
     pub allow_privileged_scheme: bool,
 
+    /// Global Minecraft server address used by the home page status card and
+    /// the "join server" action.
+    ///
+    /// An empty value means "not configured": the frontend then falls back to
+    /// the build-time `VITE_AXO_SERVER_ADDRESS` value and only then to its
+    /// placeholder. Storing it here keeps the address out of the source tree
+    /// and lets the player change it without rebuilding the launcher.
+    #[serde(default)]
+    pub server_address: String,
+    /// Global web map address used by the map page and its navigation entry.
+    ///
+    /// An empty value means "not configured" and follows the same fallback as
+    /// `server_address`; when the effective address is empty the frontend
+    /// hides every entry point into the map instead of rendering a blank frame.
+    #[serde(default)]
+    pub server_map_url: String,
+
     pub version: usize,
 }
 
@@ -269,6 +286,62 @@ fn sanitize_font_family(family: Option<String>) -> Option<String> {
                 .collect::<String>()
         })
         .filter(|value| !value.is_empty())
+}
+
+const MAX_SERVER_ADDRESS_LENGTH: usize = 255;
+const MAX_SERVER_MAP_URL_LENGTH: usize = 2048;
+
+/// Normalise the stored global server address.
+///
+/// The settings page already validates the value, but the database is plain
+/// user data and can be edited by hand, so the backend applies the same light
+/// rules: a bare `host` or `host:port`, no scheme, no whitespace and nothing
+/// that could be mistaken for a URL path. Anything invalid is stored as an
+/// empty string, which the frontend treats as "not configured" and resolves
+/// through the build-time value and placeholder instead.
+fn sanitize_server_address(value: String) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty()
+        || trimmed.len() > MAX_SERVER_ADDRESS_LENGTH
+        || trimmed.chars().any(char::is_whitespace)
+        || trimmed
+            .chars()
+            .any(|character| matches!(character, '/' | '\\' | '?' | '#' | '@'))
+        || trimmed.contains("://")
+    {
+        return String::new();
+    }
+
+    if let Some((host, port)) = trimmed.rsplit_once(':') {
+        if host.is_empty()
+            || port.is_empty()
+            || !port.chars().all(|character| character.is_ascii_digit())
+        {
+            return String::new();
+        }
+    }
+
+    trimmed.to_string()
+}
+
+/// Normalise the stored global web map address.
+///
+/// Only an absolute `http(s)` URL is useful inside the map frame; anything else
+/// (including an empty value) is stored as empty, which means "not configured"
+/// and falls back to the build-time value. The frontend hides the map entry
+/// points whenever the effective address is empty.
+fn sanitize_server_map_url(value: String) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty() || trimmed.len() > MAX_SERVER_MAP_URL_LENGTH {
+        return String::new();
+    }
+
+    match url::Url::parse(trimmed) {
+        Ok(url) if matches!(url.scheme(), "http" | "https") => {
+            trimmed.to_string()
+        }
+        _ => String::new(),
+    }
 }
 
 /// Default log level, kept in sync with the `log_level` column default and
@@ -568,6 +641,20 @@ impl Settings {
             .fetch_one(&mut *connection)
             .await
             .unwrap_or(false),
+            server_address: sanitize_server_address(
+                sqlx::query_scalar(
+                    "SELECT server_address FROM settings WHERE id = 0",
+                )
+                .fetch_one(&mut *connection)
+                .await?,
+            ),
+            server_map_url: sanitize_server_map_url(
+                sqlx::query_scalar(
+                    "SELECT server_map_url FROM settings WHERE id = 0",
+                )
+                .fetch_one(&mut *connection)
+                .await?,
+            ),
             version: res.version as usize,
         };
         Ok(settings)
@@ -867,6 +954,13 @@ impl Settings {
             "UPDATE settings SET allow_privileged_scheme = ? WHERE id = 0",
         )
         .bind(self.allow_privileged_scheme)
+        .execute(&mut *connection)
+        .await?;
+        sqlx::query(
+            "UPDATE settings SET server_address = ?, server_map_url = ? WHERE id = 0",
+        )
+        .bind(sanitize_server_address(self.server_address.clone()))
+        .bind(sanitize_server_map_url(self.server_map_url.clone()))
         .execute(&mut *connection)
         .await?;
 
@@ -1355,6 +1449,103 @@ mod tests {
             settings.curseforge_source,
             DownloadSourceMode::OfficialPreferred
         );
+    }
+
+    #[test]
+    fn server_address_sanitizer_accepts_plain_host_and_host_port() {
+        assert_eq!(
+            sanitize_server_address(" play.example.com ".to_string()),
+            "play.example.com"
+        );
+        assert_eq!(
+            sanitize_server_address("play.example.com:25565".to_string()),
+            "play.example.com:25565"
+        );
+        assert_eq!(
+            sanitize_server_address("127.0.0.1:25565".to_string()),
+            "127.0.0.1:25565"
+        );
+    }
+
+    #[test]
+    fn server_address_sanitizer_rejects_schemes_paths_and_whitespace() {
+        for invalid in [
+            "",
+            "   ",
+            "https://play.example.com",
+            "play.example.com/path",
+            "play example.com",
+            "https:example",
+            "host:",
+            ":25565",
+            "host:port",
+        ] {
+            assert_eq!(
+                sanitize_server_address(invalid.to_string()),
+                "",
+                "expected {invalid:?} to be rejected"
+            );
+        }
+    }
+
+    #[test]
+    fn server_map_url_sanitizer_accepts_only_absolute_http_urls() {
+        assert_eq!(
+            sanitize_server_map_url(
+                " https://map.example.com/ ".to_string()
+            ),
+            "https://map.example.com/"
+        );
+        assert_eq!(
+            sanitize_server_map_url("http://map.example.com".to_string()),
+            "http://map.example.com"
+        );
+        for invalid in [
+            "",
+            "map.example.com",
+            "ftp://map.example.com",
+            "javascript:alert(1)",
+        ] {
+            assert_eq!(
+                sanitize_server_map_url(invalid.to_string()),
+                "",
+                "expected {invalid:?} to be rejected"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn server_connection_settings_default_empty_and_round_trip() {
+        let pool = sqlx::sqlite::SqlitePoolOptions::new()
+            .max_connections(1)
+            .connect("sqlite::memory:")
+            .await
+            .unwrap();
+        sqlx::migrate!().run(&pool).await.unwrap();
+
+        // A fresh install stores nothing, so the frontend keeps falling back
+        // to the build-time value exactly as it did before this setting existed.
+        let mut settings = Settings::get(&pool).await.unwrap();
+        assert_eq!(settings.server_address, "");
+        assert_eq!(settings.server_map_url, "");
+
+        settings.server_address = " play.example.com:25565 ".to_string();
+        settings.server_map_url = "https://map.example.com/".to_string();
+        settings.update(&pool).await.unwrap();
+
+        let reloaded = Settings::get(&pool).await.unwrap();
+        assert_eq!(reloaded.server_address, "play.example.com:25565");
+        assert_eq!(reloaded.server_map_url, "https://map.example.com/");
+
+        // Invalid values are normalised to empty instead of reaching the UI.
+        let mut invalid = reloaded;
+        invalid.server_address = "https://play.example.com".to_string();
+        invalid.server_map_url = "map.example.com".to_string();
+        invalid.update(&pool).await.unwrap();
+
+        let reloaded = Settings::get(&pool).await.unwrap();
+        assert_eq!(reloaded.server_address, "");
+        assert_eq!(reloaded.server_map_url, "");
     }
 
     #[tokio::test]

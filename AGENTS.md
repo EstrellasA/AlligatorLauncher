@@ -60,8 +60,18 @@ time** instead of being written into source:
 
 `apps/app-frontend/src/server-config.ts` reads these through
 `import.meta.env`, so the value is inlined into the frontend bundle at build
-time. The shipped binary therefore contains it — that is expected and cannot be
-avoided — but the public source tree does not.
+time. They are now **fallbacks**, not the primary source: the player can set
+the server address and web map address in 「设置 → 服务器」, which persists to the
+local settings database. The effective value is resolved in this order:
+
+1. the value saved in the settings page,
+2. the build-time value from the table above,
+3. the placeholder in the table above.
+
+A build-time value is therefore only needed to ship a pre-configured binary.
+Leaving both the setting and `VITE_AXO_WEB_MAP_URL` empty hides the web map page
+and its navigation button; a per-instance `web_map_url` still overrides the
+global value.
 
 Supply the values in either way (environment wins):
 
@@ -77,8 +87,10 @@ Supply the values in either way (environment wins):
    when a value changes.
 
 Never commit the real values, and never re-add them to `server-config.ts`.
-Before pushing a release, confirm the private server address and map host appear
-nowhere in the tracked tree.
+The settings page is the intended place for a player to enter them; the
+environment variables only pre-configure a build. Before pushing a release,
+confirm the private server address and map host appear nowhere in the tracked
+tree.
 
 ## Style Commands
 

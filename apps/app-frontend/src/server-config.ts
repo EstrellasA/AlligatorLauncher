@@ -9,30 +9,149 @@
  *   - `server-config.ts`（本文件） = 你这台服务器的具体参数
  */
 
-export const ServerConfig = Object.freeze({
+import { reactive } from 'vue'
+
+import {
+    isServerAddressConfigured,
+    normalizeServerAddress,
+    normalizeServerMapUrl,
+    resolveServerAddress,
+    resolveServerMapUrl,
+} from '@/helpers/server-connection'
+import { type AppSettings, get as getSettings, update as updateSettings } from '@/helpers/settings'
+
+/**
+ * Build-time fallbacks, for a launcher built with a pre-configured server.
+ *
+ * They are only consulted when the player has not saved a value in the
+ * settings page (「设置 → 服务器」), so a normal install follows the setting and
+ * an untouched install keeps behaving exactly as it did before the setting
+ * existed.
+ */
+const BUILD_TIME_SERVER_ADDRESS = (import.meta.env.VITE_AXO_SERVER_ADDRESS ?? '').trim()
+const BUILD_TIME_WEB_MAP_URL = (import.meta.env.VITE_AXO_WEB_MAP_URL ?? '').trim()
+
+/**
+ * The single mutable source of truth for the two player-editable values.
+ *
+ * `ServerConfig` exposes them through getters, so every existing
+ * `ServerConfig.serverAddress` / `ServerConfig.mapUrl` read keeps working while
+ * a computed property or template that reads it re-runs as soon as the saved
+ * setting changes. Nothing else may cache these values.
+ */
+const storedServerConnection = reactive({
+    serverAddress: '',
+    serverMapUrl: '',
+})
+
+export type StoredServerConnection = Pick<AppSettings, 'server_address' | 'server_map_url'>
+
+/** Copy persisted settings into the reactive store (called after every read/save). */
+export function applyServerConnectionSettings(
+    settings: StoredServerConnection | null | undefined,
+): void {
+    storedServerConnection.serverAddress = normalizeServerAddress(settings?.server_address)
+    storedServerConnection.serverMapUrl = normalizeServerMapUrl(settings?.server_map_url)
+}
+
+/** The stored values, trimmed and validated; empty means "not configured". */
+export function getStoredServerConnection(): { serverAddress: string; serverMapUrl: string } {
+    return {
+        serverAddress: storedServerConnection.serverAddress,
+        serverMapUrl: storedServerConnection.serverMapUrl,
+    }
+}
+
+/**
+ * Whether the effective address is a real one rather than the placeholder.
+ *
+ * The first-run overlay uses this to skip its address step for a pre-configured
+ * build (env value) and for a returning player (saved setting). It deliberately
+ * runs through the same resolution as every other consumer, so "configured"
+ * can never disagree with the address the launcher would actually ping.
+ */
+export function hasConfiguredServerAddress(): boolean {
+    return isServerAddressConfigured(
+        storedServerConnection.serverAddress,
+        BUILD_TIME_SERVER_ADDRESS,
+    )
+}
+
+/**
+ * The one write path for both the settings page and the first-run prompt.
+ *
+ * Validation happens in the UI before calling this; the normalisers are the
+ * same ones the getters use, so a value that reaches the database is always the
+ * value the rest of the launcher resolves against. Applying the returned
+ * settings immediately updates every reactive consumer.
+ */
+export async function saveServerConnectionSettings(values: {
+    serverAddress: string
+    serverMapUrl: string
+}): Promise<void> {
+    const saved = await updateSettings({
+        server_address: normalizeServerAddress(values.serverAddress),
+        server_map_url: normalizeServerMapUrl(values.serverMapUrl),
+    })
+    applyServerConnectionSettings(saved)
+    serverConnectionLoaded = true
+}
+
+let serverConnectionLoaded = false
+let serverConnectionLoading: Promise<void> | null = null
+
+/**
+ * Read the persisted settings once, for code that runs before `App.vue` has
+ * hydrated the store (the first-run bootstrap can start in a mounted child
+ * overlay before the root component's initialization finishes).
+ *
+ * A failure leaves the store untouched, so the build-time value keeps applying
+ * and a later call retries.
+ */
+export async function ensureServerConnectionSettingsLoaded(): Promise<void> {
+    if (serverConnectionLoaded) return
+    if (serverConnectionLoading) return await serverConnectionLoading
+
+    serverConnectionLoading = (async () => {
+        try {
+            applyServerConnectionSettings(await getSettings())
+            serverConnectionLoaded = true
+        } catch (error) {
+            console.warn(
+                'Server settings: could not read the stored connection values, using the built-in ones',
+                error,
+            )
+        }
+    })()
+
+    try {
+        await serverConnectionLoading
+    } finally {
+        serverConnectionLoading = null
+    }
+}
+
+export const ServerConfig = {
     // ---------------------------------------------------------------------
     // 服务器
     // ---------------------------------------------------------------------
 
     /**
-     * Minecraft 服务器地址（用于「一键进服」）。
+     * Minecraft 服务器地址（用于首页状态卡片和「一键进服」）。
      * 格式：`域名` 或 `域名:端口`。默认端口 25565 时可省略 `:25565`。
      *
-     * ⚠️ 真实地址**不写在这里**：本仓库是公开的，地址写进源码就会被搜到。
-     *    真实值在**构建时**由环境变量 `VITE_AXO_SERVER_ADDRESS` 注入，
-     *    打包进二进制里（玩家照常一键进服），但源码树里不留任何痕迹。
+     * 取值顺序是 **设置页 → 构建期环境变量 → 占位值**：
      *
-     *    构建前设置（二选一）：
-     *      1. 环境变量：`$env:VITE_AXO_SERVER_ADDRESS = '<真实地址>'`，
-     *         然后再跑 `pnpm build` / `tauri build`；
-     *      2. 未跟踪的 `packages/app-lib/.env.local`（已被 `.gitignore` 覆盖），
-     *         写 `VITE_AXO_SERVER_ADDRESS=<真实地址>`，`vite.config.ts` 会自动读它。
-     *         模板见 `packages/app-lib/.env.local.example`，细节见 `AGENTS.md`。
+     *   1. 玩家在「设置 → 服务器 → 服务器地址」里保存的值（存在本地数据库里）；
+     *   2. 构建时的 `VITE_AXO_SERVER_ADDRESS`，只为「预配置二进制」保留；
+     *   3. `example.invalid`（RFC 2606 保留域名），让漏配的构建明显连不上。
      *
-     *    下面这个占位值是 RFC 2606 保留域名，永远解析不到，作用是让漏配
-     *    环境变量的构建「明显连不上」而不是悄悄连到别人的服务器。
+     * 这里用 getter 读取响应式 store，因此改设置后首页状态和进服按钮
+     * **无需重启**就会跟进；不要在别处缓存这个字段。
      */
-    serverAddress: import.meta.env.VITE_AXO_SERVER_ADDRESS || 'example.invalid',
+    get serverAddress(): string {
+        return resolveServerAddress(storedServerConnection.serverAddress, BUILD_TIME_SERVER_ADDRESS)
+    },
 
     /** 服务器展示名，会出现在首页和进服按钮上。 */
     serverName: 'ALLIGATORZONE',
@@ -83,16 +202,15 @@ export const ServerConfig = Object.freeze({
     // ---------------------------------------------------------------------
 
     /**
-     * 网页地图地址的**内置默认值**。
+     * 网页地图地址的**全局默认值**。
      *
-     * 只在两种情况下生效：
-     *   1. 首次运行 bootstrap 建实例时，写进该实例的「网页地图地址」；
-     *   2. 实例里从未设置过这个地址（`web_map_url` 为 NULL）时兜底，
-     *      这样老玩家升级后不会突然看不到地图。
+     * 取值顺序与 `serverAddress` 相同：设置页保存的值 → 构建期
+     * `VITE_AXO_WEB_MAP_URL` → 空。空字符串表示「没有网页地图」，
+     * 所有入口（侧边栏按钮、`/map` 路由）都会隐藏，不会渲染空 iframe。
      *
-     * 之后玩家可以在「实例设置 → 常规 → 网页地图」里随时改：填了就出现地图页
-     * 和侧边栏按钮，清空就隐藏并禁用（空字符串是「明确关掉」，不会再退回这里）。
-     * 也就是说，换服务器 / 换地图**不需要重新编译启动器**。
+     * 实例设置里的 `web_map_url` 仍然优先于这里（见
+     * `helpers/server-web-map.ts`）：实例里保存过值就以实例为准，
+     * 从未设置过才回落到这个全局值。
      *
      * ⚠️ CSP：`apps/app/tauri.conf.json` 里 `app.security.csp.frame-src` 和
      *    `app.security.devCsp.frame-src` 已放宽为 `http: https:`，允许内嵌任意
@@ -103,13 +221,12 @@ export const ServerConfig = Object.freeze({
      *    因为 `http:`/`https:` 已经涵盖一切来源，frame-src 里**不再**列出具体
      *    主机：列了既没有额外作用，又会把内网地图地址写进公开仓库。
      *
-     * ⚠️ 真实地址同样**不写在这里**，构建时由环境变量
-     *    `VITE_AXO_WEB_MAP_URL` 注入，理由和 `serverAddress` 完全一致
-     *    （见该字段上方注释与 `packages/app-lib/.env.local.example`）。
-     *    留空 = 不内置默认地址：地图页会隐藏，玩家仍可在
-     *    「实例设置 → 常规 → 网页地图」里自己填。
+     * ⚠️ 真实地址同样**不写在这里**，由玩家在设置页填写，或构建时用
+     *    `VITE_AXO_WEB_MAP_URL` 注入，理由和 `serverAddress` 完全一致。
      */
-    mapUrl: import.meta.env.VITE_AXO_WEB_MAP_URL || '',
+    get mapUrl(): string {
+        return resolveServerMapUrl(storedServerConnection.serverMapUrl, BUILD_TIME_WEB_MAP_URL)
+    },
 
     /**
      * 地图服务是否允许被 iframe 内嵌。
@@ -166,6 +283,6 @@ export const ServerConfig = Object.freeze({
      *    请把这个字段填成你实际托管源码的地址（公开仓库或随包附带的源码包）。
      */
     sourceCodeUrl: '',
-})
+}
 
 export type ServerConfigShape = typeof ServerConfig

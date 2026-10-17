@@ -73,10 +73,10 @@ import { type RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } f
 
 import { getAnnouncementByVersion } from '@/announcements/catalog'
 import InstanceExportModal from '@/components/lab/recipe-generator/InstanceExportModal.vue'
-import AccountsCard from '@/components/ui/AccountsCard.vue'
+import type AccountsCard from '@/components/ui/AccountsCard.vue'
+import AlligatorZoneLogo from '@/components/ui/AlligatorZoneLogo.vue'
 import UpdateAnnouncementModal from '@/components/ui/announcement/UpdateAnnouncementModal.vue'
 import AppActionBar from '@/components/ui/AppActionBar.vue'
-import AlligatorZoneLogo from '@/components/ui/AlligatorZoneLogo.vue'
 import Breadcrumbs from '@/components/ui/Breadcrumbs.vue'
 import ContentInstallPreviewModal from '@/components/ui/ContentInstallPreviewModal.vue'
 import ErrorModal from '@/components/ui/ErrorModal.vue'
@@ -137,6 +137,7 @@ import { runWhenIdle } from '@/helpers/page-transition'
 import { get_by_instance_id, kill as killProcess } from '@/helpers/process.js'
 import { getExternalLinkUrl, mergeUrlQuery, parseModrinthLink } from '@/helpers/project-links.ts'
 import { getQuickScrollEnabled, getShowScrollTop } from '@/helpers/scroll-top-state'
+import { isWebMapConfigured } from '@/helpers/server-connection'
 import {
     get as getSettings,
     getPrivacySettings,
@@ -147,10 +148,7 @@ import {
     update as updateSettings,
 } from '@/helpers/settings.ts'
 import { diffSettings } from '@/helpers/settings-patch'
-import {
-    SHORTCUT_ACTIONS,
-    type ShortcutAction,
-} from '@/helpers/shortcut-actions'
+import { SHORTCUT_ACTIONS, type ShortcutAction } from '@/helpers/shortcut-actions'
 import { resolveAllBindings } from '@/helpers/shortcut-bindings'
 import { get_opening_command, initialize_state, set_discord_activity } from '@/helpers/state'
 import {
@@ -193,6 +191,7 @@ import { createServerInstall, provideServerInstall } from '@/providers/server-in
 import { setupProviders } from '@/providers/setup'
 import { setupAuthProvider } from '@/providers/setup/auth'
 import { setupLoadingStateProvider } from '@/providers/setup/loading-state'
+import { applyServerConnectionSettings } from '@/server-config'
 import { useError } from '@/store/error.js'
 import { useTheming } from '@/store/state'
 
@@ -202,9 +201,10 @@ import { AppPopupNotificationManager } from './providers/app-popup-notifications
 
 const themeStore = useTheming()
 /**
- * The web map address comes from the instance settings, not from a constant, so
- * the nav entry has to appear and disappear with it. `useServerWebMap` owns the
- * resolution rule and the instance-event refresh.
+ * The web map address comes from the instance setting first and the global
+ * 设置 → 服务器 value otherwise, so the nav entry has to appear and disappear
+ * with it. `useServerWebMap` owns the resolution rule and the instance-event
+ * refresh; the entry is gated on the shared "is there a usable URL" predicate.
  */
 const { mapUrl: serverWebMapUrl } = useServerWebMap()
 /** While a dialog is open no shortcut fires, including the one being recorded. */
@@ -783,7 +783,9 @@ function handleDirectLinkSyncReport(event: Event) {
 function startDirectLinkSync() {
     const readRoots = () => {
         try {
-            const parsed = JSON.parse(localStorage.getItem('ALLIGATORZONE-minecraft-directories') ?? '[]')
+            const parsed = JSON.parse(
+                localStorage.getItem('ALLIGATORZONE-minecraft-directories') ?? '[]',
+            )
             return Array.isArray(parsed)
                 ? parsed.flatMap((value) => {
                       if (typeof value === 'string' && value.trim()) {
@@ -1396,6 +1398,9 @@ async function setupApp() {
     }
 
     const initialSettings = await getSettings()
+    // Route the stored server connection values into the reactive source of
+    // truth before any consumer (home status card, nav map entry) reads them.
+    applyServerConnectionSettings(initialSettings)
     await downloadManager.start()
     const {
         native_decorations,
@@ -2918,11 +2923,12 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
                     <HomeIcon />
                 </NavButton>
                 <!--
-                    地图入口只在实例设置里填了网页地图地址时才出现；
-                    留空（或从未填写且默认值为空）时整个功能隐藏 + 禁用。
+                    The map entry appears only when the resolved web map address
+                    is non-empty: an instance value wins, otherwise the global
+                    Settings → Server value applies, otherwise the feature hides.
                 -->
                 <NavButton
-                    v-if="serverWebMapUrl"
+                    v-if="isWebMapConfigured(serverWebMapUrl)"
                     v-tooltip.right="formatMessage(messages.serverMap)"
                     data-onboarding-id="nav-server-map"
                     to="/map"

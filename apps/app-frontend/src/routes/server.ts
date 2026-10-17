@@ -2,6 +2,7 @@ import './meta'
 
 import type { RouteRecordRaw } from 'vue-router'
 
+import { isWebMapConfigured } from '@/helpers/server-connection'
 import { loadServerWebMapUrl } from '@/helpers/server-web-map'
 
 /**
@@ -16,12 +17,13 @@ export const serverRoutes: RouteRecordRaw[] = [
         name: 'ServerMap',
         component: () => import('@/pages/ServerMap.vue'),
         /**
-         * 网页地图地址是「按实例设置」的：没填（或填成空）就没有地图可看。
-         * 这时直接进 `/map` 只会得到一个空 iframe，所以改跳回首页 —— 这就是
-         * 需求里的「禁用」。地址由哪个实例提供见 `helpers/server-web-map.ts`。
+         * 网页地图地址按「实例 → 全局设置 → 构建期环境变量」解析，三者都为空
+         * 就没有地图可看。这时直接进 `/map` 只会得到一个空 iframe，所以改跳回
+         * 首页 —— 这就是需求里的「不填就不显示网页地图」在路由层的兜底。
+         * 地址由哪个实例提供见 `helpers/server-web-map.ts`。
          */
         beforeEnter: async () =>
-            (await loadServerWebMapUrl()) ? true : { path: '/' },
+            isWebMapConfigured(await loadServerWebMapUrl()) ? true : { path: '/' },
         meta: {
             breadcrumb: [{ name: 'Server map' }],
             discordActivity: 'Viewing the server map...',

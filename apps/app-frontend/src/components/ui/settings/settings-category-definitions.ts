@@ -10,6 +10,7 @@ export type SettingsCategoryId =
     | 'instance-sync'
     | 'java-performance'
     | 'content-downloads'
+    | 'server'
     | 'network-multiplayer'
     | 'storage-backups'
     | 'privacy-data'
@@ -118,6 +119,15 @@ export const settingsCategoryDefinitions: SettingsCategoryDefinition[] = [
         }),
         group: 'game',
         onboardingId: 'settings-tab-content-downloads',
+    },
+    {
+        id: 'server',
+        name: defineMessage({
+            id: 'app.settings.tabs.server',
+            defaultMessage: 'Server',
+        }),
+        group: 'game',
+        onboardingId: 'settings-tab-server',
     },
     {
         id: 'network-multiplayer',

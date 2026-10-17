@@ -6,6 +6,7 @@ import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useServerWebMap } from '@/composables/useServerWebMap'
+import { isWebMapConfigured } from '@/helpers/server-connection'
 import { ServerConfig } from '@/server-config'
 
 const { formatMessage } = useVIntl()
@@ -47,7 +48,7 @@ const { mapUrl, loaded } = useServerWebMap()
  * 判断，这里是「停在地图页时把地址清掉」的兜底。
  */
 watch([loaded, mapUrl], ([isLoaded, url]) => {
-    if (isLoaded && !url) void router.replace('/')
+    if (isLoaded && !isWebMapConfigured(url)) void router.replace('/')
 })
 
 /**

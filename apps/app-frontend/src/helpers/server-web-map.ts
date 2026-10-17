@@ -1,8 +1,8 @@
-import { get as getSettings } from '@/helpers/settings'
 import { isServerLinkedInstance } from '@/helpers/first-run-bootstrap'
 import { list } from '@/helpers/instance'
+import { get as getSettings } from '@/helpers/settings'
 import type { GameInstance } from '@/helpers/types'
-import { ServerConfig } from '@/server-config'
+import { applyServerConnectionSettings, ServerConfig } from '@/server-config'
 
 /**
  * Which instance supplies the sidebar web map address.
@@ -22,11 +22,11 @@ import { ServerConfig } from '@/server-config'
  *      replaced by the built-in default, which is what "不填入就隐藏" means once
  *      a player has actually cleared the field.
  *
- *   2. When *no* instance has an explicit value, the built-in default from
- *      `server-config.ts` applies. Existing installs have no stored value at
- *      all, so this is what keeps the map they have always had from silently
- *      vanishing on upgrade. It only applies while unset: saving any value
- *      (including an empty one) takes over permanently.
+ *   2. When *no* instance has an explicit value, the global setting from
+ *      设置 → 服务器 (`ServerConfig.mapUrl`) applies. That value is itself
+ *      resolved as stored setting → build-time env → empty. Existing installs
+ *      have no stored global value either, so the build-time env value keeps
+ *      the map they have always had from silently vanishing on upgrade.
  *
  * The rule is deliberately independent of "which instance the home page shows",
  * because `minimal_home_instance_id` is only written once a player picks an
@@ -37,8 +37,6 @@ export function resolveServerWebMapUrl(
     instances: readonly GameInstance[],
     homeInstanceId: string | null | undefined,
 ): string {
-    if (instances.length === 0) return ''
-
     const ordered = [
         ...instances.filter(isServerLinkedInstance),
         ...instances.filter(
@@ -61,31 +59,13 @@ export function hasStoredWebMapUrl(instance: Pick<GameInstance, 'web_map_url'>):
 }
 
 /** The stored value, or `null` when the instance has never been configured. */
-export function getStoredWebMapUrl(
-    instance: Pick<GameInstance, 'web_map_url'>,
-): string | null {
+export function getStoredWebMapUrl(instance: Pick<GameInstance, 'web_map_url'>): string | null {
     if (!hasStoredWebMapUrl(instance)) return null
     return normalizeWebMapUrl(instance.web_map_url)
 }
 
 function normalizeWebMapUrl(value: string | null | undefined): string {
     return (value ?? '').trim()
-}
-
-/**
- * A map address has to be an absolute http(s) URL: anything else would be
- * stored happily and then fail to load inside the frame with no explanation.
- * Schemeless input like `map.example.com` is rejected on purpose so the stored
- * value is always exactly what the webview will request.
- */
-export function isValidWebMapUrl(value: string): boolean {
-    let url: URL
-    try {
-        url = new URL(value.trim())
-    } catch {
-        return false
-    }
-    return url.protocol === 'http:' || url.protocol === 'https:'
 }
 
 /**
@@ -96,6 +76,9 @@ export function isValidWebMapUrl(value: string): boolean {
 export async function loadServerWebMapUrl(): Promise<string> {
     try {
         const [instances, settings] = await Promise.all([list(), getSettings()])
+        // The route guard may run before `App.vue` hydrates the store; apply
+        // the same settings row we just read so the guard and the page agree.
+        applyServerConnectionSettings(settings)
         return resolveServerWebMapUrl(instances, settings.minimal_home_instance_id)
     } catch {
         return ''

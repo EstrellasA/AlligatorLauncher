@@ -6,7 +6,88 @@
     >
         <img class="h-28 w-28 object-contain" src="@/assets/axolotl.png" alt="" />
 
-        <template v-if="choosing">
+        <template v-if="configuringServer">
+            <div class="flex w-full max-w-md flex-col gap-2 text-center">
+                <h1 class="m-0 text-xl font-bold text-[var(--color-text-primary)]">
+                    {{ formatMessage(messages.serverSetupTitle) }}
+                </h1>
+                <p class="m-0 text-sm text-[var(--color-text-tertiary)]">
+                    {{ formatMessage(messages.serverSetupSubtitle) }}
+                </p>
+            </div>
+
+            <div class="flex w-full max-w-md flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="first-run-server-address"
+                        class="text-sm font-semibold text-[var(--color-text-primary)]"
+                    >
+                        {{ formatMessage(messages.setupAddress) }}
+                    </label>
+                    <StyledInput
+                        id="first-run-server-address"
+                        v-model="serverAddressInput"
+                        autocomplete="off"
+                        type="text"
+                        :error="serverAddressInvalid"
+                        :placeholder="formatMessage(messages.setupAddressPlaceholder)"
+                        :spellcheck="false"
+                        wrapper-class="w-full"
+                    />
+                    <p class="m-0 text-xs text-[var(--color-text-tertiary)]">
+                        {{ formatMessage(messages.setupAddressDescription) }}
+                    </p>
+                    <p v-if="serverAddressInvalid" class="m-0 text-sm text-red">
+                        {{ formatMessage(messages.setupAddressInvalid) }}
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="first-run-server-map"
+                        class="text-sm font-semibold text-[var(--color-text-primary)]"
+                    >
+                        {{ formatMessage(messages.setupMap) }}
+                    </label>
+                    <StyledInput
+                        id="first-run-server-map"
+                        v-model="serverMapInput"
+                        autocomplete="off"
+                        type="url"
+                        :error="serverMapInvalid"
+                        :placeholder="formatMessage(messages.setupMapPlaceholder)"
+                        :spellcheck="false"
+                        wrapper-class="w-full"
+                    />
+                    <p class="m-0 text-xs text-[var(--color-text-tertiary)]">
+                        {{ formatMessage(messages.setupMapDescription) }}
+                    </p>
+                    <p v-if="serverMapInvalid" class="m-0 text-sm text-red">
+                        {{ formatMessage(messages.setupMapInvalid) }}
+                    </p>
+                </div>
+
+                <div class="mt-1 flex items-center justify-between gap-2">
+                    <button
+                        type="button"
+                        class="cursor-pointer border-0 bg-transparent p-1 text-xs text-[var(--color-text-tertiary)] underline"
+                        @click="skip"
+                    >
+                        {{ formatMessage(messages.choiceSkip) }}
+                    </button>
+                    <Button
+                        type="colored"
+                        color="brand"
+                        :disabled="serverSetupSaving || serverAddressInvalid || serverMapInvalid"
+                        @click="saveServerSetup"
+                    >
+                        {{ formatMessage(messages.serverSetupContinue) }}
+                    </Button>
+                </div>
+            </div>
+        </template>
+
+        <template v-else-if="choosing">
             <div class="flex w-full max-w-md flex-col gap-2 text-center">
                 <h1 class="m-0 text-xl font-bold text-[var(--color-text-primary)]">
                     {{ formatMessage(messages.choiceTitle) }}
@@ -19,9 +100,16 @@
             </div>
 
             <div class="flex w-full max-w-md flex-col gap-3">
+                <p
+                    v-if="!serverAddressReady"
+                    class="m-0 rounded-lg border border-solid border-[var(--color-divider)] bg-surface-2 px-3 py-2 text-xs text-[var(--color-text-tertiary)]"
+                >
+                    {{ formatMessage(messages.serverSetupRequired) }}
+                </p>
                 <button
                     type="button"
-                    class="flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl border border-solid border-[var(--color-divider)] bg-surface-2 p-4 text-left"
+                    class="flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl border border-solid border-[var(--color-divider)] bg-surface-2 p-4 text-left disabled:cursor-not-allowed disabled:opacity-60"
+                    :disabled="!serverAddressReady"
                     @click="chooseImport"
                 >
                     <span class="text-sm font-bold text-[var(--color-text-primary)]">
@@ -33,8 +121,9 @@
                 </button>
                 <button
                     type="button"
-                    class="flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl border border-solid border-[var(--color-divider)] bg-surface-2 p-4 text-left"
-                    @click="start('first-run')"
+                    class="flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl border border-solid border-[var(--color-divider)] bg-surface-2 p-4 text-left disabled:cursor-not-allowed disabled:opacity-60"
+                    :disabled="!serverAddressReady"
+                    @click="chooseDownload"
                 >
                     <span class="text-sm font-bold text-[var(--color-text-primary)]">
                         {{ formatMessage(messages.choiceDownloadTitle) }}
@@ -42,6 +131,14 @@
                     <span class="text-xs text-[var(--color-text-tertiary)]">
                         {{ formatMessage(messages.choiceDownloadText) }}
                     </span>
+                </button>
+                <button
+                    v-if="!serverAddressReady"
+                    type="button"
+                    class="cursor-pointer self-center border-0 bg-transparent p-1 text-xs text-brand underline"
+                    @click="editServerSetup"
+                >
+                    {{ formatMessage(messages.serverSetupEdit) }}
                 </button>
                 <button
                     type="button"
@@ -158,6 +255,7 @@ import {
     defineMessages,
     injectNotificationManager,
     ProgressBar,
+    StyledInput,
     useVIntl,
 } from '@modrinth/ui'
 import { open } from '@tauri-apps/plugin-dialog'
@@ -174,7 +272,14 @@ import {
     shouldOfferInstallChoice,
 } from '@/helpers/first-run-bootstrap'
 import type { InstallPhaseId } from '@/helpers/install'
-import { ServerConfig } from '@/server-config'
+import { isValidServerAddress, isValidWebMapUrl } from '@/helpers/server-connection'
+import {
+    ensureServerConnectionSettingsLoaded,
+    getStoredServerConnection,
+    hasConfiguredServerAddress,
+    saveServerConnectionSettings,
+    ServerConfig,
+} from '@/server-config'
 
 /**
  * First-run overlay.
@@ -242,6 +347,67 @@ const messages = defineMessages({
     choiceSkip: {
         id: 'app.first-run-bootstrap.choice.skip',
         defaultMessage: 'Skip',
+    },
+    serverSetupTitle: {
+        id: 'app.first-run-bootstrap.server-setup.title',
+        defaultMessage: 'Connect to your server',
+    },
+    serverSetupSubtitle: {
+        id: 'app.first-run-bootstrap.server-setup.subtitle',
+        defaultMessage:
+            'Enter the server this launcher should prepare. Importing or downloading needs its address; you can change it later in Settings → Server.',
+    },
+    serverSetupContinue: {
+        id: 'app.first-run-bootstrap.server-setup.continue',
+        defaultMessage: 'Continue',
+    },
+    serverSetupRequired: {
+        id: 'app.first-run-bootstrap.server-setup.required',
+        defaultMessage:
+            'Enter the server address first — importing or downloading needs a server to sync from.',
+    },
+    serverSetupEdit: {
+        id: 'app.first-run-bootstrap.server-setup.edit',
+        defaultMessage: 'Enter server address',
+    },
+    /**
+     * The same field copy as 设置 → 服务器, deliberately sharing the message ids:
+     * the player meets one description and one validation rule in both places.
+     */
+    setupAddress: {
+        id: 'app.settings.server.address',
+        defaultMessage: 'Server address',
+    },
+    setupAddressDescription: {
+        id: 'app.settings.server.address-description',
+        defaultMessage:
+            'The Minecraft server address, for example host or host:port. Do not include a protocol or a path.',
+    },
+    setupAddressPlaceholder: {
+        id: 'app.settings.server.address-placeholder',
+        defaultMessage: 'play.example.com:25565',
+    },
+    setupAddressInvalid: {
+        id: 'app.settings.server.address-invalid',
+        defaultMessage:
+            'Enter a host or host:port without a protocol, a path, or spaces, or leave it empty.',
+    },
+    setupMap: {
+        id: 'app.settings.server.map',
+        defaultMessage: 'Server web map',
+    },
+    setupMapDescription: {
+        id: 'app.settings.server.map-description',
+        defaultMessage:
+            'Optional web map URL. When neither this nor the per-instance address is set, the map page and its navigation button are hidden.',
+    },
+    setupMapPlaceholder: {
+        id: 'app.settings.server.map-placeholder',
+        defaultMessage: 'https://map.example.com/',
+    },
+    setupMapInvalid: {
+        id: 'app.settings.server.map-invalid',
+        defaultMessage: 'Enter a complete http:// or https:// address, or leave it empty.',
     },
     stepCreatingInstance: {
         id: 'app.first-run-bootstrap.step.creating-instance',
@@ -348,6 +514,11 @@ const messages = defineMessages({
         id: 'app.first-run-bootstrap.failed.unknown',
         defaultMessage: 'Something went wrong while setting up your game.',
     },
+    failedAddressMissing: {
+        id: 'app.first-run-bootstrap.failed.address-missing',
+        defaultMessage:
+            'No server address is configured yet, so there is nothing to sync the game from. Enter it in Settings → Server and try again.',
+    },
     failedDetails: {
         id: 'app.first-run-bootstrap.failed.details',
         defaultMessage: 'Technical details',
@@ -411,6 +582,15 @@ interface FailureState {
  */
 const visible = ref(false)
 const choosing = ref(false)
+/**
+ * The address step that runs before the import/download choice on a genuinely
+ * unconfigured install. Kept inside this overlay so the player experiences one
+ * flow, not a second modal.
+ */
+const configuringServer = ref(false)
+const serverAddressInput = ref('')
+const serverMapInput = ref('')
+const serverSetupSaving = ref(false)
 const running = ref(false)
 const finished = ref(false)
 const repairing = ref(false)
@@ -432,6 +612,20 @@ let importAbortController: AbortController | null = null
 const steps = computed<VisibleStep[]>(() =>
     repairing.value ? visibleSteps.filter((entry) => entry !== 'creating-instance') : visibleSteps,
 )
+
+/** Validation matches 设置 → 服务器 exactly; an empty address is allowed to pass here. */
+const serverAddressInvalid = computed(
+    () => serverAddressInput.value.trim() !== '' && !isValidServerAddress(serverAddressInput.value),
+)
+const serverMapInvalid = computed(
+    () => serverMapInput.value.trim() !== '' && !isValidWebMapUrl(serverMapInput.value),
+)
+
+/**
+ * Whether the effective address is real. Read through the same reactive
+ * getter as the home card, so this switches as soon as the setup step saves.
+ */
+const serverAddressReady = computed(() => hasConfiguredServerAddress())
 
 watch(step, (current) => {
     if (current !== 'checking' && !choosing.value) visible.value = true
@@ -662,6 +856,12 @@ function describeFailure(error: unknown): FailureState {
                     technical,
                     instanceId,
                 }
+            case 'server-address-missing':
+                return {
+                    message: formatMessage(messages.failedAddressMissing),
+                    technical,
+                    instanceId,
+                }
         }
     }
     return {
@@ -764,6 +964,7 @@ async function start(mode: 'first-run' | 'retry') {
     if (running.value) return
 
     choosing.value = false
+    configuringServer.value = false
     beginRun()
     visible.value = true
 
@@ -777,9 +978,64 @@ async function start(mode: 'first-run' | 'retry') {
     }
 }
 
+/**
+ * Persist the first-run address through the same single write path as the
+ * settings page, then continue to the existing import/download question. A
+ * blank address is allowed to pass: the next screen blocks import/download with
+ * an explanation and offers to come back here.
+ */
+async function saveServerSetup() {
+    if (serverSetupSaving.value || serverAddressInvalid.value || serverMapInvalid.value) return
+
+    serverSetupSaving.value = true
+    try {
+        await saveServerConnectionSettings({
+            serverAddress: serverAddressInput.value,
+            serverMapUrl: serverMapInput.value,
+        })
+        const stored = getStoredServerConnection()
+        serverAddressInput.value = stored.serverAddress
+        serverMapInput.value = stored.serverMapUrl
+        configuringServer.value = false
+        choosing.value = true
+        visible.value = true
+    } catch (error) {
+        console.error('First-run bootstrap: saving the server settings failed', error)
+        addNotification({
+            title: formatMessage(messages.failedTitle),
+            text: formatMessage(messages.failedUnknown),
+            type: 'error',
+        })
+    } finally {
+        serverSetupSaving.value = false
+    }
+}
+
+function editServerSetup() {
+    const stored = getStoredServerConnection()
+    serverAddressInput.value = stored.serverAddress
+    serverMapInput.value = stored.serverMapUrl
+    configuringServer.value = true
+    choosing.value = false
+}
+
+/** Download is a path that needs a real server to sync from. */
+function chooseDownload() {
+    if (running.value) return
+    if (!serverAddressReady.value) {
+        editServerSetup()
+        return
+    }
+    void start('first-run')
+}
+
 /** Import an existing install; cancel during the scan writes nothing at all. */
 async function chooseImport() {
     if (running.value) return
+    if (!serverAddressReady.value) {
+        editServerSetup()
+        return
+    }
     const selected = await open({ multiple: false, directory: true })
     const sourcePath = selected ? String(Array.isArray(selected) ? selected[0] : selected) : null
     if (!sourcePath) return
@@ -814,19 +1070,34 @@ function cancelImport() {
 
 function dismiss() {
     choosing.value = false
+    configuringServer.value = false
     visible.value = false
 }
 
 /** Leave the launcher to its normal UI without creating or installing anything. */
 function skip() {
     choosing.value = false
+    configuringServer.value = false
     visible.value = false
 }
 
 onMounted(() => {
     void (async () => {
+        // The overlay can mount before App.vue hydrates the settings store, and
+        // "is an address configured?" must not be answered from a stale store.
+        await ensureServerConnectionSettingsLoaded()
+
         if (await shouldOfferInstallChoice()) {
-            choosing.value = true
+            if (hasConfiguredServerAddress()) {
+                // A pre-configured build, or a player who already saved an
+                // address: behave exactly as before and ask how to get the game.
+                choosing.value = true
+            } else {
+                const stored = getStoredServerConnection()
+                serverAddressInput.value = stored.serverAddress
+                serverMapInput.value = stored.serverMapUrl
+                configuringServer.value = true
+            }
             visible.value = true
             return
         }

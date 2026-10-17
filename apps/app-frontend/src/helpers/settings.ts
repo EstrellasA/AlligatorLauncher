@@ -182,6 +182,10 @@ export type AppSettings = DohSettings & {
     discord_rpc: boolean
     allow_external_scheme: boolean
     allow_privileged_scheme: boolean
+    /** Global server address; `''` means "not configured" (settings → env → placeholder). */
+    server_address: string
+    /** Global web map address; `''` means "not configured" (hidden when nothing resolves). */
+    server_map_url: string
     onboarded: boolean
     onboarding_version: number
     onboarding_instance_tour_completed: boolean

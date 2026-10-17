@@ -12,6 +12,7 @@ import {
     LayoutTemplateIcon,
     PaintbrushIcon,
     RefreshCwIcon,
+    ServerIcon,
     ShieldIcon,
     ToggleRightIcon,
     UsersIcon,
@@ -74,6 +75,10 @@ const categoryContent: Record<SettingsCategoryId, Pick<SettingsCategory, 'icon' 
     'content-downloads': {
         icon: GaugeIcon,
         content: defineAsyncComponent(() => import('./ContentDownloadSettings.vue')),
+    },
+    server: {
+        icon: ServerIcon,
+        content: defineAsyncComponent(() => import('./ServerSettings.vue')),
     },
     'network-multiplayer': {
         icon: UsersIcon,
