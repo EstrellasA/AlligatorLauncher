@@ -33,6 +33,7 @@ const OPTIFINE_VERSION_LIST_URL: &str =
     "https://bmclapi2.bangbang93.com/optifine/versionList";
 const LITELOADER_META_URL: &str =
     "https://dl.liteloader.com/versions/versions.json";
+const LITELOADER_FALLBACK_URL: &str = "https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json";
 const CLEANROOM_RELEASES_URL: &str =
     "https://api.github.com/repos/CleanroomMC/Cleanroom/releases?per_page=100";
 const CLEANROOM_MAVEN_METADATA_URL: &str = "https://repo.cleanroommc.com/releases/com/cleanroommc/cleanroom/maven-metadata.xml";
@@ -698,10 +699,7 @@ fn liteloader_manifest(
 				url: LITELOADER_META_URL.to_string(),
 				stable,
 				profile_source: LoaderProfileSource::LiteLoader,
-				fallback_url: Some(
-					"https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json"
-						.to_string(),
-				),
+				fallback_url: Some(LITELOADER_FALLBACK_URL.to_string()),
 			}],
 		});
     }
@@ -1192,6 +1190,141 @@ fn fallback_profile_url(
         "{}{loader}/v{format_version}/versions/{version}.json",
         env!("MODRINTH_LAUNCHER_META_URL")
     )
+}
+
+/// Builds the loader-version entry for an exact, already-known loader version
+/// without fetching the loader metadata manifest.
+///
+/// The manifest exists to *enumerate* loader versions. For an exact id every
+/// field it contributes is a function of the loader kind, the Minecraft
+/// version and the id, so a launcher whose server pins `loaderVersion` never
+/// needs that network round-trip. Each arm mirrors the manifest builder above
+/// field for field; keep them in sync when a builder changes.
+///
+/// `None` means the download URL genuinely depends on manifest data (Cleanroom
+/// publishes its installer as a GitHub release asset). Callers then fall back
+/// to cached metadata instead of inventing a URL.
+pub(crate) fn loader_version_from_pinned_id(
+    loader: &str,
+    game_version: &str,
+    version: &str,
+) -> Option<LoaderVersion> {
+    if !is_safe_pinned_loader_version(version) {
+        return None;
+    }
+    let stable = is_stable_version(version);
+    match loader {
+        "fabric" => Some(LoaderVersion {
+            id: version.to_string(),
+            url: format!(
+                "{FABRIC_META_URL}loader/{game_version}/{version}/profile/json"
+            ),
+            stable,
+            profile_source: LoaderProfileSource::Json,
+            fallback_url: Some(fallback_profile_url("fabric", 0, version)),
+        }),
+        "quilt" => Some(LoaderVersion {
+            id: version.to_string(),
+            url: format!(
+                "{QUILT_META_URL}loader/{game_version}/{version}/profile/json"
+            ),
+            stable,
+            profile_source: LoaderProfileSource::Json,
+            fallback_url: Some(fallback_profile_url("quilt", 1, version)),
+        }),
+        "legacy_fabric" => Some(LoaderVersion {
+            id: version.to_string(),
+            url: format!(
+                "{LEGACY_FABRIC_META_URL}loader/{game_version}/{version}/profile/json"
+            ),
+            stable,
+            profile_source: LoaderProfileSource::Json,
+            fallback_url: Some(fallback_profile_url(
+                "legacy_fabric",
+                0,
+                version,
+            )),
+        }),
+        "babric" => Some(LoaderVersion {
+            id: version.to_string(),
+            url: format!(
+                "{BABRIC_META_URL}loader/{game_version}/{version}/profile/json"
+            ),
+            // The manifest only marks its hard-coded fallback build as
+            // stable; the flag is irrelevant for an explicitly pinned id but
+            // mirroring it keeps this entry identical to the manifest's.
+            stable: version == BABRIC_FALLBACK_LOADER_VERSION,
+            profile_source: LoaderProfileSource::Babric,
+            fallback_url: None,
+        }),
+        // The legacy Forge artifact path for 1.7.10-and-earlier releases
+        // repeats the game version (`1.7.10-10.13.4.1614-1.7.10`), which is
+        // not derivable from the id alone. The installer URL below is correct
+        // for modern releases; anything else falls back to the launcher-meta
+        // profile JSON, the same fallback the manifest entry carries.
+        "forge" => {
+            let full_version = format!("{game_version}-{version}");
+            Some(LoaderVersion {
+                id: version.to_string(),
+                url: format!(
+                    "{FORGE_MAVEN_URL}{full_version}/forge-{full_version}-installer.jar"
+                ),
+                stable,
+                profile_source: LoaderProfileSource::Installer,
+                fallback_url: Some(fallback_profile_url("forge", 0, version)),
+            })
+        }
+        "neo" => {
+            // Modern NeoForge ids encode their Minecraft version
+            // (`21.1.252` -> 1.21.1). The 1.20.1 line instead lives under the
+            // legacy `net.neoforged:forge` coordinates with the game version
+            // repeated in the artifact path, exactly like the manifest builder.
+            if neoforge_game_version(version).as_deref() == Some(game_version) {
+                Some(LoaderVersion {
+                    id: version.to_string(),
+                    url: format!(
+                        "{NEOFORGE_MAVEN_URL}{version}/neoforge-{version}-installer.jar"
+                    ),
+                    stable,
+                    profile_source: LoaderProfileSource::Installer,
+                    fallback_url: Some(fallback_profile_url("neo", 0, version)),
+                })
+            } else {
+                let full_version = format!("{game_version}-{version}");
+                Some(LoaderVersion {
+                    id: version.to_string(),
+                    url: format!(
+                        "{NEOFORGE_LEGACY_MAVEN_URL}{full_version}/forge-{full_version}-installer.jar"
+                    ),
+                    stable,
+                    profile_source: LoaderProfileSource::Installer,
+                    fallback_url: Some(fallback_profile_url("neo", 0, version)),
+                })
+            }
+        }
+        "lite_loader" => Some(LoaderVersion {
+            id: version.to_string(),
+            url: LITELOADER_META_URL.to_string(),
+            stable,
+            profile_source: LoaderProfileSource::LiteLoader,
+            fallback_url: Some(LITELOADER_FALLBACK_URL.to_string()),
+        }),
+        _ => None,
+    }
+}
+
+/// A pinned loader id must be safe to place in a URL path and in the derived
+/// version folder name. Rejecting anything else keeps a malformed pack
+/// manifest from reaching a download path instead of silently inventing one.
+fn is_safe_pinned_loader_version(version: &str) -> bool {
+    !version.is_empty()
+        && version.len() <= 128
+        && version != "."
+        && version != ".."
+        && version.chars().all(|character| {
+            character.is_ascii_alphanumeric()
+                || matches!(character, '.' | '-' | '_' | '+')
+        })
 }
 
 fn neoforge_game_version(version: &str) -> Option<String> {
@@ -2397,6 +2530,104 @@ mod tests {
                 .map(|loader| loader.id.as_str())
                 .collect::<Vec<_>>()
         );
+    }
+
+    fn assert_same_loader_version(
+        actual: &LoaderVersion,
+        expected: &LoaderVersion,
+    ) {
+        assert_eq!(actual.id, expected.id);
+        assert_eq!(actual.url, expected.url);
+        assert_eq!(actual.stable, expected.stable);
+        assert_eq!(actual.profile_source, expected.profile_source);
+        assert_eq!(actual.fallback_url, expected.fallback_url);
+    }
+
+    /// The locally built entry must be byte-for-byte what the manifest builder
+    /// would have produced, so pinning a loader version cannot change where the
+    /// installer is downloaded from.
+    #[test]
+    fn pinned_loader_version_matches_manifest_for_known_versions() {
+        let fabric = meta_api_manifest_for_game(
+            "1.21.1",
+            vec![("0.16.14".to_string(), true)],
+            "fabric",
+            FABRIC_META_URL,
+            0,
+        );
+        assert_same_loader_version(
+            &loader_version_from_pinned_id("fabric", "1.21.1", "0.16.14")
+                .expect("fabric URL is derivable"),
+            &fabric.game_versions[0].loaders[0],
+        );
+
+        let quilt = meta_api_manifest_for_game(
+            "1.21.1",
+            vec![("0.27.1".to_string(), true)],
+            "quilt",
+            QUILT_META_URL,
+            1,
+        );
+        assert_same_loader_version(
+            &loader_version_from_pinned_id("quilt", "1.21.1", "0.27.1")
+                .expect("quilt URL is derivable"),
+            &quilt.game_versions[0].loaders[0],
+        );
+
+        let forge = forge_manifest(
+            maven_metadata("1.20.1-47.4.22", &["1.20.1-47.4.22"]),
+            ForgePromotions {
+                promos: HashMap::from([(
+                    "1.20.1-recommended".to_string(),
+                    "47.4.22".to_string(),
+                )]),
+            },
+        );
+        assert_same_loader_version(
+            &loader_version_from_pinned_id("forge", "1.20.1", "47.4.22")
+                .expect("modern Forge URL is derivable"),
+            &forge_loaders(&forge, "1.20.1")[0],
+        );
+
+        let neoforge = neoforge_manifest(
+            maven_metadata("21.1.252", &["21.1.251", "21.1.252"]),
+            maven_metadata("", &[]),
+        );
+        assert_same_loader_version(
+            &loader_version_from_pinned_id("neo", "1.21.1", "21.1.252")
+                .expect("modern NeoForge URL is derivable"),
+            &forge_loaders(&neoforge, "1.21.1")[0],
+        );
+
+        let neoforge_legacy = neoforge_manifest(
+            maven_metadata("", &[]),
+            maven_metadata("1.20.1-47.1.106", &["1.20.1-47.1.106"]),
+        );
+        assert_same_loader_version(
+            &loader_version_from_pinned_id("neo", "1.20.1", "47.1.106")
+                .expect("legacy NeoForge URL is derivable"),
+            &forge_loaders(&neoforge_legacy, "1.20.1")[0],
+        );
+    }
+
+    #[test]
+    fn pinned_loader_version_never_invents_underivable_urls() {
+        assert!(
+            loader_version_from_pinned_id("cleanroom", "1.12.2", "0.4.4-alpha")
+                .is_none(),
+            "Cleanroom installer URLs come from GitHub release assets"
+        );
+        assert!(
+            loader_version_from_pinned_id("unknown_loader", "1.21.1", "1.0")
+                .is_none()
+        );
+        for version in ["", ".", "..", "../escape", "1.0/2", "a b", "v1\\2"] {
+            assert!(
+                loader_version_from_pinned_id("fabric", "1.21.1", version)
+                    .is_none(),
+                "{version:?} must not become a URL path segment"
+            );
+        }
     }
 
     #[test]

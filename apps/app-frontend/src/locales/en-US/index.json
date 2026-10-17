@@ -2138,14 +2138,41 @@
   "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
+  "app.first-run-bootstrap.choice.download-text": {
+    "message": "Create a new instance and download everything the server needs."
+  },
+  "app.first-run-bootstrap.choice.download-title": {
+    "message": "I don't have it — download"
+  },
+  "app.first-run-bootstrap.choice.import-text": {
+    "message": "Pick the folder that already contains this server's pack — another launcher's instance folder or a copied .minecraft."
+  },
+  "app.first-run-bootstrap.choice.import-title": {
+    "message": "I already have it — import"
+  },
+  "app.first-run-bootstrap.choice.skip": {
+    "message": "Skip"
+  },
+  "app.first-run-bootstrap.choice.subtitle": {
+    "message": "Choose how to prepare your game for {server}. Nothing is downloaded until you choose."
+  },
+  "app.first-run-bootstrap.choice.title": {
+    "message": "Is the modpack already installed?"
+  },
   "app.first-run-bootstrap.dismiss": {
     "message": "Continue anyway"
+  },
+  "app.first-run-bootstrap.elapsed": {
+    "message": "Elapsed {time}"
   },
   "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "Your instance was created, but the required mods could not be installed. The game will not start until this is fixed."
   },
   "app.first-run-bootstrap.failed.details": {
     "message": "Technical details"
+  },
+  "app.first-run-bootstrap.failed.import": {
+    "message": "The existing install could not be imported. Check that the folder contains the pack, then try again — or choose download instead."
   },
   "app.first-run-bootstrap.failed.instance-creation": {
     "message": "The game instance could not be created. Check your network connection and try again."
@@ -2162,8 +2189,20 @@
   "app.first-run-bootstrap.file-progress": {
     "message": "File {current} of {total}"
   },
+  "app.first-run-bootstrap.import-scan-progress": {
+    "message": "Found {files} files so far"
+  },
+  "app.first-run-bootstrap.phase.copying-mods": {
+    "message": "Copying the required files…"
+  },
   "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "Downloading the game files…"
+  },
+  "app.first-run-bootstrap.phase.downloading-pack": {
+    "message": "Downloading the modpack…"
+  },
+  "app.first-run-bootstrap.phase.downloading-pack-content": {
+    "message": "Installing the modpack files…"
   },
   "app.first-run-bootstrap.phase.finishing": {
     "message": "Finishing up…"
@@ -2173,6 +2212,9 @@
   },
   "app.first-run-bootstrap.phase.preparing": {
     "message": "Preparing your game…"
+  },
+  "app.first-run-bootstrap.phase.preparing-java": {
+    "message": "Preparing Java…"
   },
   "app.first-run-bootstrap.repair.subtitle": {
     "message": "The launcher found files missing from your {server} instance and is adding them back. This only happens once."
@@ -2192,8 +2234,20 @@
   "app.first-run-bootstrap.server-missing.title": {
     "message": "The server was not added automatically"
   },
+  "app.first-run-bootstrap.slow-hint": {
+    "message": "This is taking longer than usual. Your network may be slow or blocking the download; the launcher is still trying."
+  },
+  "app.first-run-bootstrap.step.checking-folder": {
+    "message": "Checking the selected folder"
+  },
   "app.first-run-bootstrap.step.creating-instance": {
     "message": "Creating your game instance"
+  },
+  "app.first-run-bootstrap.step.importing": {
+    "message": "Importing your existing install"
+  },
+  "app.first-run-bootstrap.step.installing-client-mods": {
+    "message": "Installing the client mods"
   },
   "app.first-run-bootstrap.step.installing-mods": {
     "message": "Installing the required mods"
@@ -2203,6 +2257,9 @@
   },
   "app.first-run-bootstrap.subtitle": {
     "message": "The launcher is building a ready-to-play instance for {server}. This only happens once."
+  },
+  "app.first-run-bootstrap.success.imported-text": {
+    "message": "Your existing install was imported and prepared. You can start playing now."
   },
   "app.first-run-bootstrap.success.text": {
     "message": "The instance was created with the mods this server needs. You can start playing now."

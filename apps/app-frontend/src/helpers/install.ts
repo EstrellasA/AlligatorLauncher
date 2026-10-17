@@ -556,7 +556,23 @@ function settleInstallJob(job: InstallJobSnapshot) {
 
 const INSTALL_JOB_POLL_INTERVAL_MS = 1000
 const INSTALL_JOB_QUERY_TIMEOUT_MS = 10 * 1000
-const INSTALL_JOB_TIMEOUT_MS = 30 * 60 * 1000
+/**
+ * Inactivity budget, deliberately not a total-duration budget.
+ *
+ * A legitimate install can run far longer than this — a large modpack
+ * downloads hundreds of megabytes — so a total cap would cancel work that is
+ * making progress. This budget instead measures how long the job has shown no
+ * visible change at all: file counts, downloaded bytes, phase, item status and
+ * attempt numbers all count as activity.
+ *
+ * It is set above the backend's own retry window for metadata fetches (four
+ * attempts with a 60 s read timeout each plus backoff), so a fetch that is
+ * genuinely retrying normally reports its own error first. Only a job that
+ * stays completely silent past that window is treated as stalled, which turns
+ * the old 30-minute black hole into at most five minutes.
+ */
+const INSTALL_JOB_INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000
+const INSTALL_JOB_STALL_CHECK_INTERVAL_MS = 5 * 1000
 
 function errorMessage(error: unknown) {
     return error instanceof Error
@@ -564,6 +580,46 @@ function errorMessage(error: unknown) {
         : typeof error === 'string'
           ? error
           : String(error)
+}
+
+/**
+ * Everything a running job can change while it makes progress. The backend
+ * emits a snapshot per completed file and per live byte update, so any real
+ * work moves this key; a network stall in a single download attempt does not.
+ */
+function installJobActivityKey(job: InstallJobSnapshot) {
+    const items = job.items
+        .map(
+            (item) =>
+                `${item.id}:${item.status}:${item.bytes_downloaded}:${item.attempt ?? 0}:${item.error ?? ''}`,
+        )
+        .join(',')
+    return [
+        job.status,
+        job.phase,
+        job.progress?.current ?? -1,
+        job.progress?.total ?? -1,
+        job.progress?.secondary?.current ?? -1,
+        job.progress?.secondary?.total ?? -1,
+        job.parallel?.phase ?? '',
+        job.parallel?.current ?? -1,
+        job.parallel?.total ?? -1,
+        job.summary.files_completed,
+        job.summary.bytes_downloaded,
+        job.pause_reason?.type ?? '',
+        job.error?.message ?? '',
+        items,
+    ].join('|')
+}
+
+function stalledInstallJobMessage(job: InstallJobSnapshot) {
+    const minutes = Math.round(INSTALL_JOB_INACTIVITY_TIMEOUT_MS / 60_000)
+    const detail = job.error?.message ?? job.pause_reason?.type
+    return (
+        `Install job ${job.job_id} showed no progress for ${minutes} minutes and was canceled` +
+        ` (last phase: ${job.phase}${detail ? `; ${detail}` : ''}).` +
+        ' Check your network connection and try again.'
+    )
 }
 
 function isTransientInstallJobQueryError(error: unknown) {
@@ -602,10 +658,15 @@ export async function wait_for_install_job(jobId: string) {
         let finished = false
         let unlisten: (() => void) | null = null
         let pollTimer: ReturnType<typeof setInterval> | null = null
-        let timeoutTimer: ReturnType<typeof setTimeout> | null = null
+        let stallTimer: ReturnType<typeof setInterval> | null = null
         let pollInFlight = false
         let cancellationRequested = false
         let cancellationInFlight = false
+        /** True when the cancellation below came from the inactivity budget. */
+        let inactivityCancellation = false
+        let lastActivityAt = Date.now()
+        let lastActivityKey = ''
+        let lastObservedStatus: InstallJobStatus = current.status
 
         const cleanup = () => {
             if (unlisten) {
@@ -616,19 +677,38 @@ export async function wait_for_install_job(jobId: string) {
                 clearInterval(pollTimer)
                 pollTimer = null
             }
-            if (timeoutTimer) {
-                clearTimeout(timeoutTimer)
-                timeoutTimer = null
+            if (stallTimer) {
+                clearInterval(stallTimer)
+                stallTimer = null
+            }
+        }
+
+        const observe = (job: InstallJobSnapshot) => {
+            lastObservedStatus = job.status
+            const key = installJobActivityKey(job)
+            if (key !== lastActivityKey) {
+                lastActivityKey = key
+                lastActivityAt = Date.now()
             }
         }
 
         const resolveJob = (job: InstallJobSnapshot) => {
             if (finished || job.job_id !== jobId || !isInstallJobFinished(job.status)) return
 
+            // A terminal snapshot always ends the wait, even one that arrives
+            // because our own cancellation succeeded.
+            observe(job)
             finished = true
             cleanup()
 
             try {
+                if (
+                    inactivityCancellation &&
+                    (job.status === 'canceled' || job.status === 'interrupted')
+                ) {
+                    reject(new Error(stalledInstallJobMessage(job)))
+                    return
+                }
                 resolve(settleInstallJob(job))
             } catch (err) {
                 reject(err)
@@ -647,6 +727,7 @@ export async function wait_for_install_job(jobId: string) {
             pollInFlight = true
             queryInstallJob(jobId)
                 .then((job) => {
+                    observe(job)
                     resolveJob(job)
                 })
                 .catch((error) => {
@@ -664,6 +745,7 @@ export async function wait_for_install_job(jobId: string) {
         const requestCancellation = async () => {
             if (finished || cancellationRequested || cancellationInFlight) return
             cancellationRequested = true
+            inactivityCancellation = true
             cancellationInFlight = true
             try {
                 resolveJob(await install_job_cancel(jobId))
@@ -676,9 +758,19 @@ export async function wait_for_install_job(jobId: string) {
         }
 
         pollTimer = setInterval(poll, INSTALL_JOB_POLL_INTERVAL_MS)
-        timeoutTimer = setTimeout(() => {
-            void requestCancellation()
-        }, INSTALL_JOB_TIMEOUT_MS)
+        stallTimer = setInterval(() => {
+            if (finished || cancellationRequested) return
+            // A job that is queued behind another install, or paused waiting
+            // for the player, is silent by design. Only a *running* job can be
+            // stalled, so those states keep the budget fresh.
+            if (lastObservedStatus === 'queued' || lastObservedStatus === 'waiting_for_user') {
+                lastActivityAt = Date.now()
+                return
+            }
+            if (Date.now() - lastActivityAt >= INSTALL_JOB_INACTIVITY_TIMEOUT_MS) {
+                void requestCancellation()
+            }
+        }, INSTALL_JOB_STALL_CHECK_INTERVAL_MS)
 
         install_job_listener(resolveJob)
             .then((listener) => {

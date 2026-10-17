@@ -2138,14 +2138,41 @@
   "app.export-modal.version-number-placeholder": {
     "message": "1.0.0"
   },
+  "app.first-run-bootstrap.choice.download-text": {
+    "message": "新建一个实例，并下载服务器需要的全部内容。"
+  },
+  "app.first-run-bootstrap.choice.download-title": {
+    "message": "没装过，帮我下载"
+  },
+  "app.first-run-bootstrap.choice.import-text": {
+    "message": "选择已经包含本服务器整合包的文件夹——例如其他启动器的实例文件夹，或复制过来的 .minecraft。"
+  },
+  "app.first-run-bootstrap.choice.import-title": {
+    "message": "已经装过，导入"
+  },
+  "app.first-run-bootstrap.choice.skip": {
+    "message": "跳过"
+  },
+  "app.first-run-bootstrap.choice.subtitle": {
+    "message": "选择为 {server} 准备游戏的方式。在你做出选择之前，不会下载任何内容。"
+  },
+  "app.first-run-bootstrap.choice.title": {
+    "message": "这台电脑上已经装过整合包了吗？"
+  },
   "app.first-run-bootstrap.dismiss": {
     "message": "仍然继续"
+  },
+  "app.first-run-bootstrap.elapsed": {
+    "message": "已用时 {time}"
   },
   "app.first-run-bootstrap.failed.bundled-mods": {
     "message": "实例已经创建，但必需模组安装失败。在修复之前游戏无法启动。"
   },
   "app.first-run-bootstrap.failed.details": {
     "message": "技术细节"
+  },
+  "app.first-run-bootstrap.failed.import": {
+    "message": "无法导入已有的安装。请确认所选文件夹包含整合包后重试，或改选「没装过，帮我下载」。"
   },
   "app.first-run-bootstrap.failed.instance-creation": {
     "message": "无法创建游戏实例。请检查网络连接后重试。"
@@ -2162,8 +2189,20 @@
   "app.first-run-bootstrap.file-progress": {
     "message": "第 {current} / {total} 个文件"
   },
+  "app.first-run-bootstrap.import-scan-progress": {
+    "message": "已找到 {files} 个文件"
+  },
+  "app.first-run-bootstrap.phase.copying-mods": {
+    "message": "正在复制必需的文件……"
+  },
   "app.first-run-bootstrap.phase.downloading-minecraft": {
     "message": "正在下载游戏文件……"
+  },
+  "app.first-run-bootstrap.phase.downloading-pack": {
+    "message": "正在下载整合包……"
+  },
+  "app.first-run-bootstrap.phase.downloading-pack-content": {
+    "message": "正在安装整合包文件……"
   },
   "app.first-run-bootstrap.phase.finishing": {
     "message": "正在收尾……"
@@ -2173,6 +2212,9 @@
   },
   "app.first-run-bootstrap.phase.preparing": {
     "message": "正在准备游戏……"
+  },
+  "app.first-run-bootstrap.phase.preparing-java": {
+    "message": "正在准备 Java……"
   },
   "app.first-run-bootstrap.repair.subtitle": {
     "message": "启动器发现 {server} 实例缺少一些文件，正在补回。这只会发生一次。"
@@ -2192,8 +2234,20 @@
   "app.first-run-bootstrap.server-missing.title": {
     "message": "服务器未能自动添加"
   },
+  "app.first-run-bootstrap.slow-hint": {
+    "message": "这次比平时更久。你的网络可能较慢，或正在阻断下载；启动器仍在尝试。"
+  },
+  "app.first-run-bootstrap.step.checking-folder": {
+    "message": "正在检查所选文件夹"
+  },
   "app.first-run-bootstrap.step.creating-instance": {
     "message": "正在创建游戏实例"
+  },
+  "app.first-run-bootstrap.step.importing": {
+    "message": "正在导入已有的安装"
+  },
+  "app.first-run-bootstrap.step.installing-client-mods": {
+    "message": "正在安装客户端模组"
   },
   "app.first-run-bootstrap.step.installing-mods": {
     "message": "正在安装必需的模组"
@@ -2203,6 +2257,9 @@
   },
   "app.first-run-bootstrap.subtitle": {
     "message": "启动器正在为 {server} 创建一个可以直接开玩的实例，这一步只会执行一次。"
+  },
+  "app.first-run-bootstrap.success.imported-text": {
+    "message": "已有的安装已经导入并准备完成，现在就可以开始游戏了。"
   },
   "app.first-run-bootstrap.success.text": {
     "message": "实例已创建，并装好了本服务器需要的模组，现在就可以开始游戏了。"

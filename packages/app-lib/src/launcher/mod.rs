@@ -560,6 +560,47 @@ pub async fn get_loader_version_from_profile_with_cache(
             .await;
     }
 
+    // An exact, pinned loader version needs no manifest: the manifest is only
+    // there to enumerate versions and pick one. Building the entry locally
+    // keeps first-run instance creation (and offline launches) away from
+    // maven/meta entirely, which is what used to turn a pinned version into a
+    // multi-minute silent network stall.
+    if let Some(requested) = explicit_loader_version(loader_version) {
+        if let Some(pinned) =
+            crate::api::loader_metadata::loader_version_from_pinned_id(
+                loader.as_meta_str(),
+                game_version,
+                requested,
+            )
+        {
+            return Ok(Some(pinned));
+        }
+
+        // The URL for this loader only exists in its metadata manifest (its
+        // installer is a release asset), so this case cannot avoid that one
+        // lookup. Keep it, but name the failing step instead of surfacing a
+        // bare metadata timeout.
+        let versions =
+            crate::api::metadata::get_loader_versions_for_game_with_cache(
+                loader.as_meta_str(),
+                game_version,
+                cache_behaviour,
+            )
+            .await
+            .map_err(|error| {
+                crate::ErrorKind::LauncherError(format!(
+                    "Loader version {requested} of {} {game_version} is pinned, \
+                     but this loader's download URL can only be read from its \
+                     loader metadata manifest, and that manifest could not be \
+                     loaded: {error}",
+                    loader.as_str()
+                ))
+            })?;
+        return Ok(loader_versions_for_game_version(&versions, game_version)
+            .and_then(|loaders| select_loader_version(loaders, Some(requested)))
+            .cloned());
+    }
+
     let versions =
         crate::api::metadata::get_loader_versions_for_game_with_cache(
             loader.as_meta_str(),
@@ -2996,6 +3037,60 @@ mod loader_resolution_tests {
         assert!(
             installed_offline_loader_version(ModLoader::Forge, None).is_none()
         );
+    }
+
+    /// A pinned loader version must resolve with no `State`, database or
+    /// network: the short-circuit returns before any of them is touched. Before
+    /// the fix this hit `State::get()` and then the loader manifest fetch, which
+    /// is exactly the silent stall this test prevents from coming back.
+    #[tokio::test]
+    async fn pinned_loader_versions_resolve_without_state_or_network() {
+        for (loader, game_version, version, url_fragment) in [
+            (
+                ModLoader::NeoForge,
+                "1.21.1",
+                "21.1.252",
+                "/net/neoforged/neoforge/21.1.252/neoforge-21.1.252-installer.jar",
+            ),
+            (
+                ModLoader::Forge,
+                "1.20.1",
+                "47.4.22",
+                "/net/minecraftforge/forge/1.20.1-47.4.22/forge-1.20.1-47.4.22-installer.jar",
+            ),
+            (
+                ModLoader::Fabric,
+                "1.21.1",
+                "0.16.14",
+                "/loader/1.21.1/0.16.14/profile/json",
+            ),
+            (
+                ModLoader::Quilt,
+                "1.21.1",
+                "0.27.1",
+                "/loader/1.21.1/0.27.1/profile/json",
+            ),
+        ] {
+            let resolved = get_loader_version_from_profile(
+                game_version,
+                loader,
+                Some(version),
+            )
+            .await
+            .unwrap_or_else(|error| {
+                panic!(
+                    "{loader:?} pinned version must not need network: {error}"
+                )
+            })
+            .expect("a pinned version must resolve to an entry");
+            assert_eq!(resolved.id, version, "{loader:?}");
+            assert!(
+                resolved.url.contains(url_fragment),
+                "{loader:?} resolved to {}",
+                resolved.url
+            );
+            assert!(resolved.fallback_url.is_some(), "{loader:?}");
+        }
     }
 }
 
