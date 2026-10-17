@@ -1124,24 +1124,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Entrar no servidor de Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Doar"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Patrocinar no GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Doar no Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Doar no Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Doar no PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Reportar problemas"
   },

@@ -14,7 +14,6 @@ import { computed, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import gradientTextToolCover from '@/assets/lab/gradient-text-tool-cover.png'
-import modTranslationCover from '@/assets/lab/mod-translation-cover.png'
 import recipeGeneratorToolCover from '@/assets/lab/recipe-generator-tool-cover.png'
 import schematicPreviewToolCover from '@/assets/lab/schematic-preview-cover.png'
 import seedMapToolCover from '@/assets/lab/seed-map-tool-cover.png'
@@ -42,7 +41,6 @@ const toolCoverImages: Record<string, string> = {
     'recipe-generator': recipeGeneratorToolCover,
     'schematic-preview': schematicPreviewToolCover,
     'seed-map': seedMapToolCover,
-    'mod-translation': modTranslationCover,
     'skin-editor': skinEditorToolCover,
 }
 
@@ -53,7 +51,6 @@ const messages = defineMessages({
     search: { id: 'app.lab.search', defaultMessage: 'Search tools' },
     allTools: { id: 'app.lab.category.all', defaultMessage: 'All tools' },
     creation: { id: 'app.lab.category.creation', defaultMessage: 'Creation' },
-    maintenance: { id: 'app.lab.category.maintenance', defaultMessage: 'Maintenance' },
     world: { id: 'app.lab.category.world', defaultMessage: 'World' },
     enter: { id: 'app.lab.enter', defaultMessage: 'Enter' },
     favoriteFilterAll: { id: 'app.lab.favorite-filter.all', defaultMessage: 'All' },
@@ -102,14 +99,6 @@ const messages = defineMessages({
         id: 'app.lab.schematic-preview.description',
         defaultMessage: 'Quickly preview and edit your schematics.',
     },
-    modTranslationTitle: {
-        id: 'app.lab.mod-translation.title',
-        defaultMessage: 'Mod translation',
-    },
-    modTranslationDescription: {
-        id: 'app.lab.mod-translation.description',
-        defaultMessage: 'Translate any Minecraft mod JAR into Simplified Chinese.',
-    },
     skinEditorTitle: { id: 'app.lab.skin-editor.title', defaultMessage: 'Skin editor' },
     skinEditorDescription: {
         id: 'app.lab.skin-editor.description',
@@ -117,7 +106,7 @@ const messages = defineMessages({
     },
 })
 
-const categoryOptions: LabCategoryFilter[] = ['all', 'creation', 'maintenance', 'world']
+const categoryOptions: LabCategoryFilter[] = ['all', 'creation', 'world']
 const favoriteFilterOptions: LabFavoriteFilter[] = ['all', 'favorite', 'unfavorite']
 
 watch(category, (value) => setLabCategoryFilter(value))
@@ -172,7 +161,6 @@ function toolTitle(toolId: string, fallback: string) {
     if (toolId === 'recipe-generator') return formatMessage(messages.recipeGeneratorTitle)
     if (toolId === 'seed-map') return formatMessage(messages.seedMapTitle)
     if (toolId === 'schematic-preview') return formatMessage(messages.schematicPreviewTitle)
-    if (toolId === 'mod-translation') return formatMessage(messages.modTranslationTitle)
     return fallback
 }
 
@@ -182,7 +170,6 @@ function toolDescription(toolId: string, fallback: string) {
     if (toolId === 'recipe-generator') return formatMessage(messages.recipeGeneratorDescription)
     if (toolId === 'seed-map') return formatMessage(messages.seedMapDescription)
     if (toolId === 'schematic-preview') return formatMessage(messages.schematicPreviewDescription)
-    if (toolId === 'mod-translation') return formatMessage(messages.modTranslationDescription)
     return fallback
 }
 

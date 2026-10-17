@@ -670,7 +670,6 @@ async function purgeCache() {
         'report_types',
         'loaders',
         'game_versions',
-        'donation_platforms',
         'file_hash',
         'file_update',
         'search_results',

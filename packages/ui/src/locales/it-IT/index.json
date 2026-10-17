@@ -1949,24 +1949,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Entra nel Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Dona"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsorizza su GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Dona su Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Dona su Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Dona su PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Segnala problemi"
   },

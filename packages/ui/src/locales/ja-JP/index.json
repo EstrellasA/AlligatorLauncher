@@ -1829,24 +1829,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Discordサーバーに参加"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "寄付"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Githubでスポンサーになる"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ko-fiで寄付"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Patreonで寄付"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "PayPalで寄付"
-  },
   "project.about.links.issues": {
     "defaultMessage": "問題を報告"
   },

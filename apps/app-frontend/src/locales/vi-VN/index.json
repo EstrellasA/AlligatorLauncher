@@ -802,9 +802,6 @@
   "app.skins.title": {
     "message": "Đổi skin"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "Phiên bản v{version} của ALLIGATORZONEđã sẵn sàng để có thể cài đặt. Khởi động lại ứng dụng để cập nhật ngay bây giờ, hoặc tự động cập nhật sau khi bạn tắt ALLIGATORZONE."
   },

@@ -895,9 +895,6 @@
   "app.skins.title": {
     "message": "Utseende väljare"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} har laddats ner. Ladda om för att uppdatera nu, eller automatiskt när du stänger ALLIGATORZONE."
   },

@@ -278,207 +278,6 @@
   "app.action-bar.view-logs": {
     "message": "查看日志"
   },
-  "app.ai-settings.add-model": {
-    "message": "添加模型"
-  },
-  "app.ai-settings.all-providers": {
-    "message": "全部"
-  },
-  "app.ai-settings.api-key": {
-    "message": "API 密钥"
-  },
-  "app.ai-settings.api-key-configured": {
-    "message": "密钥已安全存储在操作系统凭据库中。"
-  },
-  "app.ai-settings.api-key-optional": {
-    "message": "尚未存储密钥；本地服务可无需密钥运行。"
-  },
-  "app.ai-settings.bedrock.access-key-id": {
-    "message": "AWS 访问密钥 ID"
-  },
-  "app.ai-settings.bedrock.api-key": {
-    "message": "API 密钥"
-  },
-  "app.ai-settings.bedrock.authentication": {
-    "message": "身份验证"
-  },
-  "app.ai-settings.bedrock.aws-credentials": {
-    "message": "AWS 凭据"
-  },
-  "app.ai-settings.bedrock.secret-access-key": {
-    "message": "AWS 秘密访问密钥"
-  },
-  "app.ai-settings.bedrock.session-token": {
-    "message": "AWS 会话令牌（可选）"
-  },
-  "app.ai-settings.clear-credential": {
-    "message": "清除凭据"
-  },
-  "app.ai-settings.clear-key": {
-    "message": "清除密钥"
-  },
-  "app.ai-settings.configured-models": {
-    "message": "{count} 个文本模型"
-  },
-  "app.ai-settings.credential-configured": {
-    "message": "已安全存储在操作系统凭据库中。"
-  },
-  "app.ai-settings.description": {
-    "message": "统一配置文本模型，然后在启动器的各项功能中使用。"
-  },
-  "app.ai-settings.disabled": {
-    "message": "已禁用"
-  },
-  "app.ai-settings.disabled-providers": {
-    "message": "未启用的供应商"
-  },
-  "app.ai-settings.enabled": {
-    "message": "已启用"
-  },
-  "app.ai-settings.enabled-providers": {
-    "message": "已启用的供应商"
-  },
-  "app.ai-settings.endpoint": {
-    "message": "API 端点"
-  },
-  "app.ai-settings.field.account-id": {
-    "message": "账户 ID"
-  },
-  "app.ai-settings.field.api-version": {
-    "message": "API 版本"
-  },
-  "app.ai-settings.field.deployment": {
-    "message": "部署名称"
-  },
-  "app.ai-settings.field.location": {
-    "message": "位置"
-  },
-  "app.ai-settings.field.project": {
-    "message": "项目 ID"
-  },
-  "app.ai-settings.field.region": {
-    "message": "区域"
-  },
-  "app.ai-settings.looking-for-translation": {
-    "message": "在找内容翻译？"
-  },
-  "app.ai-settings.looking-for-translation.description": {
-    "message": "项目标题与描述的翻译在「语言与翻译」中配置。选择 AI 翻译服务时，这里配置的模型供应商会驱动该功能。"
-  },
-  "app.ai-settings.master-switch": {
-    "message": "启用 AI 功能"
-  },
-  "app.ai-settings.master-switch-description": {
-    "message": "关闭后，启动器中的 AI 操作和供应商选项将全部隐藏。"
-  },
-  "app.ai-settings.model-id": {
-    "message": "模型 ID"
-  },
-  "app.ai-settings.model-name": {
-    "message": "显示名称（可选）"
-  },
-  "app.ai-settings.models": {
-    "message": "文本模型"
-  },
-  "app.ai-settings.no-matching-models": {
-    "message": "没有符合搜索条件的模型。"
-  },
-  "app.ai-settings.no-models": {
-    "message": "没有可用模型，请先添加模型 ID。"
-  },
-  "app.ai-settings.no-providers": {
-    "message": "未找到供应商。"
-  },
-  "app.ai-settings.oauth.check": {
-    "message": "立即检查授权状态"
-  },
-  "app.ai-settings.oauth.checking": {
-    "message": "正在检查授权状态"
-  },
-  "app.ai-settings.oauth.code": {
-    "message": "授权码"
-  },
-  "app.ai-settings.oauth.connect": {
-    "message": "连接账户"
-  },
-  "app.ai-settings.oauth.connected": {
-    "message": "账户已连接"
-  },
-  "app.ai-settings.oauth.copy-code": {
-    "message": "复制授权码"
-  },
-  "app.ai-settings.oauth.denied": {
-    "message": "授权已被拒绝。"
-  },
-  "app.ai-settings.oauth.disconnect": {
-    "message": "断开连接"
-  },
-  "app.ai-settings.oauth.expired": {
-    "message": "授权码已过期，请重新开始。"
-  },
-  "app.ai-settings.oauth.open": {
-    "message": "打开授权页面"
-  },
-  "app.ai-settings.oauth.pending": {
-    "message": "请在浏览器中完成授权，本页面会自动更新。"
-  },
-  "app.ai-settings.oauth.reconnect": {
-    "message": "重新连接账户"
-  },
-  "app.ai-settings.open-language-translation": {
-    "message": "打开语言与翻译"
-  },
-  "app.ai-settings.refresh-models": {
-    "message": "获取模型"
-  },
-  "app.ai-settings.refreshing-models": {
-    "message": "正在获取……"
-  },
-  "app.ai-settings.save-credential": {
-    "message": "保存凭据"
-  },
-  "app.ai-settings.save-key": {
-    "message": "保存密钥"
-  },
-  "app.ai-settings.save-provider": {
-    "message": "保存供应商"
-  },
-  "app.ai-settings.saved": {
-    "message": "供应商设置已保存。"
-  },
-  "app.ai-settings.search": {
-    "message": "搜索供应商"
-  },
-  "app.ai-settings.search-models": {
-    "message": "搜索模型"
-  },
-  "app.ai-settings.sponsored-providers": {
-    "message": "赞助的供应商"
-  },
-  "app.ai-settings.test": {
-    "message": "测试供应商"
-  },
-  "app.ai-settings.test-model": {
-    "message": "测试模型"
-  },
-  "app.ai-settings.test-success": {
-    "message": "连接成功：{response}"
-  },
-  "app.ai-settings.testing": {
-    "message": "正在测试……"
-  },
-  "app.ai-settings.title": {
-    "message": "AI 供应商"
-  },
-  "app.ai-settings.vertex.service-account": {
-    "message": "服务账号 JSON"
-  },
-  "app.ai-settings.vertex.service-account-description": {
-    "message": "粘贴完整的 Google Cloud 服务账号 JSON 文档。"
-  },
-  "app.ai-settings.visit-website": {
-    "message": "访问官网"
-  },
   "app.appearance-settings.accent-color.blue": {
     "message": "蓝色"
   },
@@ -1258,45 +1057,6 @@
   },
   "app.content.install-content": {
     "message": "安装内容"
-  },
-  "app.crash-analysis.ai.action": {
-    "message": "使用 AI 解释"
-  },
-  "app.crash-analysis.ai.analyzing": {
-    "message": "正在解释崩溃……"
-  },
-  "app.crash-analysis.ai.close": {
-    "message": "关闭"
-  },
-  "app.crash-analysis.ai.copied": {
-    "message": "AI 解释已复制到剪贴板"
-  },
-  "app.crash-analysis.ai.copy": {
-    "message": "复制解释"
-  },
-  "app.crash-analysis.ai.disclaimer": {
-    "message": "经过脱敏和裁剪的崩溃上下文会直接发送给本启动器中配置的 AI Provider。AI 输出可能不准确。"
-  },
-  "app.crash-analysis.ai.error": {
-    "message": "AI 解释失败：{message}"
-  },
-  "app.crash-analysis.ai.settings.enabled": {
-    "message": "启用 AI 解释"
-  },
-  "app.crash-analysis.ai.settings.enabled-description": {
-    "message": "不使用 AI 时，本地规则崩溃分析仍可用。"
-  },
-  "app.crash-analysis.ai.settings.model": {
-    "message": "文本模型"
-  },
-  "app.crash-analysis.ai.settings.no-providers": {
-    "message": "请先在上方启用 Provider 和文本模型，再使用 AI 崩溃解释。"
-  },
-  "app.crash-analysis.ai.settings.provider": {
-    "message": "AI Provider"
-  },
-  "app.crash-analysis.ai.title": {
-    "message": "AI 崩溃解释"
   },
   "app.curseforge.automatic-downloads-failed.notification-body": {
     "message": "重试后仍有 {failed, number} 个文件下载失败（{list}）。可在“下载”中查看已记录的错误。"
@@ -4019,9 +3779,6 @@
   "app.lab.category.creation": {
     "message": "创作"
   },
-  "app.lab.category.maintenance": {
-    "message": "维护"
-  },
   "app.lab.category.world": {
     "message": "世界"
   },
@@ -4213,207 +3970,6 @@
   },
   "app.lab.gradient-text.title": {
     "message": "渐变文字生成器"
-  },
-  "app.lab.mod-translation.active-count": {
-    "message": "{count} 个任务进行中"
-  },
-  "app.lab.mod-translation.ai-load-error": {
-    "message": "AI 设置加载失败，请检查网络后重试。"
-  },
-  "app.lab.mod-translation.ai-not-configured": {
-    "message": "AI 尚未配置。请先在 AI 设置中启用提供商和模型。"
-  },
-  "app.lab.mod-translation.ai-section": {
-    "message": "AI 与选项"
-  },
-  "app.lab.mod-translation.all-finished": {
-    "message": "所有任务已结束"
-  },
-  "app.lab.mod-translation.analysis": {
-    "message": "分析结果"
-  },
-  "app.lab.mod-translation.analyze": {
-    "message": "分析"
-  },
-  "app.lab.mod-translation.analyzing": {
-    "message": "分析中…"
-  },
-  "app.lab.mod-translation.analyzing-elapsed": {
-    "message": "已分析 {seconds} 秒"
-  },
-  "app.lab.mod-translation.analyzing-hint": {
-    "message": "本地预检：正在解包并扫描模组文本，不消耗 AI token。"
-  },
-  "app.lab.mod-translation.background-running": {
-    "message": "任务仍在后台运行"
-  },
-  "app.lab.mod-translation.batch-size": {
-    "message": "批次大小"
-  },
-  "app.lab.mod-translation.cancel": {
-    "message": "取消"
-  },
-  "app.lab.mod-translation.cancelling": {
-    "message": "取消中…"
-  },
-  "app.lab.mod-translation.class-candidates": {
-    "message": "Class 文本候选"
-  },
-  "app.lab.mod-translation.class-text-enabled": {
-    "message": "改写高级 .class 文本候选"
-  },
-  "app.lab.mod-translation.completed-count": {
-    "message": "{count} 个已完成"
-  },
-  "app.lab.mod-translation.copy-diagnostics": {
-    "message": "复制诊断"
-  },
-  "app.lab.mod-translation.copy-diagnostics-info": {
-    "message": "复制诊断信息"
-  },
-  "app.lab.mod-translation.description": {
-    "message": "把任意 Minecraft 模组 JAR 翻译成简体中文。"
-  },
-  "app.lab.mod-translation.done": {
-    "message": "完成"
-  },
-  "app.lab.mod-translation.estimated-quote": {
-    "message": "预计消耗"
-  },
-  "app.lab.mod-translation.estimated-tokens": {
-    "message": "{tokens} 个 token"
-  },
-  "app.lab.mod-translation.estimated-tokens-detail": {
-    "message": "约 {calls} 次调用 · 输入 {input} / 输出 {output}"
-  },
-  "app.lab.mod-translation.failed": {
-    "message": "失败"
-  },
-  "app.lab.mod-translation.failed-count": {
-    "message": "{count} 个失败"
-  },
-  "app.lab.mod-translation.generate-mod-name": {
-    "message": "AI 生成中文模组名"
-  },
-  "app.lab.mod-translation.input-section": {
-    "message": "输入"
-  },
-  "app.lab.mod-translation.jobs-section": {
-    "message": "任务"
-  },
-  "app.lab.mod-translation.language-characters": {
-    "message": "字符数"
-  },
-  "app.lab.mod-translation.language-entries": {
-    "message": "语言条目"
-  },
-  "app.lab.mod-translation.language-sources": {
-    "message": "语言源文件"
-  },
-  "app.lab.mod-translation.loader": {
-    "message": "加载器"
-  },
-  "app.lab.mod-translation.model": {
-    "message": "文本模型"
-  },
-  "app.lab.mod-translation.no-jobs": {
-    "message": "开始的任务会显示在这里。"
-  },
-  "app.lab.mod-translation.open-output": {
-    "message": "打开输出目录"
-  },
-  "app.lab.mod-translation.operation-failed": {
-    "message": "模组翻译操作失败。"
-  },
-  "app.lab.mod-translation.options": {
-    "message": "选项"
-  },
-  "app.lab.mod-translation.output-path": {
-    "message": "输出：{path}"
-  },
-  "app.lab.mod-translation.phase.class": {
-    "message": "Class 文本"
-  },
-  "app.lab.mod-translation.phase.language": {
-    "message": "语言"
-  },
-  "app.lab.mod-translation.phase.packaging": {
-    "message": "打包"
-  },
-  "app.lab.mod-translation.phase.prepare": {
-    "message": "准备"
-  },
-  "app.lab.mod-translation.phase.repair": {
-    "message": "质量检查"
-  },
-  "app.lab.mod-translation.phase.research": {
-    "message": "生成名称"
-  },
-  "app.lab.mod-translation.phase.validation": {
-    "message": "验收"
-  },
-  "app.lab.mod-translation.points": {
-    "message": "{points} 点"
-  },
-  "app.lab.mod-translation.preparing": {
-    "message": "准备中…"
-  },
-  "app.lab.mod-translation.progress.current-batch": {
-    "message": "当前批次 {completed} / {total}"
-  },
-  "app.lab.mod-translation.progress.recently-written": {
-    "message": "最近写入"
-  },
-  "app.lab.mod-translation.progress.verified-weights": {
-    "message": "当前复验通过 {verified} / {total}"
-  },
-  "app.lab.mod-translation.progress.workload-measuring": {
-    "message": "正在建立可验证工作量…"
-  },
-  "app.lab.mod-translation.provider": {
-    "message": "AI 提供商"
-  },
-  "app.lab.mod-translation.repair-enabled": {
-    "message": "复验后批量修复疑难翻译"
-  },
-  "app.lab.mod-translation.result.changed-files": {
-    "message": "改动文件：{files}"
-  },
-  "app.lab.mod-translation.result.class-text": {
-    "message": "Class 文本"
-  },
-  "app.lab.mod-translation.result.completed": {
-    "message": "翻译完成"
-  },
-  "app.lab.mod-translation.result.completed-warnings": {
-    "message": "已生成，但仍有未覆盖文本"
-  },
-  "app.lab.mod-translation.result.mod-label": {
-    "message": "模组"
-  },
-  "app.lab.mod-translation.select-file": {
-    "message": "选择模组 JAR"
-  },
-  "app.lab.mod-translation.signed-mod": {
-    "message": "该模组带有数字签名，无法修改。"
-  },
-  "app.lab.mod-translation.start": {
-    "message": "开始翻译"
-  },
-  "app.lab.mod-translation.start-hint": {
-    "message": "先选择 JAR 和 AI 模型再开始。"
-  },
-  "app.lab.mod-translation.technical-details": {
-    "message": "技术详情"
-  },
-  "app.lab.mod-translation.timeline.empty": {
-    "message": "等待处理事件…"
-  },
-  "app.lab.mod-translation.timeline.title": {
-    "message": "处理时间线 ({count})"
-  },
-  "app.lab.mod-translation.title": {
-    "message": "模组翻译"
   },
   "app.lab.no-favorites": {
     "message": "还没有收藏任何工具。"
@@ -5945,18 +5501,6 @@
   "app.log-share.ai.working": {
     "message": "正在使用 LogAgent 分析…"
   },
-  "app.log-share.settings.ai-source": {
-    "message": "AI 分析来源"
-  },
-  "app.log-share.settings.ai-source-custom": {
-    "message": "自定义 AI 服务商"
-  },
-  "app.log-share.settings.ai-source-description": {
-    "message": "LogShare AI 在云端分析；自定义则使用下方配置的服务商。"
-  },
-  "app.log-share.settings.ai-source-logshare": {
-    "message": "LogShare AI"
-  },
   "app.log-share.settings.auto-upload": {
     "message": "自动上传以获取结构化摘要"
   },
@@ -5991,7 +5535,7 @@
     "message": "展示 LogAgent 运行期间的思考、工具及上限状态。"
   },
   "app.log-share.settings.title": {
-    "message": "日志分享与 AI 分析"
+    "message": "日志分享"
   },
   "app.log-share.shared-logs.delete": {
     "message": "删除"
@@ -7256,21 +6800,6 @@
   "app.project.planet-minecraft.versions": {
     "message": "下载"
   },
-  "app.project.translation.failed": {
-    "message": "翻译失败，已保留原文。请重试。"
-  },
-  "app.project.translation.failed-title": {
-    "message": "翻译失败"
-  },
-  "app.project.translation.show-original": {
-    "message": "显示原文"
-  },
-  "app.project.translation.translate": {
-    "message": "翻译"
-  },
-  "app.project.translation.translating": {
-    "message": "正在翻译…"
-  },
   "app.project.version.all-versions": {
     "message": "全部版本"
   },
@@ -8142,12 +7671,6 @@
   },
   "app.servers.wizard.type-title": {
     "message": "服务器类型"
-  },
-  "app.settings.about.afdian": {
-    "message": "在爱发电赞助"
-  },
-  "app.settings.about.afdian-description": {
-    "message": "支持项目持续开发"
   },
   "app.settings.about.attribution": {
     "message": "ALLIGATORZONE 是开源项目 Modrinth 代码库的修改版本。"
@@ -10459,9 +9982,6 @@
   "app.settings.tabs.about": {
     "message": "关于"
   },
-  "app.settings.tabs.ai": {
-    "message": "AI 功能"
-  },
   "app.settings.tabs.content-downloads": {
     "message": "内容与下载"
   },
@@ -10487,7 +10007,7 @@
     "message": "语言"
   },
   "app.settings.tabs.language-translation": {
-    "message": "语言与翻译"
+    "message": "语言"
   },
   "app.settings.tabs.launch-defaults": {
     "message": "启动默认值"
@@ -11029,155 +10549,11 @@
   "app.sync-instances-update.choose-source.resource-packs": {
     "message": "选择要从哪个实例复制资源包。这些包仅用于初始化同步，之后可从任意实例进行编辑。"
   },
-  "app.translation-settings.ai-model": {
-    "message": "文本模型"
-  },
-  "app.translation-settings.ai-provider": {
-    "message": "AI 供应商"
-  },
-  "app.translation-settings.auto-translate": {
-    "message": "自动翻译项目页面"
-  },
-  "app.translation-settings.auto-translate-description": {
-    "message": "打开 Modrinth 项目页面后立即开始翻译。"
-  },
-  "app.translation-settings.cache": {
-    "message": "翻译缓存"
-  },
-  "app.translation-settings.cache-cleared": {
-    "message": "翻译缓存已清除。"
-  },
-  "app.translation-settings.cache-description": {
-    "message": "成功的翻译会缓存七天，以减少请求次数。"
-  },
-  "app.translation-settings.clear-cache": {
-    "message": "清除翻译缓存"
-  },
-  "app.translation-settings.deepl-api-endpoint": {
-    "message": "API 端点"
-  },
-  "app.translation-settings.deepl-api-endpoint-placeholder": {
-    "message": "https://api-free.deepl.com/v2/translate"
-  },
-  "app.translation-settings.deepl-api-key": {
-    "message": "API 密钥"
-  },
-  "app.translation-settings.deepl-api-key-hint": {
-    "message": "在 deepl.com/pro-api 免费获取密钥"
-  },
-  "app.translation-settings.deepl-api-key-placeholder": {
-    "message": "输入你的 DeepL API 密钥"
-  },
-  "app.translation-settings.description": {
-    "message": "浏览内容时翻译 Modrinth 项目的标题、简介和详细描述。"
-  },
-  "app.translation-settings.display-mode": {
-    "message": "显示模式"
-  },
-  "app.translation-settings.display-mode.bilingual": {
-    "message": "原文与译文"
-  },
-  "app.translation-settings.display-mode.translation-only": {
-    "message": "仅译文"
-  },
-  "app.translation-settings.display-section-title": {
-    "message": "翻译显示"
-  },
-  "app.translation-settings.google-ip-pool": {
-    "message": "可用: {count}"
-  },
-  "app.translation-settings.operation-failed": {
-    "message": "翻译操作失败，请检查配置后重试。"
-  },
-  "app.translation-settings.provider": {
-    "message": "翻译服务"
-  },
-  "app.translation-settings.provider.ai": {
-    "message": "AI 模型"
-  },
-  "app.translation-settings.provider.deepl": {
-    "message": "DeepL 翻译"
-  },
-  "app.translation-settings.provider.google": {
-    "message": "Google 翻译（可直接用）"
-  },
-  "app.translation-settings.style": {
-    "message": "译文样式"
-  },
-  "app.translation-settings.style.background": {
-    "message": "背景色"
-  },
-  "app.translation-settings.style.blockquote": {
-    "message": "引用块"
-  },
-  "app.translation-settings.style.blur": {
-    "message": "模糊"
-  },
-  "app.translation-settings.style.border": {
-    "message": "边框"
-  },
-  "app.translation-settings.style.dashed-line": {
-    "message": "虚线下划线"
-  },
-  "app.translation-settings.style.default": {
-    "message": "默认"
-  },
-  "app.translation-settings.style.preview": {
-    "message": "效果预览"
-  },
-  "app.translation-settings.style.preview-original-text": {
-    "message": "在 Modrinth 上发现优质的 Minecraft 内容。"
-  },
-  "app.translation-settings.style.preview-text": {
-    "message": "在 Modrinth 上探索高质量的 Minecraft 内容。"
-  },
-  "app.translation-settings.style.text-color": {
-    "message": "文字颜色"
-  },
-  "app.translation-settings.style.weakened": {
-    "message": "弱化"
-  },
-  "app.translation-settings.system-prompt": {
-    "message": "翻译指令"
-  },
-  "app.translation-settings.system-prompt-description": {
-    "message": "可选的翻译专用指令。启动器始终会附加内置的结构化翻译约束。"
-  },
-  "app.translation-settings.target-language": {
-    "message": "目标语言"
-  },
-  "app.translation-settings.target-language.follow-app": {
-    "message": "跟随启动器语言"
-  },
-  "app.translation-settings.test": {
-    "message": "测试服务"
-  },
-  "app.translation-settings.test-success": {
-    "message": "连接成功：{translation}"
-  },
-  "app.translation-settings.testing": {
-    "message": "正在测试…"
-  },
-  "app.translation-settings.title": {
-    "message": "翻译"
-  },
   "app.translation.auto-translate-hint.text": {
     "message": "可在「设置 → 语言与翻译」中开启自动翻译，浏览结果与项目页会自动翻译。"
   },
   "app.translation.auto-translate-hint.title": {
     "message": "试试自动翻译"
-  },
-  "app.translation.error.authentication": {
-    "message": "翻译服务认证失败，请稍后重试。"
-  },
-  "app.translation.error.content-too-long": {
-    "message": "此内容超过了所选翻译服务的长度限制。"
-  },
-  "app.translation.error.network": {
-    "message": "无法连接翻译服务，请检查网络或代理设置。"
-  },
-  "app.translation.error.rate-limited": {
-    "message": "翻译服务暂时受到速率限制，请稍后重试。"
   },
   "app.update-announcement.category.added": {
     "message": "新增"
@@ -12513,27 +11889,6 @@
   },
   "instance.upgrade.changelog.loading": {
     "message": "正在加载版本详情……"
-  },
-  "instance.upgrade.changelog.show-original": {
-    "message": "显示原文"
-  },
-  "instance.upgrade.changelog.translate": {
-    "message": "翻译"
-  },
-  "instance.upgrade.changelog.translation.authentication": {
-    "message": "翻译服务身份验证失败。"
-  },
-  "instance.upgrade.changelog.translation.failed": {
-    "message": "更新日志翻译失败。"
-  },
-  "instance.upgrade.changelog.translation.network": {
-    "message": "翻译网络请求失败。"
-  },
-  "instance.upgrade.changelog.translation.rate-limited": {
-    "message": "翻译服务暂时受到频率限制。"
-  },
-  "instance.upgrade.changelog.translation.too-long": {
-    "message": "此更新日志过长，无法翻译。"
   },
   "instance.upgrade.changelog.unavailable": {
     "message": "无法获取版本详情。"

@@ -1601,24 +1601,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Wordt lid van de Discord server"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Doneer"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsor via GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Doneer via Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Doneer via Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Doneer via PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Rapporteer een probleem"
   },

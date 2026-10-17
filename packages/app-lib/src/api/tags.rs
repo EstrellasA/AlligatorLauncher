@@ -2,7 +2,7 @@
 use crate::state::{CacheBehaviour, CachedEntry};
 pub use crate::{
     State,
-    state::{Category, DonationPlatform, GameVersion, Loader},
+    state::{Category, GameVersion, Loader},
 };
 
 /// Get category tags
@@ -88,22 +88,4 @@ async fn get_game_version_tags_with_cache(
     })?;
 
     Ok(game_versions)
-}
-
-/// Get donation platform tags
-#[tracing::instrument]
-pub async fn get_donation_platform_tags() -> crate::Result<Vec<DonationPlatform>>
-{
-    let state = State::get().await?;
-    let donation_platforms = CachedEntry::get_donation_platforms(
-        None,
-        &state.pool,
-        &state.api_semaphore,
-    )
-    .await?
-    .ok_or_else(|| {
-        crate::ErrorKind::NoValueFor("donation platform tags".to_string())
-    })?;
-
-    Ok(donation_platforms)
 }

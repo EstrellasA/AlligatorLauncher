@@ -405,55 +405,18 @@ export const settingsSearchEntries: SettingsSearchEntry[] = [
         label: message('app.settings.tabs.language', 'Language'),
     },
     {
-        id: 'translation-service',
-        categoryId: 'language-translation',
-        targetId: 'settings-target-translation-service',
-        label: message('app.translation-settings.provider', 'Translation service'),
-    },
-    {
-        id: 'translation-auto-translate',
-        categoryId: 'language-translation',
-        targetId: 'settings-target-translation-auto-translate',
-        label: message(
-            'app.translation-settings.auto-translate',
-            'Translate project pages automatically',
-        ),
-    },
-    {
-        id: 'translation-cache',
-        categoryId: 'language-translation',
-        targetId: 'settings-target-translation-cache',
-        label: message('app.translation-settings.cache', 'Translation cache'),
-    },
-    {
-        id: 'translation-display',
-        categoryId: 'language-translation',
-        targetId: 'settings-target-translation-display',
-        label: message('app.translation-settings.display-section-title', 'Translation display'),
-    },
-    {
-        id: 'ai-providers',
-        categoryId: 'ai',
-        targetId: 'settings-target-ai-providers',
-        label: message('app.ai-settings.title', 'AI providers'),
-        keywords: [message('app.settings.tabs.ai', 'AI')],
-    },
-    {
         id: 'log-share',
         categoryId: 'launch-defaults',
         targetId: 'settings-target-log-share',
-        label: message('app.log-share.settings.title', 'Log sharing & AI analysis'),
-        keywords: [
-            message('app.log-share.settings.share-provider', 'Log sharing service'),
-            message('app.log-share.settings.ai-source', 'AI analysis source'),
-        ],
+        label: message('app.log-share.settings.title', 'Log sharing'),
+        keywords: [message('app.log-share.settings.share-provider', 'Log sharing service')],
     },
     {
         id: 'shared-logs',
         categoryId: 'launch-defaults',
         targetId: 'settings-target-shared-logs',
         label: message('app.log-share.shared-logs.title', 'Shared logs'),
-        keywords: [message('app.log-share.settings.title', 'Log sharing & AI analysis')],
+        keywords: [message('app.log-share.settings.title', 'Log sharing')],
     },
     {
         id: 'privacy-telemetry',

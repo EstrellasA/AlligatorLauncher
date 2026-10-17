@@ -1,40 +1,18 @@
 <template>
     <Card>
-        <TranslatedProjectDescription
-            :description="project.body"
-            :active="translationActive"
-            :translations="translations"
-            :mode="translationMode"
-            :style="translationStyle"
-        />
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div class="markdown-body" v-html="renderHighlightedString(project.body ?? '')" />
     </Card>
 </template>
 
 <script setup>
 import { Card } from '@modrinth/ui'
-
-import TranslatedProjectDescription from '@/components/ui/TranslatedProjectDescription.vue'
+import { renderHighlightedString } from '@modrinth/utils'
 
 defineProps({
     project: {
         type: Object,
         default: () => {},
-    },
-    translationActive: {
-        type: Boolean,
-        default: false,
-    },
-    translations: {
-        type: Object,
-        default: () => ({}),
-    },
-    translationMode: {
-        type: String,
-        default: 'bilingual',
-    },
-    translationStyle: {
-        type: String,
-        default: 'weakened',
     },
 })
 </script>

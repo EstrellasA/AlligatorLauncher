@@ -907,9 +907,6 @@
   "app.skins.title": {
     "message": "Wybierz skórkę"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "Wersja ALLIGATORZONE v{version} została pobrana. Załaduj ponownie, żeby zaktualizować teraz, albo automatycznie, gdy zamkniesz ALLIGATORZONE."
   },

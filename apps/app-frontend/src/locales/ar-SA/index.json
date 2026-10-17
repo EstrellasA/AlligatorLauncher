@@ -679,9 +679,6 @@
   "app.skins.title": {
     "message": "اختيار المظهر"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "انتهى تنزيل تطبيق ALLIGATORZONEv{version}. أعد التحميل للتحديث الآن، أو تلقائيًا عند إغلاق تطبيق ALLIGATORZONE."
   },

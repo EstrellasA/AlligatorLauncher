@@ -1889,24 +1889,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Приєднатися до Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Підтримати"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Підтримати на Github"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Підтримати на Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Підтримати на Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Підтримати на PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Звітувати проблеми"
   },

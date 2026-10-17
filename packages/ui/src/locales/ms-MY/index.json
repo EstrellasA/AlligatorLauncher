@@ -1868,24 +1868,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Sertai pelayan Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Derma"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Taja di GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Derma di Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Derma di Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Derma di PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Laporkan isu"
   },

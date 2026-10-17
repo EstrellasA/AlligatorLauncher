@@ -683,24 +683,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Tilslut Discord server"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Doner"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsor på GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Doner på Ko-Fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Doner på Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Doner på PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Anmeld fejl"
   },

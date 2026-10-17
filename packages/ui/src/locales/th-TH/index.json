@@ -440,24 +440,6 @@
   "project.about.links.discord": {
     "defaultMessage": "เข้าร่วม Discord server"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "สนับสนุน"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "สปอนเซอร์บน GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "สนับสนุนบน Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "สนับสนุนบน Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "สนับสนุนบน PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "รายงานปัญหา"
   },

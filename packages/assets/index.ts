@@ -13,7 +13,6 @@ import _ModrinthIcon from './branding/logo.svg?component'
 // External Icons
 import _AppleIcon from './external/apple.svg?component'
 import _BlueskyIcon from './external/bluesky.svg?component'
-import _BuyMeACoffeeIcon from './external/bmac.svg?component'
 import _USDCColorIcon from './external/color/usdc.svg?component'
 import _CurseForgeIcon from './external/curseforge.svg?component'
 import _DiscordIcon from './external/discord.svg?component'
@@ -22,10 +21,7 @@ import _GithubIcon from './external/github.svg?component'
 import _IntercomBubbleIcon from './external/illustrations/intercom_bubble_icon.png?url'
 import _MinecraftServerIcon from './external/illustrations/minecraft_server_icon.png?url'
 import _InstagramIcon from './external/instagram.svg?component'
-import _KoFiIcon from './external/kofi.svg?component'
 import _MastodonIcon from './external/mastodon.svg?component'
-import _OpenCollectiveIcon from './external/opencollective.svg?component'
-import _PatreonIcon from './external/patreon.svg?component'
 import _PayPalIcon from './external/paypal.svg?component'
 import _PolygonIcon from './external/polygon.svg?component'
 import _RedditIcon from './external/reddit.svg?component'
@@ -61,7 +57,6 @@ import _NoTasksIllustration from './illustrations/no-tasks.svg?component'
 export const ModrinthIcon = _ModrinthIcon
 export const AppleIcon = _AppleIcon
 export const BlueskyIcon = _BlueskyIcon
-export const BuyMeACoffeeIcon = _BuyMeACoffeeIcon
 export const GithubIcon = _GithubIcon
 export const CurseForgeIcon = _CurseForgeIcon
 export const DiscordIcon = _DiscordIcon
@@ -72,10 +67,7 @@ export const ReelsIcon = _ReelsIcon
 export const TikTokIcon = _TikTokIcon
 export const TwitchIcon = _TwitchIcon
 export const ThreadsIcon = _ThreadsIcon
-export const KoFiIcon = _KoFiIcon
 export const MastodonIcon = _MastodonIcon
-export const OpenCollectiveIcon = _OpenCollectiveIcon
-export const PatreonIcon = _PatreonIcon
 export const PayPalIcon = _PayPalIcon
 export const RedditIcon = _RedditIcon
 export const TumblrIcon = _TumblrIcon

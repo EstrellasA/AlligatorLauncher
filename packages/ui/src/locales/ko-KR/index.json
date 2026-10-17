@@ -1919,24 +1919,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Discord 서버 참여하기"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "커피 한잔 사주기"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "후원하기"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "GitHub 스폰서 지원하기"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ko-fi에서 후원하기"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Patreon에서 후원하기"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "PayPal로 후원하기"
-  },
   "project.about.links.issues": {
     "defaultMessage": "오류 신고"
   },

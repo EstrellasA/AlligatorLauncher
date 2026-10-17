@@ -607,9 +607,6 @@
   "app.skins.section.modrinth": {
     "message": "Modrinth"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} acabou de ser transferida. Recarrega para atualizar agora, ou automaticamente quando fechares a ALLIGATORZONE."
   },

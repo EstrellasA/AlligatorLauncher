@@ -1382,24 +1382,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Gabung ke server Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Donasi"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsori di GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Buat donasi pada Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Buat donasi pada Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Buat donasi pada PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Laporkan masalah"
   },

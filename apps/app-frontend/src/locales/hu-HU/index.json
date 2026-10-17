@@ -805,9 +805,6 @@
   "app.skins.title": {
     "message": "Kinézetváltó"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "A ALLIGATORZONE v{version} letöltése befejeződött. Frissítéshez válaszd ki a Frissítés opciót, vagy az alkalmazás a bezárásakor automatikusan frissül."
   },

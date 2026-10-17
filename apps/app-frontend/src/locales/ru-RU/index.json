@@ -901,9 +901,6 @@
   "app.skins.title": {
     "message": "Выбор скина"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "Скачивание версии ALLIGATORZONE {version} завершено. Перезапустите приложение, чтобы обновить его, или оно обновится автоматически после закрытия."
   },

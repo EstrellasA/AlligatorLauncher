@@ -1,6 +1,5 @@
 import {
     ArchiveIcon,
-    BotIcon,
     CoffeeIcon,
     CpuIcon,
     FileTextIcon,
@@ -52,9 +51,8 @@ const categoryContent: Record<SettingsCategoryId, Pick<SettingsCategory, 'icon' 
     },
     'language-translation': {
         icon: LanguagesIcon,
-        content: defineAsyncComponent(() => import('./LanguageTranslationSettings.vue')),
+        content: defineAsyncComponent(() => import('./LanguageSettings.vue')),
     },
-    ai: { icon: BotIcon, content: defineAsyncComponent(() => import('./AISettings.vue')) },
     'shortcut-settings': {
         icon: KeyboardIcon,
         content: defineAsyncComponent(() => import('./KeybindSettings.vue')),

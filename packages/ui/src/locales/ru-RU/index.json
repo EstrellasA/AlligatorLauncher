@@ -1910,24 +1910,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Вступить в Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Поддержать"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Спонсировать на GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Поддержать на Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Поддержать на Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Поддержать на PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Сообщить о проблеме"
   },

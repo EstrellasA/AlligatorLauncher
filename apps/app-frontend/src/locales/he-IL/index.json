@@ -544,9 +544,6 @@
   "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} סיימה את תהליך ההורדה. יש לרענן כדי לעדכן עכשיו, או באופן אוטומטי בעת סגירת האפליקציה."
   },

@@ -24,32 +24,9 @@
                     :project="data"
                     :project-v3="projectV3"
                     :ping="serverPing"
-                    :translated-title="translationActive ? translations.title : undefined"
-                    :translated-description="
-                        translationActive ? translations.description : undefined
-                    "
-                    :translation-mode="translationMode"
-                    :translation-style="translationStyle"
                     @contextmenu.prevent.stop="handleRightClick"
                 >
                     <template v-if="isServerProject" #actions>
-                        <Button
-                            type="quiet"
-                            size="xl"
-                            :disabled="translationLoading"
-                            @click="toggleTranslation"
-                            ><SpinnerIcon v-if="translationLoading" class="animate-spin" />
-                            <LanguagesIcon v-else />
-                            {{
-                                formatMessage(
-                                    translationLoading
-                                        ? messages.translating
-                                        : translationActive
-                                          ? messages.showOriginal
-                                          : messages.translateProject,
-                                )
-                            }}
-                        </Button>
                         <Button
                             v-if="serverPlaying"
                             type="colored"
@@ -124,23 +101,6 @@
                         </OverflowMenu>
                     </template>
                     <template v-else #actions>
-                        <Button
-                            type="quiet"
-                            size="xl"
-                            :disabled="translationLoading"
-                            @click="toggleTranslation"
-                            ><SpinnerIcon v-if="translationLoading" class="animate-spin" />
-                            <LanguagesIcon v-else />
-                            {{
-                                formatMessage(
-                                    translationLoading
-                                        ? messages.translating
-                                        : translationActive
-                                          ? messages.showOriginal
-                                          : messages.translateProject,
-                                )
-                            }}
-                        </Button>
                         <!--
                             Reached from an instance's content list the page is
                             read-only, so the install / switch-version cluster is
@@ -312,10 +272,6 @@
                     :installed="installed"
                     :installing="installing"
                     :installed-version="installedVersion"
-                    :translation-active="translationActive"
-                    :translations="translations"
-                    :translation-mode="translationMode"
-                    :translation-style="translationStyle"
                     :start-server="(version) => openModpackServerFlow(version)"
                 />
             </template>
@@ -387,7 +343,6 @@ import {
     ExternalIcon,
     GlobeIcon,
     HeartIcon,
-    LanguagesIcon,
     MoreVerticalIcon,
     PackageIcon,
     PlayIcon,
@@ -467,19 +422,8 @@ import {
 import { getDisplayInstanceIcon } from '@/helpers/instance-icons'
 import { get_loader_versions as getLoaderManifest } from '@/helpers/metadata'
 import { get_by_instance_id } from '@/helpers/process'
-import { projectGalleryTranslationSegments } from '@/helpers/project-gallery'
 import { get_categories, get_game_versions, get_loaders } from '@/helpers/tags'
-import {
-    autoTranslateHintMessages,
-    getTranslationErrorKind,
-    getTranslationSettings,
-    noteManualTranslateClick,
-    prepareDescription,
-    translateInBatches as translateContent,
-    validateTranslatedDescription,
-} from '@/helpers/translation'
 import { getServerAddress } from '@/helpers/worlds'
-import i18n from '@/i18n.config'
 import { injectContentInstall } from '@/providers/content-install'
 import { injectContentSelection, makeContentSelectionKey } from '@/providers/content-selection'
 import { injectServerInstall } from '@/providers/server-install'
@@ -491,7 +435,7 @@ import UpgradeProjectReturnBar from './UpgradeProjectReturnBar.vue'
 
 dayjs.extend(relativeTime)
 
-const { addNotification, handleError } = injectNotificationManager()
+const { handleError } = injectNotificationManager()
 const popupNotificationManager = injectPopupNotificationManager()
 const { install: installVersion } = injectContentInstall()
 const contentSelection = injectContentSelection()
@@ -533,44 +477,6 @@ const messages = defineMessages({
     openInMcmod: {
         id: 'app.project.open-in-mcmod',
         defaultMessage: 'Open in MC Mod',
-    },
-    translateProject: {
-        id: 'app.project.translation.translate',
-        defaultMessage: 'Translate',
-    },
-    showOriginal: {
-        id: 'app.project.translation.show-original',
-        defaultMessage: 'Show original',
-    },
-    translating: {
-        id: 'app.project.translation.translating',
-        defaultMessage: 'Translating…',
-    },
-    translationFailed: {
-        id: 'app.project.translation.failed',
-        defaultMessage: 'Translation failed. The original content was kept. Try again.',
-    },
-    translationFailedTitle: {
-        id: 'app.project.translation.failed-title',
-        defaultMessage: 'Translation failed',
-    },
-    translationRateLimited: {
-        id: 'app.translation.error.rate-limited',
-        defaultMessage:
-            'The translation service is temporarily rate limited. Please try again later.',
-    },
-    translationAuthenticationFailed: {
-        id: 'app.translation.error.authentication',
-        defaultMessage: 'The translation service could not authenticate. Please try again later.',
-    },
-    translationContentTooLong: {
-        id: 'app.translation.error.content-too-long',
-        defaultMessage: 'This content is too long for the selected translation service.',
-    },
-    translationNetworkFailed: {
-        id: 'app.translation.error.network',
-        defaultMessage:
-            'The translation service could not be reached. Check your network or proxy.',
     },
     addToFavorites: {
         id: 'app.content-favorites.add',
@@ -701,12 +607,6 @@ const serverInstancePath = ref(null)
 const serverPlaying = ref(false)
 const serverSetupModalRef = ref(null)
 const serverInstallContent = createServerInstallContent({ serverSetupModalRef })
-const translationActive = ref(false)
-const translationLoading = ref(false)
-const translations = ref({})
-const translationMode = ref('bilingual')
-const translationStyle = ref('weakened')
-let translationRequestVersion = 0
 
 serverInstallContent.watchServerContextChanges()
 const serverContextReady = serverInstallContent.initServerContext().catch(handleError)
@@ -1039,10 +939,6 @@ function handleAddServerToInstance() {
 
 async function fetchProjectData() {
     const requestedProjectId = String(route.params.id)
-    translationRequestVersion++
-    translationActive.value = false
-    translationLoading.value = false
-    translations.value = {}
     const [project, projectV3Result] = await Promise.all([
         get_project(requestedProjectId, 'must_revalidate').catch(handleError),
         get_project_v3(requestedProjectId, 'must_revalidate').catch(handleError),
@@ -1107,101 +1003,6 @@ async function fetchProjectData() {
     breadcrumbs.setNameIcon('Project', data.value.icon_url)
 
     fetchDeferredServerData(project)
-    void maybeAutoTranslate()
-}
-
-function translationFailureMessage(error) {
-    return formatMessage(
-        {
-            'rate-limited': messages.translationRateLimited,
-            authentication: messages.translationAuthenticationFailed,
-            'content-too-long': messages.translationContentTooLong,
-            network: messages.translationNetworkFailed,
-            provider: messages.translationFailed,
-        }[getTranslationErrorKind(error)],
-    )
-}
-
-async function translateProject() {
-    if (!data.value || translationLoading.value) return
-    const requestVersion = ++translationRequestVersion
-    const previousTranslationActive = translationActive.value
-    const previousTranslations = translations.value
-    translationLoading.value = true
-
-    try {
-        const settings = await getTranslationSettings()
-        translationMode.value = settings.mode
-        translationStyle.value = settings.style
-        const prepared = prepareDescription(data.value.body ?? '')
-        const targetLanguage = settings.target_language || i18n.global.locale.value || 'en-US'
-        const baseRequest = {
-            source_language: 'auto',
-            target_language: targetLanguage,
-            context: {
-                title: data.value.title ?? '',
-                description: data.value.description ?? '',
-            },
-        }
-        const allSegments = [
-            { id: 'title', text: data.value.title ?? '', format: 'plain' },
-            { id: 'description', text: data.value.description ?? '', format: 'plain' },
-            ...projectGalleryTranslationSegments(data.value.gallery),
-            ...prepared.segments,
-        ]
-
-        translationActive.value = true
-        const accumulated = { ...translations.value }
-        await translateContent({ ...baseRequest, segments: allSegments }, (response) => {
-            if (requestVersion !== translationRequestVersion) return
-            for (const segment of response.segments) accumulated[segment.id] = segment.text
-            translations.value = { ...accumulated }
-        })
-        if (requestVersion !== translationRequestVersion) return
-
-        validateTranslatedDescription(prepared, accumulated)
-    } catch (error) {
-        if (requestVersion === translationRequestVersion) {
-            translationActive.value = previousTranslationActive
-            translations.value = previousTranslations
-            addNotification({
-                title: formatMessage(messages.translationFailedTitle),
-                text: translationFailureMessage(error),
-                type: 'error',
-            })
-        }
-    } finally {
-        if (requestVersion === translationRequestVersion) translationLoading.value = false
-    }
-}
-
-async function maybeAutoTranslate() {
-    try {
-        const settings = await getTranslationSettings()
-        if (settings.auto_translate) await translateProject()
-    } catch (error) {
-        handleError(error)
-    }
-}
-
-async function maybeHintAutoTranslate() {
-    if (!(await noteManualTranslateClick())) return
-    addNotification({
-        title: formatMessage(autoTranslateHintMessages.title),
-        text: formatMessage(autoTranslateHintMessages.text),
-        type: 'info',
-    })
-}
-
-function toggleTranslation() {
-    if (translationActive.value) {
-        translationRequestVersion++
-        translationActive.value = false
-        translationLoading.value = false
-        return
-    }
-    void maybeHintAutoTranslate()
-    void translateProject()
 }
 
 function fetchDeferredServerData(project) {

@@ -47,13 +47,13 @@ axolotl://<命名空间>[/<动作>/<标识>][?<参数>]
 | `axolotl://skins` / `axolotl://worlds` / `axolotl://screenshots` | 聚合页 | `screenshots` 可加 `instance=<id>` 过滤 |
 | `axolotl://multiplayer/servers[/<id>]` | 服务器列表/详情 | — |
 | `axolotl://multiplayer/rooms` | 房间页 | `invite=<口令>` 仅预填 |
-| `axolotl://lab` / `axolotl://lab/<tool>` | Lab / 工具 | tool: `skin-editor/gradient-text/recipe-generator/schematic-preview/mod-translation` |
+| `axolotl://lab` / `axolotl://lab/<tool>` | Lab / 工具 | tool: `skin-editor/gradient-text/recipe-generator/schematic-preview` |
 | `axolotl://lab/seed-map` | 种子地图 | 全参数透传（旧别名 `seed-map?...` 兼容） |
 | `axolotl://settings` | 设置页 | `tab=<分类>`（query 或 `settings/<tab>` 路径二选一）、`entry=<搜索条目ID>` 定位 |
 | `axolotl://help/drop` | 投放帮助页 | — |
 | `axolotl://open?path=<路由>` | 通用跳转 | `path` 必须在白名单内（见下） |
 
-**设置 tab 取值**：`interface, home-navigation, shortcut-settings, language-translation, ai, launch-defaults, instance-sync, java-performance, content-downloads, network-multiplayer, storage-backups, privacy-data, updates, about, logs`  
+**设置 tab 取值**：`interface, home-navigation, shortcut-settings, language-translation, launch-defaults, instance-sync, java-performance, content-downloads, network-multiplayer, storage-backups, privacy-data, updates, about, logs`  
 **entry**：传搜索条目 id（如 `privacy-external-scheme`）用于滚动定位。
 
 ---
@@ -68,7 +68,7 @@ axolotl://<命名空间>[/<动作>/<标识>][?<参数>]
 /instance/<id>[/mods|/files|/files/studio|/logs|/worlds|/screenshots|/upgrade],
 /downloads, /create, /skins, /worlds, /screenshots, /help/drop,
 /multiplayer/servers[/<id>], /multiplayer/rooms,
-/lab[/skin-editor|/gradient-text|/recipe-generator|/schematic-preview|/mod-translation|/seed-map],
+/lab[/skin-editor|/gradient-text|/recipe-generator|/schematic-preview|/seed-map],
 /settings
 ```
 

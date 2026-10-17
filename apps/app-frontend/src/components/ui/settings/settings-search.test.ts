@@ -21,8 +21,7 @@ import {
 const settingsComponentFiles = {
     interface: ['./AppearanceSettings.vue'],
     'home-navigation': ['./AppearanceSettings.vue'],
-    'language-translation': ['./LanguageSettings.vue', './TranslationSettings.vue'],
-    ai: ['./AISettings.vue'],
+    'language-translation': ['./LanguageSettings.vue'],
     'shortcut-settings': ['./KeybindSettings.vue'],
     'java-performance': ['./JavaSettings.vue'],
     'launch-defaults': [
@@ -172,7 +171,6 @@ test('settings navigation groups preserve the intended ALLIGATORZONE information
         'home-navigation',
         'shortcut-settings',
         'language-translation',
-        'ai',
     ])
     assert.deepEqual(categoriesForGroup('game'), [
         'launch-defaults',

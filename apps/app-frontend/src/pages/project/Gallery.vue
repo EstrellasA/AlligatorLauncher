@@ -20,12 +20,7 @@ import {
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import { trackEvent } from '@/helpers/analytics'
-import {
-    type ProjectGalleryCaptionField,
-    projectGalleryTranslationSegmentId,
-    visibleProjectGallery,
-} from '@/helpers/project-gallery'
-import type { TranslationMode, TranslationStyle } from '@/helpers/translation'
+import { type ProjectGalleryCaptionField, visibleProjectGallery } from '@/helpers/project-gallery'
 
 interface GalleryImage {
     url: string
@@ -40,24 +35,12 @@ interface GalleryEntry {
     index: number
 }
 
-const props = withDefaults(
-    defineProps<{
-        project: {
-            id: string
-            gallery?: GalleryImage[]
-        }
-        translationActive?: boolean
-        translations?: Record<string, string>
-        translationMode?: TranslationMode
-        translationStyle?: TranslationStyle
-    }>(),
-    {
-        translationActive: false,
-        translations: () => ({}),
-        translationMode: 'bilingual',
-        translationStyle: 'weakened',
-    },
-)
+const props = defineProps<{
+    project: {
+        id: string
+        gallery?: GalleryImage[]
+    }
+}>()
 
 const { formatMessage } = useVIntl()
 const formatDate = useFormatDateTime({
@@ -97,30 +80,8 @@ const viewerImageUrl = computed(() => {
         : selectedGalleryItem.value.image.url
 })
 
-const translationClass = computed(() => [
-    'gallery-translation',
-    `gallery-translation--${props.translationStyle}`,
-])
-
-function translationFor(
-    entry: GalleryEntry,
-    field: ProjectGalleryCaptionField,
-): string | undefined {
-    if (!props.translationActive) return undefined
-    return (
-        props.translations[projectGalleryTranslationSegmentId(entry.index, field)]?.trim() ||
-        undefined
-    )
-}
-
 function galleryText(entry: GalleryEntry, field: ProjectGalleryCaptionField): string {
-    const original = entry.image[field] ?? ''
-    const translated = translationFor(entry, field)
-    return props.translationMode === 'translation-only' && translated ? translated : original
-}
-
-function showBilingualTranslation(entry: GalleryEntry, field: ProjectGalleryCaptionField): boolean {
-    return props.translationMode === 'bilingual' && !!translationFor(entry, field)
+    return entry.image[field] ?? ''
 }
 
 function imageAlt(entry: GalleryEntry): string {
@@ -208,20 +169,11 @@ onUnmounted(() => {
                     >
                         {{ galleryText(entry, 'title') }}
                     </h3>
-                    <p v-if="showBilingualTranslation(entry, 'title')" :class="translationClass">
-                        {{ translationFor(entry, 'title') }}
-                    </p>
                     <p
                         v-if="galleryText(entry, 'description')"
                         class="mb-0 mt-1 break-words text-[var(--color-text-tertiary)]"
                     >
                         {{ galleryText(entry, 'description') }}
-                    </p>
-                    <p
-                        v-if="showBilingualTranslation(entry, 'description')"
-                        :class="translationClass"
-                    >
-                        {{ translationFor(entry, 'description') }}
                     </p>
                 </div>
                 <div
@@ -291,12 +243,6 @@ onUnmounted(() => {
                     >
                         {{ galleryText(selectedGalleryItem, 'description') }}
                     </p>
-                    <p
-                        v-if="showBilingualTranslation(selectedGalleryItem, 'description')"
-                        :class="translationClass"
-                    >
-                        {{ translationFor(selectedGalleryItem, 'description') }}
-                    </p>
                     <div class="mt-1 flex items-center gap-2">
                         <CalendarIcon class="size-4 shrink-0" aria-hidden="true" />
                         {{ formatDate(new Date(selectedGalleryItem.image.created)) }}
@@ -325,64 +271,3 @@ onUnmounted(() => {
         </template>
     </NewModal>
 </template>
-
-<style scoped>
-.gallery-translation {
-    margin: 0.25rem 0 0;
-    animation: translation-float-in 0.5s ease-out both;
-}
-
-.gallery-translation--weakened {
-    color: var(--color-text-tertiary);
-}
-
-.gallery-translation--blur {
-    filter: blur(4px);
-    opacity: 0.75;
-    transition:
-        filter 0.1s ease-in-out,
-        opacity 0.1s ease-in-out;
-}
-
-.gallery-translation--blur:hover {
-    filter: blur(0);
-    opacity: 1;
-}
-
-.gallery-translation--blockquote {
-    padding: 4px 0 4px 8px;
-    border-left: 4px solid var(--color-brand);
-}
-
-.gallery-translation--dashed-line {
-    text-decoration: underline dashed var(--color-brand);
-    text-underline-offset: 5px;
-}
-
-.gallery-translation--border {
-    padding: 2px 4px;
-    border: 1px solid var(--color-brand);
-    border-radius: 4px;
-}
-
-.gallery-translation--text-color {
-    color: oklch(0.693 0.17 162.48);
-}
-
-.gallery-translation--background {
-    padding: 2px 4px;
-    border-radius: 4px;
-    background-color: color-mix(in srgb, var(--color-brand) 15%, transparent);
-}
-
-@keyframes translation-float-in {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-</style>

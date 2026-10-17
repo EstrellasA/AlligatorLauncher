@@ -412,9 +412,6 @@
   "app.settings.updates.manual.title": {
     "message": "Automatic updates are off"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "Aplicația ALLIGATORZONEv{version} a terminat descărcarea. Reîncărcați pentru a actualiza acum sau automat când închideți aplicația ALLIGATORZONE."
   },

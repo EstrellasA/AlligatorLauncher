@@ -61,13 +61,4 @@ export const labRoutes: RouteRecordRaw[] = [
             discordActivity: 'Messing with labs...',
         },
     },
-    {
-        path: '/lab/mod-translation',
-        name: 'ModTranslation',
-        component: () => import('@/pages/LabModTranslation.vue'),
-        meta: {
-            breadcrumb: [{ name: 'Lab', link: '/lab' }, { name: 'Mod translation' }],
-            discordActivity: 'Messing with labs...',
-        },
-    },
 ]

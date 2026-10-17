@@ -799,9 +799,6 @@
   "app.skins.sign-in.title": {
     "message": "โปรดลงชื่อเข้าใช้"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ดาวน์โหลด ALLIGATORZONEv{version} สำเร็จแล้ว เปิดโปรแกรมใหม่อีกครั้งเพื่ออัปเดตตอนนี้ หรือจะรออัปเดตอัตโนมัติ ซึ่งจะเกิดขึ้นเมื่อคุณกดปิดโปรแกรม ALLIGATORZONE"
   },

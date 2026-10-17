@@ -36,27 +36,7 @@
                                 >{{ metadata.channel }}</span
                             >
                         </div>
-                        <Button
-                            v-if="metadata.changelog"
-                            type="quiet"
-                            size="2xs"
-                            :disabled="translationLoading"
-                            @click="toggleTranslation"
-                            ><SpinnerIcon
-                                v-if="translationLoading"
-                                class="animate-spin"
-                                aria-hidden="true"
-                            />
-                            {{
-                                formatMessage(
-                                    showTranslation ? messages.showOriginal : messages.translate,
-                                )
-                            }}
-                        </Button>
                     </div>
-                    <p v-if="translationError" class="mb-0 mt-2 text-sm text-red">
-                        {{ translationError }}
-                    </p>
                     <!-- eslint-disable vue/no-v-html -->
                     <div
                         v-if="metadata.changelog"
@@ -78,29 +58,16 @@
 </template>
 
 <script setup lang="ts">
-import { SpinnerIcon } from '@modrinth/assets'
-import { Button, defineMessages, useVIntl } from '@modrinth/ui'
+import { defineMessages, useVIntl } from '@modrinth/ui'
 import { renderHighlightedString } from '@modrinth/utils'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import {
-    getTranslationErrorKind,
-    getTranslationSettings,
-    prepareDescription,
-    renderTranslatedDescription,
-    translateInBatches,
-    validateTranslatedDescription,
-} from '@/helpers/translation'
-import {
-    getUpgradeChangelogTranslation,
-    setUpgradeChangelogTranslation,
     shouldUpgradeChangelogStayOpen,
-    upgradeChangelogTranslationCacheKey,
     upgradeExternalChangelogUrl,
 } from '@/helpers/upgrade-changelog'
 import { loadUpgradeVersionMetadata } from '@/helpers/upgrade-version-metadata'
-import i18n from '@/i18n.config'
 
 const props = defineProps<{
     label: string
@@ -121,31 +88,6 @@ const messages = defineMessages({
         id: 'instance.upgrade.changelog.unavailable',
         defaultMessage: 'Release details unavailable.',
     },
-    translate: { id: 'instance.upgrade.changelog.translate', defaultMessage: 'Translate' },
-    showOriginal: {
-        id: 'instance.upgrade.changelog.show-original',
-        defaultMessage: 'Show original',
-    },
-    translationRateLimited: {
-        id: 'instance.upgrade.changelog.translation.rate-limited',
-        defaultMessage: 'Translation is temporarily rate limited.',
-    },
-    translationAuthentication: {
-        id: 'instance.upgrade.changelog.translation.authentication',
-        defaultMessage: 'Translation provider authentication failed.',
-    },
-    translationTooLong: {
-        id: 'instance.upgrade.changelog.translation.too-long',
-        defaultMessage: 'This changelog is too long to translate.',
-    },
-    translationNetwork: {
-        id: 'instance.upgrade.changelog.translation.network',
-        defaultMessage: 'Translation network request failed.',
-    },
-    translationFailed: {
-        id: 'instance.upgrade.changelog.translation.failed',
-        defaultMessage: 'Changelog translation failed.',
-    },
 })
 const { formatMessage } = useVIntl()
 const visible = ref(false)
@@ -154,10 +96,6 @@ const popup = ref<HTMLElement | null>(null)
 const popupStyle = ref<Record<string, string>>({ backgroundColor: 'var(--color-tooltip-bg)' })
 const loading = ref(false)
 const metadata = ref<Awaited<ReturnType<typeof loadUpgradeVersionMetadata>> | null>(null)
-const translationLoading = ref(false)
-const translationError = ref<string | null>(null)
-const translatedChangelog = ref<string | null>(null)
-const showTranslation = ref(false)
 const ownership = ref({
     triggerHovered: false,
     triggerFocused: false,
@@ -167,10 +105,7 @@ const ownership = ref({
 let closeTimer: ReturnType<typeof setTimeout> | undefined
 let loaded = false
 
-const renderedChangelog = computed(() => {
-    if (showTranslation.value && translatedChangelog.value) return translatedChangelog.value
-    return renderHighlightedString(metadata.value?.changelog ?? '')
-})
+const renderedChangelog = computed(() => renderHighlightedString(metadata.value?.changelog ?? ''))
 
 function cancelClose() {
     if (closeTimer) clearTimeout(closeTimer)
@@ -226,75 +161,6 @@ function setOwnership(key: keyof typeof ownership.value, active: boolean) {
         void open()
     } else {
         close()
-    }
-}
-
-function translationFailureMessage(error: unknown) {
-    return formatMessage(
-        {
-            'rate-limited': messages.translationRateLimited,
-            authentication: messages.translationAuthentication,
-            'content-too-long': messages.translationTooLong,
-            network: messages.translationNetwork,
-            provider: messages.translationFailed,
-        }[getTranslationErrorKind(error)],
-    )
-}
-
-async function toggleTranslation() {
-    if (showTranslation.value) {
-        showTranslation.value = false
-        await nextTick()
-        positionPopup()
-        return
-    }
-    if (!metadata.value?.changelog || !props.provider || !props.projectId || !props.releaseId)
-        return
-    translationLoading.value = true
-    translationError.value = null
-    try {
-        const settings = await getTranslationSettings()
-        const targetLanguage = settings.target_language || i18n.global.locale.value || 'en-US'
-        const key = upgradeChangelogTranslationCacheKey(
-            props.provider,
-            props.projectId,
-            props.releaseId,
-            targetLanguage,
-        )
-        const cached = getUpgradeChangelogTranslation(key)
-        if (cached) {
-            translatedChangelog.value = cached
-        } else {
-            const prepared = prepareDescription(metadata.value.changelog)
-            const accumulated: Record<string, string> = {}
-            await translateInBatches(
-                {
-                    source_language: 'auto',
-                    target_language: targetLanguage,
-                    segments: prepared.segments,
-                    context: { title: metadata.value.version, description: '' },
-                },
-                (response) => {
-                    for (const segment of response.segments) accumulated[segment.id] = segment.text
-                },
-            )
-            validateTranslatedDescription(prepared, accumulated)
-            const translated = renderTranslatedDescription(
-                prepared,
-                accumulated,
-                'translation-only',
-                settings.style,
-            )
-            setUpgradeChangelogTranslation(key, translated)
-            translatedChangelog.value = translated
-        }
-        showTranslation.value = true
-    } catch (error) {
-        translationError.value = translationFailureMessage(error)
-    } finally {
-        translationLoading.value = false
-        await nextTick()
-        positionPopup()
     }
 }
 

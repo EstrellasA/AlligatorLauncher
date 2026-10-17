@@ -391,9 +391,6 @@ fn main() {
                         "logs_get_live_log_buffer",
                         "logs_clear_live_log_buffer",
                         "logs_analyze_crash",
-                        "logs_get_crash_analysis_ai_settings",
-                        "logs_update_crash_analysis_ai_settings",
-                        "logs_explain_crash_with_ai",
                         "logs_undo_added_mod",
                         "logs_export_crash_context",
                         "logs_get_log_share_settings",
@@ -740,44 +737,6 @@ fn main() {
                         "tags_get_report_types",
                         "tags_get_loaders",
                         "tags_get_game_versions",
-                        "tags_get_donation_platforms",
-                    ])
-                    .default_permission(
-                        DefaultPermissionRule::AllowAllCommands,
-                    ),
-            )
-            .plugin(
-                "ai",
-                InlinedPlugin::new()
-                    .commands(&[
-                        "ai_get_catalog",
-                        "ai_get_state",
-                        "ai_update_settings",
-                        "ai_update_provider",
-                        "ai_set_api_key",
-                        "ai_set_credential",
-                        "ai_update_model",
-                        "ai_remove_model",
-                        "ai_fetch_models",
-                        "ai_test_provider",
-                        "ai_begin_oauth",
-                        "ai_poll_oauth",
-                        "ai_disconnect_oauth",
-                    ])
-                    .default_permission(
-                        DefaultPermissionRule::AllowAllCommands,
-                    ),
-            )
-            .plugin(
-                "translation",
-                InlinedPlugin::new()
-                    .commands(&[
-                        "translation_get_settings",
-                        "translation_update_settings",
-                        "translation_test_provider",
-                        "translation_translate",
-                        "translation_clear_cache",
-                        "translation_google_ip_pool_size",
                     ])
                     .default_permission(
                         DefaultPermissionRule::AllowAllCommands,
@@ -994,21 +953,6 @@ fn main() {
                 "telemetry",
                 InlinedPlugin::new()
                     .commands(&["notify_online"])
-                    .default_permission(
-                        DefaultPermissionRule::AllowAllCommands,
-                    ),
-            )
-            .plugin(
-                "mod-translation",
-                InlinedPlugin::new()
-                    .commands(&[
-                        "mod_translation_analyze",
-                        "mod_translation_translate",
-                        "mod_translation_cancel",
-                        "mod_translation_list_tasks",
-                        "mod_translation_get_task",
-                        "mod_translation_dismiss_task",
-                    ])
                     .default_permission(
                         DefaultPermissionRule::AllowAllCommands,
                     ),

@@ -104,7 +104,6 @@ fn valid_lab_tool(value: &str) -> bool {
             | "gradient-text"
             | "recipe-generator"
             | "schematic-preview"
-            | "mod-translation"
     )
 }
 

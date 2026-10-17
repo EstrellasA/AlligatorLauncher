@@ -2345,24 +2345,6 @@
   "project.about.links.discord": {
     "defaultMessage": "加入 Discord 伺服器"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "贊助"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "GitHub Sponsors 贊助"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ko-fi 贊助"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Patreon 贊助"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "PayPal 贊助"
-  },
   "project.about.links.issues": {
     "defaultMessage": "回報問題"
   },

@@ -802,9 +802,6 @@
   "app.skins.title": {
     "message": "Вибір скіну"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} завантажено. Перезапустіть, щоб оновити зараз, або це відбудеться автоматично після закриття застосунку."
   },

@@ -3203,24 +3203,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Join Discord server"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Donate"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsor on GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Donate on Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Donate on Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Donate on PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Report issues"
   },

@@ -1,16 +1,9 @@
-import {
-    BlocksIcon,
-    BoxIcon,
-    LanguagesIcon,
-    PaletteIcon,
-    PencilIcon,
-    WorldIcon,
-} from '@modrinth/assets'
+import { BlocksIcon, BoxIcon, PaletteIcon, PencilIcon, WorldIcon } from '@modrinth/assets'
 import type { Component } from 'vue'
 
 export type LabToolDefinition = {
     id: string
-    category: 'creation' | 'maintenance' | 'world'
+    category: 'creation' | 'world'
     route: string
     icon: Component
     title: string
@@ -49,14 +42,6 @@ export const labTools: readonly LabToolDefinition[] = [
         icon: BoxIcon,
         title: 'Schematic workshop',
         description: 'Quickly preview and edit your schematics.',
-    },
-    {
-        id: 'mod-translation',
-        category: 'maintenance',
-        route: '/lab/mod-translation',
-        icon: LanguagesIcon,
-        title: 'Mod translation',
-        description: 'Translate any Minecraft mod JAR into Simplified Chinese.',
     },
     {
         id: 'recipe-generator',

@@ -15,7 +15,6 @@ const SETTINGS_TABS = new Set([
     'home-navigation',
     'shortcut-settings',
     'language-translation',
-    'ai',
     'launch-defaults',
     'instance-sync',
     'java-performance',
@@ -33,7 +32,6 @@ const LAB_TOOLS = new Set([
     'recipe-generator',
     'seed-map',
     'schematic-preview',
-    'mod-translation',
 ])
 
 function safeQuery(query: string | null | undefined): Record<string, string> {

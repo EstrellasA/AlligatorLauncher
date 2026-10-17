@@ -1047,7 +1047,6 @@ fn curseforge_project_to_project(
         source_url: project.links.source_url.clone(),
         wiki_url: project.links.wiki_url.clone(),
         discord_url: None,
-        donation_urls: None,
         gallery: project
             .screenshots
             .iter()

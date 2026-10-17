@@ -1961,24 +1961,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Tham gia máy chủ Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Ủng hộ"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Tài trợ trên GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ủng hộ trên Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Ủng hộ trên Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Ủng hộ trên PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Báo cáo lỗi"
   },

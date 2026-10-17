@@ -89,9 +89,6 @@ importers:
       '@dnd-kit/vue':
         specifier: ^0.5.0
         version: 0.5.0(vue@3.5.42(typescript@5.9.3))
-      '@lobehub/icons-static-svg':
-        specifier: ^1.95.0
-        version: 1.95.0
       '@modrinth/api-client':
         specifier: workspace:^
         version: link:../../packages/api-client
@@ -2476,9 +2473,6 @@ packages:
 
   '@lezer/markdown@1.7.2':
     resolution: {integrity: sha512-iTkYvoVcKt3WkeL7qUDyXHONZEwLio4wj8KTNi2dnjQEXBZKMV63BpQrPqfsM+OkvuRbiSTAcycYAsQzLhRNoQ==}
-
-  '@lobehub/icons-static-svg@1.95.0':
-    resolution: {integrity: sha512-VSObF66DUVQe0EK3xbIoFcw+Fcia1+bLVFkMsQbmz0zCceMxPmoLImS5VM5SM7zL+/NarZ11/ySNfkekcomIkQ==}
 
   '@mapbox/geojson-rewind@0.5.2':
     resolution: {integrity: sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA==}
@@ -10721,8 +10715,6 @@ snapshots:
     dependencies:
       '@lezer/common': 1.5.2
       '@lezer/highlight': 1.2.3
-
-  '@lobehub/icons-static-svg@1.95.0': {}
 
   '@mapbox/geojson-rewind@0.5.2':
     dependencies:

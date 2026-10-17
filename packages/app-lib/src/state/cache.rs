@@ -67,7 +67,6 @@ pub enum CacheValueType {
     ReportTypes,
     Loaders,
     GameVersions,
-    DonationPlatforms,
     FileHash,
     FileUpdate,
     SearchResults,
@@ -95,7 +94,6 @@ impl CacheValueType {
             CacheValueType::ReportTypes => "report_types",
             CacheValueType::Loaders => "loaders",
             CacheValueType::GameVersions => "game_versions",
-            CacheValueType::DonationPlatforms => "donation_platforms",
             CacheValueType::FileHash => "file_hash",
             CacheValueType::FileUpdate => "file_update",
             CacheValueType::SearchResults => "search_results",
@@ -122,7 +120,6 @@ impl CacheValueType {
             "report_types" => CacheValueType::ReportTypes,
             "loaders" => CacheValueType::Loaders,
             "game_versions" => CacheValueType::GameVersions,
-            "donation_platforms" => CacheValueType::DonationPlatforms,
             "file_hash" => CacheValueType::FileHash,
             "file_update" => CacheValueType::FileUpdate,
             "search_results" => CacheValueType::SearchResults,
@@ -181,7 +178,6 @@ impl CacheValueType {
             | CacheValueType::ReportTypes
             | CacheValueType::Loaders
             | CacheValueType::GameVersions
-            | CacheValueType::DonationPlatforms
             | CacheValueType::Version
             | CacheValueType::VersionV3
             | CacheValueType::Team
@@ -337,7 +333,6 @@ pub enum CacheValue {
     ReportTypes(Vec<String>),
     Loaders(Vec<Loader>),
     GameVersions(Vec<GameVersion>),
-    DonationPlatforms(Vec<DonationPlatform>),
     FileHash(CachedFileHash),
     FileUpdate(CachedFileUpdate),
     SearchResults(SearchResults),
@@ -584,7 +579,6 @@ pub struct Project {
     pub source_url: Option<String>,
     pub wiki_url: Option<String>,
     pub discord_url: Option<String>,
-    pub donation_urls: Option<Vec<DonationLink>>,
     pub gallery: Vec<GalleryItem>,
     pub color: Option<u32>,
 }
@@ -635,13 +629,6 @@ mod gallery_item_tests {
 
         assert!(item.raw_url.is_empty());
     }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct DonationLink {
-    pub id: String,
-    pub platform: String,
-    pub url: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq)]
@@ -790,12 +777,6 @@ pub struct Loader {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct DonationPlatform {
-    pub short: String,
-    pub name: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameVersion {
     pub version: String,
     pub version_type: String,
@@ -815,7 +796,6 @@ impl CacheValue {
             CacheValue::ReportTypes(values) => values.is_empty(),
             CacheValue::Loaders(values) => values.is_empty(),
             CacheValue::GameVersions(values) => values.is_empty(),
-            CacheValue::DonationPlatforms(values) => values.is_empty(),
             _ => false,
         }
     }
@@ -851,9 +831,6 @@ impl CacheValue {
             CacheValue::ReportTypes(_) => CacheValueType::ReportTypes,
             CacheValue::Loaders(_) => CacheValueType::Loaders,
             CacheValue::GameVersions(_) => CacheValueType::GameVersions,
-            CacheValue::DonationPlatforms(_) => {
-                CacheValueType::DonationPlatforms
-            }
             CacheValue::FileHash(_) => CacheValueType::FileHash,
             CacheValue::FileUpdate(_) => CacheValueType::FileUpdate,
             CacheValue::SearchResults(_) => CacheValueType::SearchResults,
@@ -885,9 +862,7 @@ impl CacheValue {
             | CacheValue::ReportTypes(_)
             | CacheValue::Loaders(_)
             | CacheValue::GameVersions(_)
-            | CacheValue::DonationPlatforms(_) => DEFAULT_ID.to_string(),
-
-            CacheValue::FileHash(hash) => {
+            | CacheValue::FileHash(hash) => {
                 format!(
                     "{}-{}",
                     hash.size,
@@ -929,7 +904,6 @@ impl CacheValue {
             | CacheValue::ReportTypes(_)
             | CacheValue::Loaders(_)
             | CacheValue::GameVersions(_)
-            | CacheValue::DonationPlatforms(_)
             | CacheValue::Version(_)
             | CacheValue::VersionV3(_)
             | CacheValue::Team { .. }
@@ -969,9 +943,6 @@ impl CacheValue {
             CacheValue::Loaders(loaders) => serde_json::to_value(loaders),
             CacheValue::GameVersions(versions) => {
                 serde_json::to_value(versions)
-            }
-            CacheValue::DonationPlatforms(platforms) => {
-                serde_json::to_value(platforms)
             }
             CacheValue::FileHash(hash) => serde_json::to_value(hash),
             CacheValue::FileUpdate(update) => serde_json::to_value(update),
@@ -1892,8 +1863,7 @@ impl_cache_method_singular!(
     (Categories, Vec<Category>),
     (ReportTypes, Vec<String>),
     (Loaders, Vec<Loader>),
-    (GameVersions, Vec<GameVersion>),
-    (DonationPlatforms, Vec<DonationPlatform>)
+    (GameVersions, Vec<GameVersion>)
 );
 
 impl CachedEntry {
@@ -2761,15 +2731,6 @@ impl CachedEntry {
                     CacheValue::GameVersions
                 )
             }
-            CacheValueType::DonationPlatforms => {
-                fetch_original_value!(
-                    DonationPlatforms,
-                    env!("MODRINTH_API_URL"),
-                    "tag/donation_platform",
-                    Some("/v2/tag/donation_platform"),
-                    CacheValue::DonationPlatforms
-                )
-            }
             CacheValueType::FileHash => {
                 let state = crate::State::get().await?;
 
@@ -3287,9 +3248,6 @@ impl CachedEntry {
             CacheValueType::GameVersions => {
                 CacheValue::GameVersions(parse(data, id, "game_versions")?)
             }
-            CacheValueType::DonationPlatforms => CacheValue::DonationPlatforms(
-                parse(data, id, "donation_platforms")?,
-            ),
             CacheValueType::FileHash => {
                 CacheValue::FileHash(parse(data, id, "file_hash")?)
             }
@@ -3607,7 +3565,6 @@ mod game_version_cache_tests {
         assert!(CacheValue::GameVersions(vec![]).is_empty_collection());
         assert!(CacheValue::Loaders(vec![]).is_empty_collection());
         assert!(CacheValue::Categories(vec![]).is_empty_collection());
-        assert!(CacheValue::DonationPlatforms(vec![]).is_empty_collection());
         assert!(
             !CacheValue::GameVersions(sample_game_versions())
                 .is_empty_collection()

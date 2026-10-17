@@ -32,7 +32,6 @@ export class LabrinthStateModule extends AbstractModule {
             categories,
             loaders,
             gameVersions,
-            donationPlatforms,
             reportTypes,
             homePageProjects,
             homePageSearch,
@@ -64,13 +63,6 @@ export class LabrinthStateModule extends AbstractModule {
                     method: 'GET',
                 })
                 .catch((err) => handleError(err, [], '/v2/tag/game_version')),
-            this.client
-                .request<Labrinth.Tags.v2.DonationPlatform[]>('/tag/donation_platform', {
-                    api: 'labrinth',
-                    version: 2,
-                    method: 'GET',
-                })
-                .catch((err) => handleError(err, [], '/v2/tag/donation_platform')),
             this.client
                 .request<string[]>('/tag/report_type', {
                     api: 'labrinth',
@@ -157,7 +149,6 @@ export class LabrinthStateModule extends AbstractModule {
             categories,
             loaders,
             gameVersions,
-            donationPlatforms,
             reportTypes,
             homePageProjects,
             homePageSearch,

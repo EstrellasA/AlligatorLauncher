@@ -60,16 +60,6 @@ allow('styles-its-own-element', [
 		'the button is written inside its own .skin-button (SkinButton.vue:65)',
 	],
 	[
-		'apps/app-frontend/src/components/lab/mod-translation/ModTranslationTaskTimeline.vue',
-		'.toggle:focus-visible,.debug button:focus-visible',
-		'both are raw buttons in this template (ModTranslationTaskTimeline.vue:44,67,74)',
-	],
-	[
-		'apps/app-frontend/src/components/lab/mod-translation/ModTranslationTaskTimeline.vue',
-		'.debug button',
-		'raw buttons under its own .debug div (ModTranslationTaskTimeline.vue:66,67,74)',
-	],
-	[
 		'apps/app-frontend/src/components/lab/recipe-generator/TagPalette.vue',
 		'.recipe-tag-tabs button',
 		'two raw tabs inside its own .recipe-tag-tabs (TagPalette.vue:192,195,204)',

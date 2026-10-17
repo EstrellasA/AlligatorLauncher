@@ -5,7 +5,6 @@ export type SettingsCategoryId =
     | 'home-navigation'
     | 'language-translation'
     | 'shortcut-settings'
-    | 'ai'
     | 'launch-defaults'
     | 'instance-sync'
     | 'java-performance'
@@ -30,7 +29,7 @@ export interface SettingsCategoryDefinition {
 
 /**
  * Ordered by daily-use priority within each group:
- * - launcher: how the shell looks and is operated, then optional AI
+ * - launcher: how the shell looks and is operated
  * - game: how Minecraft launches and gets content
  * - data-privacy: disk footprint and what leaves the machine
  * - support: update, identity, then diagnostics
@@ -68,20 +67,10 @@ export const settingsCategoryDefinitions: SettingsCategoryDefinition[] = [
         id: 'language-translation',
         name: defineMessage({
             id: 'app.settings.tabs.language-translation',
-            defaultMessage: 'Language & translation',
+            defaultMessage: 'Language',
         }),
         group: 'launcher',
         onboardingId: 'settings-tab-language-translation',
-    },
-    {
-        id: 'ai',
-        name: defineMessage({
-            id: 'app.settings.tabs.ai',
-            defaultMessage: 'AI features',
-        }),
-        group: 'launcher',
-        flushContent: true,
-        onboardingId: 'settings-tab-ai',
     },
     {
         id: 'launch-defaults',

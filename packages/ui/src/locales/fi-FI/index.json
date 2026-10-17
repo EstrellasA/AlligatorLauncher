@@ -377,15 +377,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Liity Discord palvelimelle"
   },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Lahjoita"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsoroi Githubissa"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Lahjoita Patreonissa"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Raportoi ongelmista"
   },

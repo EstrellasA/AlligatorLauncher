@@ -20,11 +20,6 @@ export async function get_game_versions() {
     return await invoke('plugin:tags|tags_get_game_versions')
 }
 
-// Gets cached donation_platforms tags
-export async function get_donation_platforms() {
-    return await invoke('plugin:tags|tags_get_donation_platforms')
-}
-
 // Gets cached licenses tags
 export async function get_report_types() {
     return await invoke('plugin:tags|tags_get_report_types')

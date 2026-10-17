@@ -959,24 +959,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Kjøp meg en kaffe"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Kjøp meg en kaffe"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Doner"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Støtt på GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Doner på Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Doner på Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Doner via PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Rapporter feil"
   },

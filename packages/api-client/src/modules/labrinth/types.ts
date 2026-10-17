@@ -896,12 +896,6 @@ export namespace Labrinth {
                 ordering: number
             }
 
-            export type DonationLink = {
-                id: string
-                platform: string
-                url: string
-            }
-
             export interface CreateProjectBase {
                 title: string
                 project_type: 'mod'
@@ -957,7 +951,6 @@ export namespace Labrinth {
                 source_url?: string
                 wiki_url?: string
                 discord_url?: string
-                donation_urls?: DonationLink[]
                 gallery?: GalleryImage[]
                 color?: number
                 thread_id: string
@@ -1020,9 +1013,6 @@ export namespace Labrinth {
                 additional_categories?: string[]
                 add_additional_categories?: string[]
                 remove_additional_categories?: string[]
-                donation_urls?: DonationLink[]
-                add_donation_urls?: DonationLink[]
-                remove_donation_urls?: DonationLink[]
                 issues_url?: string | null
                 source_url?: string | null
                 wiki_url?: string | null
@@ -1649,11 +1639,6 @@ export namespace Labrinth {
                 major: boolean
             }
 
-            export interface DonationPlatform {
-                short: string
-                name: string
-            }
-
             export type LicenseText = {
                 title: string
                 body: string
@@ -2083,7 +2068,6 @@ export namespace Labrinth {
             categories: Tags.v2.Category[]
             loaders: Tags.v2.Loader[]
             gameVersions: Tags.v2.GameVersion[]
-            donationPlatforms: Tags.v2.DonationPlatform[]
             reportTypes: string[]
             muralBankDetails?: Record<
                 string,

@@ -745,9 +745,6 @@
   "app.skins.title": {
     "message": "Pemilih kekulit"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} sudah selesai dimuat turun! Muat semula untuk kemas kini sekarang, atau kemas kini secara automatik apabila anda menutup ALLIGATORZONE."
   },

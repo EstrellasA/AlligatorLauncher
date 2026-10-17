@@ -1934,24 +1934,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Discord sunucusuna katıl"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Bana kahve ısmarlıyın"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Bağış"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "GitHub'tan Sponsor Ol"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ko-fi'den Bağış Yap"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Patreon'dan Bağış Yap"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "PayPal'dan Bağış Yap"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Sorunları bildir"
   },

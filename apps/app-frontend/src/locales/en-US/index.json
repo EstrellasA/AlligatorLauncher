@@ -278,207 +278,6 @@
   "app.action-bar.view-logs": {
     "message": "View logs"
   },
-  "app.ai-settings.add-model": {
-    "message": "Add model"
-  },
-  "app.ai-settings.all-providers": {
-    "message": "All"
-  },
-  "app.ai-settings.api-key": {
-    "message": "API key"
-  },
-  "app.ai-settings.api-key-configured": {
-    "message": "A key is stored securely in the operating system credential store."
-  },
-  "app.ai-settings.api-key-optional": {
-    "message": "No key is stored. Local providers can work without one."
-  },
-  "app.ai-settings.bedrock.access-key-id": {
-    "message": "AWS access key ID"
-  },
-  "app.ai-settings.bedrock.api-key": {
-    "message": "API key"
-  },
-  "app.ai-settings.bedrock.authentication": {
-    "message": "Authentication"
-  },
-  "app.ai-settings.bedrock.aws-credentials": {
-    "message": "AWS credentials"
-  },
-  "app.ai-settings.bedrock.secret-access-key": {
-    "message": "AWS secret access key"
-  },
-  "app.ai-settings.bedrock.session-token": {
-    "message": "AWS session token (optional)"
-  },
-  "app.ai-settings.clear-credential": {
-    "message": "Clear credential"
-  },
-  "app.ai-settings.clear-key": {
-    "message": "Clear key"
-  },
-  "app.ai-settings.configured-models": {
-    "message": "{count, plural, one {# text model} other {# text models}}"
-  },
-  "app.ai-settings.credential-configured": {
-    "message": "Stored securely in the operating system credential store."
-  },
-  "app.ai-settings.description": {
-    "message": "Configure text models once, then use them across launcher features."
-  },
-  "app.ai-settings.disabled": {
-    "message": "Disabled"
-  },
-  "app.ai-settings.disabled-providers": {
-    "message": "Disabled providers"
-  },
-  "app.ai-settings.enabled": {
-    "message": "Enabled"
-  },
-  "app.ai-settings.enabled-providers": {
-    "message": "Enabled providers"
-  },
-  "app.ai-settings.endpoint": {
-    "message": "API endpoint"
-  },
-  "app.ai-settings.field.account-id": {
-    "message": "Account ID"
-  },
-  "app.ai-settings.field.api-version": {
-    "message": "API version"
-  },
-  "app.ai-settings.field.deployment": {
-    "message": "Deployment"
-  },
-  "app.ai-settings.field.location": {
-    "message": "Location"
-  },
-  "app.ai-settings.field.project": {
-    "message": "Project ID"
-  },
-  "app.ai-settings.field.region": {
-    "message": "Region"
-  },
-  "app.ai-settings.looking-for-translation": {
-    "message": "Looking for content translation?"
-  },
-  "app.ai-settings.looking-for-translation.description": {
-    "message": "Translating project titles and descriptions is configured under Language & translation. AI providers here can power that feature when you pick the AI translation service."
-  },
-  "app.ai-settings.master-switch": {
-    "message": "Enable AI features"
-  },
-  "app.ai-settings.master-switch-description": {
-    "message": "When disabled, AI actions and provider choices are hidden across the launcher."
-  },
-  "app.ai-settings.model-id": {
-    "message": "Model ID"
-  },
-  "app.ai-settings.model-name": {
-    "message": "Display name (optional)"
-  },
-  "app.ai-settings.models": {
-    "message": "Text models"
-  },
-  "app.ai-settings.no-matching-models": {
-    "message": "No models match your search."
-  },
-  "app.ai-settings.no-models": {
-    "message": "No models are available. Add a model ID to continue."
-  },
-  "app.ai-settings.no-providers": {
-    "message": "No providers found."
-  },
-  "app.ai-settings.oauth.check": {
-    "message": "Check authorization status"
-  },
-  "app.ai-settings.oauth.checking": {
-    "message": "Checking authorization status"
-  },
-  "app.ai-settings.oauth.code": {
-    "message": "Authorization code"
-  },
-  "app.ai-settings.oauth.connect": {
-    "message": "Connect account"
-  },
-  "app.ai-settings.oauth.connected": {
-    "message": "Account connected"
-  },
-  "app.ai-settings.oauth.copy-code": {
-    "message": "Copy authorization code"
-  },
-  "app.ai-settings.oauth.denied": {
-    "message": "Authorization was denied."
-  },
-  "app.ai-settings.oauth.disconnect": {
-    "message": "Disconnect"
-  },
-  "app.ai-settings.oauth.expired": {
-    "message": "The authorization code expired. Start again."
-  },
-  "app.ai-settings.oauth.open": {
-    "message": "Open authorization page"
-  },
-  "app.ai-settings.oauth.pending": {
-    "message": "Complete authorization in your browser. This page will update automatically."
-  },
-  "app.ai-settings.oauth.reconnect": {
-    "message": "Reconnect account"
-  },
-  "app.ai-settings.open-language-translation": {
-    "message": "Open Language & translation"
-  },
-  "app.ai-settings.refresh-models": {
-    "message": "Fetch models"
-  },
-  "app.ai-settings.refreshing-models": {
-    "message": "Fetching…"
-  },
-  "app.ai-settings.save-credential": {
-    "message": "Save credential"
-  },
-  "app.ai-settings.save-key": {
-    "message": "Save key"
-  },
-  "app.ai-settings.save-provider": {
-    "message": "Save provider"
-  },
-  "app.ai-settings.saved": {
-    "message": "Provider settings saved."
-  },
-  "app.ai-settings.search": {
-    "message": "Search providers"
-  },
-  "app.ai-settings.search-models": {
-    "message": "Search models"
-  },
-  "app.ai-settings.sponsored-providers": {
-    "message": "Sponsored providers"
-  },
-  "app.ai-settings.test": {
-    "message": "Test provider"
-  },
-  "app.ai-settings.test-model": {
-    "message": "Test model"
-  },
-  "app.ai-settings.test-success": {
-    "message": "Connection succeeded: {response}"
-  },
-  "app.ai-settings.testing": {
-    "message": "Testing…"
-  },
-  "app.ai-settings.title": {
-    "message": "AI providers"
-  },
-  "app.ai-settings.vertex.service-account": {
-    "message": "Service-account JSON"
-  },
-  "app.ai-settings.vertex.service-account-description": {
-    "message": "Paste the complete Google Cloud service-account JSON document."
-  },
-  "app.ai-settings.visit-website": {
-    "message": "Visit website"
-  },
   "app.appearance-settings.accent-color.blue": {
     "message": "Blue"
   },
@@ -1258,45 +1057,6 @@
   },
   "app.content.install-content": {
     "message": "Install content"
-  },
-  "app.crash-analysis.ai.action": {
-    "message": "Use AI to explain"
-  },
-  "app.crash-analysis.ai.analyzing": {
-    "message": "Explaining the crash..."
-  },
-  "app.crash-analysis.ai.close": {
-    "message": "Close"
-  },
-  "app.crash-analysis.ai.copied": {
-    "message": "AI explanation copied to your clipboard"
-  },
-  "app.crash-analysis.ai.copy": {
-    "message": "Copy explanation"
-  },
-  "app.crash-analysis.ai.disclaimer": {
-    "message": "A sanitized and shortened crash context is sent directly to the AI provider configured in this launcher. AI output may be inaccurate."
-  },
-  "app.crash-analysis.ai.error": {
-    "message": "AI explanation failed: {message}"
-  },
-  "app.crash-analysis.ai.settings.enabled": {
-    "message": "Enable AI explanations"
-  },
-  "app.crash-analysis.ai.settings.enabled-description": {
-    "message": "Local rule-based crash analysis remains available without AI."
-  },
-  "app.crash-analysis.ai.settings.model": {
-    "message": "Text model"
-  },
-  "app.crash-analysis.ai.settings.no-providers": {
-    "message": "Enable a provider and a text model above before using AI crash explanations."
-  },
-  "app.crash-analysis.ai.settings.provider": {
-    "message": "AI provider"
-  },
-  "app.crash-analysis.ai.title": {
-    "message": "AI crash explanation"
   },
   "app.curseforge.automatic-downloads-failed.notification-body": {
     "message": "{failed, number} files failed after retrying ({list}). See Downloads for the recorded errors."
@@ -4019,9 +3779,6 @@
   "app.lab.category.creation": {
     "message": "Creation"
   },
-  "app.lab.category.maintenance": {
-    "message": "Maintenance"
-  },
   "app.lab.category.world": {
     "message": "World"
   },
@@ -4213,207 +3970,6 @@
   },
   "app.lab.gradient-text.title": {
     "message": "Gradient text generator"
-  },
-  "app.lab.mod-translation.active-count": {
-    "message": "{count} running"
-  },
-  "app.lab.mod-translation.ai-load-error": {
-    "message": "AI settings could not be loaded. Check your connection and try again."
-  },
-  "app.lab.mod-translation.ai-not-configured": {
-    "message": "AI is not configured. Open the AI settings to enable a provider and model."
-  },
-  "app.lab.mod-translation.ai-section": {
-    "message": "AI and options"
-  },
-  "app.lab.mod-translation.all-finished": {
-    "message": "All finished"
-  },
-  "app.lab.mod-translation.analysis": {
-    "message": "Analysis"
-  },
-  "app.lab.mod-translation.analyze": {
-    "message": "Analyze"
-  },
-  "app.lab.mod-translation.analyzing": {
-    "message": "Analyzing…"
-  },
-  "app.lab.mod-translation.analyzing-elapsed": {
-    "message": "Analyzing for {seconds}s"
-  },
-  "app.lab.mod-translation.analyzing-hint": {
-    "message": "Local inspection: unpacking and scanning the mod. No AI tokens are consumed."
-  },
-  "app.lab.mod-translation.background-running": {
-    "message": "Running in background"
-  },
-  "app.lab.mod-translation.batch-size": {
-    "message": "Batch size"
-  },
-  "app.lab.mod-translation.cancel": {
-    "message": "Cancel"
-  },
-  "app.lab.mod-translation.cancelling": {
-    "message": "Cancelling…"
-  },
-  "app.lab.mod-translation.class-candidates": {
-    "message": "Class text candidates"
-  },
-  "app.lab.mod-translation.class-text-enabled": {
-    "message": "Rewrite advanced .class text candidates"
-  },
-  "app.lab.mod-translation.completed-count": {
-    "message": "{count} completed"
-  },
-  "app.lab.mod-translation.copy-diagnostics": {
-    "message": "Copy diagnostics"
-  },
-  "app.lab.mod-translation.copy-diagnostics-info": {
-    "message": "Copy diagnostic information"
-  },
-  "app.lab.mod-translation.description": {
-    "message": "Translate any Minecraft mod JAR into Simplified Chinese."
-  },
-  "app.lab.mod-translation.done": {
-    "message": "Done"
-  },
-  "app.lab.mod-translation.estimated-quote": {
-    "message": "Estimated usage"
-  },
-  "app.lab.mod-translation.estimated-tokens": {
-    "message": "{tokens} tokens"
-  },
-  "app.lab.mod-translation.estimated-tokens-detail": {
-    "message": "~{calls} calls · {input} in / {output} out"
-  },
-  "app.lab.mod-translation.failed": {
-    "message": "Failed"
-  },
-  "app.lab.mod-translation.failed-count": {
-    "message": "{count} failed"
-  },
-  "app.lab.mod-translation.generate-mod-name": {
-    "message": "AI-generate a Chinese mod name"
-  },
-  "app.lab.mod-translation.input-section": {
-    "message": "Input"
-  },
-  "app.lab.mod-translation.jobs-section": {
-    "message": "Jobs"
-  },
-  "app.lab.mod-translation.language-characters": {
-    "message": "Characters"
-  },
-  "app.lab.mod-translation.language-entries": {
-    "message": "Language entries"
-  },
-  "app.lab.mod-translation.language-sources": {
-    "message": "Language sources"
-  },
-  "app.lab.mod-translation.loader": {
-    "message": "Loader"
-  },
-  "app.lab.mod-translation.model": {
-    "message": "Text model"
-  },
-  "app.lab.mod-translation.no-jobs": {
-    "message": "Started jobs will appear here."
-  },
-  "app.lab.mod-translation.open-output": {
-    "message": "Open output folder"
-  },
-  "app.lab.mod-translation.operation-failed": {
-    "message": "The mod translation operation failed."
-  },
-  "app.lab.mod-translation.options": {
-    "message": "Options"
-  },
-  "app.lab.mod-translation.output-path": {
-    "message": "Output: {path}"
-  },
-  "app.lab.mod-translation.phase.class": {
-    "message": "Class text"
-  },
-  "app.lab.mod-translation.phase.language": {
-    "message": "Language"
-  },
-  "app.lab.mod-translation.phase.packaging": {
-    "message": "Packaging"
-  },
-  "app.lab.mod-translation.phase.prepare": {
-    "message": "Preparing"
-  },
-  "app.lab.mod-translation.phase.repair": {
-    "message": "Quality check"
-  },
-  "app.lab.mod-translation.phase.research": {
-    "message": "Name generation"
-  },
-  "app.lab.mod-translation.phase.validation": {
-    "message": "Validation"
-  },
-  "app.lab.mod-translation.points": {
-    "message": "{points} points"
-  },
-  "app.lab.mod-translation.preparing": {
-    "message": "Preparing…"
-  },
-  "app.lab.mod-translation.progress.current-batch": {
-    "message": "Batch {completed} / {total}"
-  },
-  "app.lab.mod-translation.progress.recently-written": {
-    "message": "Recently written"
-  },
-  "app.lab.mod-translation.progress.verified-weights": {
-    "message": "Verified {verified} / {total}"
-  },
-  "app.lab.mod-translation.progress.workload-measuring": {
-    "message": "Establishing a verifiable workload…"
-  },
-  "app.lab.mod-translation.provider": {
-    "message": "AI provider"
-  },
-  "app.lab.mod-translation.repair-enabled": {
-    "message": "Repair difficult translations after verification"
-  },
-  "app.lab.mod-translation.result.changed-files": {
-    "message": "Changed files: {files}"
-  },
-  "app.lab.mod-translation.result.class-text": {
-    "message": "Class text"
-  },
-  "app.lab.mod-translation.result.completed": {
-    "message": "Translation complete"
-  },
-  "app.lab.mod-translation.result.completed-warnings": {
-    "message": "Generated, but some text is still uncovered"
-  },
-  "app.lab.mod-translation.result.mod-label": {
-    "message": "Mod"
-  },
-  "app.lab.mod-translation.select-file": {
-    "message": "Choose a mod JAR"
-  },
-  "app.lab.mod-translation.signed-mod": {
-    "message": "This mod is signed and cannot be modified."
-  },
-  "app.lab.mod-translation.start": {
-    "message": "Start translation"
-  },
-  "app.lab.mod-translation.start-hint": {
-    "message": "Choose a JAR and an AI model to start."
-  },
-  "app.lab.mod-translation.technical-details": {
-    "message": "Technical details"
-  },
-  "app.lab.mod-translation.timeline.empty": {
-    "message": "Waiting for processing events…"
-  },
-  "app.lab.mod-translation.timeline.title": {
-    "message": "Processing timeline ({count})"
-  },
-  "app.lab.mod-translation.title": {
-    "message": "Mod translation"
   },
   "app.lab.no-favorites": {
     "message": "You have not favorited any tools yet."
@@ -5945,18 +5501,6 @@
   "app.log-share.ai.working": {
     "message": "Analyzing with LogAgent…"
   },
-  "app.log-share.settings.ai-source": {
-    "message": "AI analysis source"
-  },
-  "app.log-share.settings.ai-source-custom": {
-    "message": "Custom AI provider"
-  },
-  "app.log-share.settings.ai-source-description": {
-    "message": "Both sources send a sanitized and shortened crash context. AI output may be inaccurate."
-  },
-  "app.log-share.settings.ai-source-logshare": {
-    "message": "LogShare AI"
-  },
   "app.log-share.settings.auto-upload": {
     "message": "Upload to get a structured summary automatically"
   },
@@ -5991,7 +5535,7 @@
     "message": "Display thinking, tool and limit status while LogShare AI is working."
   },
   "app.log-share.settings.title": {
-    "message": "Log sharing & AI analysis"
+    "message": "Log sharing"
   },
   "app.log-share.shared-logs.delete": {
     "message": "Delete"
@@ -7256,21 +6800,6 @@
   "app.project.planet-minecraft.versions": {
     "message": "Downloads"
   },
-  "app.project.translation.failed": {
-    "message": "Translation failed. The original content was kept. Try again."
-  },
-  "app.project.translation.failed-title": {
-    "message": "Translation failed"
-  },
-  "app.project.translation.show-original": {
-    "message": "Show original"
-  },
-  "app.project.translation.translate": {
-    "message": "Translate"
-  },
-  "app.project.translation.translating": {
-    "message": "Translating…"
-  },
   "app.project.version.all-versions": {
     "message": "All versions"
   },
@@ -8142,12 +7671,6 @@
   },
   "app.servers.wizard.type-title": {
     "message": "Server type"
-  },
-  "app.settings.about.afdian": {
-    "message": "Support on Afdian"
-  },
-  "app.settings.about.afdian-description": {
-    "message": "Help support continued development"
   },
   "app.settings.about.attribution": {
     "message": "ALLIGATORZONE is a modified version of the open-source Modrinth codebase."
@@ -10459,9 +9982,6 @@
   "app.settings.tabs.about": {
     "message": "About"
   },
-  "app.settings.tabs.ai": {
-    "message": "AI features"
-  },
   "app.settings.tabs.content-downloads": {
     "message": "Content & downloads"
   },
@@ -10478,7 +9998,7 @@
     "message": "Java & performance"
   },
   "app.settings.tabs.language-translation": {
-    "message": "Language & translation"
+    "message": "Language"
   },
   "app.settings.tabs.launch-defaults": {
     "message": "Launch defaults"
@@ -11017,155 +10537,11 @@
   "app.sync-instances-update.choose-source.resource-packs": {
     "message": "Choose which instance to copy your resource packs from. These packs are only used for the initial sync, and you can edit them from any instance afterward."
   },
-  "app.translation-settings.ai-model": {
-    "message": "Text model"
-  },
-  "app.translation-settings.ai-provider": {
-    "message": "AI provider"
-  },
-  "app.translation-settings.auto-translate": {
-    "message": "Translate project pages automatically"
-  },
-  "app.translation-settings.auto-translate-description": {
-    "message": "Start translating as soon as a Modrinth project page is opened."
-  },
-  "app.translation-settings.cache": {
-    "message": "Translation cache"
-  },
-  "app.translation-settings.cache-cleared": {
-    "message": "Translation cache cleared."
-  },
-  "app.translation-settings.cache-description": {
-    "message": "Successful translations are cached for seven days to reduce requests."
-  },
-  "app.translation-settings.clear-cache": {
-    "message": "Clear translation cache"
-  },
-  "app.translation-settings.deepl-api-endpoint": {
-    "message": "API endpoint"
-  },
-  "app.translation-settings.deepl-api-endpoint-placeholder": {
-    "message": "https://api-free.deepl.com/v2/translate"
-  },
-  "app.translation-settings.deepl-api-key": {
-    "message": "API key"
-  },
-  "app.translation-settings.deepl-api-key-hint": {
-    "message": "Get a free key at deepl.com/pro-api"
-  },
-  "app.translation-settings.deepl-api-key-placeholder": {
-    "message": "Enter your DeepL API key"
-  },
-  "app.translation-settings.description": {
-    "message": "Translate Modrinth project titles, summaries, and descriptions while browsing content."
-  },
-  "app.translation-settings.display-mode": {
-    "message": "Display mode"
-  },
-  "app.translation-settings.display-mode.bilingual": {
-    "message": "Original and translation"
-  },
-  "app.translation-settings.display-mode.translation-only": {
-    "message": "Translation only"
-  },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
-  "app.translation-settings.google-ip-pool": {
-    "message": "IP pool {count}"
-  },
-  "app.translation-settings.operation-failed": {
-    "message": "The translation operation failed. Check the configuration and try again."
-  },
-  "app.translation-settings.provider": {
-    "message": "Translation service"
-  },
-  "app.translation-settings.provider.ai": {
-    "message": "AI model"
-  },
-  "app.translation-settings.provider.deepl": {
-    "message": "DeepL"
-  },
-  "app.translation-settings.provider.google": {
-    "message": "Google Translate (free)"
-  },
-  "app.translation-settings.style": {
-    "message": "Translation style"
-  },
-  "app.translation-settings.style.background": {
-    "message": "Background"
-  },
-  "app.translation-settings.style.blockquote": {
-    "message": "Block quote"
-  },
-  "app.translation-settings.style.blur": {
-    "message": "Blur"
-  },
-  "app.translation-settings.style.border": {
-    "message": "Border"
-  },
-  "app.translation-settings.style.dashed-line": {
-    "message": "Dashed underline"
-  },
-  "app.translation-settings.style.default": {
-    "message": "Default"
-  },
-  "app.translation-settings.style.preview": {
-    "message": "Preview"
-  },
-  "app.translation-settings.style.preview-original-text": {
-    "message": "Explore high-quality Minecraft content on Modrinth."
-  },
-  "app.translation-settings.style.preview-text": {
-    "message": "Discover high-quality Minecraft content on Modrinth."
-  },
-  "app.translation-settings.style.text-color": {
-    "message": "Text color"
-  },
-  "app.translation-settings.style.weakened": {
-    "message": "Muted"
-  },
-  "app.translation-settings.system-prompt": {
-    "message": "Translation instructions"
-  },
-  "app.translation-settings.system-prompt-description": {
-    "message": "Optional feature-specific instructions. The launcher always appends its structured translation contract."
-  },
-  "app.translation-settings.target-language": {
-    "message": "Target language"
-  },
-  "app.translation-settings.target-language.follow-app": {
-    "message": "Follow launcher language"
-  },
-  "app.translation-settings.test": {
-    "message": "Test service"
-  },
-  "app.translation-settings.test-success": {
-    "message": "Connection succeeded: {translation}"
-  },
-  "app.translation-settings.testing": {
-    "message": "Testing…"
-  },
-  "app.translation-settings.title": {
-    "message": "Translation"
-  },
   "app.translation.auto-translate-hint.text": {
     "message": "You can turn this on in Settings → Language & translation so browse results and project pages translate for you."
   },
   "app.translation.auto-translate-hint.title": {
     "message": "Use automatic translation"
-  },
-  "app.translation.error.authentication": {
-    "message": "The translation service could not authenticate. Please try again later."
-  },
-  "app.translation.error.content-too-long": {
-    "message": "This content is too long for the selected translation service."
-  },
-  "app.translation.error.network": {
-    "message": "The translation service could not be reached. Check your network or proxy."
-  },
-  "app.translation.error.rate-limited": {
-    "message": "The translation service is temporarily rate limited. Please try again later."
   },
   "app.update-announcement.category.added": {
     "message": "Added"
@@ -12501,27 +11877,6 @@
   },
   "instance.upgrade.changelog.loading": {
     "message": "Loading release details…"
-  },
-  "instance.upgrade.changelog.show-original": {
-    "message": "Show original"
-  },
-  "instance.upgrade.changelog.translate": {
-    "message": "Translate"
-  },
-  "instance.upgrade.changelog.translation.authentication": {
-    "message": "Translation provider authentication failed."
-  },
-  "instance.upgrade.changelog.translation.failed": {
-    "message": "Changelog translation failed."
-  },
-  "instance.upgrade.changelog.translation.network": {
-    "message": "Translation network request failed."
-  },
-  "instance.upgrade.changelog.translation.rate-limited": {
-    "message": "Translation is temporarily rate limited."
-  },
-  "instance.upgrade.changelog.translation.too-long": {
-    "message": "This changelog is too long to translate."
   },
   "instance.upgrade.changelog.unavailable": {
     "message": "Release details unavailable."

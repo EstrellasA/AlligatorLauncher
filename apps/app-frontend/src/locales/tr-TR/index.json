@@ -910,9 +910,6 @@
   "app.skins.title": {
     "message": "Skin seçici"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} indirildi. Güncellemek için yeniden başlatın veya ALLIGATORZONE’i kapattığınızda otomatik olarak güncellenecektir."
   },

@@ -802,9 +802,6 @@
   "app.skins.title": {
     "message": "Pemilih rupa"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} telah selesai mengunduh. Muat ulang untuk memperbarui sekarang, atau secara otomatis saat Anda menutup ALLIGATORZONE."
   },

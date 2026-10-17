@@ -1082,24 +1082,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Sumali sa Discord server"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Bilhan Ako ng Kape"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Mag-donate"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsorin sa GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Mag-donate sa Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Mag-donate sa Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Mag-donate sa PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Mag-ulat ng isyu"
   },

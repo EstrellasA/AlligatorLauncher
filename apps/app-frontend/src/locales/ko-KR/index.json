@@ -790,9 +790,6 @@
   "app.skins.title": {
     "message": "스킨 선택"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} 다운로드가 완료되었습니다. 새로고침하거나 ALLIGATORZONE을 종료하면 자동으로 업데이트됩니다."
   },

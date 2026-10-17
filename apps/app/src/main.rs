@@ -22,7 +22,6 @@ use theseus::prelude::*;
 mod api;
 mod error;
 mod lightweight_mode;
-mod mod_translation;
 mod portable;
 mod seed_map;
 mod window_frame;
@@ -831,7 +830,6 @@ fn main() {
         });
 
     builder = builder
-        .plugin(api::ai::init())
         .plugin(api::auth::init())
         .plugin(api::bootstrap::init())
         .plugin(api::mr_auth::init())
@@ -843,7 +841,6 @@ fn main() {
         .plugin(api::metadata::init())
         .plugin(api::mcarchive::init())
         .plugin(api::minecraft_skins::init())
-        .plugin(api::mod_translation::init())
         .plugin(api::process::init())
         .plugin(api::planet_minecraft::init())
         .plugin(api::settings::init())
@@ -854,7 +851,6 @@ fn main() {
         .plugin(api::shortcuts::init())
         .plugin(api::tags::init())
         .plugin(api::telemetry::init())
-        .plugin(api::translation::init())
         .plugin(api::utils::init())
         .plugin(api::cache::init())
         .plugin(api::content_favorites::init())

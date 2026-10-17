@@ -1982,24 +1982,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Discordserver beitreten"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Spenden"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Auf GitHub sponsorn"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Auf Ko-fi spenden"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Auf Patreon spenden"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Auf PayPal spenden"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Problem melden"
   },

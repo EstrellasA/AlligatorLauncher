@@ -671,24 +671,6 @@
   "project.about.links.discord": {
     "defaultMessage": "הצטרף לשרת הדיסקורד"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "תרום"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "ספונסר ב-GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "תרום דרך Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "תרום דרך Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "תרום דרך פייפאל"
-  },
   "project.about.links.issues": {
     "defaultMessage": "דיווח בעיות"
   },

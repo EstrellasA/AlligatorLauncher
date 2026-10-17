@@ -10,14 +10,6 @@ export type ApprovedStatus = RequestableStatus | 'scheduled'
 export type UnapprovedStatus = 'draft' | 'processing' | 'rejected' | 'withheld'
 export type ProjectStatus = ApprovedStatus | UnapprovedStatus | 'unknown'
 
-export type DonationPlatform =
-    | { short: 'patreon'; name: 'Patreon' }
-    | { short: 'bmac'; name: 'Buy Me A Coffee' }
-    | { short: 'paypal'; name: 'PayPal' }
-    | { short: 'github'; name: 'GitHub Sponsors' }
-    | { short: 'ko-fi'; name: 'Ko-fi' }
-    | { short: 'other'; name: 'Other' }
-
 export type ProjectType =
     'mod' | 'modpack' | 'resourcepack' | 'shader' | 'plugin' | 'datapack' | 'project'
 export type MonetizationStatus = 'monetized' | 'demonetized' | 'force-demonetized'
@@ -26,12 +18,6 @@ export type GameVersion = string
 export type Platform = string
 export type Category = string
 export type CategoryOrPlatform = Category | Platform
-
-export interface DonationLink<T extends DonationPlatform> {
-    id: T['short']
-    platform: T['name']
-    url: string
-}
 
 export interface GalleryImage {
     url: string
@@ -88,7 +74,6 @@ export interface ProjectV3 {
         string,
         {
             platform: string
-            donation: boolean
             url: string
         }
     >
@@ -143,7 +128,6 @@ export interface Project {
     source_url: string | null
     wiki_url: string | null
     discord_url: string | null
-    donation_urls: DonationLink<DonationPlatform>[]
 
     published: string
     created?: string

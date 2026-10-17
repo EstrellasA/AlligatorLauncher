@@ -1,4 +1,4 @@
-export type LabCategoryFilter = 'all' | 'creation' | 'maintenance' | 'world'
+export type LabCategoryFilter = 'all' | 'creation' | 'world'
 export type LabFavoriteFilter = 'all' | 'favorite' | 'unfavorite'
 
 const LAB_FAVORITE_TOOL_IDS_STORAGE_KEY = 'axolotl-lab-favorite-tool-ids'
@@ -25,7 +25,7 @@ export function setLabFavoriteToolIds(ids: string[]) {
 }
 
 export function isLabCategoryFilter(value: string): value is LabCategoryFilter {
-    return value === 'creation' || value === 'maintenance' || value === 'world'
+    return value === 'creation' || value === 'world'
 }
 
 export function getLabCategoryFilter(): LabCategoryFilter {

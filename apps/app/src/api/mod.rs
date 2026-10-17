@@ -2,7 +2,6 @@ use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 use thiserror::Error;
 
-pub mod ai;
 pub mod auth;
 pub mod bootstrap;
 pub mod import;
@@ -13,7 +12,6 @@ pub mod logs;
 pub mod mcarchive;
 pub mod metadata;
 pub mod minecraft_skins;
-pub mod mod_translation;
 pub mod mr_auth;
 pub mod multiplayer;
 pub mod planet_minecraft;
@@ -28,7 +26,6 @@ pub mod system_accent;
 pub mod tags;
 pub mod telemetry;
 pub mod terracotta;
-pub mod translation;
 pub mod utils;
 
 pub mod cache;

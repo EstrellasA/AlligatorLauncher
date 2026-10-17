@@ -688,9 +688,6 @@
   "app.skins.sign-in.axolotl-alt": {
     "message": "ALLIGATORZONE"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} のダウンロードが完了しました。今すぐ更新するには再読み込みするか、ALLIGATORZONEを閉じる際に自動更新されます。"
   },

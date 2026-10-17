@@ -26,7 +26,6 @@ import {
 import { renderHighlightedString } from '@modrinth/utils/highlightjs'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-import CrashAIExplanationModal from '@/components/ui/CrashAIExplanationModal.vue'
 import CrashModChangesModal from '@/components/ui/CrashModChangesModal.vue'
 import {
     clearCrashAnalysis,
@@ -34,11 +33,9 @@ import {
     refreshCrashAnalysis,
 } from '@/composables/useCrashAnalysis'
 import type { MinecraftLaunchErrorPayload } from '@/composables/useMinecraftLaunchError'
-import { getAIState } from '@/helpers/ai'
 import { logshare_ai_listener, process_listener } from '@/helpers/events.js'
 import { get as getInstance } from '@/helpers/instance'
 import {
-    get_crash_analysis_ai_settings,
     get_log_share_settings,
     get_logs,
     get_output_by_filename,
@@ -107,7 +104,6 @@ const { formatMessage } = useVIntl()
 const client = injectModrinthClient()
 const { addNotification } = injectNotificationManager()
 const modal = ref<InstanceType<typeof NewModal>>()
-const aiModal = ref<InstanceType<typeof CrashAIExplanationModal>>()
 const modChangesModal = ref<InstanceType<typeof CrashModChangesModal>>()
 const payload = ref<Partial<CrashModalPayload>>({})
 let lastAnalysis: CrashAnalysisResult | null = null
@@ -367,10 +363,6 @@ const messages = defineMessages({
     copyLink: {
         id: 'app.minecraft-crash.copy-link',
         defaultMessage: 'Copy link',
-    },
-    aiAnalyze: {
-        id: 'app.crash-analysis.ai.action',
-        defaultMessage: 'Use AI to explain',
     },
     aiAnalyzeLogShare: {
         id: 'app.log-share.ai.action',
@@ -754,10 +746,6 @@ function isLaunchFailure(error: unknown): boolean {
     return launchFailureBody(error) !== null
 }
 
-function useLogShareAi(): boolean {
-    return logShareSettings.value.ai_source === 'logshare'
-}
-
 function formatInsights(value: unknown): string {
     const record = (value ?? {}) as Record<string, unknown>
     const lines: string[] = []
@@ -1122,15 +1110,7 @@ async function runLogShareAi(): Promise<string> {
 }
 
 async function openAIAnalysis(): Promise<void> {
-    if (aiLoading.value || (useLogShareAi() && aiRequested.value)) return
-    if (!useLogShareAi()) {
-        if (!lastAnalysis?.combined_log) {
-            notifyNoLogContent()
-            return
-        }
-        aiModal.value?.show(payload.value.instance_id!)
-        return
-    }
+    if (aiLoading.value || aiRequested.value) return
     aiTabVisible.value = true
     activeTab.value = AI_TAB
     if (aiRequested.value) return
@@ -1168,31 +1148,9 @@ async function openAIAnalysis(): Promise<void> {
 
 async function refreshAIAvailability(): Promise<void> {
     try {
-        const [settings, aiSettings] = await Promise.all([
-            get_log_share_settings(),
-            get_crash_analysis_ai_settings(),
-        ])
-        logShareSettings.value = settings
+        logShareSettings.value = await get_log_share_settings()
         logShareSettingsLoaded.value = true
-        if (aiSettings.ai_source === 'custom') {
-            try {
-                const state = await getAIState()
-                const provider = state.providers.find(
-                    (item) => item.provider_id === aiSettings.provider_id,
-                )
-                const providerReady =
-                    !!provider &&
-                    provider.enabled &&
-                    provider.models.some(
-                        (model) => model.id === aiSettings.model_id && model.enabled,
-                    )
-                aiAvailable.value = aiSettings.enabled && state.settings.enabled && providerReady
-            } catch {
-                aiAvailable.value = false
-            }
-        } else {
-            aiAvailable.value = true
-        }
+        aiAvailable.value = true
     } catch {
         logShareSettingsLoaded.value = false
         aiAvailable.value = false
@@ -1402,14 +1360,10 @@ defineExpose({
                         v-if="aiAvailable"
                         type="colored"
                         color="brand"
-                        :disabled="aiLoading || (useLogShareAi() && aiRequested)"
+                        :disabled="aiLoading || aiRequested"
                         @click="openAIAnalysis"
                         ><SparklesIcon aria-hidden="true" />
-                        {{
-                            useLogShareAi()
-                                ? formatMessage(messages.aiAnalyzeLogShare)
-                                : formatMessage(messages.aiAnalyze)
-                        }}
+                        {{ formatMessage(messages.aiAnalyzeLogShare) }}
                     </Button>
                     <Button v-if="modChangesAvailable" type="outlined" @click="openModChanges"
                         >{{ formatMessage(messages.viewModChanges) }}
@@ -1584,7 +1538,6 @@ defineExpose({
             </section>
         </div>
     </NewModal>
-    <CrashAIExplanationModal ref="aiModal" />
     <CrashModChangesModal ref="modChangesModal" />
 </template>
 

@@ -802,9 +802,6 @@
   "app.skins.title": {
     "message": "Skinkiezer"
   },
-  "app.translation-settings.display-section-title": {
-    "message": "Translation display"
-  },
   "app.update-popup.body.download-complete": {
     "message": "ALLIGATORZONE v{version} is klaar met downloaden. Herlaad om nu te updaten, of automatisch wanneer je de ALLIGATORZONE afsluit."
   },

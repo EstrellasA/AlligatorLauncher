@@ -1,5 +1,4 @@
 //! API for interacting with Theseus
-pub mod ai;
 pub mod anti_piracy;
 pub mod cache;
 pub mod content_favorites;
@@ -7,7 +6,6 @@ pub mod content_search;
 pub mod curseforge;
 pub mod drop_classifier;
 pub mod friends;
-pub mod google_ip;
 pub mod handler;
 pub mod hongshi;
 pub mod instance;
@@ -31,7 +29,6 @@ pub mod settings;
 pub mod symlink;
 pub mod tags;
 pub mod terracotta;
-pub mod translation;
 pub mod worlds;
 
 pub mod data {

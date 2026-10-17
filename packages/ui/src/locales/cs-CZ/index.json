@@ -1859,24 +1859,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Připojit k Discord serveru"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Kup mi kávu"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Přispět"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsorujte na GitHubu"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Přispějte na Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Přispějte na Patreonu"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Přispějte na PayPalu"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Nahlaste chyby"
   },

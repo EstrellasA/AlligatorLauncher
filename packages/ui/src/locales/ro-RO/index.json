@@ -1529,24 +1529,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Alătură-te serverului de Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Donează"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsor pe GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Donează pe Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Donează pe Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Donează pe PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Raportează o problemă"
   },

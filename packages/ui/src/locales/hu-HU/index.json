@@ -1814,24 +1814,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Csatlakozz a Discord szerverhez"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Vegyél nekem egy kávét"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Adományozz"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Támogass GitHubon"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Támogass Ko-fin"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Támogass Patreonon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Támogass PayPalon"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Hibák jelentése"
   },

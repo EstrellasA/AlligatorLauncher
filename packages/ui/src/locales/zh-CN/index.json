@@ -2786,24 +2786,6 @@
   "project.about.links.discord": {
     "defaultMessage": "加入 Discord 服务器"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "通过 Buy Me a Coffee 赞助"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "赞助"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "GitHub Sponsors 赞助"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Ko-fi 赞助"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Patreon 赞助"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "PayPal 赞助"
-  },
   "project.about.links.issues": {
     "defaultMessage": "报告问题"
   },

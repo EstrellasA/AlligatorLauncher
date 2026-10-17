@@ -1976,24 +1976,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Rejoindre le serveur Discord"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Faire un don"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsoriser sur GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Faire un don sur Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Faire un don sur Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Faire un don sur PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Signaler un problème"
   },

@@ -1703,24 +1703,6 @@
   "project.about.links.discord": {
     "defaultMessage": "Gå med i Discord Servern"
   },
-  "project.about.links.donate.bmac": {
-    "defaultMessage": "Buy Me a Coffee"
-  },
-  "project.about.links.donate.generic": {
-    "defaultMessage": "Donera"
-  },
-  "project.about.links.donate.github": {
-    "defaultMessage": "Sponsra på GitHub"
-  },
-  "project.about.links.donate.kofi": {
-    "defaultMessage": "Donera på Ko-fi"
-  },
-  "project.about.links.donate.patreon": {
-    "defaultMessage": "Donera på Patreon"
-  },
-  "project.about.links.donate.paypal": {
-    "defaultMessage": "Donera på PayPal"
-  },
   "project.about.links.issues": {
     "defaultMessage": "Rapportera problem"
   },
